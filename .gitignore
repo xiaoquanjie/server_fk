@@ -1,0 +1,12 @@
+/fk/bin
+/fk/output
+/fk/build64_release
+/fk/routersvr/.vs
+/fk/slience.opensdf
+/fk/slience.sdf
+/fk/slience.v12.suo
+/fk/blade-bin
+/fk/.SConstruct.lock
+/fk/.sconsign.dblite
+/fk/.vs
+
