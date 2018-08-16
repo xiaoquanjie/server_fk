@@ -19,9 +19,9 @@ ws2_32.lib
 Shlwapi.lib
 
 引用头文件：
-E:\test\ConsoleApplication2\mariadb-connector-c-master\zlib
-E:\test\ConsoleApplication2\mariadb-connector-c-master\win-iconv
-E:\test\ConsoleApplication2\mariadb-connector-c-master\libmariadb
-E:\test\ConsoleApplication2\mariadb-connector-c-master\plugins\auth
-E:\test\ConsoleApplication2\mariadb-connector-c-master\include
-E:\test\ConsoleApplication2\mariadb-connector-c-master\plugins\pvio
+..\mariadb-connector-c-master\zlib
+..\mariadb-connector-c-master\win-iconv
+..\mariadb-connector-c-master\libmariadb
+..\mariadb-connector-c-master\plugins\auth
+..\mariadb-connector-c-master\include
+..\mariadb-connector-c-master\plugins\pvio

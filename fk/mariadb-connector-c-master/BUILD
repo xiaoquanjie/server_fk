@@ -1,7 +1,7 @@
 
 # need to install openssl library
 cc_library(
-	name = 'mariadbclient',
+	name = 'mysqlclient',
 	srcs = [
 		'plugins/auth/my_auth.c',
 		'plugins/auth/old_password.c',

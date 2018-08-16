@@ -12,7 +12,7 @@ cc_library(
     deps = [
 		'//slience:slience',
 		'#pthread',
-		'#mysqlcppconn'
+		'//mariadb-connector-c-master:mysqlclient'
     ],
 
     #link_all_symbols = True,
