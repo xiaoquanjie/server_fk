@@ -82,7 +82,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>WIN32;_WINDOWS;ENABLED_LOCAL_INFILE;HAVE_COMPRESS;LIBMARIADB;THREAD;MARIADB_SYSTEM_TYPE="Windows";MARIADB_MACHINE_TYPE="AMD64";HAVE_DLOPEN;_CRT_SECURE_NO_WARNINGS;HAVE_SCHANNEL;HAVE_TLS;SIZEOF_CHARP=4;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\mariadb-connector-c-master\zlib;..\mariadb-connector-c-master\win-iconv;..\mariadb-connector-c-master\libmariadb;..\mariadb-connector-c-master\plugins\auth;..\mariadb-connector-c-master\include;..\mariadb-connector-c-master\plugins\pvio;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\mariadb-connector-c-master\zlib;..\mariadb-connector-c-master\win-iconv;..\mariadb-connector-c-master\libmariadb;..\mariadb-connector-c-master\plugins\auth;..\mariadb-connector-c-master\include;..\mariadb-connector-c-master\plugins\pvio;../;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -173,6 +173,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\mariadb-connector-c-master\BUILD" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ma_wrapper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

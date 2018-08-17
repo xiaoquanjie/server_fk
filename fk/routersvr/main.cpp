@@ -3,6 +3,8 @@
 #include "protolib/src/routersvr_config.pb.h"
 using namespace std;
 
+#include "mysqlclient/ma_wrapper.h"
+
 int main(int argc, char* argv[]) {
 	RouterAppSgl::mutable_instance().Init(argc, argv);
 	RouterAppSgl::mutable_instance().Run();

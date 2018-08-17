@@ -53,4 +53,7 @@
   <ItemGroup>
     <None Include="..\mariadb-connector-c-master\BUILD" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ma_wrapper.h" />
+  </ItemGroup>
 </Project>
