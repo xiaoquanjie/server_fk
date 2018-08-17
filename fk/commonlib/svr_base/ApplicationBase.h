@@ -61,7 +61,7 @@ protected:
 
 	bool CheckReload();
 
-	void CheckTcpSocketExpire(const base::timestamp& now);
+	virtual void CheckTcpSocketExpire(const base::timestamp& now);
 
 	void OnConnected(netiolib::TcpSocketPtr& clisock) override;
 

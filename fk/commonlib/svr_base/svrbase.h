@@ -66,14 +66,14 @@ public:
 struct TcpSocketContext {
 	int fd;
 	int msgcount;
-	base::s_uint32_t tt;
+	time_t tt;
 	netiolib::TcpSocketPtr ptr;
 };
 
 struct TcpConnectorContext {
 	int fd;
 	int msgcount;
-	base::s_uint32_t tt;
+	time_t tt;
 	netiolib::TcpConnectorPtr ptr;
 };
 
@@ -101,21 +101,21 @@ namespace bmi = boost::multi_index;
 typedef bmi::multi_index_container<TcpSocketContext,
 			bmi::indexed_by<
 				bmi::ordered_unique<bmi::tag<tag_socket_context_fd>, bmi::member<TcpSocketContext, int, &TcpSocketContext::fd> >,
-				bmi::ordered_non_unique<bmi::tag<tag_socket_context_active>, bmi::member<TcpSocketContext, base::s_uint32_t, &TcpSocketContext::tt> >
+				bmi::ordered_non_unique<bmi::tag<tag_socket_context_active>, bmi::member<TcpSocketContext, time_t, &TcpSocketContext::tt> >
 			>
 > TcpSocketContextContainer;
 
 typedef bmi::multi_index_container<TcpConnectorContext,
 	bmi::indexed_by<
 	bmi::ordered_unique<bmi::tag<tag_socket_context_fd>, bmi::member<TcpConnectorContext, int, &TcpConnectorContext::fd> >,
-	bmi::ordered_non_unique<bmi::tag<tag_socket_context_active>, bmi::member<TcpConnectorContext, base::s_uint32_t, &TcpConnectorContext::tt> >
+	bmi::ordered_non_unique<bmi::tag<tag_socket_context_active>, bmi::member<TcpConnectorContext, time_t, &TcpConnectorContext::tt> >
 	>
 > TcpConnectorContextContainer;
 
 // modify class
 class FuncModifySocketContext {
 public:
-	FuncModifySocketContext(int cnt, base::s_uint32_t tt) {
+	FuncModifySocketContext(int cnt, time_t tt) {
 		_cnt = cnt;
 		_tt = tt;
 	}
@@ -132,7 +132,7 @@ public:
 
 private:
 	int _cnt;
-	base::s_uint32_t _tt;
+	time_t _tt;
 };
 
 

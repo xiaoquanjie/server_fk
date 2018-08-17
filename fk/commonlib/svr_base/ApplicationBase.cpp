@@ -10,6 +10,13 @@
 
 /////////////////////////////////////////////////////////////
 
+// 最大消息队列
+#define M_MAX_MESSAGE_LIST (5000)
+// expire检查间隔
+#define M_EXPIRE_CHECK_INTERVAL (15)
+// expire时长
+#define M_EXPIRE_INTERVAL (30)
+
 ApplicationBase::ApplicationBase() {
 	_log_level = base::logger::LOG_LEVEL_TRACE;
 	_log_withpid = 0;
@@ -341,11 +348,11 @@ bool ApplicationBase::CheckReload() {
 
 void ApplicationBase::CheckTcpSocketExpire(const base::timestamp& now) {
 	static base::timestamp last_check_time;
-	if (now.second() - last_check_time.second() >= 15) {
+	if (now.second() - last_check_time.second() >= M_EXPIRE_CHECK_INTERVAL) {
 		// ten second
 		auto &tt_index = _tcp_socket_container.get<tag_socket_context_active>();
 		for (auto iter = tt_index.begin(); iter != tt_index.end(); ++iter) {
-			if ((now.second() - iter->tt) >= 10
+			if ((now.second() - iter->tt) >= M_EXPIRE_INTERVAL
 				&& iter->ptr->IsConnected()) {
 				LogInfo("connection expire been closed, remote_ip: " << iter->ptr->RemoteEndpoint().Address()
 					<< " fd: " << iter->ptr->GetSocket().GetFd());
@@ -425,6 +432,12 @@ void ApplicationBase::OnDisconnected(netiolib::TcpConnectorPtr& clisock) {
 
 void ApplicationBase::OnReceiveData(netiolib::TcpSocketPtr& clisock, SocketLib::Buffer& buffer) {
 	base::ScopedLock scoped(_msg_lock);
+	if (_tcp_socket_msg_list.size() >= M_MAX_MESSAGE_LIST) {
+		// message list is too many
+		LogError("tcp_socket_msg_list is too many, new message will be dropped");
+		return;
+	}
+
 	TcpSocketMsg* pMessage = 0;
 	if (_tcp_socket_msg_list2.size() > 0) {
 		pMessage = _tcp_socket_msg_list2.front();
@@ -442,6 +455,12 @@ void ApplicationBase::OnReceiveData(netiolib::TcpSocketPtr& clisock, SocketLib::
 
 void ApplicationBase::OnReceiveData(netiolib::TcpConnectorPtr& clisock, SocketLib::Buffer& buffer) {
 	base::ScopedLock scoped(_msg_lock);
+	if (_tcp_connector_msg_list.size() >= M_MAX_MESSAGE_LIST) {
+		// message list is too many
+		LogError("tcp_connector_msg_list is too many, new message will be dropped");
+		return;
+	}
+
 	TcpConnectorMsg* pMessage = 0;
 	if (_tcp_connector_msg_list2.size() > 0) {
 		pMessage = _tcp_connector_msg_list2.front();
@@ -511,31 +530,34 @@ void ApplicationBase::OnConnection(netiolib::TcpSocketPtr& clisock) {
 
 void ApplicationBase::OnDisConnection(netiolib::TcpConnectorPtr& clisock) {
 	int fd = clisock->GetSocket().GetFd();
-	proto::SocketClientOut client_out;
-	std::string str = client_out.SerializeAsString();
-	AppHeadFrame frame;
-	frame.set_cmd(proto::CMD::CMD_SOCKET_CLIENT_OUT);
-
-	LogInfo("connection break, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
-	OnProc(fd, frame, str.c_str(), str.size());
 	auto &fd_index = _tcp_connector_container.get<tag_socket_context_fd>();
 	if (0 == fd_index.erase(fd)) {
 		LogError("this is a bug!!!!!!!!!!!!!!!!!");
+	}
+	else {
+		proto::SocketClientOut client_out;
+		std::string str = client_out.SerializeAsString();
+		AppHeadFrame frame;
+		frame.set_cmd(proto::CMD::CMD_SOCKET_CLIENT_OUT);
+
+		LogInfo("connection break, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
+		OnProc(fd, frame, str.c_str(), str.size());
 	}
 }
 
 void ApplicationBase::OnDisConnection(netiolib::TcpSocketPtr& clisock) {
 	int fd = clisock->GetSocket().GetFd();
-	proto::SocketClientOut client_out;
-	std::string str = client_out.SerializeAsString();
-	AppHeadFrame frame;
-	frame.set_cmd(proto::CMD::CMD_SOCKET_CLIENT_OUT);
-	
-	LogInfo("connection break, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
-	OnProc(fd, frame, str.c_str(), str.size());
-
 	auto &fd_index = _tcp_socket_container.get<tag_socket_context_fd>();
 	if (0 == fd_index.erase(fd)) {
 		LogError("this is a big bug!!!!!!!!!!!!!!!!!");
+	}
+	else {
+		proto::SocketClientOut client_out;
+		std::string str = client_out.SerializeAsString();
+		AppHeadFrame frame;
+		frame.set_cmd(proto::CMD::CMD_SOCKET_CLIENT_OUT);
+
+		LogInfo("connection break, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
+		OnProc(fd, frame, str.c_str(), str.size());
 	}
 }
