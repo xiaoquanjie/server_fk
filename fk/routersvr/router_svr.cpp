@@ -3,6 +3,13 @@
 #include "slience/base/logger.hpp"
 
 int RouterApplication::OnInit() {
+	if (ListenOne("0.0.0.0", 22002)) {
+		LogInfo("listen success");
+	}
+	else {
+		LogError("listen error:" << GetLastError().What());
+		return -1;
+	}
 	return 0;
 }
 

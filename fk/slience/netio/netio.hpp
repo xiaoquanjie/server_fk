@@ -163,6 +163,8 @@ public:
 
 	const SocketLib::Tcp::EndPoint& RemoteEndpoint()const;
 
+	int GetFd();
+
 	// 调用这个函数不意味着连接立即断开，会等所有的未处理的数据处理完就会断开
 	void Close();
 
@@ -204,6 +206,9 @@ protected:
 	unsigned short _flag;
 	void* _extdata;
 	void(*_extdata_func)(void*data);
+
+	// file descriptor, 在对象生命周期中不会被清除，不像SocketType中的fd
+	int _fd;
 };
 
 // for stream
@@ -254,6 +259,7 @@ protected:
 			_remoteep = _socket->RemoteEndPoint();
 			_localep = _socket->LocalEndPoint();
 			_flag = E_STATE_START;
+			_fd = _socket->GetFd();
 			shard_ptr_t<TcpSocket> ref = this->shared_from_this();
 			_netio.OnConnected(ref);
 			this->_TryRecvData();
@@ -341,6 +347,7 @@ protected:
 			this->_remoteep = this->_socket->RemoteEndPoint();
 			this->_localep = this->_socket->LocalEndPoint();
 			this->_flag = E_STATE_START;
+			this->_fd = _socket->GetFd();
 			shard_ptr_t<HttpSocket> ref = this->shared_from_this();
 			this->_netio.OnConnected(ref);
 			this->_TryRecvData();

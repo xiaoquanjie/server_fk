@@ -84,6 +84,7 @@ protected:
 	int _log_level;
 	int _log_withpid;
 	int _daemon;
+	int _svr_thread_cnt;
 
 	int _msg_cache_size;
 	base::timestamp _now;

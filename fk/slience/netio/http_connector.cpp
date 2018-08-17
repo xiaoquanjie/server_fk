@@ -54,6 +54,7 @@ void HttpConnector::_ConnectHandler(const SocketLib::SocketError& error, HttpCon
 		this->_remoteep = this->_socket->RemoteEndPoint();
 		this->_localep = this->_socket->LocalEndPoint();
 		this->_flag = E_STATE_START;
+		this->_fd = _socket->GetFd();
 		shard_ptr_t<HttpConnector> ref = this->shared_from_this();
 		this->_netio.OnConnected(ref, error);
 		m_function_t<void(SocketLib::s_uint32_t, SocketLib::SocketError)> handler =

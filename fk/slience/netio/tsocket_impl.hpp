@@ -41,6 +41,7 @@ TcpBaseSocket<T, SocketType>::_writerinfo_::~_writerinfo_() {
 template<typename T, typename SocketType>
 TcpBaseSocket<T, SocketType>::TcpBaseSocket(NetIo& netio)
 	:_netio(netio) {
+	_fd = M_INVALID_SOCKET;
 	_flag = E_STATE_STOP;
 	_extdata_func = 0;
 	_socket = new SocketType(_netio.GetIoService());
@@ -61,6 +62,11 @@ const SocketLib::Tcp::EndPoint& TcpBaseSocket<T, SocketType>::LocalEndpoint()con
 template<typename T, typename SocketType>
 const SocketLib::Tcp::EndPoint& TcpBaseSocket<T, SocketType>::RemoteEndpoint()const {
 	return _remoteep;
+}
+
+template<typename T, typename SocketType>
+int TcpBaseSocket<T, SocketType>::GetFd() {
+	return _fd;
 }
 
 template<typename T, typename SocketType>

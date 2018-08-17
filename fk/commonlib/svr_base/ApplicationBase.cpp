@@ -22,6 +22,7 @@ ApplicationBase::ApplicationBase() {
 	_log_withpid = 0;
 	_daemon = 0;
 	_msg_cache_size = 5000;
+	_svr_thread_cnt = 4;
 }
 
 ApplicationBase::~ApplicationBase() {
@@ -71,17 +72,25 @@ int ApplicationBase::Init(int argc, char** argv) {
 			break;
 		}
 
+		// start network thread
+		if (_svr_thread_cnt > 0 && _svr_thread_cnt < 100) {
+			Start(_svr_thread_cnt, false);
+		}
+
 		ret = OnInit();
 		if (ret != 0) {
-			LogError("init error.....");
+			LogError("application init error.....");
 			break;
 		}
 	} while (false);
-	   
-	LogInfo("application param : _workdir=" << GetWorkDir());
-	LogInfo("application param : _appname=" << _appname);
-	LogInfo("application param : _log_file=" << _log_file);
-	LogInfo("application param : _log_level=" << _log_level);
+	  
+	if (0 == ret) {
+		LogInfo("application param : workdir=" << GetWorkDir());
+		LogInfo("application param : appname=" << _appname);
+		LogInfo("application param : log_file=" << _log_file);
+		LogInfo("application param : log_level=" << _log_level);
+		LogInfo("application start successfully");
+	}
 	
 	return ret;
 }
@@ -162,15 +171,15 @@ int ApplicationBase::Run() {
 		while (tmp_tcp_connector_msg_list.size()) {
 			TcpConnectorMsg* pmsg = tmp_tcp_connector_msg_list.front();
 			if (pmsg->type == M_SOCKET_DATA) {
-				auto tmp_iter = tcp_conn_fd_index.find(pmsg->ptr->GetSocket().GetFd());
+				auto tmp_iter = tcp_conn_fd_index.find(pmsg->ptr->GetFd());
 				if (tmp_iter != tcp_conn_fd_index.end()) {
 					tcp_conn_fd_index.modify(tmp_iter, FuncModifySocketContext(tmp_iter->msgcount + 1, GetNow().second()));
 					AppHeadFrame& pFrame = *(AppHeadFrame*)pmsg->buf.Data();
 					const char* data = (const char*)pmsg->buf.Data() + sizeof(AppHeadFrame);
-					OnProc(pmsg->ptr->GetSocket().GetFd(), pFrame, data, pFrame.get_cmd_length());
+					OnProc(pmsg->ptr->GetFd(), pFrame, data, pFrame.get_cmd_length());
 				}
 				else {
-					LogError(pmsg->ptr->GetSocket().GetFd() << " fd not found in _tcp_connector_container");
+					LogError(pmsg->ptr->GetFd() << " fd not found in _tcp_connector_container");
 				}
 			}
 			else if (pmsg->type == M_SOCKET_IN) {
@@ -195,10 +204,10 @@ int ApplicationBase::Run() {
 					tcp_socket_fd_index.modify(tmp_iter, FuncModifySocketContext(tmp_iter->msgcount + 1, GetNow().second()));
 					AppHeadFrame& pFrame = *(AppHeadFrame*)pmsg->buf.Data();
 					const char* data = (const char*)pmsg->buf.Data() + sizeof(AppHeadFrame);
-					OnProc(pmsg->ptr->GetSocket().GetFd(), pFrame, data, pFrame.get_cmd_length());
+					OnProc(pmsg->ptr->GetFd(), pFrame, data, pFrame.get_cmd_length());
 				}
 				else {
-					LogError(pmsg->ptr->GetSocket().GetFd() << " fd not found in _tcp_socket_container");
+					LogError(pmsg->ptr->GetFd() << " fd not found in _tcp_socket_container");
 				}
 			}
 			else if (pmsg->type == M_SOCKET_IN) {
@@ -277,7 +286,8 @@ int ApplicationBase::ParseOpt(int argc, char** argv) {
 		{"daemon", 0, 0, 'D'},
 		{"log_file", 1, &opt_char, 'L'},
 		{"log_level", 1, &opt_char, 'l'},
-		{"log_withpid", 1, &opt_char, 'p'}
+		{"log_withpid", 1, &opt_char, 'p'},
+		{"thread_cnt", 1, &opt_char, 'T'}
 	};
 
 	int opt_idx = 0;
@@ -297,6 +307,9 @@ int ApplicationBase::ParseOpt(int argc, char** argv) {
 				break;
 			case 'p':
 				_log_withpid = base::GetOptArgI();
+				break;
+			case 'T':
+				_svr_thread_cnt = base::GetOptArgI();
 				break;
 			}
 			break;
@@ -355,7 +368,7 @@ void ApplicationBase::CheckTcpSocketExpire(const base::timestamp& now) {
 			if ((now.second() - iter->tt) >= M_EXPIRE_INTERVAL
 				&& iter->ptr->IsConnected()) {
 				LogInfo("connection expire been closed, remote_ip: " << iter->ptr->RemoteEndpoint().Address()
-					<< " fd: " << iter->ptr->GetSocket().GetFd());
+					<< " fd: " << iter->ptr->GetFd());
 				iter->ptr->Close();
 			}
 			else {
@@ -479,7 +492,7 @@ void ApplicationBase::OnReceiveData(netiolib::TcpConnectorPtr& clisock, SocketLi
 void ApplicationBase::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error) {
 	if (!error) {
 		// connect success
-		int fd = clisock->GetSocket().GetFd();
+		int fd = clisock->GetFd();
 		TcpConnectorContext context;
 		context.fd = fd;
 		context.ptr = clisock;
@@ -504,7 +517,7 @@ void ApplicationBase::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib
 }
 
 void ApplicationBase::OnConnection(netiolib::TcpSocketPtr& clisock) {
-	int fd = clisock->GetSocket().GetFd();
+	int fd = clisock->GetFd();
 	TcpSocketContext context;
 	context.fd = fd;
 	context.ptr = clisock;
@@ -529,10 +542,10 @@ void ApplicationBase::OnConnection(netiolib::TcpSocketPtr& clisock) {
 }
 
 void ApplicationBase::OnDisConnection(netiolib::TcpConnectorPtr& clisock) {
-	int fd = clisock->GetSocket().GetFd();
+	int fd = clisock->GetFd();
 	auto &fd_index = _tcp_connector_container.get<tag_socket_context_fd>();
 	if (0 == fd_index.erase(fd)) {
-		LogError("this is a bug!!!!!!!!!!!!!!!!!");
+		LogError("fd: " << fd << " not exist, this is a big bug!!!!!!!!!!!!!!!!!");
 	}
 	else {
 		proto::SocketClientOut client_out;
@@ -540,16 +553,16 @@ void ApplicationBase::OnDisConnection(netiolib::TcpConnectorPtr& clisock) {
 		AppHeadFrame frame;
 		frame.set_cmd(proto::CMD::CMD_SOCKET_CLIENT_OUT);
 
-		LogInfo("connection break, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
+		LogInfo("connection broken, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
 		OnProc(fd, frame, str.c_str(), str.size());
 	}
 }
 
 void ApplicationBase::OnDisConnection(netiolib::TcpSocketPtr& clisock) {
-	int fd = clisock->GetSocket().GetFd();
+	int fd = clisock->GetFd();
 	auto &fd_index = _tcp_socket_container.get<tag_socket_context_fd>();
 	if (0 == fd_index.erase(fd)) {
-		LogError("this is a big bug!!!!!!!!!!!!!!!!!");
+		LogError("fd: " << fd << " not exist, this is a big bug!!!!!!!!!!!!!!!!!");
 	}
 	else {
 		proto::SocketClientOut client_out;
@@ -557,7 +570,7 @@ void ApplicationBase::OnDisConnection(netiolib::TcpSocketPtr& clisock) {
 		AppHeadFrame frame;
 		frame.set_cmd(proto::CMD::CMD_SOCKET_CLIENT_OUT);
 
-		LogInfo("connection break, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
+		LogInfo("connection broken, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
 		OnProc(fd, frame, str.c_str(), str.size());
 	}
 }
