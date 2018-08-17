@@ -156,7 +156,7 @@ namespace logger {
 		return *this;
 	}
 
-	logstream& logstream::operator<<(const short& value) {
+	logstream& logstream::operator<<(const signed short& value) {
 		*this << static_cast<int>(value);
 		return *this;
 	}
@@ -166,7 +166,7 @@ namespace logger {
 		return *this;
 	}
 
-	logstream& logstream::operator<<(const int& value) {
+	logstream& logstream::operator<<(const signed int& value) {
 		_convert(value, 0);
 		return *this;
 	}
@@ -176,13 +176,13 @@ namespace logger {
 		return *this;
 	}
 
-	logstream& logstream::operator<<(const long long& value) {
-		_convert(value, 0);
+	logstream& logstream::operator<<(const signed long long& value) {
+		_convert(value, 2);
 		return *this;
 	}
 
 	logstream& logstream::operator<<(const unsigned long long& value) {
-		_convert(value, 0);
+		_convert(value, 2);
 		return *this;
 	}
 

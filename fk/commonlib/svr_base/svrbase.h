@@ -62,16 +62,41 @@ public:
 #define M_SOCKET_DATA (3)
 #endif
 
+#ifndef M_TCP_CONNECTOR_FD_FLAG
+#define M_TCP_CONNECTOR_FD_FLAG ((base::s_int64_t)1 << 33)
+#endif
+
+#ifndef M_TCP_FD_FLAG
+#define M_TCP_FD_FLAG ((base::s_int64_t)1 << 34)
+#endif
+
+#ifndef M_CHECK_IS_TCP_CONNECTOR_FD
+#define M_CHECK_IS_TCP_CONNECTOR_FD(fd) (M_TCP_CONNECTOR_FD_FLAG & fd)
+#endif
+
+#ifndef M_CHECK_IS_TCP_FD
+#define M_CHECK_IS_TCP_FD(fd) (M_TCP_FD_FLAG & fd)
+#endif
+
+#ifndef M_GET_TCP_FD
+#define M_GET_TCP_FD(fd) (fd & ~M_TCP_FD_FLAG)
+#endif
+
+#ifndef M_GET_TCP_CONNECTOR_FD
+#define M_GET_TCP_CONNECTOR_FD(fd) (fd & ~M_TCP_CONNECTOR_FD_FLAG)
+#endif
+
+
 // context
 struct TcpSocketContext {
-	int fd;
+	base::s_int64_t fd;
 	int msgcount;
 	time_t tt;
 	netiolib::TcpSocketPtr ptr;
 };
 
 struct TcpConnectorContext {
-	int fd;
+	base::s_int64_t fd;
 	int msgcount;
 	time_t tt;
 	netiolib::TcpConnectorPtr ptr;
@@ -100,14 +125,14 @@ namespace bmi = boost::multi_index;
 // multi index container
 typedef bmi::multi_index_container<TcpSocketContext,
 			bmi::indexed_by<
-				bmi::ordered_unique<bmi::tag<tag_socket_context_fd>, bmi::member<TcpSocketContext, int, &TcpSocketContext::fd> >,
+				bmi::ordered_unique<bmi::tag<tag_socket_context_fd>, bmi::member<TcpSocketContext, base::s_int64_t, &TcpSocketContext::fd> >,
 				bmi::ordered_non_unique<bmi::tag<tag_socket_context_active>, bmi::member<TcpSocketContext, time_t, &TcpSocketContext::tt> >
 			>
 > TcpSocketContextContainer;
 
 typedef bmi::multi_index_container<TcpConnectorContext,
 	bmi::indexed_by<
-	bmi::ordered_unique<bmi::tag<tag_socket_context_fd>, bmi::member<TcpConnectorContext, int, &TcpConnectorContext::fd> >,
+	bmi::ordered_unique<bmi::tag<tag_socket_context_fd>, bmi::member<TcpConnectorContext, base::s_int64_t, &TcpConnectorContext::fd> >,
 	bmi::ordered_non_unique<bmi::tag<tag_socket_context_active>, bmi::member<TcpConnectorContext, time_t, &TcpConnectorContext::tt> >
 	>
 > TcpConnectorContextContainer;

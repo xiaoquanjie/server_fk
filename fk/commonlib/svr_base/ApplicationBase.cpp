@@ -171,15 +171,16 @@ int ApplicationBase::Run() {
 		while (tmp_tcp_connector_msg_list.size()) {
 			TcpConnectorMsg* pmsg = tmp_tcp_connector_msg_list.front();
 			if (pmsg->type == M_SOCKET_DATA) {
-				auto tmp_iter = tcp_conn_fd_index.find(pmsg->ptr->GetFd());
+				base::s_int64_t fd = M_TCP_CONNECTOR_FD_FLAG | pmsg->ptr->GetFd();
+				auto tmp_iter = tcp_conn_fd_index.find(fd);
 				if (tmp_iter != tcp_conn_fd_index.end()) {
 					tcp_conn_fd_index.modify(tmp_iter, FuncModifySocketContext(tmp_iter->msgcount + 1, GetNow().second()));
 					AppHeadFrame& pFrame = *(AppHeadFrame*)pmsg->buf.Data();
 					const char* data = (const char*)pmsg->buf.Data() + sizeof(AppHeadFrame);
-					OnProc(pmsg->ptr->GetFd(), pFrame, data, pFrame.get_cmd_length());
+					OnProc(fd, pFrame, data, pFrame.get_cmd_length());
 				}
 				else {
-					LogError(pmsg->ptr->GetFd() << " fd not found in _tcp_connector_container");
+					LogError(fd << " fd not found in _tcp_connector_container");
 				}
 			}
 			else if (pmsg->type == M_SOCKET_IN) {
@@ -199,15 +200,16 @@ int ApplicationBase::Run() {
 		while (tmp_tcp_socket_msg_list.size()) {
 			TcpSocketMsg* pmsg = tmp_tcp_socket_msg_list.front();
 			if (pmsg->type == M_SOCKET_DATA) {
-				auto tmp_iter = tcp_socket_fd_index.find(pmsg->ptr->GetSocket().GetFd());
+				base::s_int64_t fd = M_TCP_FD_FLAG | pmsg->ptr->GetFd();
+				auto tmp_iter = tcp_socket_fd_index.find(fd);
 				if (tmp_iter != tcp_socket_fd_index.end()) {
 					tcp_socket_fd_index.modify(tmp_iter, FuncModifySocketContext(tmp_iter->msgcount + 1, GetNow().second()));
 					AppHeadFrame& pFrame = *(AppHeadFrame*)pmsg->buf.Data();
 					const char* data = (const char*)pmsg->buf.Data() + sizeof(AppHeadFrame);
-					OnProc(pmsg->ptr->GetFd(), pFrame, data, pFrame.get_cmd_length());
+					OnProc(fd, pFrame, data, pFrame.get_cmd_length());
 				}
 				else {
-					LogError(pmsg->ptr->GetFd() << " fd not found in _tcp_socket_container");
+					LogError(fd << " fd not found in _tcp_socket_container");
 				}
 			}
 			else if (pmsg->type == M_SOCKET_IN) {
@@ -367,8 +369,9 @@ void ApplicationBase::CheckTcpSocketExpire(const base::timestamp& now) {
 		for (auto iter = tt_index.begin(); iter != tt_index.end(); ++iter) {
 			if ((now.second() - iter->tt) >= M_EXPIRE_INTERVAL
 				&& iter->ptr->IsConnected()) {
+				base::s_int64_t fd = M_TCP_FD_FLAG | iter->ptr->GetFd();
 				LogInfo("connection expire been closed, remote_ip: " << iter->ptr->RemoteEndpoint().Address()
-					<< " fd: " << iter->ptr->GetFd());
+					<< " fd: " << fd);
 				iter->ptr->Close();
 			}
 			else {
@@ -492,7 +495,7 @@ void ApplicationBase::OnReceiveData(netiolib::TcpConnectorPtr& clisock, SocketLi
 void ApplicationBase::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error) {
 	if (!error) {
 		// connect success
-		int fd = clisock->GetFd();
+		base::s_int64_t fd = M_TCP_CONNECTOR_FD_FLAG | clisock->GetFd();
 		TcpConnectorContext context;
 		context.fd = fd;
 		context.ptr = clisock;
@@ -517,7 +520,7 @@ void ApplicationBase::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib
 }
 
 void ApplicationBase::OnConnection(netiolib::TcpSocketPtr& clisock) {
-	int fd = clisock->GetFd();
+	base::s_int64_t fd = M_TCP_FD_FLAG | clisock->GetFd();
 	TcpSocketContext context;
 	context.fd = fd;
 	context.ptr = clisock;
@@ -542,7 +545,7 @@ void ApplicationBase::OnConnection(netiolib::TcpSocketPtr& clisock) {
 }
 
 void ApplicationBase::OnDisConnection(netiolib::TcpConnectorPtr& clisock) {
-	int fd = clisock->GetFd();
+	base::s_int64_t fd = M_TCP_CONNECTOR_FD_FLAG | clisock->GetFd();
 	auto &fd_index = _tcp_connector_container.get<tag_socket_context_fd>();
 	if (0 == fd_index.erase(fd)) {
 		LogError("fd: " << fd << " not exist, this is a big bug!!!!!!!!!!!!!!!!!");
@@ -559,7 +562,7 @@ void ApplicationBase::OnDisConnection(netiolib::TcpConnectorPtr& clisock) {
 }
 
 void ApplicationBase::OnDisConnection(netiolib::TcpSocketPtr& clisock) {
-	int fd = clisock->GetFd();
+	base::s_int64_t fd = M_TCP_FD_FLAG | clisock->GetFd();
 	auto &fd_index = _tcp_socket_container.get<tag_socket_context_fd>();
 	if (0 == fd_index.erase(fd)) {
 		LogError("fd: " << fd << " not exist, this is a big bug!!!!!!!!!!!!!!!!!");

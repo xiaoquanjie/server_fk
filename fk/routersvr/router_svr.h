@@ -10,7 +10,7 @@ protected:
 
 	int OnReload() override;
 
-	int OnProc(int fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) override;
+	int OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) override;
 };
 
 typedef base::singletion<RouterApplication> RouterAppSgl;

@@ -177,15 +177,15 @@ namespace logger {
 
 		logstream& operator<<(const bool& value);
 
-		logstream& operator<<(const short& value);
+		logstream& operator<<(const signed short& value);
 
 		logstream& operator<<(const unsigned short& value);
 
-		logstream& operator<<(const int& value);
+		logstream& operator<<(const signed int& value);
 
 		logstream& operator<<(const unsigned int& value);
 
-		logstream& operator<<(const long long& value);
+		logstream& operator<<(const signed long long& value);
 
 		logstream& operator<<(const unsigned long long& value);
 
@@ -232,6 +232,9 @@ namespace logger {
 				break;
 			case 1:
 				ptype = "%.12g";
+				break;
+			case 2:
+				ptype = "%llu";
 				break;
 			default:
 				ptype = "0x%0X";
