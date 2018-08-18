@@ -3,6 +3,8 @@
 
 #include "commonlib/svr_base/ApplicationBase.h"
 #include "slience/base/singletion.hpp"
+#include "protolib/src/routersvr_config.pb.h"
+#include "commonlib/svr_base/server_cfg.h"
 
 class RouterApplication : public ApplicationBase {
 protected:
@@ -11,6 +13,10 @@ protected:
 	int OnReload() override;
 
 	int OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) override;
+
+private:
+	ServerCfg<config::RouterSvrConfig> _svr_config;
+	ServerCfg<config::RouterPolicy> _router_policy;
 };
 
 typedef base::singletion<RouterApplication> RouterAppSgl;

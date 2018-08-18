@@ -304,6 +304,7 @@
     <ClInclude Include="svr_base\getopt.h" />
     <ClInclude Include="svr_base\getopt.hpp" />
     <ClInclude Include="svr_base\msgbase.hpp" />
+    <ClInclude Include="svr_base\server_cfg.h" />
     <ClInclude Include="svr_base\svrbase.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,20 @@
 package config;
 
+message ListenInfo {
+	optional string listen_ip = 1;		// 监听ip
+	optional int32 listen_port = 2;
+}
+
 message RouterSvrConfig {
-	optional int32 log_level = 1;
+	repeated ListenInfo listen_list = 1;
+	repeated int32 legal_svr_list = 2;	// 合法服务列表
+}
+
+message Policy {
+	optional uint32 svr_type = 1;
+	optional uint32 policy = 2;
+}
+
+message RouterPolicy {
+	repeated Policy policy_list = 1;
 }

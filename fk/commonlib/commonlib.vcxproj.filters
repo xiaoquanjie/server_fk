@@ -681,6 +681,9 @@
     <ClInclude Include="..\boost\visit_each.hpp">
       <Filter>boost</Filter>
     </ClInclude>
+    <ClInclude Include="svr_base\server_cfg.h">
+      <Filter>svr_base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="BUILD" />
