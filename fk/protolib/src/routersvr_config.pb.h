@@ -28,6 +28,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
@@ -36,7 +37,7 @@ namespace protobuf_routersvr_5fconfig_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[4];
+  static const ::google::protobuf::internal::ParseTable schema[3];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -44,17 +45,14 @@ struct TableStruct {
 void AddDescriptors();
 void InitDefaultsListenInfoImpl();
 void InitDefaultsListenInfo();
-void InitDefaultsRouterSvrConfigImpl();
-void InitDefaultsRouterSvrConfig();
 void InitDefaultsPolicyImpl();
 void InitDefaultsPolicy();
-void InitDefaultsRouterPolicyImpl();
-void InitDefaultsRouterPolicy();
+void InitDefaultsRouterSvrConfigImpl();
+void InitDefaultsRouterSvrConfig();
 inline void InitDefaults() {
   InitDefaultsListenInfo();
-  InitDefaultsRouterSvrConfig();
   InitDefaultsPolicy();
-  InitDefaultsRouterPolicy();
+  InitDefaultsRouterSvrConfig();
 }
 }  // namespace protobuf_routersvr_5fconfig_2eproto
 namespace config {
@@ -64,15 +62,33 @@ extern ListenInfoDefaultTypeInternal _ListenInfo_default_instance_;
 class Policy;
 class PolicyDefaultTypeInternal;
 extern PolicyDefaultTypeInternal _Policy_default_instance_;
-class RouterPolicy;
-class RouterPolicyDefaultTypeInternal;
-extern RouterPolicyDefaultTypeInternal _RouterPolicy_default_instance_;
 class RouterSvrConfig;
 class RouterSvrConfigDefaultTypeInternal;
 extern RouterSvrConfigDefaultTypeInternal _RouterSvrConfig_default_instance_;
 }  // namespace config
 namespace config {
 
+enum PolicyType {
+  POLICY_ROUTER = 0,
+  POLICY_RANDOM = 1,
+  POLICY_MOD = 2,
+  POLICY_BROADCAST = 3
+};
+bool PolicyType_IsValid(int value);
+const PolicyType PolicyType_MIN = POLICY_ROUTER;
+const PolicyType PolicyType_MAX = POLICY_BROADCAST;
+const int PolicyType_ARRAYSIZE = PolicyType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* PolicyType_descriptor();
+inline const ::std::string& PolicyType_Name(PolicyType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    PolicyType_descriptor(), value);
+}
+inline bool PolicyType_Parse(
+    const ::std::string& name, PolicyType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<PolicyType>(
+    PolicyType_descriptor(), name, value);
+}
 // ===================================================================
 
 class ListenInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:config.ListenInfo) */ {
@@ -203,132 +219,6 @@ class ListenInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
 };
 // -------------------------------------------------------------------
 
-class RouterSvrConfig : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:config.RouterSvrConfig) */ {
- public:
-  RouterSvrConfig();
-  virtual ~RouterSvrConfig();
-
-  RouterSvrConfig(const RouterSvrConfig& from);
-
-  inline RouterSvrConfig& operator=(const RouterSvrConfig& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  #if LANG_CXX11
-  RouterSvrConfig(RouterSvrConfig&& from) noexcept
-    : RouterSvrConfig() {
-    *this = ::std::move(from);
-  }
-
-  inline RouterSvrConfig& operator=(RouterSvrConfig&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-  #endif
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const RouterSvrConfig& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const RouterSvrConfig* internal_default_instance() {
-    return reinterpret_cast<const RouterSvrConfig*>(
-               &_RouterSvrConfig_default_instance_);
-  }
-  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    1;
-
-  void Swap(RouterSvrConfig* other);
-  friend void swap(RouterSvrConfig& a, RouterSvrConfig& b) {
-    a.Swap(&b);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline RouterSvrConfig* New() const PROTOBUF_FINAL { return New(NULL); }
-
-  RouterSvrConfig* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
-  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void CopyFrom(const RouterSvrConfig& from);
-  void MergeFrom(const RouterSvrConfig& from);
-  void Clear() PROTOBUF_FINAL;
-  bool IsInitialized() const PROTOBUF_FINAL;
-
-  size_t ByteSizeLong() const PROTOBUF_FINAL;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
-  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
-  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const PROTOBUF_FINAL;
-  void InternalSwap(RouterSvrConfig* other);
-  private:
-  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
-    return NULL;
-  }
-  inline void* MaybeArenaPtr() const {
-    return NULL;
-  }
-  public:
-
-  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // repeated .config.ListenInfo listen_list = 1;
-  int listen_list_size() const;
-  void clear_listen_list();
-  static const int kListenListFieldNumber = 1;
-  const ::config::ListenInfo& listen_list(int index) const;
-  ::config::ListenInfo* mutable_listen_list(int index);
-  ::config::ListenInfo* add_listen_list();
-  ::google::protobuf::RepeatedPtrField< ::config::ListenInfo >*
-      mutable_listen_list();
-  const ::google::protobuf::RepeatedPtrField< ::config::ListenInfo >&
-      listen_list() const;
-
-  // repeated int32 legal_svr_list = 2;
-  int legal_svr_list_size() const;
-  void clear_legal_svr_list();
-  static const int kLegalSvrListFieldNumber = 2;
-  ::google::protobuf::int32 legal_svr_list(int index) const;
-  void set_legal_svr_list(int index, ::google::protobuf::int32 value);
-  void add_legal_svr_list(::google::protobuf::int32 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-      legal_svr_list() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-      mutable_legal_svr_list();
-
-  // @@protoc_insertion_point(class_scope:config.RouterSvrConfig)
- private:
-
-  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::internal::HasBits<1> _has_bits_;
-  mutable int _cached_size_;
-  ::google::protobuf::RepeatedPtrField< ::config::ListenInfo > listen_list_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > legal_svr_list_;
-  friend struct ::protobuf_routersvr_5fconfig_2eproto::TableStruct;
-  friend void ::protobuf_routersvr_5fconfig_2eproto::InitDefaultsRouterSvrConfigImpl();
-};
-// -------------------------------------------------------------------
-
 class Policy : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:config.Policy) */ {
  public:
   Policy();
@@ -371,7 +261,7 @@ class Policy : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
                &_Policy_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    2;
+    1;
 
   void Swap(Policy* other);
   friend void swap(Policy& a, Policy& b) {
@@ -449,24 +339,24 @@ class Policy : public ::google::protobuf::Message /* @@protoc_insertion_point(cl
 };
 // -------------------------------------------------------------------
 
-class RouterPolicy : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:config.RouterPolicy) */ {
+class RouterSvrConfig : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:config.RouterSvrConfig) */ {
  public:
-  RouterPolicy();
-  virtual ~RouterPolicy();
+  RouterSvrConfig();
+  virtual ~RouterSvrConfig();
 
-  RouterPolicy(const RouterPolicy& from);
+  RouterSvrConfig(const RouterSvrConfig& from);
 
-  inline RouterPolicy& operator=(const RouterPolicy& from) {
+  inline RouterSvrConfig& operator=(const RouterSvrConfig& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  RouterPolicy(RouterPolicy&& from) noexcept
-    : RouterPolicy() {
+  RouterSvrConfig(RouterSvrConfig&& from) noexcept
+    : RouterSvrConfig() {
     *this = ::std::move(from);
   }
 
-  inline RouterPolicy& operator=(RouterPolicy&& from) noexcept {
+  inline RouterSvrConfig& operator=(RouterSvrConfig&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -483,30 +373,30 @@ class RouterPolicy : public ::google::protobuf::Message /* @@protoc_insertion_po
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const RouterPolicy& default_instance();
+  static const RouterSvrConfig& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const RouterPolicy* internal_default_instance() {
-    return reinterpret_cast<const RouterPolicy*>(
-               &_RouterPolicy_default_instance_);
+  static inline const RouterSvrConfig* internal_default_instance() {
+    return reinterpret_cast<const RouterSvrConfig*>(
+               &_RouterSvrConfig_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
-    3;
+    2;
 
-  void Swap(RouterPolicy* other);
-  friend void swap(RouterPolicy& a, RouterPolicy& b) {
+  void Swap(RouterSvrConfig* other);
+  friend void swap(RouterSvrConfig& a, RouterSvrConfig& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline RouterPolicy* New() const PROTOBUF_FINAL { return New(NULL); }
+  inline RouterSvrConfig* New() const PROTOBUF_FINAL { return New(NULL); }
 
-  RouterPolicy* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  RouterSvrConfig* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
   void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
   void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void CopyFrom(const RouterPolicy& from);
-  void MergeFrom(const RouterPolicy& from);
+  void CopyFrom(const RouterSvrConfig& from);
+  void MergeFrom(const RouterSvrConfig& from);
   void Clear() PROTOBUF_FINAL;
   bool IsInitialized() const PROTOBUF_FINAL;
 
@@ -522,7 +412,7 @@ class RouterPolicy : public ::google::protobuf::Message /* @@protoc_insertion_po
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const PROTOBUF_FINAL;
-  void InternalSwap(RouterPolicy* other);
+  void InternalSwap(RouterSvrConfig* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -538,10 +428,34 @@ class RouterPolicy : public ::google::protobuf::Message /* @@protoc_insertion_po
 
   // accessors -------------------------------------------------------
 
-  // repeated .config.Policy policy_list = 1;
+  // repeated .config.ListenInfo listen_list = 1;
+  int listen_list_size() const;
+  void clear_listen_list();
+  static const int kListenListFieldNumber = 1;
+  const ::config::ListenInfo& listen_list(int index) const;
+  ::config::ListenInfo* mutable_listen_list(int index);
+  ::config::ListenInfo* add_listen_list();
+  ::google::protobuf::RepeatedPtrField< ::config::ListenInfo >*
+      mutable_listen_list();
+  const ::google::protobuf::RepeatedPtrField< ::config::ListenInfo >&
+      listen_list() const;
+
+  // repeated int32 legal_svr_list = 2;
+  int legal_svr_list_size() const;
+  void clear_legal_svr_list();
+  static const int kLegalSvrListFieldNumber = 2;
+  ::google::protobuf::int32 legal_svr_list(int index) const;
+  void set_legal_svr_list(int index, ::google::protobuf::int32 value);
+  void add_legal_svr_list(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      legal_svr_list() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_legal_svr_list();
+
+  // repeated .config.Policy policy_list = 3;
   int policy_list_size() const;
   void clear_policy_list();
-  static const int kPolicyListFieldNumber = 1;
+  static const int kPolicyListFieldNumber = 3;
   const ::config::Policy& policy_list(int index) const;
   ::config::Policy* mutable_policy_list(int index);
   ::config::Policy* add_policy_list();
@@ -550,15 +464,17 @@ class RouterPolicy : public ::google::protobuf::Message /* @@protoc_insertion_po
   const ::google::protobuf::RepeatedPtrField< ::config::Policy >&
       policy_list() const;
 
-  // @@protoc_insertion_point(class_scope:config.RouterPolicy)
+  // @@protoc_insertion_point(class_scope:config.RouterSvrConfig)
  private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::config::ListenInfo > listen_list_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > legal_svr_list_;
   ::google::protobuf::RepeatedPtrField< ::config::Policy > policy_list_;
   friend struct ::protobuf_routersvr_5fconfig_2eproto::TableStruct;
-  friend void ::protobuf_routersvr_5fconfig_2eproto::InitDefaultsRouterPolicyImpl();
+  friend void ::protobuf_routersvr_5fconfig_2eproto::InitDefaultsRouterSvrConfigImpl();
 };
 // ===================================================================
 
@@ -660,6 +576,58 @@ inline void ListenInfo::set_listen_port(::google::protobuf::int32 value) {
 
 // -------------------------------------------------------------------
 
+// Policy
+
+// optional uint32 svr_type = 1;
+inline bool Policy::has_svr_type() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void Policy::set_has_svr_type() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void Policy::clear_has_svr_type() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void Policy::clear_svr_type() {
+  svr_type_ = 0u;
+  clear_has_svr_type();
+}
+inline ::google::protobuf::uint32 Policy::svr_type() const {
+  // @@protoc_insertion_point(field_get:config.Policy.svr_type)
+  return svr_type_;
+}
+inline void Policy::set_svr_type(::google::protobuf::uint32 value) {
+  set_has_svr_type();
+  svr_type_ = value;
+  // @@protoc_insertion_point(field_set:config.Policy.svr_type)
+}
+
+// optional uint32 policy = 2;
+inline bool Policy::has_policy() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void Policy::set_has_policy() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void Policy::clear_has_policy() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void Policy::clear_policy() {
+  policy_ = 0u;
+  clear_has_policy();
+}
+inline ::google::protobuf::uint32 Policy::policy() const {
+  // @@protoc_insertion_point(field_get:config.Policy.policy)
+  return policy_;
+}
+inline void Policy::set_policy(::google::protobuf::uint32 value) {
+  set_has_policy();
+  policy_ = value;
+  // @@protoc_insertion_point(field_set:config.Policy.policy)
+}
+
+// -------------------------------------------------------------------
+
 // RouterSvrConfig
 
 // repeated .config.ListenInfo listen_list = 1;
@@ -722,89 +690,33 @@ RouterSvrConfig::mutable_legal_svr_list() {
   return &legal_svr_list_;
 }
 
-// -------------------------------------------------------------------
-
-// Policy
-
-// optional uint32 svr_type = 1;
-inline bool Policy::has_svr_type() const {
-  return (_has_bits_[0] & 0x00000001u) != 0;
-}
-inline void Policy::set_has_svr_type() {
-  _has_bits_[0] |= 0x00000001u;
-}
-inline void Policy::clear_has_svr_type() {
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline void Policy::clear_svr_type() {
-  svr_type_ = 0u;
-  clear_has_svr_type();
-}
-inline ::google::protobuf::uint32 Policy::svr_type() const {
-  // @@protoc_insertion_point(field_get:config.Policy.svr_type)
-  return svr_type_;
-}
-inline void Policy::set_svr_type(::google::protobuf::uint32 value) {
-  set_has_svr_type();
-  svr_type_ = value;
-  // @@protoc_insertion_point(field_set:config.Policy.svr_type)
-}
-
-// optional uint32 policy = 2;
-inline bool Policy::has_policy() const {
-  return (_has_bits_[0] & 0x00000002u) != 0;
-}
-inline void Policy::set_has_policy() {
-  _has_bits_[0] |= 0x00000002u;
-}
-inline void Policy::clear_has_policy() {
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline void Policy::clear_policy() {
-  policy_ = 0u;
-  clear_has_policy();
-}
-inline ::google::protobuf::uint32 Policy::policy() const {
-  // @@protoc_insertion_point(field_get:config.Policy.policy)
-  return policy_;
-}
-inline void Policy::set_policy(::google::protobuf::uint32 value) {
-  set_has_policy();
-  policy_ = value;
-  // @@protoc_insertion_point(field_set:config.Policy.policy)
-}
-
-// -------------------------------------------------------------------
-
-// RouterPolicy
-
-// repeated .config.Policy policy_list = 1;
-inline int RouterPolicy::policy_list_size() const {
+// repeated .config.Policy policy_list = 3;
+inline int RouterSvrConfig::policy_list_size() const {
   return policy_list_.size();
 }
-inline void RouterPolicy::clear_policy_list() {
+inline void RouterSvrConfig::clear_policy_list() {
   policy_list_.Clear();
 }
-inline const ::config::Policy& RouterPolicy::policy_list(int index) const {
-  // @@protoc_insertion_point(field_get:config.RouterPolicy.policy_list)
+inline const ::config::Policy& RouterSvrConfig::policy_list(int index) const {
+  // @@protoc_insertion_point(field_get:config.RouterSvrConfig.policy_list)
   return policy_list_.Get(index);
 }
-inline ::config::Policy* RouterPolicy::mutable_policy_list(int index) {
-  // @@protoc_insertion_point(field_mutable:config.RouterPolicy.policy_list)
+inline ::config::Policy* RouterSvrConfig::mutable_policy_list(int index) {
+  // @@protoc_insertion_point(field_mutable:config.RouterSvrConfig.policy_list)
   return policy_list_.Mutable(index);
 }
-inline ::config::Policy* RouterPolicy::add_policy_list() {
-  // @@protoc_insertion_point(field_add:config.RouterPolicy.policy_list)
+inline ::config::Policy* RouterSvrConfig::add_policy_list() {
+  // @@protoc_insertion_point(field_add:config.RouterSvrConfig.policy_list)
   return policy_list_.Add();
 }
 inline ::google::protobuf::RepeatedPtrField< ::config::Policy >*
-RouterPolicy::mutable_policy_list() {
-  // @@protoc_insertion_point(field_mutable_list:config.RouterPolicy.policy_list)
+RouterSvrConfig::mutable_policy_list() {
+  // @@protoc_insertion_point(field_mutable_list:config.RouterSvrConfig.policy_list)
   return &policy_list_;
 }
 inline const ::google::protobuf::RepeatedPtrField< ::config::Policy >&
-RouterPolicy::policy_list() const {
-  // @@protoc_insertion_point(field_list:config.RouterPolicy.policy_list)
+RouterSvrConfig::policy_list() const {
+  // @@protoc_insertion_point(field_list:config.RouterSvrConfig.policy_list)
   return policy_list_;
 }
 
@@ -815,12 +727,22 @@ RouterPolicy::policy_list() const {
 
 // -------------------------------------------------------------------
 
-// -------------------------------------------------------------------
-
 
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace config
+
+namespace google {
+namespace protobuf {
+
+template <> struct is_proto_enum< ::config::PolicyType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::config::PolicyType>() {
+  return ::config::PolicyType_descriptor();
+}
+
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
 

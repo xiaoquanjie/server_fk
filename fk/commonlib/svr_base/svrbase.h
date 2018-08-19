@@ -32,6 +32,7 @@ struct __attribute__((__packed__)) AppHeadFrame {
 	GETSETVAR(base::s_uint32_t, dst_transaction_id);	// 目标事务id
 	GETSETVAR(base::s_uint32_t, cmd);					// cmd
 	GETSETVAR(base::s_uint32_t, cmd_length);			// cmd长度
+	GETSETVAR(base::s_uint64_t, userid);				// user id
 
 public:
 	AppHeadFrame() {

@@ -16,7 +16,6 @@ protected:
 
 private:
 	ServerCfg<config::RouterSvrConfig> _svr_config;
-	ServerCfg<config::RouterPolicy> _router_policy;
 };
 
 typedef base::singletion<RouterApplication> RouterAppSgl;

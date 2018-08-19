@@ -28,6 +28,7 @@
 #include <google/protobuf/message.h>
 #include <google/protobuf/repeated_field.h>  // IWYU pragma: export
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
+#include <google/protobuf/generated_enum_reflection.h>
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
 
@@ -61,6 +62,25 @@ extern SocketClientOutDefaultTypeInternal _SocketClientOut_default_instance_;
 }  // namespace proto
 namespace proto {
 
+enum ServerType {
+  SVR_TYPE_ROUTER = 1,
+  SVR_TYPE_CONN = 2
+};
+bool ServerType_IsValid(int value);
+const ServerType ServerType_MIN = SVR_TYPE_ROUTER;
+const ServerType ServerType_MAX = SVR_TYPE_CONN;
+const int ServerType_ARRAYSIZE = ServerType_MAX + 1;
+
+const ::google::protobuf::EnumDescriptor* ServerType_descriptor();
+inline const ::std::string& ServerType_Name(ServerType value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    ServerType_descriptor(), value);
+}
+inline bool ServerType_Parse(
+    const ::std::string& name, ServerType* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<ServerType>(
+    ServerType_descriptor(), name, value);
+}
 // ===================================================================
 
 class SocketClientIn : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:proto.SocketClientIn) */ {
@@ -285,6 +305,18 @@ class SocketClientOut : public ::google::protobuf::Message /* @@protoc_insertion
 // @@protoc_insertion_point(namespace_scope)
 
 }  // namespace proto
+
+namespace google {
+namespace protobuf {
+
+template <> struct is_proto_enum< ::proto::ServerType> : ::google::protobuf::internal::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::proto::ServerType>() {
+  return ::proto::ServerType_descriptor();
+}
+
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
 

@@ -75,6 +75,7 @@ void InitDefaultsSocketClientOut() {
 }
 
 ::google::protobuf::Metadata file_level_metadata[2];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::proto::SocketClientIn, _has_bits_),
@@ -103,7 +104,7 @@ void protobuf_AssignDescriptors() {
   ::google::protobuf::MessageFactory* factory = NULL;
   AssignDescriptors(
       "svr_base.proto", schemas, file_default_instances, TableStruct::offsets, factory,
-      file_level_metadata, NULL, NULL);
+      file_level_metadata, file_level_enum_descriptors, NULL);
 }
 
 void protobuf_AssignDescriptorsOnce() {
@@ -121,10 +122,11 @@ void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\016svr_base.proto\022\005proto\"\020\n\016SocketClientI"
-      "n\"\021\n\017SocketClientOut"
+      "n\"\021\n\017SocketClientOut*4\n\nServerType\022\023\n\017SV"
+      "R_TYPE_ROUTER\020\001\022\021\n\rSVR_TYPE_CONN\020\002"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 60);
+      descriptor, 114);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "svr_base.proto", &protobuf_RegisterTypes);
 }
@@ -141,6 +143,20 @@ struct StaticDescriptorInitializer {
 } static_descriptor_initializer;
 }  // namespace protobuf_svr_5fbase_2eproto
 namespace proto {
+const ::google::protobuf::EnumDescriptor* ServerType_descriptor() {
+  protobuf_svr_5fbase_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_svr_5fbase_2eproto::file_level_enum_descriptors[0];
+}
+bool ServerType_IsValid(int value) {
+  switch (value) {
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 

@@ -23,10 +23,6 @@ public:
 
 	const base::timestamp& GetNow()const;
 
-	netiolib::TcpSocketPtr GetTcpSocketContext(int fd);
-
-	netiolib::TcpConnectorPtr GetTcpConnectorContext(int fd);
-
 protected:
 	virtual int OnInit() {
 		return 0;

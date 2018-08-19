@@ -91,7 +91,10 @@ int ApplicationBase::Init(int argc, char** argv) {
 		LogInfo("application param : log_level=" << _log_level);
 		LogInfo("application start successfully");
 	}
-	
+	else {
+		LogError("application start fail");
+		exit(-1);
+	}
 	return ret;
 }
 
@@ -109,28 +112,6 @@ const std::string& ApplicationBase::PidFile()const {
 
 const base::timestamp& ApplicationBase::GetNow()const {
 	return _now;
-}
-
-netiolib::TcpSocketPtr ApplicationBase::GetTcpSocketContext(int fd) {
-	auto &fd_index = _tcp_socket_container.get<tag_socket_context_fd>();
-	auto iter = fd_index.find(fd);
-	if (iter == fd_index.end()) {
-		return netiolib::TcpSocketPtr();
-	}
-	else {
-		return iter->ptr;
-	}
-}
-
-netiolib::TcpConnectorPtr ApplicationBase::GetTcpConnectorContext(int fd) {
-	auto &fd_index = _tcp_connector_container.get<tag_socket_context_fd>();
-	auto iter = fd_index.find(fd);
-	if (iter == fd_index.end()) {
-		return netiolib::TcpConnectorPtr();
-	}
-	else {
-		return iter->ptr;
-	}
 }
 
 int ApplicationBase::OnTick(const base::timestamp& now) {

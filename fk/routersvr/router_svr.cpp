@@ -21,11 +21,7 @@ int RouterApplication::OnInit() {
 int RouterApplication::OnReload() {
 	const std::string config_path = ConfigFilePath();
 	if (_svr_config.Parse(config_path.c_str()) != 0) {
-		LogError("_svr_config.init fail");
-		return -1;
-	}
-	if (_router_policy.Parse(config_path.c_str()) != 0) {
-		LogError("_router_policy.init fail");
+		LogError("_svr_config.Parse fail");
 		return -1;
 	}
 	return 0;

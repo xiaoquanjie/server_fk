@@ -5,9 +5,12 @@ message ListenInfo {
 	optional int32 listen_port = 2;
 }
 
-message RouterSvrConfig {
-	repeated ListenInfo listen_list = 1;
-	repeated int32 legal_svr_list = 2;	// 合法服务列表
+// 路由策略
+enum PolicyType{
+	POLICY_ROUTER = 0;	
+	POLICY_RANDOM = 1;			// 随机
+	POLICY_MOD = 2;				// 取模
+	POLICY_BROADCAST = 3;		// 广播
 }
 
 message Policy {
@@ -15,6 +18,8 @@ message Policy {
 	optional uint32 policy = 2;
 }
 
-message RouterPolicy {
-	repeated Policy policy_list = 1;
+message RouterSvrConfig {
+	repeated ListenInfo listen_list = 1;
+	repeated int32 legal_svr_list = 2;	// 合法服务列表
+	repeated Policy policy_list = 3;
 }
