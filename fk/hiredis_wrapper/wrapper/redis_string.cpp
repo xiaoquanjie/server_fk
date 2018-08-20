@@ -360,7 +360,6 @@ int RedisConnection::setbit(const char* key, unsigned int offset, int value) {
 	M_CHECK_REDIS_CONTEXT(_context);
 	if (value != 0)
 		value = 1;
-	std::string k = "SETBIT " + std::string(key) + " %d %d";
 	redisReply* reply = (redisReply*)w_redisCommand(*this, "SETBIT %s %d %d", key, offset, value);
 	if (!reply)
 		M_CLOSE_CONNECTION(this);
@@ -388,7 +387,6 @@ int RedisConnection::setbit(const char* key, unsigned int offset, int value) {
 
 int RedisConnection::getbit(const char* key, unsigned int offset) {
 	M_CHECK_REDIS_CONTEXT(_context);
-	std::string k = "GETBIT " + std::string(key) + " %d";
 	redisReply* reply = (redisReply*)w_redisCommand(*this, "GETBIT %s %d", key, offset);
 	if (!reply)
 		M_CLOSE_CONNECTION(this);
