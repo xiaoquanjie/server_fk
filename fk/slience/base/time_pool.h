@@ -7,7 +7,6 @@
 #ifndef M_BASE_TIME_POOL_INCLUDE
 #define M_BASE_TIME_POOL_INCLUDE
 
-#include "slience/base/object_pool.h"
 #include "slience/base/compatibility.hpp"
 #include "slience/base/timer.hpp"
 
@@ -19,7 +18,7 @@ public:
 	// 时间节点
 	struct TimeNode {
 		base::s_int64_t expire;	// 超时时间(毫秒)
-		m_function_t<void(int param1, void* param2)> cb;	// 回调函数
+		m_function_t<void()> cb;	// 回调函数
 	};
 
 	// @max_interval_day 最大不能超过7天，默认是1天（24小时)
@@ -31,7 +30,7 @@ public:
 	void Update(const base::timestamp& now);
 
 	// @interval是毫秒
-	bool AddTimer(int interval, m_function_t<void(int param1, void* param2)> func);
+	int AddTimer(int interval, m_function_t<void()> func);
 
 private:
 	int _max_interval_day;	// 最大的时间间隔（天数)

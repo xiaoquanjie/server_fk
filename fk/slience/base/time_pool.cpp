@@ -1,5 +1,6 @@
 #include "slience/base/time_pool.h"
 #include <map>
+#include "slience/base/object_pool.h"
 
 M_BASE_NAMESPACE_BEGIN
 
@@ -49,8 +50,28 @@ void TimerPool::Update(const base::timestamp& now) {
 
 }
 
-bool TimerPool::AddTimer(int interval, m_function_t<void(int param1, void* param2)> func) {
-	return false;
+int TimerPool::AddTimer(int interval, m_function_t<void()> func) {
+	if (interval <= 0) {
+		func();
+		return 0;
+	}
+	if (interval > big_bucket_cnt * _max_interval_day * 1000) {
+		return -1;
+	}
+
+	base::s_int64_t now = base::timestamp().millisecond();
+	int inteval_mil = (int)(now - _beg_time + interval);
+	int interval_sec = inteval_mil / 1000;
+	int big_bucket = interval_sec % (big_bucket_cnt * _max_interval_day);
+	int small_bucket = ((inteval_mil % 1000) / 100) % 10;
+	void** pp = (void**)_big_bucket[big_bucket];
+	TimeNodeMap* pmap = (TimeNodeMap*)(pp[small_bucket]);
+
+	TimeNode* node = base::ObjectPool<TimeNode>::Alloc();
+	node->expire = now + interval;
+	node->cb = func;
+	pmap->insert(std::make_pair(node->expire, node));
+	return true;
 }
 
 M_BASE_NAMESPACE_END
