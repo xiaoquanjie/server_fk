@@ -106,7 +106,7 @@ void NetIo::Stop() {
 	}
 	catch (SocketLib::SocketError& error) {
 		lasterror = error;
-		M_NETIO_LOGGER("stop happend error:"M_ERROR_DESC_STR(error));
+		M_NETIO_LOGGER("stop happend error:" << M_ERROR_DESC_STR(error));
 	}
 }
 
@@ -140,7 +140,7 @@ void NetIo::_Start(void*p) {
 	}
 	catch (SocketLib::SocketError& error) {
 		lasterror = error;
-		M_NETIO_LOGGER("run happend error:"M_ERROR_DESC_STR(error));
+		M_NETIO_LOGGER("run happend error:" << M_ERROR_DESC_STR(error));
 	}
 	delete pb;
 	printf("%d thread is leaving..............\n", base::thread::ctid());

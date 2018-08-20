@@ -211,7 +211,7 @@ void TcpBaseSocket<T, SocketType>::_WriteHandler(SocketLib::s_uint32_t tran_byte
 	
 	if (error) {
 		// 出错关闭连接
-		M_NETIO_LOGGER("write handler happend error:"M_ERROR_DESC_STR(error));
+		M_NETIO_LOGGER("write handler happend error:" << M_ERROR_DESC_STR(error));
 		_Close();
 	}
 	else if (tran_byte <= 0) {
