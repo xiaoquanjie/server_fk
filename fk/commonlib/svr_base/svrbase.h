@@ -26,10 +26,10 @@ struct __attribute__((__packed__)) AppHeadFrame {
 	GETSETVAR(base::s_uint16_t, is_broadcast);			// 消息是否广播
 	GETSETVAR(base::s_uint32_t, src_svr_type);			// 源服务器类型
 	GETSETVAR(base::s_uint32_t, dst_svr_type);			// 目标服务器类型
-	GETSETVAR(base::s_uint32_t, src_instance_id);		// 源服务器实例
-	GETSETVAR(base::s_uint32_t, dst_instance_id);		// 目标服务器实例
-	GETSETVAR(base::s_uint32_t, src_transaction_id);	// 源事务id
-	GETSETVAR(base::s_uint32_t, dst_transaction_id);	// 目标事务id
+	GETSETVAR(base::s_uint32_t, src_inst_id);			// 源服务器实例
+	GETSETVAR(base::s_uint32_t, dst_inst_id);			// 目标服务器实例
+	GETSETVAR(base::s_uint32_t, src_trans_id);			// 源事务id
+	GETSETVAR(base::s_uint32_t, dst_trans_id);			// 目标事务id
 	GETSETVAR(base::s_uint32_t, cmd);					// cmd
 	GETSETVAR(base::s_uint32_t, cmd_length);			// cmd长度
 	GETSETVAR(base::s_uint64_t, userid);				// user id
@@ -39,10 +39,10 @@ public:
 		is_broadcast = 0;
 		src_svr_type = 0;
 		dst_svr_type = 0;
-		src_instance_id = 0;
-		dst_instance_id = 0;
-		src_transaction_id = 0;
-		dst_transaction_id = 0;
+		src_inst_id = 0;
+		dst_inst_id = 0;
+		src_trans_id = 0;
+		dst_trans_id = 0;
 		cmd = 0;
 		cmd_length = 0;
 	}

@@ -17,10 +17,11 @@
 #include "slience/netio/config.hpp"
 M_NETIO_NAMESPACE_BEGIN
 
-static void set_netio_loginterface();
+// static void set_netio_loginterface();
 
 #define M_NETIO_LOGGER(info) 
-#define M_ERROR_DESC_STR(error) " code("<<error.Code()<<"),what("<<error.What()<<") "
+#define M_ERROR_DESC_STR(error) \
+	" code(" << error.Code()<< "),what(" << error.What() << ") "
 
 M_NETIO_NAMESPACE_END
 #endif
