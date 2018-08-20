@@ -6,6 +6,7 @@
 #ifdef M_PLATFORM_WIN
 // for windows
 #include <stdio.h>
+#include <functional>
 
 #if defined(_MSC_VER) && _MSC_VER<1900   // MS VC++ 14.0 _MSC_VER = 1900 (Visual Studio 2015)
 #define snprintf sprintf_s  
@@ -14,9 +15,13 @@
 #define myfopen(path, mode, flag) _fsopen(path, mode, flag)
 #define myfscanf fscanf_s
 
+#define m_function_t std::function
+
 #else
+
 // for linux
 #include <unistd.h>
+#include <tr1/functional>
 
 // windows's macro, just for compatibility
 #define _SH_DENYRW      0x10    // deny read/write mode
@@ -29,6 +34,8 @@
 #define GetCurrentProcessId getpid
 #define myfopen(path, mode, flag) fopen(path, mode)
 #define myfscanf fscanf
+
+#define m_function_t std::tr1::function
 
 #endif
 #endif

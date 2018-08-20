@@ -40,9 +40,26 @@ public:
 #endif
 };
 
+class FakeLock {
+public:
+	FakeLock() {}
+
+	~FakeLock(){}
+
+	void lock();
+
+	void unlock();
+
+private:
+	FakeLock(const FakeLock&);
+	FakeLock& operator=(const FakeLock&);
+};
+
 class ScopedLock
 {
 public:
+	ScopedLock(FakeLock&);
+
 	ScopedLock(MutexLock& mutex);
 	
 	~ScopedLock();
@@ -51,7 +68,7 @@ private:
 	ScopedLock(const ScopedLock&);
 	ScopedLock& operator=(const ScopedLock&);
 
-	MutexLock& _mutex;
+	MutexLock* _mutex;
 };
 
 M_BASE_NAMESPACE_END

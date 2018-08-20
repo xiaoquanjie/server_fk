@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B6D43274-EE16-4488-BA38-863805CB3CCB}</ProjectGuid>
     <RootNamespace>slience</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -141,12 +141,14 @@
     <ClInclude Include="base\logger.hpp" />
     <ClInclude Include="base\mutexlock.hpp" />
     <ClInclude Include="base\noncopyable.hpp" />
+    <ClInclude Include="base\object_pool.h" />
     <ClInclude Include="base\singletion.hpp" />
     <ClInclude Include="base\slist.hpp" />
     <ClInclude Include="base\string_util.hpp" />
     <ClInclude Include="base\svector.hpp" />
     <ClInclude Include="base\thread.hpp" />
     <ClInclude Include="base\timer.hpp" />
+    <ClInclude Include="base\time_pool.h" />
     <ClInclude Include="base\tls.hpp" />
     <ClInclude Include="base\win.hpp" />
     <ClInclude Include="coroutine\config.hpp" />
@@ -159,6 +161,8 @@
     <ClInclude Include="netio\httpmsg.hpp" />
     <ClInclude Include="netio\log.hpp" />
     <ClInclude Include="netio\netio.hpp" />
+    <ClCompile Include="base\object_pool.cpp" />
+    <ClCompile Include="base\time_pool.cpp" />
     <ClCompile Include="netio\netio.cpp" />
     <ClInclude Include="netio\tsocket_impl.hpp" />
     <ClInclude Include="socket\acceptor_service.hpp" />

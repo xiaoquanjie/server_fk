@@ -38,6 +38,9 @@
     <Filter Include="boost">
       <UniqueIdentifier>{97fb7176-6611-44c7-ba90-d01af7393398}</UniqueIdentifier>
     </Filter>
+    <Filter Include="transaction">
+      <UniqueIdentifier>{e01d65f2-5f03-4791-b0dc-d4fe7806b96d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="svr_base\getopt.c">
@@ -48,6 +51,9 @@
     </ClCompile>
     <ClCompile Include="svr_base\ApplicationBase.cpp">
       <Filter>svr_base</Filter>
+    </ClCompile>
+    <ClCompile Include="transaction\transaction_mgr.cpp">
+      <Filter>transaction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -683,6 +689,9 @@
     </ClInclude>
     <ClInclude Include="svr_base\server_cfg.h">
       <Filter>svr_base</Filter>
+    </ClInclude>
+    <ClInclude Include="transaction\transaction_mgr.h">
+      <Filter>transaction</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

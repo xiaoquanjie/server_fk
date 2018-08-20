@@ -48,12 +48,19 @@ pthread_mutex_t& MutexLock::mutex() {
 
 #endif
 
-ScopedLock::ScopedLock(MutexLock& mutex) :_mutex(mutex) {
-	_mutex.lock();
+ScopedLock::ScopedLock(FakeLock&) {
+	_mutex = 0;
+}
+
+ScopedLock::ScopedLock(MutexLock& mutex) {
+	_mutex = &mutex;
+	_mutex->lock();
 }
 
 ScopedLock::~ScopedLock() {
-	_mutex.unlock();
+	if (_mutex) {
+		_mutex->unlock();
+	}
 }
 
 M_BASE_NAMESPACE_END

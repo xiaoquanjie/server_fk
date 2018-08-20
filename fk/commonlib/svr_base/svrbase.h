@@ -11,8 +11,8 @@
 #ifndef GETSETVAR
 #define GETSETVAR(type, name) \
 public: \
-    const type& get_##name() const { return name; } \
-    void set_##name(const type& newval) { name = newval; } \
+    const type& get_##name() const { return this->name; } \
+    void set_##name(const type& newval) { this->name = newval; } \
 private: \
     type name;
 #endif
@@ -45,6 +45,7 @@ public:
 		dst_trans_id = 0;
 		cmd = 0;
 		cmd_length = 0;
+		userid = 0;
 	}
 };
 #ifdef M_PLATFORM_WIN

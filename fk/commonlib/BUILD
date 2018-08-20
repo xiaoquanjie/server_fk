@@ -6,7 +6,8 @@ cc_library(
     name = 'common',
     srcs = [
 	   'svr_base/ApplicationBase.cpp',
-	   'svr_base/ApplicationFunc.cpp'
+	   'svr_base/ApplicationFunc.cpp',
+	   'transaction/transaction_mgr.cpp',
     ],
 
     deps = [

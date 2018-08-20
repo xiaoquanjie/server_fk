@@ -115,7 +115,6 @@ const base::timestamp& ApplicationBase::GetNow()const {
 }
 
 int ApplicationBase::OnTick(const base::timestamp& now) {
-	CheckTcpSocketExpire(now);
 	return 0;
 }
 
@@ -133,6 +132,7 @@ int ApplicationBase::Run() {
 		if (t_now.millisecond() > _now.millisecond()) {
 			_now = t_now;
 			OnTick(_now);
+			CheckTcpSocketExpire(_now);
 		}
 		if (CheckReload()) {
 			LogInfo("reload begin.................");

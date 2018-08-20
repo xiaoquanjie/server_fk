@@ -222,6 +222,12 @@
     <ClInclude Include="socket\winsock_init.hpp">
       <Filter>socket</Filter>
     </ClInclude>
+    <ClInclude Include="base\object_pool.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="base\time_pool.h">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\buffer.cpp">
@@ -259,6 +265,12 @@
     </ClCompile>
     <ClCompile Include="netio\netio.cpp">
       <Filter>netio</Filter>
+    </ClCompile>
+    <ClCompile Include="base\object_pool.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="base\time_pool.cpp">
+      <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
