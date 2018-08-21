@@ -101,10 +101,12 @@ namespace logger {
 	private:
 		char _data[SIZE+1];
 		size_t _pos;
+		size_t _max_size;
 	};
 
 	template<size_t SIZE>
 	fixedbuffer<SIZE>::fixedbuffer() {
+		_max_size = SIZE;
 		clear();
 	}
 

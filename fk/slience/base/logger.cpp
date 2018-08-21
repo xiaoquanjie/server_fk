@@ -352,6 +352,8 @@ namespace logger {
 					}
 				}
 			}
+			if (_consumer == _producer)
+				_producer = _circular->next(_producer);
 			_mutex.unlock();
 
 			_file->write(_consumer->buffer.data(), _consumer->buffer.length());
@@ -359,8 +361,6 @@ namespace logger {
 				_output(_consumer->buffer.data(), _consumer->buffer.length());
 
 			_mutex.lock();
-			if (_consumer == _producer)
-				_producer = _circular->next(_producer);
 			_consumer->status = buffer_circular::Enum_Buffer_Free;
 			_consumer->buffer.clear();
 			_consumer = _circular->next(_consumer);
