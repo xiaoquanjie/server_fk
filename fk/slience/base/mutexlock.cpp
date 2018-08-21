@@ -48,6 +48,18 @@ pthread_mutex_t& MutexLock::mutex() {
 
 #endif
 
+FakeLock::FakeLock() {
+}
+
+FakeLock::~FakeLock() {
+}
+
+void FakeLock::lock() {
+}
+
+void FakeLock::unlock() {
+}
+
 ScopedLock::ScopedLock(FakeLock&) {
 	_mutex = 0;
 }

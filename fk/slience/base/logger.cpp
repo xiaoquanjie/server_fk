@@ -242,7 +242,7 @@ namespace logger {
 		_flushtime = 50;
 		_run = false;
 		_output = console_output;
-		_node_cnt = 5;
+		_node_cnt = 4;
 		_circular = 0;
 		_producer = 0;
 		_consumer = 0;

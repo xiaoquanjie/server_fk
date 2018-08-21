@@ -6,37 +6,31 @@
 
 M_BASE_NAMESPACE_BEGIN
 
-template<typename T, typename LockMode>
-struct ObjectPoolInfo {
-	ObjectPoolInfo() {
-		_numalloc = 0;
-		_elemsize = (sizeof(T) > sizeof(T*)) ? sizeof(T) : sizeof(T*);
-		_listhead = 0;
-	}
-
-	~ObjectPoolInfo() {
-		while (_listhead) {
-			T* ret = _listhead;
-			_listhead = *(reinterpret_cast<T**>(_listhead));
-			::free(ret);
-		}
-	}
-
-	int		 _numalloc; ///< number of elements currently allocated through this ClassPool
-	size_t    _elemsize; ///< the size of each element, or the size of a pointer, whichever is greater
-	T*	     _listhead; ///< a pointer to a linked list of freed elements for reuse
-	LockMode  _lock;
-};
 
 template<typename T, typename LockMode = base::FakeLock>
 class ObjectPool {
+	struct ObjectPoolInfo {
+		ObjectPoolInfo() {
+			_numalloc = 0;
+			_elemsize = (sizeof(T) > sizeof(T*)) ? sizeof(T) : sizeof(T*);
+			_listhead = 0;
+		}
+
+		~ObjectPoolInfo() {
+			while (_listhead) {
+				T* ret = _listhead;
+				_listhead = *(reinterpret_cast<T**>(_listhead));
+				::free(ret);
+			}
+		}
+
+		int _numalloc; ///< number of elements currently allocated through this ClassPool
+		size_t _elemsize; ///< the size of each element, or the size of a pointer, whichever is greater
+		T*_listhead; ///< a pointer to a linked list of freed elements for reuse
+		LockMode _lock;
+	};
+
 public:
-	ObjectPool() {
-	}
-
-	~ObjectPool() {
-	}
-
 	static int GetCount() {
 		return _info._numalloc;
 	}
@@ -144,8 +138,12 @@ protected:
 	}
 
 protected:
-	static ObjectPoolInfo<T, LockMode> _info;
+	static ObjectPoolInfo _info;
 };
+
+template<typename T, typename LockMode>
+typename ObjectPool<T, LockMode>::ObjectPoolInfo
+ObjectPool<T, LockMode>::_info;
 
 M_BASE_NAMESPACE_END
 #endif

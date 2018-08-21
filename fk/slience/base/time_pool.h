@@ -17,6 +17,7 @@ class TimerPool {
 public:
 	// 时间节点
 	struct TimeNode {
+		TimeNode(){}
 		base::s_int64_t expire;	// 超时时间(毫秒)
 		m_function_t<void()> cb;	// 回调函数
 	};
@@ -32,12 +33,15 @@ public:
 	// @interval是毫秒
 	int AddTimer(int interval, m_function_t<void()> func);
 
+protected:
+	bool _CalcBucket(const base::timestamp& now, int interval, int& big_bucket, int& small_bucket);
+
 private:
 	int _max_interval_day;	// 最大的时间间隔（天数)
-	void** _big_bucket;		// 大桶，精度是秒
+	void** _bucket;			// 桶，精度是毫秒
 	base::s_int64_t _beg_time;
-	int _big_bucket_idx;
-	int _small_bucket_idx;
+	int _big_bucket;
+	int _small_bucket;
 };
 
 

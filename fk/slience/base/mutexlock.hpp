@@ -42,9 +42,9 @@ public:
 
 class FakeLock {
 public:
-	FakeLock() {}
+	FakeLock();
 
-	~FakeLock(){}
+	~FakeLock();
 
 	void lock();
 

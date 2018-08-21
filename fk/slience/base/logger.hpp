@@ -305,7 +305,7 @@ namespace logger {
 			Enum_Buffer_Free,
 			Enum_Buffer_Full,
 		};
-		typedef fixedbuffer<4 * 1024 * 1024> buffer_type;
+		typedef fixedbuffer<512 * 1024> buffer_type;
 		struct buffer_node {
 			buffer_type buffer;
 			size_t status;
