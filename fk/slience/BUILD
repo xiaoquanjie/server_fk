@@ -13,6 +13,7 @@ cc_library(
 	   'base/timer.cpp',
 	   'base/thread.cpp',
 	   'base/object_pool.cpp',
+	   'base/time_pool.cpp',
 	   'socket/error.cpp',
 	   'netio/sync_connector.cpp',
 	   'netio/http_connector.cpp',

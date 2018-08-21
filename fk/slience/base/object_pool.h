@@ -1,6 +1,8 @@
 #ifndef M_BASE_OBJECT_POOL_INCLUDE
 #define M_BASE_OBJECT_POOL_INCLUDE
 
+#include <string.h>
+#include <stdlib.h>
 #include "slience/base/config.hpp"
 #include "slience/base/mutexlock.hpp"
 
