@@ -8,6 +8,7 @@ cc_library(
 	   'svr_base/ApplicationBase.cpp',
 	   'svr_base/ApplicationFunc.cpp',
 	   'transaction/transaction_mgr.cpp',
+	   'transaction/base_transaction.cpp',
     ],
 
     deps = [

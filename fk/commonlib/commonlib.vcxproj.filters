@@ -55,6 +55,9 @@
     <ClCompile Include="transaction\transaction_mgr.cpp">
       <Filter>transaction</Filter>
     </ClCompile>
+    <ClCompile Include="transaction\base_transaction.cpp">
+      <Filter>transaction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="svr_base\ApplicationBase.h">
@@ -691,6 +694,9 @@
       <Filter>svr_base</Filter>
     </ClInclude>
     <ClInclude Include="transaction\transaction_mgr.h">
+      <Filter>transaction</Filter>
+    </ClInclude>
+    <ClInclude Include="transaction\base_transaction.h">
       <Filter>transaction</Filter>
     </ClInclude>
   </ItemGroup>
