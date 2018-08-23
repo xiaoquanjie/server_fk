@@ -31,6 +31,7 @@ TimerPool::TimerPool(int max_interval_day) {
 	_beg_time = base::timestamp().millisecond();
 	_big_bucket = 0;
 	_small_bucket = 0;
+	_cur_timer_id = 1;
 }
 
 TimerPool::~TimerPool() {
@@ -87,13 +88,12 @@ void TimerPool::Update(const base::timestamp& now) {
 	_small_bucket = small_bucket;
 }
 
-int TimerPool::AddTimer(int interval, m_function_t<void()> func) {
+base::s_uint64_t TimerPool::AddTimer(int interval, m_function_t<void()> func) {
 	if (interval <= 0) {
-		func();
 		return 0;
 	}
 	if (interval > big_bucket_cnt * _max_interval_day * 1000) {
-		return -1;
+		return 0;
 	}
 
 	base::timestamp now_time;
@@ -106,12 +106,50 @@ int TimerPool::AddTimer(int interval, m_function_t<void()> func) {
 		pmap = new TimeNodeMap;
 		pp[small_bucket] = pmap;
 	}
+	if (_cur_timer_id == 0xFFFFFFFF) {
+		_cur_timer_id = 1;
+	}
+
+	base::s_uint64_t timer_id = (base::s_uint64_t)(big_bucket * 10 + small_bucket) << 32;
+	timer_id += _cur_timer_id++;
 
 	TimeNode* node = base::ObjectPool<TimeNode>::Alloc();
 	node->expire = now_time.millisecond() + interval;
 	node->cb = func;
+	node->timer_id = timer_id;
 	pmap->insert(std::make_pair(node->expire, node));
-	return 0;
+
+	return timer_id;
+}
+
+int TimerPool::CancelTimer(base::s_uint64_t id) {
+	base::s_uint64_t flag = 0xFFFFFFFF;
+	int low_32bit = (int)(id & flag);
+	int high_32bit = (id >> 32) & flag;
+
+	int big_bucket = high_32bit / 10;
+	int small_bucket = high_32bit % 10;
+
+	void** pp = (void**)_bucket[big_bucket];
+	TimeNodeMap* pmap = (TimeNodeMap*)(pp[small_bucket]);
+	if (!pmap) {
+		return -1;
+	}
+	for (auto iter = pmap->begin(); iter != pmap->end();) {
+		if (iter->second->timer_id == id) {
+			base::ObjectPool<TimeNode>::Dealloc(iter->second);
+			pmap->erase(iter);
+			if (pmap->empty()) {
+				delete pmap;
+				pp[small_bucket] = 0;
+			}
+			return 0;
+		}
+		else {
+			++iter;
+		}
+	}
+	return -1;
 }
 
 bool TimerPool::_CalcBucket(const base::timestamp& now, int interval, int& big_bucket, int& small_bucket) {

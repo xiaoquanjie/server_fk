@@ -17,7 +17,7 @@ class TimerPool {
 public:
 	// 时间节点
 	struct TimeNode {
-		TimeNode(){}
+		base::s_uint64_t timer_id;
 		base::s_int64_t expire;	// 超时时间(毫秒)
 		m_function_t<void()> cb;	// 回调函数
 	};
@@ -30,8 +30,10 @@ public:
 	// 调用此函数，超时的节点会被调用回调
 	void Update(const base::timestamp& now);
 
-	// @interval是毫秒
-	int AddTimer(int interval, m_function_t<void()> func);
+	// @interval是毫秒, 返回值是timer id, 值大于0
+	base::s_uint64_t AddTimer(int interval, m_function_t<void()> func);
+
+	int CancelTimer(base::s_uint64_t id);
 
 protected:
 	bool _CalcBucket(const base::timestamp& now, int interval, int& big_bucket, int& small_bucket);
@@ -42,6 +44,7 @@ private:
 	base::s_int64_t _beg_time;
 	int _big_bucket;
 	int _small_bucket;
+	int _cur_timer_id;
 };
 
 

@@ -13,6 +13,9 @@ int RouterApplication::OnInit() {
 			LogError(item.listen_ip() << " " << item.listen_port() << "listen error:" << GetLastError().What());
 			return -1;
 		}
+		else {
+			LogInfo("listen in: " << item.ShortDebugString());
+		}
 	}
 	LogInfo("server listen success");
 	return 0;
@@ -41,6 +44,7 @@ void Print_test() {
 }
 
 int RouterApplication::OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) {
-	time_pool.AddTimer(560, &Print_test);
+	base::s_uint64_t id = time_pool.AddTimer(560, &Print_test);
+	time_pool.CancelTimer(id);
 	return 0;
 }
