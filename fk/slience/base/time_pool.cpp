@@ -124,7 +124,7 @@ base::s_uint64_t TimerPool::AddTimer(int interval, m_function_t<void()> func) {
 
 int TimerPool::CancelTimer(base::s_uint64_t id) {
 	base::s_uint64_t flag = 0xFFFFFFFF;
-	int low_32bit = (int)(id & flag);
+	/*int low_32bit = (int)(id & flag);*/
 	int high_32bit = (id >> 32) & flag;
 
 	int big_bucket = high_32bit / 10;
