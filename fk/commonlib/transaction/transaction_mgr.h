@@ -4,6 +4,7 @@
 #include <vector>
 #include "slience/coroutine/coroutine.hpp"
 #include "slience/base/time_pool.h"
+#include "commonlib/transaction/base_transaction.h"
 
 class Transaction;
 struct AppHeadFrame;
