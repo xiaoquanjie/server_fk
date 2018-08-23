@@ -11,7 +11,7 @@
 #ifndef GETSETVAR
 #define GETSETVAR(type, name) \
 public: \
-    const type& get_##name() const { return this->name; } \
+    type get_##name() const { return this->name; } \
     void set_##name(const type& newval) { this->name = newval; } \
 private: \
     type name;
