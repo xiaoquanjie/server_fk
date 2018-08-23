@@ -33,7 +33,7 @@
 // for linux
 #include <unistd.h>
 #include <tr1/functional>
-#include <tr1/unorder_map>
+#include <tr1/unordered_map>
 
 // windows's macro, just for compatibility
 #define _SH_DENYRW      0x10    // deny read/write mode

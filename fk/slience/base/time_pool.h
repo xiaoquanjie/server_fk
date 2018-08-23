@@ -44,7 +44,7 @@ private:
 	base::s_int64_t _beg_time;
 	int _big_bucket;
 	int _small_bucket;
-	int _cur_timer_id;
+	base::s_uint32_t _cur_timer_id;
 };
 
 

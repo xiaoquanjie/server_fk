@@ -106,7 +106,7 @@ base::s_uint64_t TimerPool::AddTimer(int interval, m_function_t<void()> func) {
 		pmap = new TimeNodeMap;
 		pp[small_bucket] = pmap;
 	}
-	if (_cur_timer_id == 0xFFFFFFFF) {
+	if (_cur_timer_id == 0xFFFFFFFE) {
 		_cur_timer_id = 1;
 	}
 
