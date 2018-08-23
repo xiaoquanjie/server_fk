@@ -1,6 +1,7 @@
 #ifndef M_COMMONLIB_TRANSACTION_MGR_H
 #define M_COMMONLIB_TRANSACTION_MGR_H
 
+#include <vector>
 #include "slience/coroutine/coroutine.hpp"
 #include "slience/base/time_pool.h"
 
@@ -109,7 +110,9 @@ int TransactionMgr::RegisterTransaction() {
 	if (iter == _trans_bucket_map.end()) {
 		TransactionBucket* bucket = new TransactionBucketImpl<TransactionType>(CMD);
 		_trans_bucket_map[CMD] = bucket;
+		return 0;
 	}
+	return -1;
 }
 
 // ÊÂÎñ×¢²á
