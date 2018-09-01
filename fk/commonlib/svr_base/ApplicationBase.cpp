@@ -7,6 +7,7 @@
 #include "mysql_wrapper/mysql_wrapper.h"
 #include "protolib/src/svr_base.pb.h"
 #include "protolib/src/cmd.pb.h"
+#include "commonlib/transaction/transaction_mgr.h"
 
 /////////////////////////////////////////////////////////////
 
@@ -82,6 +83,10 @@ int ApplicationBase::Init(int argc, char** argv) {
 			LogError("application init error.....");
 			break;
 		}
+
+		// init transaction manager
+		TransactionMgr::Init();
+
 	} while (false);
 	  
 	if (0 == ret) {
@@ -133,6 +138,7 @@ int ApplicationBase::Run() {
 		base::timestamp t_now;
 		if (t_now.millisecond() > _now.millisecond()) {
 			_now = t_now;
+			TransactionMgr::Update(_now);
 			OnTick(_now);
 			CheckTcpSocketExpire(_now);
 		}

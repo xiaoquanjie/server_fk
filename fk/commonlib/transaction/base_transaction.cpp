@@ -18,6 +18,10 @@ Transaction::Transaction(int cmd) {
 	Construct();
 }
 
+Transaction::~Transaction() {
+
+}
+
 int Transaction::ParseMsg(google::protobuf::Message& message) {
 	if (!_cur_frame_data || !_cur_frame_head) {
 		assert(0);

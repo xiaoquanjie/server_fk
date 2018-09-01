@@ -107,7 +107,7 @@ namespace logger {
 	template<size_t SIZE>
 	fixedbuffer<SIZE>::fixedbuffer() {
 		_max_size = SIZE;
-		clear();
+		this->clear();
 	}
 
 	template<size_t SIZE>

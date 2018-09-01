@@ -17,14 +17,6 @@ TransactionBucket::~TransactionBucket() {
 	_trans_vec.clear();
 }
 
-TransactionMgr::TransactionMgr() {
-
-}
-
-TransactionMgr::~TransactionMgr() {
-
-}
-
 void TransactionMgr::Init() {
 	coroutine::Coroutine::initEnv(128 * 1024, true);
 }
