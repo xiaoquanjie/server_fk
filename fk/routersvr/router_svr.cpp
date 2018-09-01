@@ -1,6 +1,6 @@
 #include "routersvr/router_svr.h"
 #include "slience/base/logger.hpp"
-#include "slience/base/time_pool.h"
+#include "commonlib/transaction/transaction_mgr.h"
 
 int RouterApplication::OnInit() {
 	if (_svr_config.Data().listen_list_size() <= 0) {
@@ -30,21 +30,11 @@ int RouterApplication::OnReload() {
 	return 0;
 }
 
-static base::TimerPool time_pool;
-
 int RouterApplication::OnTick(const base::timestamp& now) {
-	time_pool.Update(now);
-	
 	return 0;
 }
 
-void Print_test() {
-	LogInfo("this is a test");
-	time_pool.AddTimer(560, &Print_test);
-}
-
 int RouterApplication::OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) {
-	base::s_uint64_t id = time_pool.AddTimer(560, &Print_test);
-	time_pool.CancelTimer(id);
+	TransactionMgr::ProcessFrame(fd, frame, data);
 	return 0;
 }
