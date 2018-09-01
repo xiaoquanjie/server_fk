@@ -81,16 +81,17 @@ public:
 #endif
 
 #ifndef M_GET_TCP_FD
-#define M_GET_TCP_FD(fd) (fd & ~M_TCP_FD_FLAG)
+#define M_GET_TCP_FD(fd) (int)(fd & ~M_TCP_FD_FLAG)
 #endif
 
 #ifndef M_GET_TCP_CONNECTOR_FD
-#define M_GET_TCP_CONNECTOR_FD(fd) (fd & ~M_TCP_CONNECTOR_FD_FLAG)
+#define M_GET_TCP_CONNECTOR_FD(fd) (int)(fd & ~M_TCP_CONNECTOR_FD_FLAG)
 #endif
 
 
 // context
 struct TcpSocketContext {
+	int instid;
 	base::s_int64_t fd;
 	int msgcount;
 	time_t tt;
@@ -98,6 +99,7 @@ struct TcpSocketContext {
 };
 
 struct TcpConnectorContext {
+	int instid;
 	base::s_int64_t fd;
 	int msgcount;
 	time_t tt;

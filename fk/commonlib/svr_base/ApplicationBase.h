@@ -23,6 +23,8 @@ public:
 
 	const base::timestamp& GetNow()const;
 
+	void SendNetWorkData(int dstid, const char* data, base::s_int32_t len);
+
 protected:
 	virtual int OnInit() {
 		return 0;
@@ -98,6 +100,7 @@ protected:
 	// socket container
 	TcpSocketContextContainer _tcp_socket_container;
 	TcpConnectorContextContainer _tcp_connector_container;
+	std::unordered_map<int, base::s_int64_t> _instid_fd_map;
 };
 
 #endif
