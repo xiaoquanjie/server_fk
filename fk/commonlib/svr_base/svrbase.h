@@ -164,5 +164,23 @@ private:
 	time_t _tt;
 };
 
+// add instance id
+class FuncAddSocketContextInstId {
+public:
+	FuncAddSocketContextInstId(int instid) {
+		_instid = instid;
+	}
+
+	void operator()(TcpSocketContext& ctxt) {
+		ctxt.instid = _instid;
+	}
+
+	void operator()(TcpConnectorContext& ctxt) {
+		ctxt.instid = _instid;
+	}
+
+private:
+	int _instid;
+};
 
 #endif

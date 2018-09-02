@@ -155,6 +155,10 @@ base::s_int32_t Transaction::co_id() {
 	return _co_id;
 }
 
+base::s_int64_t Transaction::fd() {
+	return _fd;
+}
+
 void Transaction::set_co_id(base::s_int32_t id) {
 	_co_id = id;
 }

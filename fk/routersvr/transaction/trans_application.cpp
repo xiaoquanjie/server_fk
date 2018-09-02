@@ -2,6 +2,7 @@
 #include "protolib/src/cmd.pb.h"
 #include "commonlib/transaction/base_transaction.h"
 #include "commonlib/transaction/transaction_mgr.h"
+#include "routersvr/router_svr.h"
 
 class TransClientIn 
 	: public BaseTransaction<TransClientIn, proto::SocketClientIn> {
@@ -31,7 +32,17 @@ REGISTER_TRANSACTION(CMD_SOCKET_CLIENT_OUT, TransClientOut);
 
 ///////////////////////////////////////////////////////////////////////////
 
-//class TransRegisterServer : 
-//	public BaseTransaction<TransRegisterServer>{
-//
-//};
+class TransRegisterServer 
+	: public BaseTransaction<TransRegisterServer, proto::RegisterServerReq, proto::RegisterServerRsp> {
+public:
+	TransRegisterServer(unsigned int cmd) : BaseTransaction(cmd) {}
+
+	int OnRequest(proto::RegisterServerReq& request, proto::RegisterServerRsp& respond) {
+		RouterAppSgl::mutable_instance().RegisterServer(request.server_type(), request.instance_id(),
+			fd());
+		respond.mutable_ret()->set_code(0);
+		return 0;
+	}
+};
+
+REGISTER_TRANSACTION(CMD_REGISTER_SERVER_REQ, TransRegisterServer);

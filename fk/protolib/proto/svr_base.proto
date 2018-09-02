@@ -6,8 +6,22 @@ enum ServerType {
 	SVR_TYPE_CONN = 0x2;		// 客户端连接服务
 }
 
+message Ret {
+	optional int32 code = 1;
+	optional string what = 2;
+}
+
 message SocketClientIn {
 }
 
 message SocketClientOut {
+}
+
+message RegisterServerReq {
+	optional int32 server_type = 1;
+	optional int32 instance_id = 2;
+}
+
+message RegisterServerRsp {
+	optional Ret ret = 1;
 }

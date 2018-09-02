@@ -58,6 +58,8 @@ protected:
 
 	base::s_int32_t co_id();
 
+	base::s_int64_t fd();
+
 	void set_co_id(base::s_int32_t);
 
 	const AppHeadFrame& cur_frame_head();

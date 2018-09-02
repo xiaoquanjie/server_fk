@@ -30,6 +30,8 @@ public:
 
 	const base::timestamp& GetNow()const;
 
+	void RegisterServer(int server_type, int instance_id, base::s_int64_t fd);
+
 	void SendNetWorkData(int instid, const char* data, base::s_int32_t len);
 
 protected:

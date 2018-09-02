@@ -114,6 +114,30 @@ const base::timestamp& ApplicationBase::GetNow()const {
 	return _now;
 }
 
+void ApplicationBase::RegisterServer(int server_type, int instance_id, base::s_int64_t fd) {
+	if (M_CHECK_IS_TCP_FD(fd)) {
+		int real_fd = M_GET_TCP_FD(fd);
+		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
+		auto iter = fd_idx.find(real_fd);
+		if (iter != fd_idx.end()) {
+			fd_idx.modify(iter, FuncAddSocketContextInstId(instance_id));
+			_instid_fd_map[instance_id] = fd;
+			LogInfo("register {server_type: " << server_type << " instance_id: " << instance_id << "}");
+		}
+	}
+	else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
+		int real_fd = M_GET_TCP_FD(fd);
+		real_fd = M_GET_TCP_CONNECTOR_FD(fd);
+		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
+		auto iter = fd_idx.find(real_fd);
+		if (iter != fd_idx.end()) {
+			fd_idx.modify(iter, FuncAddSocketContextInstId(instance_id));
+			_instid_fd_map[instance_id] = fd;
+			LogInfo("register {server_type: " << server_type << " instance_id: " << instance_id << "}");
+		}
+	}
+}
+
 void ApplicationBase::SendNetWorkData(int instid, const char* data, base::s_int32_t len) {
 	auto fd_iter = _instid_fd_map.find(instid);
 	if (fd_iter == _instid_fd_map.end()) {
@@ -134,7 +158,7 @@ void ApplicationBase::SendNetWorkData(int instid, const char* data, base::s_int3
 			LogError("instid: " << instid << " this is a big bug");
 		}
 	}
-	else {
+	else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
 		real_fd = M_GET_TCP_CONNECTOR_FD(fd);
 		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
 		auto iter = fd_idx.find(real_fd);
