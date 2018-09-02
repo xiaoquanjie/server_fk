@@ -5,6 +5,13 @@
 #include "commonlib/svr_base/svrbase.h"
 #include <unordered_map>
 
+// 最大消息队列
+#define M_MAX_MESSAGE_LIST (5000)
+// expire检查间隔
+#define M_EXPIRE_CHECK_INTERVAL (15)
+// expire时长
+#define M_EXPIRE_INTERVAL (30)
+
 class ApplicationBase : public netiolib::NetIo {
 public:
 	ApplicationBase();
@@ -23,7 +30,7 @@ public:
 
 	const base::timestamp& GetNow()const;
 
-	void SendNetWorkData(int dstid, const char* data, base::s_int32_t len);
+	void SendNetWorkData(int instid, const char* data, base::s_int32_t len);
 
 protected:
 	virtual int OnInit() {

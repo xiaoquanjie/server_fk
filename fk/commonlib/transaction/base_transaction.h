@@ -7,7 +7,7 @@
 #include "commonlib/svr_base/svrbase.h"
 
 class Transaction {
-	friend class TransactionMgr;
+	friend class TransactionMgrImpl;
 public:
 	enum State{
 		E_STATE_IDLE = 0,
@@ -135,14 +135,14 @@ protected:
 	}
 };
 
+struct RespondNull {};
+
 // 
-template <typename TRANS_TYPE, typename REQUEST_TYPE, typename RESPOND_TYPE>
+template <typename TRANS_TYPE, typename REQUEST_TYPE, typename RESPOND_TYPE = RespondNull>
 class BaseTransaction : public TwoWayTransaction<TRANS_TYPE, REQUEST_TYPE, RESPOND_TYPE> {
 public:
 	BaseTransaction(unsigned int cmd) : TwoWayTransaction<TRANS_TYPE, REQUEST_TYPE, RESPOND_TYPE>(cmd) {}
 };
-
-struct RespondNull {};
 
 template <typename TRANS_TYPE, typename REQUEST_TYPE>
 class BaseTransaction<TRANS_TYPE, REQUEST_TYPE, RespondNull> : public OneWayTransaction<TRANS_TYPE, REQUEST_TYPE> {

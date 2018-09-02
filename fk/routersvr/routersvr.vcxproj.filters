@@ -5,6 +5,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="transaction">
+      <UniqueIdentifier>{532b0bba-f401-4611-adbf-9d3c069374d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="router_svr.h">
@@ -21,6 +24,9 @@
     </ClCompile>
     <ClCompile Include="router_svr.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="transaction\trans_application.cpp">
+      <Filter>transaction</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

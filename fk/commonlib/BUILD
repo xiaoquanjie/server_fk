@@ -7,6 +7,7 @@ cc_library(
     srcs = [
 	   'svr_base/ApplicationBase.cpp',
 	   'svr_base/ApplicationFunc.cpp',
+	   'svr_base/ApplicationBaseExt.cpp',
 	   'transaction/transaction_mgr.cpp',
 	   'transaction/base_transaction.cpp',
     ],

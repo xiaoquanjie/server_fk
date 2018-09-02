@@ -3,12 +3,9 @@
 #include "slience/base/logger.hpp"
 #include "commonlib/transaction/base_transaction.h"
 
-base::s_int32_t TransactionMgr::_max_concurrent_trans = 5000;
-base::TimerPool TransactionMgr::_timer_pool(1);
-base::s_uint32_t TransactionMgr::_trans_id_generator = 1;
-base::timestamp TransactionMgr::_last_check_time;
-m_unorder_map_t<base::s_uint32_t, Transaction*> TransactionMgr::_active_trans_map;
-m_unorder_map_t<base::s_uint32_t, TransactionBucket*> TransactionMgr::_trans_bucket_map;
+TransactionBucket::TransactionBucket(base::s_uint32_t cmd) {
+	_cmd = cmd;
+}
 
 TransactionBucket::~TransactionBucket() {
 	for (auto iter = _trans_vec.begin(); iter != _trans_vec.end(); ++iter) {
@@ -17,16 +14,16 @@ TransactionBucket::~TransactionBucket() {
 	_trans_vec.clear();
 }
 
-void TransactionMgr::Init() {
+void TransactionMgrImpl::Init() {
 	coroutine::Coroutine::initEnv(128 * 1024, true);
 }
 
-void TransactionMgr::Init(base::s_int32_t max_concurrent_trans) {
+void TransactionMgrImpl::Init(base::s_int32_t max_concurrent_trans) {
 	_max_concurrent_trans = max_concurrent_trans;
 	Init();
 }
 
-void TransactionMgr::Update(const base::timestamp& now) {
+void TransactionMgrImpl::Update(const base::timestamp& now) {
 	_timer_pool.Update(now);
 	if (now.second() - _last_check_time.second() > 60) {
 		_last_check_time = now;
@@ -34,7 +31,7 @@ void TransactionMgr::Update(const base::timestamp& now) {
 	}
 }
 
-int TransactionMgr::ProcessFrame(base::s_int64_t fd, const AppHeadFrame& frame, const char* data) {
+int TransactionMgrImpl::ProcessFrame(base::s_int64_t fd, const AppHeadFrame& frame, const char* data) {
 	if (frame.get_dst_trans_id() > 0) {
 		Transaction* p = GetTransaction(frame.get_dst_trans_id());
 		if (p) {
@@ -58,7 +55,7 @@ int TransactionMgr::ProcessFrame(base::s_int64_t fd, const AppHeadFrame& frame, 
 	return 0;
 }
 
-void TransactionMgr::CoroutineEnter(void* p) {
+void TransactionMgrImpl::CoroutineEnter(void* p) {
 	Transaction* trans = (Transaction*)p;
 	trans->set_co_id(coroutine::Coroutine::curid());
 	_active_trans_map.insert(std::make_pair(trans->trans_id(), trans));
@@ -83,7 +80,7 @@ void TransactionMgr::CoroutineEnter(void* p) {
 	RecyleTransaction(trans);
 }
 
-void TransactionMgr::TimerCallback(base::s_uint32_t trans_id) {
+void TransactionMgrImpl::TimerCallback(base::s_uint32_t trans_id) {
 	auto trans = GetTransaction(trans_id);
 	if (trans) {
 		trans->_state = Transaction::E_STATE_TIMEOUT;
@@ -91,20 +88,20 @@ void TransactionMgr::TimerCallback(base::s_uint32_t trans_id) {
 	}
 }
 
-int TransactionMgr::CancelTimer(base::s_uint64_t id) {
+int TransactionMgrImpl::CancelTimer(base::s_uint64_t id) {
 	return _timer_pool.CancelTimer(id);
 }
 
-base::s_uint64_t TransactionMgr::AddTimer(int interval, base::s_uint32_t trans_id) {
-	m_function_t<void()> cb = m_bind_t(&TimerCallback, trans_id);
+base::s_uint64_t TransactionMgrImpl::AddTimer(int interval, base::s_uint32_t trans_id) {
+	m_function_t<void()> cb = m_bind_t(&TransactionMgrImpl::TimerCallback, this, trans_id);
 	return _timer_pool.AddTimer(interval, cb);
 }
 
-base::s_uint32_t TransactionMgr::GeneratorTransId() {
+base::s_uint32_t TransactionMgrImpl::GeneratorTransId() {
 	return _trans_id_generator++;
 }
 
-Transaction* TransactionMgr::CreateTransaction(base::s_uint64_t uid, base::s_uint32_t cmd) {
+Transaction* TransactionMgrImpl::CreateTransaction(base::s_uint64_t uid, base::s_uint32_t cmd) {
 	if (GetActiveTransCnt() > _max_concurrent_trans) {
 		LogError("create transaction fail, because of the max concurrency cnt:" << _max_concurrent_trans);
 		return NULL;
@@ -120,7 +117,7 @@ Transaction* TransactionMgr::CreateTransaction(base::s_uint64_t uid, base::s_uin
 	}
 }
 
-Transaction* TransactionMgr::GetTransaction(base::s_uint32_t trans_id) {
+Transaction* TransactionMgrImpl::GetTransaction(base::s_uint32_t trans_id) {
 	auto iter = _active_trans_map.find(trans_id);
 	if (iter != _active_trans_map.end()) {
 		return iter->second;
@@ -130,7 +127,7 @@ Transaction* TransactionMgr::GetTransaction(base::s_uint32_t trans_id) {
 	}
 }
 
-void TransactionMgr::RecyleTransaction(Transaction* trans) {
+void TransactionMgrImpl::RecyleTransaction(Transaction* trans) {
 	if (!trans) {
 		return;
 	}
@@ -143,7 +140,7 @@ void TransactionMgr::RecyleTransaction(Transaction* trans) {
 	}
 }
 
-void TransactionMgr::PrintStatus() {
+void TransactionMgrImpl::PrintStatus() {
 	LogInfo("transaction_mgr status, active_trans_cnt:" << GetActiveTransCnt());
 	int cmd_cnt = 0;
 	int trans_cnt = 0;
@@ -155,6 +152,6 @@ void TransactionMgr::PrintStatus() {
 	LogInfo("transaction_mgr status, cmd_cnt:" << cmd_cnt);
 }
 
-base::s_int32_t TransactionMgr::GetActiveTransCnt() {
+base::s_int32_t TransactionMgrImpl::GetActiveTransCnt() {
 	return _active_trans_map.size();
 }

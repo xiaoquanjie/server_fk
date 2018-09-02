@@ -32,9 +32,6 @@ template<typename TransactionType>
 class TransactionBucketImpl : public TransactionBucket {
 public:
 	TransactionBucketImpl(base::s_uint32_t cmd) : TransactionBucket(cmd) {
-		for (int idx = 0; idx < 10; ++idx) {
-			RecycleTransaction(new TransactionType(cmd));
-		}
 	}
 
 	Transaction* CreateTransaction() override {
@@ -55,54 +52,55 @@ public:
 	}
 };
 
-class TransactionMgr {
+///////////////////////////////////////////////////////////////////////////
+
+class TransactionMgrImpl {
 	friend class Transaction;
 
 public:
-	static void Init();
+	void Init();
 
-	static void Init(base::s_int32_t max_concurrent_trans);
+	void Init(base::s_int32_t max_concurrent_trans);
 
-	static void Update(const base::timestamp& now);
+	void Update(const base::timestamp& now);
 
-	static int ProcessFrame(base::s_int64_t fd, const AppHeadFrame& frame, const char* data);
+	int ProcessFrame(base::s_int64_t fd, const AppHeadFrame& frame, const char* data);
 
-	static void CoroutineEnter(void* p);
+	void CoroutineEnter(void* p);
 
-	static void TimerCallback(base::s_uint32_t trans_id);
+	void TimerCallback(base::s_uint32_t trans_id);
 
-	static int CancelTimer(base::s_uint64_t id);
+	int CancelTimer(base::s_uint64_t id);
 
-	static base::s_uint64_t AddTimer(int interval, base::s_uint32_t trans_id);
+	base::s_uint64_t AddTimer(int interval, base::s_uint32_t trans_id);
 
-	static base::s_uint32_t GeneratorTransId();
+	base::s_uint32_t GeneratorTransId();
 
-	static Transaction* CreateTransaction(base::s_uint64_t uid, base::s_uint32_t cmd);
+	Transaction* CreateTransaction(base::s_uint64_t uid, base::s_uint32_t cmd);
 
-	static Transaction* GetTransaction(base::s_uint32_t trans_id);
+	Transaction* GetTransaction(base::s_uint32_t trans_id);
 
-	static base::s_int32_t GetActiveTransCnt();
+	base::s_int32_t GetActiveTransCnt();
 
 	template<int CMD, typename TransactionType>
-	static int RegisterTransaction();
+	int RegisterTransaction();
 
-protected:
-	static void RecyleTransaction(Transaction*);
+	void RecyleTransaction(Transaction*);
 
-	static void PrintStatus();
+	void PrintStatus();
 
 private:
-	static base::s_int32_t _max_concurrent_trans;
-	static base::TimerPool _timer_pool;
-	static base::s_uint32_t _trans_id_generator;
-	static base::timestamp _last_check_time;
-	static m_unorder_map_t<base::s_uint32_t, Transaction*> _active_trans_map;
-	static m_unorder_map_t<base::s_uint32_t, TransactionBucket*> _trans_bucket_map;
+	base::s_int32_t _max_concurrent_trans;
+	base::TimerPool _timer_pool;
+	base::s_uint32_t _trans_id_generator;
+	base::timestamp _last_check_time;
+	m_unorder_map_t<base::s_uint32_t, Transaction*> _active_trans_map;
+	m_unorder_map_t<int, TransactionBucket*> _trans_bucket_map;
 };
 
 template<int CMD, typename TransactionType>
-int TransactionMgr::RegisterTransaction() {
-	LogInfo("register transaction info, cmd:" << CMD << " type:" << typeid(TransactionType).name());
+int TransactionMgrImpl::RegisterTransaction() {
+	LogInfo("register transaction info, cmd:" << CMD << " type:" << typeid(TransactionType).name());	
 	auto iter = _trans_bucket_map.find(CMD);
 	if (iter == _trans_bucket_map.end()) {
 		TransactionBucket* bucket = new TransactionBucketImpl<TransactionType>(CMD);
@@ -112,9 +110,84 @@ int TransactionMgr::RegisterTransaction() {
 	return -1;
 }
 
+///////////////////////////////////////////////////////////////////////////
+
+class TransactionMgr {
+public:
+	static void Init() {
+		return GetImpl()->Init();
+	}
+
+	static void Init(base::s_int32_t max_concurrent_trans) {
+		return GetImpl()->Init(max_concurrent_trans);
+	}
+
+	static void Update(const base::timestamp& now) {
+		return GetImpl()->Update(now);
+	}
+
+	static int ProcessFrame(base::s_int64_t fd, const AppHeadFrame& frame, const char* data) {
+		return GetImpl()->ProcessFrame(fd, frame, data);
+	}
+
+	static void CoroutineEnter(void* p) {
+		return GetImpl()->CoroutineEnter(p);
+	}
+
+	static void TimerCallback(base::s_uint32_t trans_id) {
+		return GetImpl()->TimerCallback(trans_id);
+	}
+
+	static int CancelTimer(base::s_uint64_t id) {
+		return GetImpl()->CancelTimer(id);
+	}
+
+	static base::s_uint64_t AddTimer(int interval, base::s_uint32_t trans_id) {
+		return GetImpl()->AddTimer(interval, trans_id);
+	}
+
+	static base::s_uint32_t GeneratorTransId() {
+		return GetImpl()->GeneratorTransId();
+	}
+
+	static Transaction* CreateTransaction(base::s_uint64_t uid, base::s_uint32_t cmd) {
+		return GetImpl()->CreateTransaction(uid, cmd);
+	}
+
+	static Transaction* GetTransaction(base::s_uint32_t trans_id) {
+		return GetImpl()->GetTransaction(trans_id);
+	}
+
+	static base::s_int32_t GetActiveTransCnt() {
+		return GetImpl()->GetActiveTransCnt();
+	}
+
+	template<int CMD, typename TransactionType>
+	static int RegisterTransaction() {
+		return GetImpl()->RegisterTransaction<CMD, TransactionType>();
+	}
+
+protected:
+	static TransactionMgrImpl* GetImpl() {
+		static TransactionMgrImpl impl;
+		return &impl;
+	}
+
+	void RecyleTransaction(Transaction* p) {
+		return GetImpl()->RecyleTransaction(p);
+	}
+
+	void PrintStatus() {
+		return GetImpl()->PrintStatus();
+	}
+};
+
+///////////////////////////////////////////////////////////////////////////
+
 // ÊÂÎñ×¢²á
-#define REGISTER_TRANSACTION(CMD, TRANS_TYPE) \
-enum CMD##_##TRANS_TYPE {};\
-	TransactionMgr::RegisterTransaction<CMD, TRANS_TYPE>();
+#define REGISTER_TRANSACTION(cmd, TRANS_TYPE) \
+enum cmd##_ {};\
+enum TRANS_TYPE##_{};\
+	int ret_##cmd = TransactionMgr::RegisterTransaction<proto::CMD::cmd, TRANS_TYPE>();
 
 #endif

@@ -58,6 +58,9 @@
     <ClCompile Include="transaction\base_transaction.cpp">
       <Filter>transaction</Filter>
     </ClCompile>
+    <ClCompile Include="svr_base\ApplicationBaseExt.cpp">
+      <Filter>svr_base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="svr_base\ApplicationBase.h">
