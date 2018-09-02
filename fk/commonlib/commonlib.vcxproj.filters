@@ -61,6 +61,12 @@
     <ClCompile Include="svr_base\ApplicationBaseExt.cpp">
       <Filter>svr_base</Filter>
     </ClCompile>
+    <ClCompile Include="svr_base\router_manager.cpp">
+      <Filter>svr_base</Filter>
+    </ClCompile>
+    <ClCompile Include="svr_base\server_manager.cpp">
+      <Filter>svr_base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="svr_base\ApplicationBase.h">
@@ -701,6 +707,12 @@
     </ClInclude>
     <ClInclude Include="transaction\base_transaction.h">
       <Filter>transaction</Filter>
+    </ClInclude>
+    <ClInclude Include="svr_base\router_manager.h">
+      <Filter>svr_base</Filter>
+    </ClInclude>
+    <ClInclude Include="svr_base\server_manager.h">
+      <Filter>svr_base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
