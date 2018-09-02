@@ -14,6 +14,11 @@ TransactionBucket::~TransactionBucket() {
 	_trans_vec.clear();
 }
 
+TransactionMgrImpl::TransactionMgrImpl() {
+	_max_concurrent_trans = 5000;
+	_trans_id_generator = 1;
+}
+
 void TransactionMgrImpl::Init() {
 	coroutine::Coroutine::initEnv(128 * 1024, true);
 }

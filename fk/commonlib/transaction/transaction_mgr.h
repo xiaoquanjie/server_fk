@@ -58,6 +58,8 @@ class TransactionMgrImpl {
 	friend class Transaction;
 
 public:
+	TransactionMgrImpl();
+
 	void Init();
 
 	void Init(base::s_int32_t max_concurrent_trans);
