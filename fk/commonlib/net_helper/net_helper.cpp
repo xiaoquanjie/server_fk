@@ -426,7 +426,7 @@ int NetHelper::Init(base::timestamp& now, NetHandler::callback_type callback, in
 	// start network thread
 	if (svr_thread_cnt > 0 && svr_thread_cnt < 100) {
 		GetNetHandler().Start(svr_thread_cnt, false);
-                return 0;
+        return 0;
 	}
 	else {
 		return -1;

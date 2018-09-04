@@ -67,7 +67,8 @@ int ApplicationBase::Init(int argc, char** argv) {
 		}
 
 		// start network thread
-		ret = NetHelper::Init(_now, 0, _svr_thread_cnt);
+		auto func = m_bind_t(&ApplicationBase::OnProc, this, placeholder_1, placeholder_2, placeholder_3, placeholder_4);
+		ret = NetHelper::Init(_now, func, _svr_thread_cnt);
 		if (0 != ret) {
 			LogError("NetHelper::Init error");
 		}
