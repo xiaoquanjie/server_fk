@@ -1,6 +1,7 @@
 #include "routersvr/router_svr.h"
 #include "slience/base/logger.hpp"
 #include "commonlib/transaction/transaction_mgr.h"
+#include "protolib/src/cmd.pb.h"
 
 int RouterApplication::OnInit() {
 	if (_svr_config.Data().listen_list_size() <= 0) {
@@ -35,6 +36,25 @@ int RouterApplication::OnTick(const base::timestamp& now) {
 }
 
 int RouterApplication::OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) {
-	TransactionMgr::ProcessFrame(fd, frame, data);
+	switch (frame.get_cmd()) {
+	case proto::CMD::CMD_SOCKET_CLIENT_OUT:
+	case proto::CMD::CMD_SOCKET_CLIENT_IN:
+	case proto::CMD::CMD_REGISTER_SERVER_REQ:
+		TransactionMgr::ProcessFrame(fd, frame, data);
+		return 0;
+	default:
+		// ×ª·¢
+		break;
+	}
+	if (frame.get_dst_inst_id() != 0) {
+		ForwardPkg(fd, frame, data, data_len);
+	}
+	else {
+
+	}
+	return 0;
+}
+
+int RouterApplication::ForwardPkg(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) {
 	return 0;
 }

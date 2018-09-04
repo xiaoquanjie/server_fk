@@ -13,6 +13,9 @@
     <ClInclude Include="router_svr.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="server_instance_mgr.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="BUILD" />
@@ -27,6 +30,9 @@
     </ClCompile>
     <ClCompile Include="transaction\trans_application.cpp">
       <Filter>transaction</Filter>
+    </ClCompile>
+    <ClCompile Include="server_instance_mgr.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

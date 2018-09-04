@@ -95,10 +95,12 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="router_svr.cpp" />
+    <ClCompile Include="server_instance_mgr.cpp" />
     <ClCompile Include="transaction\trans_application.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="router_svr.h" />
+    <ClInclude Include="server_instance_mgr.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\conf\routersvr\routersvr.conf" />
