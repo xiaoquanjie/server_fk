@@ -356,3 +356,55 @@ void NetHandler::OnReceiveData(netiolib::TcpConnectorPtr& clisock, SocketLib::Bu
 	pMessage->buf.Write(buffer.Data(), buffer.Length());
 	_tcp_connector_msg_list.push_back(pMessage);
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+NetHandler* NetHelper::_net_handler = 0;
+
+int NetHelper::Init(base::timestamp& now, NetHandler::callback_type callback, int svr_thread_cnt) {
+	static NetHandler net_handler(now, callback);
+	SetNetHandler(&net_handler);
+	// start network thread
+	if (svr_thread_cnt > 0 && svr_thread_cnt < 100) {
+		GetNetHandler().Start(svr_thread_cnt, false);
+	}
+	else {
+		return -1;
+	}
+}
+
+void NetHelper::Stop() {
+	GetNetHandler().Stop();
+}
+
+int NetHelper::Update() {
+	return GetNetHandler().Update();
+}
+
+void NetHelper::OnTick() {
+	return GetNetHandler().OnTick();
+}
+
+bool NetHelper::ListenOne(const std::string& addr, SocketLib::s_uint16_t port) {
+	return GetNetHandler().ListenOne(addr, port);
+}
+
+bool NetHelper::ListenOneHttp(const std::string& addr, SocketLib::s_uint16_t port) {
+	return GetNetHandler().ListenOneHttp(addr, port);
+}
+
+void NetHelper::ConnectOne(const std::string& addr, SocketLib::s_uint16_t port) {
+	return GetNetHandler().ConnectOne(addr, port);
+}
+
+void NetHelper::ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port) {
+	return GetNetHandler().ConnectOneHttp(addr, port);
+}
+
+NetHandler& NetHelper::GetNetHandler() {
+	return *_net_handler;
+}
+
+void NetHelper::SetNetHandler(NetHandler* handler) {
+	_net_handler = handler;
+}

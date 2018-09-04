@@ -103,4 +103,33 @@ protected:
 	std::unordered_map<int, base::s_int64_t> _instid_fd_map;
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+class NetHelper {
+public:
+	static int Init(base::timestamp& now, NetHandler::callback_type callback, int svr_thread_cnt);
+
+	static void Stop();
+
+	static int Update();
+
+	static void OnTick();
+
+	static bool ListenOne(const std::string& addr, SocketLib::s_uint16_t port);
+
+	static bool ListenOneHttp(const std::string& addr, SocketLib::s_uint16_t port);
+
+	static void ConnectOne(const std::string& addr, SocketLib::s_uint16_t port);
+
+	static void ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port);
+
+protected:
+	static NetHandler& GetNetHandler();
+
+	static void SetNetHandler(NetHandler* handler);
+
+private:
+	static NetHandler* _net_handler;
+};
+
 #endif
