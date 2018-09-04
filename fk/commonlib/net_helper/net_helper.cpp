@@ -185,7 +185,6 @@ void NetHandler::SendDataByInstId(int instid, const char* data, base::s_int32_t 
 		LogError("instid: " << instid << " connection is broken");
 		return;
 	}
-	int real_fd = 0;
 	base::s_int64_t fd = fd_iter->second;
 	SendDataByFd(fd, data, len);
 }
@@ -427,6 +426,7 @@ int NetHelper::Init(base::timestamp& now, NetHandler::callback_type callback, in
 	// start network thread
 	if (svr_thread_cnt > 0 && svr_thread_cnt < 100) {
 		GetNetHandler().Start(svr_thread_cnt, false);
+                return 0;
 	}
 	else {
 		return -1;
