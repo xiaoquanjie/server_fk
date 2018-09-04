@@ -2,7 +2,7 @@
 #include "protolib/src/cmd.pb.h"
 #include "commonlib/transaction/base_transaction.h"
 #include "commonlib/transaction/transaction_mgr.h"
-#include "routersvr/router_svr.h"
+#include "commonlib/net_helper/net_helper.h"
 
 class TransClientIn 
 	: public BaseTransaction<TransClientIn, proto::SocketClientIn> {
@@ -38,7 +38,7 @@ public:
 	TransRegisterServer(unsigned int cmd) : BaseTransaction(cmd) {}
 
 	int OnRequest(proto::RegisterServerReq& request, proto::RegisterServerRsp& respond) {
-		RouterAppSgl::mutable_instance().RegisterServer(request.server_type(), request.instance_id(),
+		NetHelper::RegisterServer(request.server_type(), request.instance_id(),
 			fd());
 		respond.mutable_ret()->set_code(0);
 		return 0;

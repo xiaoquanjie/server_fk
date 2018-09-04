@@ -33,6 +33,12 @@ public:
 
 	const base::timestamp& GetNow()const;
 
+	void SendDataByFd(base::s_int64_t fd, const char* data, base::s_int32_t len);
+
+	void SendDataByInstId(int instid, const char* data, base::s_int32_t len);
+
+	void RegisterServer(int server_type, int instance_id, base::s_int64_t fd);
+
 	virtual void OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error);
 
 	virtual void OnConnection(netiolib::TcpSocketPtr& clisock);
@@ -122,6 +128,10 @@ public:
 	static void ConnectOne(const std::string& addr, SocketLib::s_uint16_t port);
 
 	static void ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port);
+
+	static SocketLib::SocketError GetLastError();
+
+	static void RegisterServer(int server_type, int instance_id, base::s_int64_t fd);
 
 protected:
 	static NetHandler& GetNetHandler();

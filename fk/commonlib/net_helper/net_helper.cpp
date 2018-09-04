@@ -154,6 +154,66 @@ void NetHandler::CheckTcpSocketExpire() {
 	}
 }
 
+void NetHandler::SendDataByFd(base::s_int64_t fd, const char* data, base::s_int32_t len) {
+	if (M_CHECK_IS_TCP_FD(fd)) {
+		int real_fd = M_GET_TCP_FD(fd);
+		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
+		auto iter = fd_idx.find(real_fd);
+		if (iter != fd_idx.end()) {
+			iter->ptr->Send(data, len);
+		}
+		else {
+			LogError("fd is not exist, real_fd: " << real_fd << " fd: " << fd);
+		}
+	}
+	else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
+		int real_fd = M_GET_TCP_CONNECTOR_FD(fd);
+		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
+		auto iter = fd_idx.find(real_fd);
+		if (iter != fd_idx.end()) {
+			iter->ptr->Send(data, len);
+		}
+		else {
+			LogError("fd is not exist, real_fd: " << real_fd << " fd: " << fd);
+		}
+	}
+}
+
+void NetHandler::SendDataByInstId(int instid, const char* data, base::s_int32_t len) {
+	auto fd_iter = _instid_fd_map.find(instid);
+	if (fd_iter == _instid_fd_map.end()) {
+		LogError("instid: " << instid << " connection is broken");
+		return;
+	}
+	int real_fd = 0;
+	base::s_int64_t fd = fd_iter->second;
+	SendDataByFd(fd, data, len);
+}
+
+void NetHandler::RegisterServer(int server_type, int instance_id, base::s_int64_t fd) {
+	if (M_CHECK_IS_TCP_FD(fd)) {
+		int real_fd = M_GET_TCP_FD(fd);
+		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
+		auto iter = fd_idx.find(real_fd);
+		if (iter != fd_idx.end()) {
+			fd_idx.modify(iter, FuncAddSocketContextInstId(instance_id));
+			_instid_fd_map[instance_id] = fd;
+			LogInfo("register {server_type: " << server_type << " instance_id: " << instance_id << "}");
+		}
+	}
+	else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
+		int real_fd = M_GET_TCP_FD(fd);
+		real_fd = M_GET_TCP_CONNECTOR_FD(fd);
+		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
+		auto iter = fd_idx.find(real_fd);
+		if (iter != fd_idx.end()) {
+			fd_idx.modify(iter, FuncAddSocketContextInstId(instance_id));
+			_instid_fd_map[instance_id] = fd;
+			LogInfo("register {server_type: " << server_type << " instance_id: " << instance_id << "}");
+		}
+	}
+}
+
 void NetHandler::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error) {
 	if (!error) {
 		// connect success
@@ -401,10 +461,18 @@ void NetHelper::ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t po
 	return GetNetHandler().ConnectOneHttp(addr, port);
 }
 
+SocketLib::SocketError NetHelper::GetLastError() {
+	return GetNetHandler().GetLastError();
+}
+
 NetHandler& NetHelper::GetNetHandler() {
 	return *_net_handler;
 }
 
 void NetHelper::SetNetHandler(NetHandler* handler) {
 	_net_handler = handler;
+}
+
+void NetHelper::RegisterServer(int server_type, int instance_id, base::s_int64_t fd) {
+	return GetNetHandler().RegisterServer(server_type, instance_id, fd);
 }

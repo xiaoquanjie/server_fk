@@ -67,8 +67,9 @@ int ApplicationBase::Init(int argc, char** argv) {
 		}
 
 		// start network thread
-		if (_svr_thread_cnt > 0 && _svr_thread_cnt < 100) {
-			Start(_svr_thread_cnt, false);
+		ret = NetHelper::Init(_now, 0, _svr_thread_cnt);
+		if (0 != ret) {
+			LogError("NetHelper::Init error");
 		}
 
 		ret = OnInit();
@@ -92,7 +93,7 @@ int ApplicationBase::Init(int argc, char** argv) {
 	else {
 		LogError("application start fail");
 		// stop network 
-		Stop();
+		NetHelper::Stop();
 		exit(-1);
 	}
 	return ret;
@@ -113,65 +114,6 @@ const std::string& ApplicationBase::PidFile()const {
 const base::timestamp& ApplicationBase::GetNow()const {
 	return _now;
 }
-
-void ApplicationBase::RegisterServer(int server_type, int instance_id, base::s_int64_t fd) {
-	if (M_CHECK_IS_TCP_FD(fd)) {
-		int real_fd = M_GET_TCP_FD(fd);
-		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
-		auto iter = fd_idx.find(real_fd);
-		if (iter != fd_idx.end()) {
-			fd_idx.modify(iter, FuncAddSocketContextInstId(instance_id));
-			_instid_fd_map[instance_id] = fd;
-			LogInfo("register {server_type: " << server_type << " instance_id: " << instance_id << "}");
-		}
-	}
-	else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
-		int real_fd = M_GET_TCP_FD(fd);
-		real_fd = M_GET_TCP_CONNECTOR_FD(fd);
-		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
-		auto iter = fd_idx.find(real_fd);
-		if (iter != fd_idx.end()) {
-			fd_idx.modify(iter, FuncAddSocketContextInstId(instance_id));
-			_instid_fd_map[instance_id] = fd;
-			LogInfo("register {server_type: " << server_type << " instance_id: " << instance_id << "}");
-		}
-	}
-}
-
-void ApplicationBase::SendNetWorkData(int instid, const char* data, base::s_int32_t len) {
-	auto fd_iter = _instid_fd_map.find(instid);
-	if (fd_iter == _instid_fd_map.end()) {
-		LogError("instid: " << instid << " connection is broken");
-		return;
-	}
-	int real_fd = 0;
-	base::s_int64_t fd = fd_iter->second;
-
-	if (M_CHECK_IS_TCP_FD(fd)) {
-		real_fd = M_GET_TCP_FD(fd);
-		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
-		auto iter = fd_idx.find(real_fd);
-		if (iter != fd_idx.end()) {
-			iter->ptr->Send(data, len);
-		}
-		else {
-			LogError("instid: " << instid << " this is a big bug");
-		}
-	}
-	else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
-		real_fd = M_GET_TCP_CONNECTOR_FD(fd);
-		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
-		auto iter = fd_idx.find(real_fd);
-		if (iter != fd_idx.end()) {
-			iter->ptr->Send(data, len);
-		}
-	}
-}
-
-int ApplicationBase::OnTick(const base::timestamp& now) {
-	return 0;
-}
-
 
 int ApplicationBase::ParseOpt(int argc, char** argv) {
 	_workdir = base::StringUtil::directory(argv[0]);
@@ -262,118 +204,4 @@ bool ApplicationBase::CheckReload() {
 		}
 	}
 	return false;
-}
-
-void ApplicationBase::CheckTcpSocketExpire(const base::timestamp& now) {
-	static base::timestamp last_check_time;
-	if (now.second() - last_check_time.second() >= M_EXPIRE_CHECK_INTERVAL) {
-		// ten second
-		auto &tt_index = _tcp_socket_container.get<tag_socket_context_active>();
-		for (auto iter = tt_index.begin(); iter != tt_index.end(); ++iter) {
-			if ((now.second() - iter->tt) >= M_EXPIRE_INTERVAL
-				&& iter->ptr->IsConnected()) {
-				base::s_int64_t fd = M_TCP_FD_FLAG | iter->ptr->GetFd();
-				LogInfo("connection expire been closed, remote_ip: " << iter->ptr->RemoteEndpoint().Address()
-					<< " fd: " << fd);
-				iter->ptr->Close();
-			}
-			else {
-				break;
-			}
-		}
-		last_check_time = now;
-	}
-}
-
-void ApplicationBase::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error) {
-	if (!error) {
-		// connect success
-		base::s_int64_t fd = M_TCP_CONNECTOR_FD_FLAG | clisock->GetFd();
-		TcpConnectorContext context;
-		context.instid = 0;
-		context.fd = fd;
-		context.ptr = clisock;
-		context.msgcount = 0;
-		context.tt = GetNow().second();
-
-		auto &fd_index = _tcp_connector_container.get<tag_socket_context_fd>();
-		if (!fd_index.insert(context).second) {
-			LogError("new connection insert fail, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
-			// close socket
-			clisock->Close();
-		}
-		else {
-			LogInfo("new connection insert success, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
-			proto::SocketClientIn client_in;
-			std::string str = client_in.SerializeAsString();
-			AppHeadFrame frame;
-			frame.set_cmd(proto::CMD::CMD_SOCKET_CLIENT_IN);
-			OnProc(fd, frame, str.c_str(), str.size());
-		}
-	}
-}
-
-void ApplicationBase::OnConnection(netiolib::TcpSocketPtr& clisock) {
-	base::s_int64_t fd = M_TCP_FD_FLAG | clisock->GetFd();
-	TcpSocketContext context;
-	context.instid = 0;
-	context.fd = fd;
-	context.ptr = clisock;
-	context.msgcount = 0;
-	context.tt = GetNow().second();
-
-	auto &fd_index = _tcp_socket_container.get<tag_socket_context_fd>();
-	if (!fd_index.insert(context).second) {
-		LogError("new connection insert fail, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
-		// close socket
-		clisock->Close();
-	}
-	else {
-		LogInfo("new connection insert success, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
-
-		proto::SocketClientIn client_in;
-		std::string str = client_in.SerializeAsString();
-		AppHeadFrame frame;
-		frame.set_cmd(proto::CMD::CMD_SOCKET_CLIENT_IN);
-		OnProc(fd, frame, str.c_str(), str.size());
-	}
-}
-
-void ApplicationBase::OnDisConnection(netiolib::TcpConnectorPtr& clisock) {
-	base::s_int64_t fd = M_TCP_CONNECTOR_FD_FLAG | clisock->GetFd();
-	auto &fd_index = _tcp_connector_container.get<tag_socket_context_fd>();
-	if (0 == fd_index.erase(fd)) {
-		LogError("fd: " << fd << " not exist, this is a big bug!!!!!!!!!!!!!!!!!");
-	}
-	else {
-		proto::SocketClientOut client_out;
-		std::string str = client_out.SerializeAsString();
-		AppHeadFrame frame;
-		frame.set_cmd(proto::CMD::CMD_SOCKET_CLIENT_OUT);
-
-		LogInfo("connection broken, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
-		OnProc(fd, frame, str.c_str(), str.size());
-	}
-}
-
-void ApplicationBase::OnDisConnection(netiolib::TcpSocketPtr& clisock) {
-	base::s_int64_t fd = M_TCP_FD_FLAG | clisock->GetFd();
-	auto &fd_index = _tcp_socket_container.get<tag_socket_context_fd>();
-	auto iter = fd_index.find(fd);
-	if (iter == fd_index.end()) {
-		LogError("fd: " << fd << " not exist, this is a big bug!!!!!!!!!!!!!!!!!");
-	}
-	else {
-		int instid = iter->instid;
-		_instid_fd_map.erase(instid);
-		fd_index.erase(iter);
-		proto::SocketClientOut client_out;
-		std::string str = client_out.SerializeAsString();
-		AppHeadFrame frame;
-		frame.set_dst_inst_id(instid);
-		frame.set_cmd(proto::CMD::CMD_SOCKET_CLIENT_OUT);
-
-		LogInfo("connection broken, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
-		OnProc(fd, frame, str.c_str(), str.size());
-	}
 }

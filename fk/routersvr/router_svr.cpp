@@ -9,8 +9,8 @@ int RouterApplication::OnInit() {
 	}
 	for (int idx = 0; idx < _svr_config.Data().listen_list_size(); ++idx) {
 		auto item = _svr_config.Data().listen_list(idx);
-		if (!ListenOne(item.listen_ip(), item.listen_port())) {
-			LogError(item.listen_ip() << " " << item.listen_port() << "listen error:" << GetLastError().What());
+		if (!NetHelper::ListenOne(item.listen_ip(), item.listen_port())) {
+			LogError(item.listen_ip() << " " << item.listen_port() << "listen error:" << NetHelper::GetLastError().What());
 			return -1;
 		}
 		else {

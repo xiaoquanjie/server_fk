@@ -2,17 +2,10 @@
 #define M_SVR_BASE_APPLICATION_INCLUDE
 
 #include <string>
-#include "commonlib/svr_base/svrbase.h"
 #include <unordered_map>
+#include "commonlib/net_helper/net_helper.h"
 
-// 最大消息队列
-#define M_MAX_MESSAGE_LIST (5000)
-// expire检查间隔
-#define M_EXPIRE_CHECK_INTERVAL (15)
-// expire时长
-#define M_EXPIRE_INTERVAL (30)
-
-class ApplicationBase : public netiolib::NetIo {
+class ApplicationBase {
 public:
 	ApplicationBase();
 
@@ -30,16 +23,14 @@ public:
 
 	const base::timestamp& GetNow()const;
 
-	void RegisterServer(int server_type, int instance_id, base::s_int64_t fd);
-
-	void SendNetWorkData(int instid, const char* data, base::s_int32_t len);
-
 protected:
 	virtual int OnInit() {
 		return 0;
 	}
 
-	virtual int OnTick(const base::timestamp& now);
+	virtual int OnTick(const base::timestamp& now) {
+		return 0;
+	}
 
 	virtual int OnReload() {
 		return 0;
@@ -53,34 +44,12 @@ protected:
 		return -1;
 	}
 
-	virtual void OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error);
-
-	virtual void OnConnection(netiolib::TcpSocketPtr& clisock);
-
-	virtual void OnDisConnection(netiolib::TcpConnectorPtr& clisock);
-
-	virtual void OnDisConnection(netiolib::TcpSocketPtr& clisock);
-
 protected:
 	int ParseOpt(int argc, char** argv);
 
 	void Usage()const;
 
 	bool CheckReload();
-
-	virtual void CheckTcpSocketExpire(const base::timestamp& now);
-
-	void OnConnected(netiolib::TcpSocketPtr& clisock) override;
-
-	void OnConnected(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error) override;
-
-	void OnDisconnected(netiolib::TcpSocketPtr& clisock) override;
-
-	void OnDisconnected(netiolib::TcpConnectorPtr& clisock) override;
-
-	void OnReceiveData(netiolib::TcpSocketPtr& clisock, SocketLib::Buffer& buffer) override;
-
-	void OnReceiveData(netiolib::TcpConnectorPtr& clisock, SocketLib::Buffer& buffer) override;
 
 protected:
 	std::string _workdir;
@@ -98,18 +67,6 @@ protected:
 
 	// application state
 	static bool _app_exit;
-
-	// message list
-	base::MutexLock _msg_lock;
-	base::slist<TcpSocketMsg*> _tcp_socket_msg_list;
-	base::slist<TcpSocketMsg*> _tcp_socket_msg_list2;
-	base::slist<TcpConnectorMsg*> _tcp_connector_msg_list;
-	base::slist<TcpConnectorMsg*> _tcp_connector_msg_list2;
-
-	// socket container
-	TcpSocketContextContainer _tcp_socket_container;
-	TcpConnectorContextContainer _tcp_connector_container;
-	std::unordered_map<int, base::s_int64_t> _instid_fd_map;
 };
 
 #endif
