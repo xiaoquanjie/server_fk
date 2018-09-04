@@ -10,6 +10,7 @@ cc_library(
 	   'svr_base/ApplicationBaseExt.cpp',
 	   'svr_base/server_manager.cpp',
 	   'svr_base/router_manager.cpp',
+	   'net_helper/net_helper.cpp',
 	   'transaction/transaction_mgr.cpp',
 	   'transaction/base_transaction.cpp',
     ],
