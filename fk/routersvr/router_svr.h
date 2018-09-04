@@ -16,7 +16,7 @@ protected:
 
 	int OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) override;
 
-	int ForwardPkg(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len);
+	int ForwardPkg(base::s_int64_t fd, int dst_inst_id, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len);
 
 private:
 	ServerCfg<config::RouterSvrConfig> _svr_config;

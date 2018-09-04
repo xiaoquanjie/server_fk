@@ -2,6 +2,7 @@
 #include "slience/base/logger.hpp"
 #include "commonlib/transaction/transaction_mgr.h"
 #include "protolib/src/cmd.pb.h"
+#include "routersvr\server_instance_mgr.h"
 
 int RouterApplication::OnInit() {
 	if (_svr_config.Data().listen_list_size() <= 0) {
@@ -18,6 +19,8 @@ int RouterApplication::OnInit() {
 			LogInfo("listen in: " << item.ShortDebugString());
 		}
 	}
+
+	SeverInstanceMgrSgl.Init(&_svr_config.Data());
 	LogInfo("server listen success");
 	return 0;
 }
@@ -47,14 +50,19 @@ int RouterApplication::OnProc(base::s_int64_t fd, const AppHeadFrame& frame, con
 		break;
 	}
 	if (frame.get_dst_inst_id() != 0) {
-		ForwardPkg(fd, frame, data, data_len);
+		ForwardPkg(fd, frame.get_dst_inst_id(), frame, data, data_len);
 	}
 	else {
-
+		std::vector<int> inst_vec;
+		SeverInstanceMgrSgl.RouterPolicy(frame.get_userid(), frame.get_dst_svr_type(),
+			frame.get_is_broadcast(), inst_vec);
+		for (auto iter = inst_vec.begin(); iter != inst_vec.end(); ++iter) {
+			ForwardPkg(fd, *iter, frame, data, data_len);
+		}
 	}
 	return 0;
 }
 
-int RouterApplication::ForwardPkg(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) {
+int RouterApplication::ForwardPkg(base::s_int64_t fd, int dst_inst_id, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) {
 	return 0;
 }
