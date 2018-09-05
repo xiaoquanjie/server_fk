@@ -91,6 +91,7 @@ public:
 
 // context
 struct TcpSocketContext {
+	int svr_type;
 	int instid;
 	base::s_int64_t fd;
 	int msgcount;
@@ -99,6 +100,7 @@ struct TcpSocketContext {
 };
 
 struct TcpConnectorContext {
+	int svr_type;
 	int instid;
 	base::s_int64_t fd;
 	int msgcount;
@@ -167,7 +169,8 @@ private:
 // add instance id
 class FuncAddSocketContextInstId {
 public:
-	FuncAddSocketContextInstId(int instid) {
+	FuncAddSocketContextInstId(int svr_type, int instid) {
+		_svr_type = svr_type;
 		_instid = instid;
 	}
 
@@ -180,6 +183,7 @@ public:
 	}
 
 private:
+	int _svr_type;
 	int _instid;
 };
 

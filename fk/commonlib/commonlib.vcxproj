@@ -89,6 +89,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="net_helper\net_helper.cpp" />
+    <ClCompile Include="net_helper\router_mgr.cpp" />
     <ClCompile Include="svr_base\ApplicationBaseExt.cpp" />
     <ClCompile Include="svr_base\router_manager.cpp" />
     <ClCompile Include="svr_base\server_manager.cpp" />
@@ -306,6 +307,7 @@
     <ClInclude Include="..\google\protobuf\wire_format_lite_inl.h" />
     <ClInclude Include="..\google\protobuf\wrappers.pb.h" />
     <ClInclude Include="net_helper\net_helper.h" />
+    <ClInclude Include="net_helper\router_mgr.h" />
     <ClInclude Include="svr_base\ApplicationBase.h" />
     <ClInclude Include="svr_base\ApplicationFunc.hpp" />
     <ClInclude Include="svr_base\getopt.h" />

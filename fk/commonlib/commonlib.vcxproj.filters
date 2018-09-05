@@ -73,6 +73,9 @@
     <ClCompile Include="net_helper\net_helper.cpp">
       <Filter>net_helper</Filter>
     </ClCompile>
+    <ClCompile Include="net_helper\router_mgr.cpp">
+      <Filter>net_helper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="svr_base\ApplicationBase.h">
@@ -721,6 +724,9 @@
       <Filter>svr_base</Filter>
     </ClInclude>
     <ClInclude Include="net_helper\net_helper.h">
+      <Filter>net_helper</Filter>
+    </ClInclude>
+    <ClInclude Include="net_helper\router_mgr.h">
       <Filter>net_helper</Filter>
     </ClInclude>
   </ItemGroup>

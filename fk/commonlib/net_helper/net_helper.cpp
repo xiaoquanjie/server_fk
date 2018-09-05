@@ -2,6 +2,7 @@
 #include "slience/base/logger.hpp"
 #include "protolib/src/svr_base.pb.h"
 #include "protolib/src/cmd.pb.h"
+#include "routersvr/server_instance_mgr.h"
 
 NetHandler::NetHandler(base::timestamp& now, callback_type callback) : _now(now){
 	_msg_cache_size = 5000;
@@ -189,13 +190,21 @@ void NetHandler::SendDataByInstId(int instid, const char* data, base::s_int32_t 
 	SendDataByFd(fd, data, len);
 }
 
+void NetHandler::SendData(const AppHeadFrame& frame, const google::protobuf::Message& message) {
+	_snd_buff.Clear();
+	_snd_buff.Write(frame);
+	_snd_buff.Write(message.SerializePartialAsString());
+	SendDataByInstId(frame.get_dst_inst_id(), _snd_buff.Data(), _snd_buff.Length());
+}
+
 void NetHandler::RegisterServer(int server_type, int instance_id, base::s_int64_t fd) {
 	if (M_CHECK_IS_TCP_FD(fd)) {
 		int real_fd = M_GET_TCP_FD(fd);
 		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
 		auto iter = fd_idx.find(real_fd);
 		if (iter != fd_idx.end()) {
-			fd_idx.modify(iter, FuncAddSocketContextInstId(instance_id));
+			SeverInstanceMgrSgl.AddInstance(server_type, instance_id);
+			fd_idx.modify(iter, FuncAddSocketContextInstId(server_type, instance_id));
 			_instid_fd_map[instance_id] = fd;
 			LogInfo("register {server_type: " << server_type << " instance_id: " << instance_id << "}");
 		}
@@ -206,7 +215,8 @@ void NetHandler::RegisterServer(int server_type, int instance_id, base::s_int64_
 		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
 		auto iter = fd_idx.find(real_fd);
 		if (iter != fd_idx.end()) {
-			fd_idx.modify(iter, FuncAddSocketContextInstId(instance_id));
+			SeverInstanceMgrSgl.AddInstance(server_type, instance_id);
+			fd_idx.modify(iter, FuncAddSocketContextInstId(server_type, instance_id));
 			_instid_fd_map[instance_id] = fd;
 			LogInfo("register {server_type: " << server_type << " instance_id: " << instance_id << "}");
 		}
@@ -218,6 +228,7 @@ void NetHandler::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::Soc
 		// connect success
 		base::s_int64_t fd = M_TCP_CONNECTOR_FD_FLAG | clisock->GetFd();
 		TcpConnectorContext context;
+		context.svr_type = -1;
 		context.instid = 0;
 		context.fd = fd;
 		context.ptr = clisock;
@@ -244,6 +255,7 @@ void NetHandler::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::Soc
 void NetHandler::OnConnection(netiolib::TcpSocketPtr& clisock) {
 	base::s_int64_t fd = M_TCP_FD_FLAG | clisock->GetFd();
 	TcpSocketContext context;
+	context.svr_type = -1;
 	context.instid = 0;
 	context.fd = fd;
 	context.ptr = clisock;
@@ -270,10 +282,13 @@ void NetHandler::OnConnection(netiolib::TcpSocketPtr& clisock) {
 void NetHandler::OnDisConnection(netiolib::TcpConnectorPtr& clisock) {
 	base::s_int64_t fd = M_TCP_CONNECTOR_FD_FLAG | clisock->GetFd();
 	auto &fd_index = _tcp_connector_container.get<tag_socket_context_fd>();
-	if (0 == fd_index.erase(fd)) {
+	auto iter = fd_index.find(fd);
+	if (iter == fd_index.end()) {
 		LogError("fd: " << fd << " not exist, this is a big bug!!!!!!!!!!!!!!!!!");
 	}
 	else {
+		SeverInstanceMgrSgl.DelInstance(iter->svr_type, iter->instid);
+		fd_index.erase(iter);
 		proto::SocketClientOut client_out;
 		std::string str = client_out.SerializeAsString();
 		AppHeadFrame frame;
@@ -292,6 +307,7 @@ void NetHandler::OnDisConnection(netiolib::TcpSocketPtr& clisock) {
 		LogError("fd: " << fd << " not exist, this is a big bug!!!!!!!!!!!!!!!!!");
 	}
 	else {
+		SeverInstanceMgrSgl.DelInstance(iter->svr_type, iter->instid);
 		int instid = iter->instid;
 		_instid_fd_map.erase(instid);
 		fd_index.erase(iter);
@@ -476,3 +492,8 @@ void NetHelper::SetNetHandler(NetHandler* handler) {
 void NetHelper::RegisterServer(int server_type, int instance_id, base::s_int64_t fd) {
 	return GetNetHandler().RegisterServer(server_type, instance_id, fd);
 }
+
+void NetHelper::SendDataByInstId(int instid, const char* data, base::s_int32_t len) {
+	return GetNetHandler().SendDataByInstId(instid, data, len);
+}
+

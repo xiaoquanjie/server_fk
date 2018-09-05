@@ -64,5 +64,8 @@ int RouterApplication::OnProc(base::s_int64_t fd, const AppHeadFrame& frame, con
 }
 
 int RouterApplication::ForwardPkg(base::s_int64_t fd, int dst_inst_id, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) {
+	const char* src = data - sizeof(frame);
+	int src_len = data_len + sizeof(frame);
+	NetHelper::SendDataByInstId(dst_inst_id, src, src_len);
 	return 0;
 }

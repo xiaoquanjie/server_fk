@@ -2,6 +2,7 @@
 #define M_NET_HELPER_INCLUDE
 
 #include "commonlib/svr_base/svrbase.h"
+#include "google/protobuf/message.h"
 #include <unordered_map>
 #include "slience/base/compatibility.hpp"
 
@@ -36,6 +37,8 @@ public:
 	void SendDataByFd(base::s_int64_t fd, const char* data, base::s_int32_t len);
 
 	void SendDataByInstId(int instid, const char* data, base::s_int32_t len);
+
+	void SendData(const AppHeadFrame& frame, const google::protobuf::Message& message);
 
 	void RegisterServer(int server_type, int instance_id, base::s_int64_t fd);
 
@@ -94,6 +97,9 @@ protected:
 	// callback
 	callback_type _callback;
 
+	// send buff
+	base::Buffer _snd_buff;
+
 	// message list
 	base::MutexLock _msg_lock;
 	base::slist<TcpSocketMsg*> _tcp_socket_msg_list;
@@ -132,6 +138,10 @@ public:
 	static SocketLib::SocketError GetLastError();
 
 	static void RegisterServer(int server_type, int instance_id, base::s_int64_t fd);
+
+	static void SendDataByInstId(int instid, const char* data, base::s_int32_t len);
+
+	static void SendData(const AppHeadFrame& frame, const google::protobuf::Message& message);
 
 protected:
 	static NetHandler& GetNetHandler();

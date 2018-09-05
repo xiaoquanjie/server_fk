@@ -11,6 +11,7 @@ cc_library(
 	   'svr_base/server_manager.cpp',
 	   'svr_base/router_manager.cpp',
 	   'net_helper/net_helper.cpp',
+	   'net_helper/router_mgr.cpp',
 	   'transaction/transaction_mgr.cpp',
 	   'transaction/base_transaction.cpp',
     ],
