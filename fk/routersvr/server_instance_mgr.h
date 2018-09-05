@@ -6,10 +6,14 @@
 #include <set>
 #include <unordered_map>
 
+struct InstanceInfo {
+	int policy;
+	std::set<int> inst_vec;
+};
+
 class SeverInstanceMgr {
 public:
-	typedef std::set<int> InstVector;
-	typedef m_unorder_map_t<int, InstVector> SvrType_InstVec_Map;
+	typedef m_unorder_map_t<int, InstanceInfo> SvrType_InstInfo_Map;
 
 	SeverInstanceMgr();
 
@@ -21,9 +25,12 @@ public:
 
 	void RouterPolicy(base::s_uint64_t uid, int server_type, bool is_broadcast, std::vector<int>& inst_vec);
 
+protected:
+	const config::Policy* GetPolicy(int server_type);
+
 private:
 	const config::RouterSvrConfig* _config;
-	SvrType_InstVec_Map _type_id_map;
+	SvrType_InstInfo_Map _type_id_map;
 };
 
 #ifndef SeverInstanceMgrSgl
