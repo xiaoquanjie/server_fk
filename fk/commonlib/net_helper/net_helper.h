@@ -131,9 +131,9 @@ public:
 
 	static bool ListenOneHttp(const std::string& addr, SocketLib::s_uint16_t port);
 
-	static void ConnectOne(const std::string& addr, SocketLib::s_uint16_t port);
+	static void ConnectOne(const std::string& addr, SocketLib::s_uint16_t port, void* data);
 
-	static void ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port);
+	static void ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port, void* data);
 
 	static SocketLib::SocketError GetLastError();
 

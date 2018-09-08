@@ -469,12 +469,25 @@ bool NetHelper::ListenOneHttp(const std::string& addr, SocketLib::s_uint16_t por
 	return GetNetHandler().ListenOneHttp(addr, port);
 }
 
-void NetHelper::ConnectOne(const std::string& addr, SocketLib::s_uint16_t port) {
-	return GetNetHandler().ConnectOne(addr, port);
+void NetHelper::ConnectOne(const std::string& addr, SocketLib::s_uint16_t port, void* data) {
+	SocketLib::SocketError error;
+	netiolib::TcpConnectorPtr connector(new netiolib::TcpConnector(GetNetHandler()));
+	connector->SetExtData(data);
+	SocketLib::Tcp::EndPoint ep(SocketLib::AddressV4(addr), port);
+	connector->AsyncConnect(ep, error);
+	connector.reset();
 }
 
-void NetHelper::ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port) {
-	return GetNetHandler().ConnectOneHttp(addr, port);
+void NetHelper::ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port, void* data) {
+	try {
+		SocketLib::Tcp::EndPoint ep(SocketLib::AddressV4(addr), port);
+		netiolib::HttpConnectorPtr connector(new netiolib::HttpConnector(GetNetHandler()));
+		connector->SetExtData(data);
+		connector->AsyncConnect(ep);
+		connector.reset();
+	}
+	catch (...) {
+	}
 }
 
 SocketLib::SocketError NetHelper::GetLastError() {
