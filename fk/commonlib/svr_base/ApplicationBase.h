@@ -3,7 +3,10 @@
 
 #include <string>
 #include <unordered_map>
-#include "commonlib/net_helper/net_helper.h"
+#include "slience/base/timer.hpp"
+#include "protolib/src/comm_conf.pb.h"
+#include "commonlib/svr_base/svrbase.h"
+#include "commonlib/svr_base/server_cfg.h"
 
 class ApplicationBase {
 public:
@@ -52,10 +55,12 @@ protected:
 	bool CheckReload();
 
 protected:
+	ServerCfg<config::CommConf> _comm_config;
 	std::string _workdir;
 	std::string _appname;
 	std::string _pid_file;
 	std::string _conf_file;
+	std::string _comm_conf_file;
 	std::string _log_file;
 	int _log_level;
 	int _log_withpid;

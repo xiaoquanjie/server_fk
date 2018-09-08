@@ -1,0 +1,10 @@
+package config;
+
+message RouterInfo {
+	optional string listen_ip = 1;
+	optional int32 listen_port = 2;
+}
+
+message RouterConfig {
+	repeated RouterInfo router_list = 1;
+}

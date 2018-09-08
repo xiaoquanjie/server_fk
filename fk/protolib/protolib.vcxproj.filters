@@ -7,6 +7,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{092fa9c1-951c-412c-a86a-de464571fa59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="comm_conf">
+      <UniqueIdentifier>{cce7c3fa-0ce0-4c48-ae2f-c753b31d89d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="BUILD" />
@@ -19,6 +22,18 @@
     <None Include="proto\cmd.proto">
       <Filter>proto</Filter>
     </None>
+    <None Include="proto\comm_conf.proto">
+      <Filter>proto</Filter>
+    </None>
+    <None Include="proto\router.proto">
+      <Filter>proto</Filter>
+    </None>
+    <None Include="..\conf\comm_conf\comm.conf">
+      <Filter>comm_conf</Filter>
+    </None>
+    <None Include="..\conf\comm_conf\router.conf">
+      <Filter>comm_conf</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\routersvr_config.pb.cc">
@@ -30,6 +45,12 @@
     <ClCompile Include="src\svr_base.pb.cc">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\comm_conf.pb.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\router.pb.cc">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\routersvr_config.pb.h">
@@ -39,6 +60,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\svr_base.pb.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\comm_conf.pb.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\router.pb.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,6 +8,7 @@
 #include "protolib/src/svr_base.pb.h"
 #include "protolib/src/cmd.pb.h"
 #include "commonlib/transaction/transaction_mgr.h"
+#include "commonlib/net_helper/net_helper.h"
 
 /////////////////////////////////////////////////////////////
 
@@ -57,6 +58,12 @@ int ApplicationBase::Init(int argc, char** argv) {
 
 		ret = WritePid(_pid_file);
 		if (0 != ret) {
+			break;
+		}
+
+		ret = _comm_config.Parse(_comm_conf_file.c_str());
+		if (0 != ret) {
+			LogError("_comm_config.Parse fail: " << _comm_conf_file);
 			break;
 		}
 
@@ -178,13 +185,15 @@ int ApplicationBase::ParseOpt(int argc, char** argv) {
 		_log_file = _appname;
 	}
 
+	_comm_conf_file = base::StringUtil::directory(base::StringUtil::directory(_conf_file));
+	_comm_conf_file += "/comm_conf/comm.conf";
 	return 0;
 }
 
 void ApplicationBase::Usage()const {
 	printf("Usage:\n");
 	printf("required arguments:\n");
-	printf("--config_file		the config file path\n");
+	printf("--config_file	the config file path\n");
 
 	printf("\noptional arguments:\n");
 	printf("--log_file		the log file path\n");

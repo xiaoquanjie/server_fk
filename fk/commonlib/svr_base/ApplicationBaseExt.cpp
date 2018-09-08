@@ -3,6 +3,7 @@
 #include "slience/base/logger.hpp"
 #include "commonlib/svr_base/ApplicationFunc.hpp"
 #include "commonlib/transaction/transaction_mgr.h"
+#include "commonlib/net_helper/net_helper.h"
 
 int ApplicationBase::Run() {
 	while (!gAppExist) {
