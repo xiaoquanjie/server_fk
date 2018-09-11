@@ -5,10 +5,6 @@
 cc_library(
     name = 'common',
     srcs = [
-	   '../tinyxml/tinystr.cpp',
-	   '../tinyxml/tinyxml.cpp',
-	   '../tinyxml/tinyxmlerror.cpp',
-	   '../tinyxml/tinyxmlparser.cpp',
 	   'svr_base/ApplicationBase.cpp',
 	   'svr_base/ApplicationFunc.cpp',
 	   'svr_base/ApplicationBaseExt.cpp',
@@ -23,7 +19,8 @@ cc_library(
     deps = [
 		'//slience:slience',
 		'#pthread',
-		'//mariadb-connector-c-master:mysqlclient'
+		'//mariadb-connector-c-master:mysqlclient',
+		'//tinyxml:tinyxml'
     ],
 
     #link_all_symbols = True,
