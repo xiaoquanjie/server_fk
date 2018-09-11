@@ -1,6 +1,7 @@
 /fk/bin
 /fk/output
 /fk/build64_release
+/fk/build64_debug
 /fk/routersvr/.vs
 /fk/slience.opensdf
 /fk/slience.sdf
