@@ -5,10 +5,10 @@
 cc_library(
     name = 'tinyxml',
     srcs = [
-	   'tinyxml/tinystr.cpp',
-	   'tinyxml/tinyxml.cpp',
-	   'tinyxml/tinyxmlerror.cpp',
-	   'tinyxml/tinyxmlparser.cpp',
+	   'tinystr.cpp',
+	   'tinyxml.cpp',
+	   'tinyxmlerror.cpp',
+	   'tinyxmlparser.cpp',
     ],
 
     deps = [
