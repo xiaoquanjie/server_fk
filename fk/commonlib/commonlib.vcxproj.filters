@@ -44,6 +44,9 @@
     <Filter Include="net_helper">
       <UniqueIdentifier>{a3b60c9e-fbb0-4bb5-93f9-f43bb282b223}</UniqueIdentifier>
     </Filter>
+    <Filter Include="tinyxml">
+      <UniqueIdentifier>{7b9957a3-a0c1-4984-9fd9-372d8b83a612}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="svr_base\getopt.c">
@@ -75,6 +78,18 @@
     </ClCompile>
     <ClCompile Include="net_helper\router_mgr.cpp">
       <Filter>net_helper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tinyxml\tinystr.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tinyxml\tinyxml.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tinyxml\tinyxmlerror.cpp">
+      <Filter>tinyxml</Filter>
+    </ClCompile>
+    <ClCompile Include="..\tinyxml\tinyxmlparser.cpp">
+      <Filter>tinyxml</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -728,6 +743,12 @@
     </ClInclude>
     <ClInclude Include="net_helper\router_mgr.h">
       <Filter>net_helper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tinyxml\tinystr.h">
+      <Filter>tinyxml</Filter>
+    </ClInclude>
+    <ClInclude Include="..\tinyxml\tinyxml.h">
+      <Filter>tinyxml</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
