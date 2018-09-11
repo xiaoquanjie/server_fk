@@ -13,20 +13,20 @@ struct InstanceInfo {
 
 class SeverInstanceMgr {
 public:
-	typedef m_unorder_map_t<int, InstanceInfo> SvrType_InstInfo_Map;
+	typedef m_unorder_map_t<unsigned int, InstanceInfo> SvrType_InstInfo_Map;
 
 	SeverInstanceMgr();
 
 	int Init(const config::RouterSvrConfig* conf);
 
-	void AddInstance(int server_type, int instance_id);
+	void AddInstance(unsigned int server_type, int instance_id);
 
-	void DelInstance(int server_type, int instance_id);
+	void DelInstance(unsigned int server_type, int instance_id);
 
-	void RouterPolicy(base::s_uint64_t uid, int server_type, bool is_broadcast, std::vector<int>& inst_vec);
+	void RouterPolicy(base::s_uint64_t uid, unsigned int server_type, bool is_broadcast, std::vector<int>& inst_vec);
 
 protected:
-	const config::Policy* GetPolicy(int server_type);
+	const config::Policy* GetPolicy(unsigned int server_type);
 
 private:
 	const config::RouterSvrConfig* _config;
