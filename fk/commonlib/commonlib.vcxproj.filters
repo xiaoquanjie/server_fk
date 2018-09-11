@@ -759,5 +759,8 @@
     <None Include="..\google\protobuf\io\gzip_stream_unittest.sh">
       <Filter>google\protobuf\io</Filter>
     </None>
+    <None Include="..\tinyxml\BUILD">
+      <Filter>tinyxml</Filter>
+    </None>
   </ItemGroup>
 </Project>

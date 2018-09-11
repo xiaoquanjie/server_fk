@@ -2,7 +2,7 @@
 #include "slience/base/logger.hpp"
 #include "commonlib/transaction/transaction_mgr.h"
 #include "protolib/src/cmd.pb.h"
-#include "routersvr\server_instance_mgr.h"
+#include "routersvr/server_instance_mgr.h"
 #include "commonlib/net_helper/net_helper.h"
 
 int RouterApplication::OnInit() {

@@ -14,7 +14,7 @@ int SeverInstanceMgr::Init(const config::RouterSvrConfig* conf) {
 	return 0;
 }
 
-void SeverInstanceMgr::AddInstance(int server_type, int instance_id) {
+void SeverInstanceMgr::AddInstance(unsigned int server_type, int instance_id) {
 	const config::Policy* policy = GetPolicy(server_type);
 	if (!policy) {
 		LogError("add instance fail, server_type:" << server_type << "instance_id" << instance_id);
@@ -32,7 +32,7 @@ void SeverInstanceMgr::AddInstance(int server_type, int instance_id) {
 	LogInfo("add server instance: server_type=" << server_type << " instance_id=" << instance_id);
 }
 
-void SeverInstanceMgr::DelInstance(int server_type, int instance_id) {
+void SeverInstanceMgr::DelInstance(unsigned int server_type, int instance_id) {
 	auto iter_type = _type_id_map.find(server_type);
 	if (iter_type == _type_id_map.end()) {
 		LogError("can't find server instance: server_type=" << server_type << " instance_id=" << instance_id);
@@ -44,7 +44,7 @@ void SeverInstanceMgr::DelInstance(int server_type, int instance_id) {
 }
 
 void SeverInstanceMgr::RouterPolicy(
-	base::s_uint64_t uid, int server_type, bool is_broadcast, std::vector<int>& inst_vec) {
+	base::s_uint64_t uid, unsigned int server_type, bool is_broadcast, std::vector<int>& inst_vec) {
 	auto iter_type = _type_id_map.find(server_type);
 	if (iter_type == _type_id_map.end()) {
 		LogError("can't find instance, server_type:" << server_type);
@@ -86,7 +86,7 @@ void SeverInstanceMgr::RouterPolicy(
 	}
 }
 
-const config::Policy* SeverInstanceMgr::GetPolicy(int server_type) {
+const config::Policy* SeverInstanceMgr::GetPolicy(unsigned int server_type) {
 	if (!_config) {
 		LogError("_config is null");
 		return 0;

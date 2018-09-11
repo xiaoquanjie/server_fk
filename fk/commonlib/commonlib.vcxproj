@@ -327,6 +327,7 @@
     <ClInclude Include="transaction\transaction_mgr.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\tinyxml\BUILD" />
     <None Include="BUILD" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
