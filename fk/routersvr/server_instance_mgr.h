@@ -34,7 +34,7 @@ private:
 };
 
 #ifndef SeverInstanceMgrSgl
-#define SeverInstanceMgrSgl base::singletion<SeverInstanceMgr>::mutable_instance()
+#define SeverInstanceMgrSgl base::singleton<SeverInstanceMgr>::mutable_instance()
 #endif
 
 

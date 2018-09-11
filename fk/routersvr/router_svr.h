@@ -22,6 +22,6 @@ private:
 	ServerCfg<config::RouterSvrConfig> _svr_config;
 };
 
-typedef base::singletion<RouterApplication> RouterAppSgl;
+typedef base::singleton<RouterApplication> RouterAppSgl;
 
 #endif

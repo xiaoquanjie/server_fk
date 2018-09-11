@@ -85,8 +85,10 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::RouterInfo, listen_ip_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::RouterInfo, listen_port_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::RouterInfo, number_),
   0,
   1,
+  2,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::RouterConfig, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::RouterConfig, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -96,8 +98,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 7, sizeof(::config::RouterInfo)},
-  { 9, 15, sizeof(::config::RouterConfig)},
+  { 0, 8, sizeof(::config::RouterInfo)},
+  { 11, 17, sizeof(::config::RouterConfig)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -127,13 +129,13 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\014router.proto\022\006config\"4\n\nRouterInfo\022\021\n\t"
-      "listen_ip\030\001 \001(\t\022\023\n\013listen_port\030\002 \001(\005\"7\n\014"
-      "RouterConfig\022\'\n\013router_list\030\001 \003(\0132\022.conf"
-      "ig.RouterInfo"
+      "\n\014router.proto\022\006config\"D\n\nRouterInfo\022\021\n\t"
+      "listen_ip\030\001 \001(\t\022\023\n\013listen_port\030\002 \001(\005\022\016\n\006"
+      "number\030\003 \001(\005\"7\n\014RouterConfig\022\'\n\013router_l"
+      "ist\030\001 \003(\0132\022.config.RouterInfo"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 133);
+      descriptor, 149);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "router.proto", &protobuf_RegisterTypes);
 }
@@ -158,6 +160,7 @@ void RouterInfo::InitAsDefaultInstance() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int RouterInfo::kListenIpFieldNumber;
 const int RouterInfo::kListenPortFieldNumber;
+const int RouterInfo::kNumberFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 RouterInfo::RouterInfo()
@@ -178,14 +181,18 @@ RouterInfo::RouterInfo(const RouterInfo& from)
   if (from.has_listen_ip()) {
     listen_ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.listen_ip_);
   }
-  listen_port_ = from.listen_port_;
+  ::memcpy(&listen_port_, &from.listen_port_,
+    static_cast<size_t>(reinterpret_cast<char*>(&number_) -
+    reinterpret_cast<char*>(&listen_port_)) + sizeof(number_));
   // @@protoc_insertion_point(copy_constructor:config.RouterInfo)
 }
 
 void RouterInfo::SharedCtor() {
   _cached_size_ = 0;
   listen_ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  listen_port_ = 0;
+  ::memset(&listen_port_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&number_) -
+      reinterpret_cast<char*>(&listen_port_)) + sizeof(number_));
 }
 
 RouterInfo::~RouterInfo() {
@@ -231,7 +238,11 @@ void RouterInfo::Clear() {
     GOOGLE_DCHECK(!listen_ip_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
     (*listen_ip_.UnsafeRawStringPointer())->clear();
   }
-  listen_port_ = 0;
+  if (cached_has_bits & 6u) {
+    ::memset(&listen_port_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&number_) -
+        reinterpret_cast<char*>(&listen_port_)) + sizeof(number_));
+  }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -270,6 +281,20 @@ bool RouterInfo::MergePartialFromCodedStream(
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &listen_port_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional int32 number = 3;
+      case 3: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
+          set_has_number();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &number_)));
         } else {
           goto handle_unusual;
         }
@@ -318,6 +343,11 @@ void RouterInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->listen_port(), output);
   }
 
+  // optional int32 number = 3;
+  if (cached_has_bits & 0x00000004u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->number(), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
@@ -349,6 +379,11 @@ void RouterInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->listen_port(), target);
   }
 
+  // optional int32 number = 3;
+  if (cached_has_bits & 0x00000004u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->number(), target);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
@@ -366,7 +401,7 @@ size_t RouterInfo::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         _internal_metadata_.unknown_fields());
   }
-  if (_has_bits_[0 / 32] & 3u) {
+  if (_has_bits_[0 / 32] & 7u) {
     // optional string listen_ip = 1;
     if (has_listen_ip()) {
       total_size += 1 +
@@ -379,6 +414,13 @@ size_t RouterInfo::ByteSizeLong() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->listen_port());
+    }
+
+    // optional int32 number = 3;
+    if (has_number()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->number());
     }
 
   }
@@ -412,13 +454,16 @@ void RouterInfo::MergeFrom(const RouterInfo& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 3u) {
+  if (cached_has_bits & 7u) {
     if (cached_has_bits & 0x00000001u) {
       set_has_listen_ip();
       listen_ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.listen_ip_);
     }
     if (cached_has_bits & 0x00000002u) {
       listen_port_ = from.listen_port_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      number_ = from.number_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
@@ -450,6 +495,7 @@ void RouterInfo::InternalSwap(RouterInfo* other) {
   using std::swap;
   listen_ip_.Swap(&other->listen_ip_);
   swap(listen_port_, other->listen_port_);
+  swap(number_, other->number_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);

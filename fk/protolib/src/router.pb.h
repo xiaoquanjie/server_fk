@@ -174,18 +174,28 @@ class RouterInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::int32 listen_port() const;
   void set_listen_port(::google::protobuf::int32 value);
 
+  // optional int32 number = 3;
+  bool has_number() const;
+  void clear_number();
+  static const int kNumberFieldNumber = 3;
+  ::google::protobuf::int32 number() const;
+  void set_number(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:config.RouterInfo)
  private:
   void set_has_listen_ip();
   void clear_has_listen_ip();
   void set_has_listen_port();
   void clear_has_listen_port();
+  void set_has_number();
+  void clear_has_number();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable int _cached_size_;
   ::google::protobuf::internal::ArenaStringPtr listen_ip_;
   ::google::protobuf::int32 listen_port_;
+  ::google::protobuf::int32 number_;
   friend struct ::protobuf_router_2eproto::TableStruct;
   friend void ::protobuf_router_2eproto::InitDefaultsRouterInfoImpl();
 };
@@ -398,6 +408,30 @@ inline void RouterInfo::set_listen_port(::google::protobuf::int32 value) {
   set_has_listen_port();
   listen_port_ = value;
   // @@protoc_insertion_point(field_set:config.RouterInfo.listen_port)
+}
+
+// optional int32 number = 3;
+inline bool RouterInfo::has_number() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void RouterInfo::set_has_number() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void RouterInfo::clear_has_number() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void RouterInfo::clear_number() {
+  number_ = 0;
+  clear_has_number();
+}
+inline ::google::protobuf::int32 RouterInfo::number() const {
+  // @@protoc_insertion_point(field_get:config.RouterInfo.number)
+  return number_;
+}
+inline void RouterInfo::set_number(::google::protobuf::int32 value) {
+  set_has_number();
+  number_ = value;
+  // @@protoc_insertion_point(field_set:config.RouterInfo.number)
 }
 
 // -------------------------------------------------------------------
