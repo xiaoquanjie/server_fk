@@ -92,8 +92,11 @@
     <ClCompile Include="..\tinyxml\tinyxml.cpp" />
     <ClCompile Include="..\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="..\tinyxml\tinyxmlparser.cpp" />
+    <ClCompile Include="net_helper\net_handler.cpp" />
     <ClCompile Include="net_helper\net_helper.cpp" />
     <ClCompile Include="net_helper\router_mgr.cpp" />
+    <ClCompile Include="net_helper\router_net_handler.cpp" />
+    <ClCompile Include="net_helper\svr_net_handler.cpp" />
     <ClCompile Include="svr_base\ApplicationBaseExt.cpp" />
     <ClCompile Include="svr_base\router_manager.cpp" />
     <ClCompile Include="svr_base\server_manager.cpp" />
@@ -312,8 +315,11 @@
     <ClInclude Include="..\google\protobuf\wrappers.pb.h" />
     <ClInclude Include="..\tinyxml\tinystr.h" />
     <ClInclude Include="..\tinyxml\tinyxml.h" />
+    <ClInclude Include="net_helper\net_handler.h" />
     <ClInclude Include="net_helper\net_helper.h" />
     <ClInclude Include="net_helper\router_mgr.h" />
+    <ClInclude Include="net_helper\router_net_handler.h" />
+    <ClInclude Include="net_helper\svr_net_handler.h" />
     <ClInclude Include="svr_base\ApplicationBase.h" />
     <ClInclude Include="svr_base\ApplicationFunc.hpp" />
     <ClInclude Include="svr_base\getopt.h" />
