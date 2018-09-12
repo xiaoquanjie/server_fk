@@ -1,6 +1,7 @@
 #ifndef M_NET_HANDLER_INCLUDE
 #define M_NET_HANDLER_INCLUDE
 
+#include "slience/base/singletion.hpp"
 #include "commonlib/svr_base/svrbase.h"
 
 // 最大消息队列
@@ -23,7 +24,7 @@ public:
 	typedef m_function_t<int(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len)>
 		callback_type;
 
-	NetIoHandler(base::timestamp& now, callback_type callback);
+	int Init(base::timestamp& now, callback_type callback);
 
 	int Update();
 
@@ -32,6 +33,8 @@ public:
 	const base::timestamp& GetNow()const;
 
 	void CheckTcpSocketExpire();
+
+	bool SendDataByFd(base::s_int64_t fd, const char* data, base::s_int32_t len);
 
 	virtual void OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error);
 
@@ -68,7 +71,7 @@ protected:
 
 protected:
 	size_t _msg_cache_size;
-	base::timestamp& _now;
+	base::timestamp* _now;
 
 	// callback
 	callback_type _callback;
@@ -90,5 +93,9 @@ protected:
 	// last check expire time
 	base::timestamp _last_check_time;
 };
+
+#ifndef NetIoHandlerSgl
+#define NetIoHandlerSgl base::singleton<NetIoHandler>::mutable_instance()
+#endif
 
 #endif

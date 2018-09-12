@@ -3,10 +3,11 @@
 #include "protolib/src/cmd.pb.h"
 #include "protolib/src/svr_base.pb.h"
 
-NetIoHandler::NetIoHandler(base::timestamp& now, callback_type callback) 
-	: _now(now) {
+int NetIoHandler::Init(base::timestamp& now, callback_type callback) {
+	_now = &now;
 	_msg_cache_size = 5000;
 	_callback = callback;
+	return 0;
 }
 
 int NetIoHandler::Update() {
@@ -120,7 +121,7 @@ void NetIoHandler::OnTick() {
 }
 
 const base::timestamp& NetIoHandler::GetNow()const {
-	return _now;
+	return *_now;
 }
 
 void NetIoHandler::CheckTcpSocketExpire() {
@@ -141,6 +142,34 @@ void NetIoHandler::CheckTcpSocketExpire() {
 		}
 		_last_check_time = GetNow();
 	}
+}
+
+bool NetIoHandler::SendDataByFd(base::s_int64_t fd, const char* data, base::s_int32_t len) {
+	if (M_CHECK_IS_TCP_FD(fd)) {
+		int real_fd = M_GET_TCP_FD(fd);
+		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
+		auto iter = fd_idx.find(real_fd);
+		if (iter != fd_idx.end()) {
+			iter->ptr->Send(data, len);
+			return true;
+		}
+		else {
+			LogError("fd is not exist, real_fd: " << real_fd << " fd: " << fd);
+		}
+	}
+	else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
+		int real_fd = M_GET_TCP_CONNECTOR_FD(fd);
+		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
+		auto iter = fd_idx.find(real_fd);
+		if (iter != fd_idx.end()) {
+			iter->ptr->Send(data, len);
+			return true;
+		}
+		else {
+			LogError("fd is not exist, real_fd: " << real_fd << " fd: " << fd);
+		}
+	}
+	return false;
 }
 
 void NetIoHandler::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error) {

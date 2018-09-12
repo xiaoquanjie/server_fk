@@ -39,11 +39,18 @@ protected:
 		return 0;
 	}
 
+	virtual int OnInitNetWork() = 0;
+
+	virtual void OnStopNetWork() = 0;
+
+	virtual int UpdateNetWork() = 0;
+
 	virtual int OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) {
 		return -1;
 	}
 
 	virtual int OnExit() {
+		OnStopNetWork();
 		return -1;
 	}
 

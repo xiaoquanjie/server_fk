@@ -60,6 +60,8 @@ protected:
 
 	base::s_int64_t fd();
 
+	base::s_int64_t cur_fd();
+
 	void set_co_id(base::s_int32_t);
 
 	const AppHeadFrame& cur_frame_head();
@@ -74,6 +76,7 @@ private:
 	base::s_uint64_t _userid;
 	base::s_int32_t _co_id;
 	base::s_int64_t _fd;
+	base::s_int64_t _cur_fd;
 	const AppHeadFrame* _cur_frame_head;
 	AppHeadFrame _ori_frame_head;
 	const char* _cur_frame_data;

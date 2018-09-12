@@ -7,6 +7,7 @@ void Transaction::Construct() {
 	_userid = 0;
 	_co_id = 0;
 	_fd = 0;
+	_cur_fd = 0;
 	_cur_frame_head = 0;
 	_cur_frame_data = 0;
 	_state = E_STATE_IDLE;
@@ -50,6 +51,7 @@ int Transaction::Process(base::s_int64_t fd, const AppHeadFrame& frame, const ch
 	}
 	_cur_frame_data = data;
 	_cur_frame_head = &frame;
+	_cur_fd = fd;
 	OnState();
 	return 0;
 }
@@ -157,6 +159,10 @@ base::s_int32_t Transaction::co_id() {
 
 base::s_int64_t Transaction::fd() {
 	return _fd;
+}
+
+base::s_int64_t Transaction::cur_fd() {
+	return _cur_fd;
 }
 
 void Transaction::set_co_id(base::s_int32_t id) {

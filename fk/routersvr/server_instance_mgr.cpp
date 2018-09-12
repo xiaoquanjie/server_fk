@@ -14,7 +14,7 @@ int SeverInstanceMgr::Init(const config::RouterSvrConfig* conf) {
 	return 0;
 }
 
-void SeverInstanceMgr::AddInstance(unsigned int server_type, int instance_id) {
+void SeverInstanceMgr::AddInstance(unsigned int server_type, int instance_id, base::s_int64_t fd) {
 	const config::Policy* policy = GetPolicy(server_type);
 	if (!policy) {
 		LogError("add instance fail, server_type:" << server_type << "instance_id" << instance_id);
@@ -27,19 +27,75 @@ void SeverInstanceMgr::AddInstance(unsigned int server_type, int instance_id) {
 		iter_type = _type_id_map.find(server_type);
 	}
 	
+	iter_type->second.svr_type = server_type;
 	iter_type->second.policy = policy->policy();
 	iter_type->second.inst_vec.insert(instance_id);
-	LogInfo("add server instance: server_type=" << server_type << " instance_id=" << instance_id);
+	
+	SvrInfo svrinfo;
+	svrinfo.svr_type = server_type;
+	svrinfo.svr_inst = instance_id;
+	_svrinfo_fd_map[svrinfo] = fd;
+	_fd_svrinfo_map[fd] = svrinfo;
+	LogInfo("add server instance: server_type=" << server_type << " instance_id=" << instance_id << " fd=" << fd);
 }
 
 void SeverInstanceMgr::DelInstance(unsigned int server_type, int instance_id) {
 	auto iter_type = _type_id_map.find(server_type);
 	if (iter_type == _type_id_map.end()) {
-		LogError("can't find server instance: server_type=" << server_type << " instance_id=" << instance_id);
+		LogError("can't find server instance in _type_id_map: server_type=" << server_type << " instance_id=" << instance_id);
 	}
 	else {
 		iter_type->second.inst_vec.erase(instance_id);
 		LogInfo("del server instance: server_type=" << server_type << " instance_id=" << instance_id);
+	}
+
+	SvrInfo svrinfo;
+	svrinfo.svr_type = server_type;
+	svrinfo.svr_inst = instance_id;
+	auto iter_svr = _svrinfo_fd_map.find(svrinfo);
+	if (iter_svr != _svrinfo_fd_map.end()) {
+		LogInfo("del server instance: server_type=" << server_type << " instance_id=" << instance_id << " fd=" << iter_svr->second);
+		_fd_svrinfo_map.erase(iter_svr->second);
+		_svrinfo_fd_map.erase(iter_svr);
+	}
+	else {
+		LogError("can't find server instance in _svrinfo_fd_map : server_type=" << server_type << " instance_id=" << instance_id);
+	}
+}
+
+void SeverInstanceMgr::DelInstance(base::s_int64_t fd) {
+	auto iter_fd = _fd_svrinfo_map.find(fd);
+	if (iter_fd == _fd_svrinfo_map.end()) {
+		LogError("can't find fd=" << fd);
+		return;
+	}
+
+	// 暂时不从_type_id_map里删除
+	LogInfo("del server instance: server_type=" << iter_fd->second.svr_type << " instance_id=" << iter_fd->second.svr_inst << " fd=" << fd);
+	_svrinfo_fd_map.erase(iter_fd->second);
+	_fd_svrinfo_map.erase(iter_fd);
+}
+
+base::s_int64_t SeverInstanceMgr::GetFdByTypeId(unsigned int server_type, int instance_id) {
+	SvrInfo info;
+	info.svr_type = server_type;
+	info.svr_inst = instance_id;
+	auto iter_svrinfo = _svrinfo_fd_map.find(info);
+	if (iter_svrinfo == _svrinfo_fd_map.end()) {
+		return 0;
+	}
+	else {
+		return iter_svrinfo->second;
+	}
+}
+
+SvrInfo* SeverInstanceMgr::GetSvrInfoByFd(base::s_int64_t fd) {
+	auto iter_fd = _fd_svrinfo_map.find(fd);
+	if (iter_fd == _fd_svrinfo_map.end()) {
+		return 0;
+	}
+	else {
+		return &iter_fd->second;
 	}
 }
 
