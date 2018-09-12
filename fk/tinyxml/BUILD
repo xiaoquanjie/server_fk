@@ -11,6 +11,8 @@ cc_library(
 	   'tinyxmlparser.cpp',
     ],
 
+	warning = 'no',
+
     deps = [
     ],
 

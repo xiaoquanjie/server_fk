@@ -7,7 +7,7 @@
 M_BASE_NAMESPACE_BEGIN
 
 template<typename T>
-class singletion : public noncopyable {
+class singleton : public noncopyable {
 public:
 	static T& mutable_instance() {
 		return instance();

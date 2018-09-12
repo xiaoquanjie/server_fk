@@ -77,6 +77,10 @@ public:
 		}
 		_size = 0;
 	}
+
+	T& operator[](int i) {
+		return _head[i];
+	}
 };
 
 M_BASE_NAMESPACE_END
