@@ -8,7 +8,6 @@
 #include "protolib/src/svr_base.pb.h"
 #include "protolib/src/cmd.pb.h"
 #include "commonlib/transaction/transaction_mgr.h"
-#include "commonlib/net_helper/net_helper.h"
 
 /////////////////////////////////////////////////////////////
 
@@ -73,11 +72,10 @@ int ApplicationBase::Init(int argc, char** argv) {
 			break;
 		}
 
-		// start network thread
-		auto func = m_bind_t(&ApplicationBase::OnProc, this, placeholder_1, placeholder_2, placeholder_3, placeholder_4);
-		ret = NetHelper::Init(_now, func, _svr_thread_cnt);
+		// init network
+		ret = OnInitNetWork();
 		if (0 != ret) {
-			LogError("NetHelper::Init error");
+			LogError("OnInitNetWork error");
 		}
 
 		ret = OnInit();
@@ -101,7 +99,7 @@ int ApplicationBase::Init(int argc, char** argv) {
 	else {
 		LogError("application start fail");
 		// stop network 
-		NetHelper::Stop();
+		OnStopNetWork();
 		exit(-1);
 	}
 	return ret;

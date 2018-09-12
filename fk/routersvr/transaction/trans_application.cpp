@@ -2,7 +2,7 @@
 #include "protolib/src/cmd.pb.h"
 #include "commonlib/transaction/base_transaction.h"
 #include "commonlib/transaction/transaction_mgr.h"
-#include "commonlib/net_helper/net_helper.h"
+#include "routersvr/server_instance_mgr.h"
 
 class TransClientIn 
 	: public BaseTransaction<TransClientIn, proto::SocketClientIn> {
@@ -24,6 +24,7 @@ public:
 	TransClientOut(unsigned int cmd) : BaseTransaction(cmd) {}
 
 	int OnRequest(proto::SocketClientOut& request) {
+		SeverInstanceMgrSgl.DelInstance(fd());
 		return 0;
 	}
 };
@@ -38,8 +39,7 @@ public:
 	TransRegisterServer(unsigned int cmd) : BaseTransaction(cmd) {}
 
 	int OnRequest(proto::RegisterServerReq& request, proto::RegisterServerRsp& respond) {
-		NetHelper::RegisterServer(request.server_type(), request.instance_id(),
-			fd());
+		SeverInstanceMgrSgl.AddInstance(request.server_type(), request.instance_id(), fd());
 		respond.mutable_ret()->set_code(0);
 		return 0;
 	}
