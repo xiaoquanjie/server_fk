@@ -32,5 +32,7 @@ int RouterMgr::Reload() {
 }
 
 int RouterMgr::ConnectRouters() {
+
+
 	return 0;
 }

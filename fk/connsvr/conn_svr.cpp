@@ -1,6 +1,7 @@
 #include "connsvr/conn_svr.h"
 #include "commonlib/net_helper/svr_net_handler.h"
 #include "commonlib/transaction/transaction_mgr.h"
+#include "commonlib/net_helper/router_mgr.h"
 
 int ConnApplication::OnInitNetWork() {
 	auto func = m_bind_t(&ConnApplication::OnProc, this, placeholder_1,
@@ -20,16 +21,36 @@ int ConnApplication::UpdateNetWork() {
 }
 
 int ConnApplication::OnInit() {
+	// listen
+	std::string ip = _svr_config.Data().listen_ip();
+	int port = _svr_config.Data().listen_port();
+	if (!SvrNetIoHandlerSgl.ListenOne(ip, port)) {
+		LogError(ip << " " << port << "listen error:" << SvrNetIoHandlerSgl.GetLastError().What());
+		return -1;
+	}
+	else {
+		LogInfo("listen in: " << ip << " " << port);
+	}
+
+	int ret = RouterMgrSgl.Init(_comm_config.Data().router_conf_file());
+	if (0 != ret) {
+		return -1;
+	}
+
 	return 0;
 }
 
 int ConnApplication::OnReload() {
 	const std::string path = ConfigFilePath();
-	int ret = _svr_config.Parse(path.c_str());
-	if (0 != ret) {
+	if (0 != _svr_config.Parse(path.c_str())) {
 		LogError("_svr_config.Parse fail:" << path);
+		return -1;
 	}
-	return ret;
+	if (0 != RouterMgrSgl.Reload()) {
+		LogError("RouterMgrSgl.Reload fail");
+		return -1;
+	}
+	return 0;
 }
 
 int ConnApplication::OnExit() {
