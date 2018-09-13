@@ -7,5 +7,8 @@ root_path=`pwd`
 ./blade-bin/routersvr/routersvr -D --config_file ${root_path}/conf/routersvr/routersvr.conf 
 echo 'starting routersvr..........'
 
+./blade-bin/connsvr/connsvr -D --config_file ${root_path}/conf/connsvr/connsvr.conf
+echo 'starting connsvr..........'
+
 
 
