@@ -143,6 +143,7 @@
     <None Include="BUILD" />
     <None Include="proto\cmd.proto" />
     <None Include="proto\comm_conf.proto" />
+    <None Include="proto\connsvr_config.proto" />
     <None Include="proto\router.proto" />
     <None Include="proto\routersvr_config.proto" />
     <None Include="proto\svr_base.proto" />
@@ -150,6 +151,7 @@
   <ItemGroup>
     <ClCompile Include="src\cmd.pb.cc" />
     <ClCompile Include="src\comm_conf.pb.cc" />
+    <ClCompile Include="src\connsvr_config.pb.cc" />
     <ClCompile Include="src\router.pb.cc" />
     <ClCompile Include="src\routersvr_config.pb.cc" />
     <ClCompile Include="src\svr_base.pb.cc" />
@@ -157,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="src\cmd.pb.h" />
     <ClInclude Include="src\comm_conf.pb.h" />
+    <ClInclude Include="src\connsvr_config.pb.h" />
     <ClInclude Include="src\router.pb.h" />
     <ClInclude Include="src\routersvr_config.pb.h" />
     <ClInclude Include="src\svr_base.pb.h" />

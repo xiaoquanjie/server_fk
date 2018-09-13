@@ -19,4 +19,12 @@
       <Filter>源文件</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="BUILD">
+      <Filter>源文件</Filter>
+    </None>
+    <None Include="..\conf\connsvr\connsvr.conf">
+      <Filter>源文件</Filter>
+    </None>
+  </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@
 #include "commonlib/svr_base/ApplicationBase.h"
 #include "slience/base/singletion.hpp"
 #include "commonlib/svr_base/server_cfg.h"
+#include "protolib/src/connsvr_config.pb.h"
 
 class ConnApplication : public ApplicationBase {
 public:
@@ -23,6 +24,8 @@ public:
 
 	int OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) override;
 
+private:
+	ServerCfg<config::ConnsvrConfig> _svr_config;
 };
 
 #ifndef ConnApplicationSgl
