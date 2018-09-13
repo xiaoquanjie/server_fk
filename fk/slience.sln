@@ -42,6 +42,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "protoc", "protoc\protoc.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mysqlclient", "mysqlclient\mysqlclient.vcxproj", "{9FC43226-167E-4CF2-8E53-983045281446}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "connsvr", "connsvr\connsvr.vcxproj", "{84484CF8-ED39-48F9-938C-5A97A066E393}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -118,6 +120,14 @@ Global
 		{9FC43226-167E-4CF2-8E53-983045281446}.Release|Win32.Build.0 = Release|Win32
 		{9FC43226-167E-4CF2-8E53-983045281446}.Release|x64.ActiveCfg = Release|x64
 		{9FC43226-167E-4CF2-8E53-983045281446}.Release|x64.Build.0 = Release|x64
+		{84484CF8-ED39-48F9-938C-5A97A066E393}.Debug|Win32.ActiveCfg = Debug|Win32
+		{84484CF8-ED39-48F9-938C-5A97A066E393}.Debug|Win32.Build.0 = Debug|Win32
+		{84484CF8-ED39-48F9-938C-5A97A066E393}.Debug|x64.ActiveCfg = Debug|x64
+		{84484CF8-ED39-48F9-938C-5A97A066E393}.Debug|x64.Build.0 = Debug|x64
+		{84484CF8-ED39-48F9-938C-5A97A066E393}.Release|Win32.ActiveCfg = Release|Win32
+		{84484CF8-ED39-48F9-938C-5A97A066E393}.Release|Win32.Build.0 = Release|Win32
+		{84484CF8-ED39-48F9-938C-5A97A066E393}.Release|x64.ActiveCfg = Release|x64
+		{84484CF8-ED39-48F9-938C-5A97A066E393}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
