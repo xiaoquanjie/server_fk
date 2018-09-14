@@ -47,6 +47,9 @@
     <Filter Include="tinyxml">
       <UniqueIdentifier>{7b9957a3-a0c1-4984-9fd9-372d8b83a612}</UniqueIdentifier>
     </Filter>
+    <Filter Include="traits">
+      <UniqueIdentifier>{1f72ab24-058f-4629-8549-4f5afbdfc730}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="svr_base\getopt.c">
@@ -761,6 +764,21 @@
     </ClInclude>
     <ClInclude Include="net_helper\svr_net_handler.h">
       <Filter>net_helper</Filter>
+    </ClInclude>
+    <ClInclude Include="traits\fun_to_mem_converter.hpp">
+      <Filter>traits</Filter>
+    </ClInclude>
+    <ClInclude Include="traits\function_traits.hpp">
+      <Filter>traits</Filter>
+    </ClInclude>
+    <ClInclude Include="traits\macro_practical.hpp">
+      <Filter>traits</Filter>
+    </ClInclude>
+    <ClInclude Include="traits\mem_to_fun_converter.hpp">
+      <Filter>traits</Filter>
+    </ClInclude>
+    <ClInclude Include="traits\mfunction_traits.hpp">
+      <Filter>traits</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

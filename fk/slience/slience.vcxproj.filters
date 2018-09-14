@@ -228,6 +228,15 @@
     <ClInclude Include="base\time_pool.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="base\random.hpp">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="base\md5.hpp">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="base\md5_helper.ipp">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\buffer.cpp">

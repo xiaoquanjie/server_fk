@@ -327,6 +327,11 @@
     <ClInclude Include="svr_base\server_cfg.h" />
     <ClInclude Include="svr_base\server_manager.h" />
     <ClInclude Include="svr_base\svrbase.h" />
+    <ClInclude Include="traits\function_traits.hpp" />
+    <ClInclude Include="traits\fun_to_mem_converter.hpp" />
+    <ClInclude Include="traits\macro_practical.hpp" />
+    <ClInclude Include="traits\mem_to_fun_converter.hpp" />
+    <ClInclude Include="traits\mfunction_traits.hpp" />
     <ClInclude Include="transaction\base_transaction.h" />
     <ClInclude Include="transaction\transaction_mgr.h" />
   </ItemGroup>
