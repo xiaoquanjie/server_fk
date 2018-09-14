@@ -172,6 +172,11 @@ void TcpBaseSocket<T, SocketType>::SetExtData(void* data, void(*func)(void*data)
 template<typename T, typename SocketType>
 void TcpBaseSocket<T, SocketType>::SetExtData(void* data) {
 	_extdata = data;
+	_extdata_func = [](void* data)->void{
+		if (data) {
+			free(data);
+		}
+	};
 }
 
 template<typename T, typename SocketType>

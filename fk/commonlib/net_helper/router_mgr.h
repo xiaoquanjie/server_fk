@@ -20,7 +20,7 @@ public:
 
 	int Reload();
 
-
+	bool ExistRouter(const std::string& ip, unsigned int port, int number);
 
 protected:
 	int ConnectRouters();
