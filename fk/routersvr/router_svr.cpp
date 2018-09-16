@@ -3,7 +3,7 @@
 #include "commonlib/transaction/transaction_mgr.h"
 #include "protolib/src/cmd.pb.h"
 #include "routersvr/server_instance_mgr.h"
-#include "commonlib/net_helper/net_handler.h"
+#include "commonlib/net_handler/net_handler.h"
 
 int RouterApplication::OnInitNetWork() {
 	// start network thread

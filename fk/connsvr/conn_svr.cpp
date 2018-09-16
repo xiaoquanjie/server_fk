@@ -1,7 +1,7 @@
 #include "connsvr/conn_svr.h"
-#include "commonlib/net_helper/svr_net_handler.h"
+#include "commonlib/net_handler/svr_net_handler.h"
 #include "commonlib/transaction/transaction_mgr.h"
-#include "commonlib/net_helper/router_mgr.h"
+#include "commonlib/net_handler/router_mgr.h"
 
 int ConnApplication::OnInitNetWork() {
 	auto func = m_bind_t(&ConnApplication::OnProc, this, placeholder_1,

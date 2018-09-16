@@ -5,10 +5,13 @@
 #include "slience/netio/netio.hpp"
 #include <vector>
 
-struct RouterInfo {
+struct RouterInfoBase{
 	std::string ip;
 	unsigned short port;
 	int number;
+};
+
+struct RouterInfo : public RouterInfoBase {
 	netiolib::TcpConnectorPtr ptr;
 };
 
@@ -22,13 +25,19 @@ public:
 
 	bool ExistRouter(const std::string& ip, unsigned int port, int number);
 
+	int AddRouter(const std::string& ip, unsigned int port, int number,
+		netiolib::TcpConnectorPtr ptr);
+
+	int DelRouter(const std::string& ip, unsigned int port, int number,
+		netiolib::TcpConnectorPtr ptr);
+
 protected:
 	int ConnectRouters();
 
 private:
 	std::string _router_file;
 	ServerCfg<config::RouterConfig> _router_config;
-	std::vector<RouterInfo> _router_info;
+	std::vector<RouterInfo> _router_info_vec;
 };
 
 #ifndef RouterMgrSgl
