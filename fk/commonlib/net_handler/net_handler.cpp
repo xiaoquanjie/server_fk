@@ -172,6 +172,31 @@ bool NetIoHandler::SendDataByFd(base::s_int64_t fd, const char* data, base::s_in
 	return false;
 }
 
+void NetIoHandler::CloseFd(base::s_int64_t fd) {
+	if (M_CHECK_IS_TCP_FD(fd)) {
+		int real_fd = M_GET_TCP_FD(fd);
+		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
+		auto iter = fd_idx.find(real_fd);
+		if (iter != fd_idx.end()) {
+			iter->ptr->Close();
+		}
+		else {
+			LogWarn(fd << " fd(tcp_socket) is not exist");
+		}
+	}
+	else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
+		int real_fd = M_GET_TCP_CONNECTOR_FD(fd);
+		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
+		auto iter = fd_idx.find(real_fd);
+		if (iter != fd_idx.end()) {
+			iter->ptr->Close();
+		}
+		else {
+			LogWarn(fd << " fd(tcp_connector) is not exist");
+		}
+	}
+}
+
 void NetIoHandler::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error) {
 	if (!error) {
 		// connect success

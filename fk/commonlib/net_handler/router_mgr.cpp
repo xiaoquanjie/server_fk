@@ -50,12 +50,14 @@ int RouterMgr::ConnectRouters() {
 	for (int idx = 0; idx < _router_config.Data().router_list_size(); ++idx) {
 		auto& item = _router_config.Data().router_list(idx);
 		if (!ExistRouter(item.listen_ip(), item.listen_port(), item.number())) {
-			RouterInfo* pinfo = (RouterInfo*)malloc(sizeof(RouterInfo));
-			pinfo->ip = item.listen_ip();
-			pinfo->port = item.listen_port();
-			pinfo->number = item.number();
-			SvrNetIoHandlerSgl.ConnectOne(pinfo->ip, pinfo->port, pinfo);
-			tmp_router_info_map[pinfo->number] = *pinfo;
+			SvrNetIoHandlerSgl.ConnectOne(item.listen_ip(), item.listen_port(), 
+				Enum_ConnType_Router, item.number());
+
+			RouterInfo router_info;
+			router_info.ip = item.listen_ip();
+			router_info.port = item.listen_port();
+			router_info.number = item.number();
+			tmp_router_info_map[item.number()] = router_info;
 		}
 	}
 
@@ -72,11 +74,7 @@ int RouterMgr::ConnectRouters() {
 			}
 		}
 		if (!exist) {
-			// close
-			if (iter->ptr) {
-				iter->ptr->Close();
-			}
-			iter = _router_info_vec.erase(iter);
+			SvrNetIoHandlerSgl.CloseFd(iter->fd);
 		}
 		else {
 			tmp_router_info_map[iter->number] = *iter;
@@ -104,13 +102,13 @@ bool RouterMgr::ExistRouter(const std::string& ip, unsigned int port, int number
 }
 
 int RouterMgr::AddRouter(const std::string& ip, unsigned int port, int number,
-	netiolib::TcpConnectorPtr ptr) {
+	base::s_int64_t fd) {
 	for (auto iter = _router_info_vec.begin(); iter != _router_info_vec.end();
 		++iter) {
 		if (ip == iter->ip
 			&& port == iter->port
 			&& number == iter->number) {
-			iter->ptr = ptr;
+			iter->fd = fd;
 			return 0;
 		}
 	}
@@ -118,7 +116,7 @@ int RouterMgr::AddRouter(const std::string& ip, unsigned int port, int number,
 }
 
 int RouterMgr::DelRouter(const std::string& ip, unsigned int port, int number,
-	netiolib::TcpConnectorPtr ptr) {
+	base::s_int64_t fd) {
 	for (auto iter = _router_info_vec.begin(); iter != _router_info_vec.end();
 		++iter) {
 		if (ip == iter->ip
@@ -129,5 +127,4 @@ int RouterMgr::DelRouter(const std::string& ip, unsigned int port, int number,
 		}
 	}
 	return -1;
-	return 0;
 }

@@ -36,6 +36,8 @@ public:
 
 	bool SendDataByFd(base::s_int64_t fd, const char* data, base::s_int32_t len);
 
+	void CloseFd(base::s_int64_t fd);
+
 	virtual void OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error);
 
 	virtual void OnConnection(netiolib::TcpSocketPtr& clisock);
