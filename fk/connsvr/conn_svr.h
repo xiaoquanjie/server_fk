@@ -8,6 +8,10 @@
 
 class ConnApplication : public ApplicationBase {
 public:
+	int ServerType() override;
+
+	int InstanceId() override;
+
 	int OnInitNetWork() override;
 
 	void OnStopNetWork() override;

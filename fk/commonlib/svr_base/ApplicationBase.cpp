@@ -105,6 +105,27 @@ int ApplicationBase::Init(int argc, char** argv) {
 	return ret;
 }
 
+int ApplicationBase::OnInit() {
+	return 0;
+}
+
+int ApplicationBase::OnTick(const base::timestamp& now) {
+	return 0;
+}
+
+int ApplicationBase::OnReload() {
+	return 0;
+}
+
+int ApplicationBase::OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) {
+	return -1;
+}
+
+int ApplicationBase::OnExit() {
+	OnStopNetWork();
+	return 0;
+}
+
 const std::string& ApplicationBase::ConfigFilePath()const {
 	return _conf_file;
 }

@@ -33,8 +33,21 @@ protected:
 
 	int ParseMsg(google::protobuf::Message& message);
 
-	void SendMessageBack(google::protobuf::Message& message);
+	// int SendMsgBack(google::protobuf::Message& respond);
 
+	int SendMsgByServerType(int cmd, int svr_type,
+		google::protobuf::Message& request, google::protobuf::Message& respond);
+	
+	int SendMsgByServerType(int cmd, int svr_type,
+		google::protobuf::Message& request);
+
+	int SendMsgByFd(int cmd, base::s_int64_t fd,
+		google::protobuf::Message& request, google::protobuf::Message& respond);
+
+	int SendMsgByFd(int cmd, base::s_int64_t fd,
+		google::protobuf::Message& request);
+
+protected:
 	void OnState();
 
 	void CancelTimer();
@@ -134,7 +147,7 @@ protected:
 		if (0 == ret) {
 			// 回包
 			LogDebug("userid: " << userid() << " cmd: " << cmd() << " RESPOND_TYPE=" << respond.GetTypeName().c_str() << "|" << respond.ShortDebugString().c_str());
-			SendMessageBack(respond);
+			SendMsgByFd(cmd() + 1, fd(), respond);
 		}
 		return 0;
 	}

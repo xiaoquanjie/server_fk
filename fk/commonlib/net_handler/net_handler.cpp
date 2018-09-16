@@ -197,6 +197,26 @@ void NetIoHandler::CloseFd(base::s_int64_t fd) {
 	}
 }
 
+netiolib::TcpConnectorPtr NetIoHandler::GetConnectorPtr(base::s_int64_t fd) {
+	int real_fd = M_GET_TCP_CONNECTOR_FD(fd);
+	auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
+	auto iter = fd_idx.find(real_fd);
+	if (iter != fd_idx.end()) {
+		return iter->ptr;
+	}
+	return netiolib::TcpConnectorPtr();
+}
+
+netiolib::TcpSocketPtr NetIoHandler::GetSocketPtr(base::s_int64_t fd) {
+	int real_fd = M_GET_TCP_FD(fd);
+	auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
+	auto iter = fd_idx.find(real_fd);
+	if (iter != fd_idx.end()) {
+		return iter->ptr;
+	}
+	return netiolib::TcpSocketPtr();
+}
+
 void NetIoHandler::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error) {
 	if (!error) {
 		// connect success
@@ -282,7 +302,6 @@ void NetIoHandler::OnDisConnection(netiolib::TcpSocketPtr& clisock) {
 	}
 	else {
 		int instid = iter->instid;
-		fd_index.erase(iter);
 		proto::SocketClientOut client_out;
 		std::string str = client_out.SerializeAsString();
 		AppHeadFrame frame;
@@ -291,6 +310,7 @@ void NetIoHandler::OnDisConnection(netiolib::TcpSocketPtr& clisock) {
 
 		LogInfo("connection broken, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
 		_callback(fd, frame, str.c_str(), str.size());
+		fd_index.erase(iter);
 	}
 }
 

@@ -38,6 +38,10 @@ public:
 
 	void CloseFd(base::s_int64_t fd);
 
+	netiolib::TcpConnectorPtr GetConnectorPtr(base::s_int64_t fd);
+
+	netiolib::TcpSocketPtr GetSocketPtr(base::s_int64_t fd);
+
 	virtual void OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error);
 
 	virtual void OnConnection(netiolib::TcpSocketPtr& clisock);

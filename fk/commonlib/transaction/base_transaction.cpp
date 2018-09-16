@@ -137,8 +137,24 @@ int Transaction::OnTimeOut() {
 	return 0;
 }
 
-void Transaction::SendMessageBack(google::protobuf::Message& message) {
+int Transaction::SendMsgByServerType(int cmd, int svr_type,
+	google::protobuf::Message& request, google::protobuf::Message& respond) {
+	return 0;
+}
 
+int Transaction::SendMsgByServerType(int cmd, int svr_type,
+	google::protobuf::Message& request) {
+	return 0;
+}
+
+int Transaction::SendMsgByFd(int cmd, base::s_int64_t fd,
+	google::protobuf::Message& request, google::protobuf::Message& respond) {
+	return 0;
+}
+
+int Transaction::SendMsgByFd(int cmd, base::s_int64_t fd,
+	google::protobuf::Message& request) {
+	return 0;
 }
 
 base::s_uint32_t Transaction::trans_id() {

@@ -8,6 +8,10 @@
 
 class RouterApplication : public ApplicationBase {
 protected:
+	int ServerType() override;
+
+	int InstanceId() override;
+
 	int OnInitNetWork() override;
 
 	void OnStopNetWork() override;

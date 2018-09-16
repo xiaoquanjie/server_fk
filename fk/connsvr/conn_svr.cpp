@@ -3,6 +3,14 @@
 #include "commonlib/transaction/transaction_mgr.h"
 #include "commonlib/net_handler/router_mgr.h"
 
+int ConnApplication::ServerType() {
+	return proto::SVR_TYPE_CONN;
+}
+
+int ConnApplication::InstanceId() {
+	return _svr_config.Data().svr_inst_id();
+}
+
 int ConnApplication::OnInitNetWork() {
 	auto func = m_bind_t(&ConnApplication::OnProc, this, placeholder_1,
 		placeholder_2, placeholder_3, placeholder_4);

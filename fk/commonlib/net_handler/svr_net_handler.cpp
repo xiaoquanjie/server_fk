@@ -1,5 +1,4 @@
 #include "commonlib/net_handler/svr_net_handler.h"
-#include "commonlib/net_handler/router_mgr.h"
 
 ConnInfo* MakeConnInfo(const std::string& addr, SocketLib::s_uint16_t port,
 	int conn_type, int serial_num) {

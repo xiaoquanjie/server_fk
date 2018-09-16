@@ -464,8 +464,17 @@ class RouterSvrConfig : public ::google::protobuf::Message /* @@protoc_insertion
   const ::google::protobuf::RepeatedPtrField< ::config::Policy >&
       policy_list() const;
 
+  // optional int32 svr_inst_id = 4;
+  bool has_svr_inst_id() const;
+  void clear_svr_inst_id();
+  static const int kSvrInstIdFieldNumber = 4;
+  ::google::protobuf::int32 svr_inst_id() const;
+  void set_svr_inst_id(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:config.RouterSvrConfig)
  private:
+  void set_has_svr_inst_id();
+  void clear_has_svr_inst_id();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
@@ -473,6 +482,7 @@ class RouterSvrConfig : public ::google::protobuf::Message /* @@protoc_insertion
   ::google::protobuf::RepeatedPtrField< ::config::ListenInfo > listen_list_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > legal_svr_list_;
   ::google::protobuf::RepeatedPtrField< ::config::Policy > policy_list_;
+  ::google::protobuf::int32 svr_inst_id_;
   friend struct ::protobuf_routersvr_5fconfig_2eproto::TableStruct;
   friend void ::protobuf_routersvr_5fconfig_2eproto::InitDefaultsRouterSvrConfigImpl();
 };
@@ -718,6 +728,30 @@ inline const ::google::protobuf::RepeatedPtrField< ::config::Policy >&
 RouterSvrConfig::policy_list() const {
   // @@protoc_insertion_point(field_list:config.RouterSvrConfig.policy_list)
   return policy_list_;
+}
+
+// optional int32 svr_inst_id = 4;
+inline bool RouterSvrConfig::has_svr_inst_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void RouterSvrConfig::set_has_svr_inst_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void RouterSvrConfig::clear_has_svr_inst_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void RouterSvrConfig::clear_svr_inst_id() {
+  svr_inst_id_ = 0;
+  clear_has_svr_inst_id();
+}
+inline ::google::protobuf::int32 RouterSvrConfig::svr_inst_id() const {
+  // @@protoc_insertion_point(field_get:config.RouterSvrConfig.svr_inst_id)
+  return svr_inst_id_;
+}
+inline void RouterSvrConfig::set_svr_inst_id(::google::protobuf::int32 value) {
+  set_has_svr_inst_id();
+  svr_inst_id_ = value;
+  // @@protoc_insertion_point(field_set:config.RouterSvrConfig.svr_inst_id)
 }
 
 #ifdef __GNUC__

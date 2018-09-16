@@ -5,6 +5,14 @@
 #include "routersvr/server_instance_mgr.h"
 #include "commonlib/net_handler/net_handler.h"
 
+int RouterApplication::ServerType() {
+	return proto::SVR_TYPE_ROUTER;
+}
+
+int RouterApplication::InstanceId() {
+	return _svr_config.Data().svr_inst_id();
+}
+
 int RouterApplication::OnInitNetWork() {
 	// start network thread
 	auto func = m_bind_t(&RouterApplication::OnProc, this, placeholder_1,
