@@ -94,9 +94,6 @@
     <ClCompile Include="net_handler\router_mgr.cpp">
       <Filter>net_handler</Filter>
     </ClCompile>
-    <ClCompile Include="net_handler\svr_net_handler.cpp">
-      <Filter>net_handler</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="svr_base\ApplicationBase.h">
@@ -769,9 +766,6 @@
       <Filter>net_handler</Filter>
     </ClInclude>
     <ClInclude Include="net_handler\router_mgr.h">
-      <Filter>net_handler</Filter>
-    </ClInclude>
-    <ClInclude Include="net_handler\svr_net_handler.h">
       <Filter>net_handler</Filter>
     </ClInclude>
   </ItemGroup>

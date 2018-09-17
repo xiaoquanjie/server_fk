@@ -14,7 +14,7 @@
     <ProjectGuid>{BD516388-238C-4DE9-9E1E-AE28AC51A8ED}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>commonlib</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -94,7 +94,6 @@
     <ClCompile Include="..\tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="net_handler\net_handler.cpp" />
     <ClCompile Include="net_handler\router_mgr.cpp" />
-    <ClCompile Include="net_handler\svr_net_handler.cpp" />
     <ClCompile Include="svr_base\ApplicationBaseExt.cpp" />
     <ClCompile Include="svr_base\router_manager.cpp" />
     <ClCompile Include="svr_base\server_manager.cpp" />
@@ -315,7 +314,6 @@
     <ClInclude Include="..\tinyxml\tinyxml.h" />
     <ClInclude Include="net_handler\net_handler.h" />
     <ClInclude Include="net_handler\router_mgr.h" />
-    <ClInclude Include="net_handler\svr_net_handler.h" />
     <ClInclude Include="svr_base\ApplicationBase.h" />
     <ClInclude Include="svr_base\ApplicationFunc.hpp" />
     <ClInclude Include="svr_base\getopt.h" />

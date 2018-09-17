@@ -3,6 +3,16 @@
 #include "protolib/src/cmd.pb.h"
 #include "protolib/src/svr_base.pb.h"
 
+ConnInfo* MakeConnInfo(const std::string& addr, SocketLib::s_uint16_t port,
+	int conn_type, int serial_num) {
+	ConnInfo* pinfo = (ConnInfo*)malloc(sizeof(ConnInfo));
+	pinfo->conn_type = conn_type;
+	pinfo->serial_num = serial_num;
+	pinfo->port = port;
+	memcpy(pinfo->ip, addr.c_str(), addr.length());
+	return pinfo;
+}
+
 int NetIoHandler::Init(base::timestamp& now, callback_type callback) {
 	_now = &now;
 	_msg_cache_size = 5000;
@@ -217,6 +227,37 @@ netiolib::TcpSocketPtr NetIoHandler::GetSocketPtr(base::s_int64_t fd) {
 	return netiolib::TcpSocketPtr();
 }
 
+bool NetIoHandler::ConnectOne(const std::string& addr, SocketLib::s_uint16_t port,
+	int conn_type, int serial_num) {
+	ConnInfo* pinfo = MakeConnInfo(addr, port, conn_type, serial_num);
+	_ConnectOne(pinfo);
+	return true;
+}
+
+void NetIoHandler::ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port,
+	int conn_type, int serial_num) {
+	try {
+		ConnInfo* pinfo = MakeConnInfo(addr, port, conn_type, serial_num);
+		SocketLib::Tcp::EndPoint ep(SocketLib::AddressV4(addr), port);
+		netiolib::HttpConnectorPtr connector(new netiolib::HttpConnector(*this));
+		connector->SetExtData(pinfo);
+		connector->AsyncConnect(ep);
+		connector.reset();
+	}
+	catch (...) {
+	}
+}
+
+void NetIoHandler::_ConnectOne(ConnInfo* info) {
+	SocketLib::SocketError error;
+	netiolib::TcpConnectorPtr connector(new netiolib::TcpConnector(*this));
+	connector->SetExtData(info);
+	SocketLib::Tcp::EndPoint ep(SocketLib::AddressV4(info->ip), info->port);
+	connector->AsyncConnect(ep, error);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
 void NetIoHandler::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error) {
 	if (!error) {
 		// connect success
@@ -243,6 +284,12 @@ void NetIoHandler::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::S
 			frame.set_cmd(proto::CMD::CMD_SOCKET_CLIENT_IN);
 			_callback(fd, frame, str.c_str(), str.size());
 		}
+	}
+	else {
+		// 默认是重连
+		ConnInfo* pinfo = (ConnInfo*)clisock->GetExtData();
+		ConnInfo* new_info = MakeConnInfo(pinfo->ip, pinfo->port, pinfo->conn_type, pinfo->serial_num);
+		_ConnectOne(pinfo);
 	}
 }
 

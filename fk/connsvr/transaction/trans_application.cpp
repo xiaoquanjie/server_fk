@@ -3,7 +3,7 @@
 #include "commonlib/transaction/base_transaction.h"
 #include "commonlib/transaction/transaction_mgr.h"
 #include "commonlib/net_handler/router_mgr.h"
-#include "commonlib/net_handler/svr_net_handler.h"
+#include "commonlib/net_handler/net_handler.h"
 #include "connsvr/conn_svr.h"
 
 class TransClientIn 
@@ -13,7 +13,7 @@ public:
 
 	int OnRequest(proto::SocketClientIn& request) {
 		if (M_CHECK_IS_TCP_CONNECTOR_FD(fd())) {
-			netiolib::TcpConnectorPtr ptr = SvrNetIoHandlerSgl.GetConnectorPtr(fd());
+			netiolib::TcpConnectorPtr ptr = NetIoHandlerSgl.GetConnectorPtr(fd());
 			if (ptr) {
 				ConnInfo* pinfo = (ConnInfo*)ptr->GetExtData();
 				if (pinfo && pinfo->conn_type == Enum_ConnType_Router) {
@@ -46,7 +46,7 @@ public:
 
 	int OnRequest(proto::SocketClientOut& request) {
 		if (M_CHECK_IS_TCP_CONNECTOR_FD(fd())) {
-			netiolib::TcpConnectorPtr ptr = SvrNetIoHandlerSgl.GetConnectorPtr(fd());
+			netiolib::TcpConnectorPtr ptr = NetIoHandlerSgl.GetConnectorPtr(fd());
 			if (ptr) {
 				ConnInfo* pinfo = (ConnInfo*)ptr->GetExtData();
 				if (pinfo && pinfo->conn_type == Enum_ConnType_Router) {
@@ -55,7 +55,7 @@ public:
 					}
 					else {
 						// жипB
-						SvrNetIoHandlerSgl.ConnectOne(pinfo->ip, pinfo->port,
+						NetIoHandlerSgl.ConnectOne(pinfo->ip, pinfo->port,
 							pinfo->conn_type, pinfo->serial_num);
 					}
 				}
@@ -67,17 +67,3 @@ public:
 
 REGISTER_TRANSACTION(CMD_SOCKET_CLIENT_OUT, TransClientOut);
 
-///////////////////////////////////////////////////////////////////////////
-
-class TransRegisterServer 
-	: public BaseTransaction<TransRegisterServer, proto::RegisterServerReq, proto::RegisterServerRsp> {
-public:
-	TransRegisterServer(unsigned int cmd) : BaseTransaction(cmd) {}
-
-	int OnRequest(proto::RegisterServerReq& request, proto::RegisterServerRsp& respond) {
-		
-		return 0;
-	}
-};
-
-REGISTER_TRANSACTION(CMD_REGISTER_SERVER_REQ, TransRegisterServer);

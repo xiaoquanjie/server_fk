@@ -1,5 +1,5 @@
 #include "connsvr/conn_svr.h"
-#include "commonlib/net_handler/svr_net_handler.h"
+#include "commonlib/net_handler/net_handler.h"
 #include "commonlib/transaction/transaction_mgr.h"
 #include "commonlib/net_handler/router_mgr.h"
 
@@ -14,17 +14,17 @@ int ConnApplication::InstanceId() {
 int ConnApplication::OnInitNetWork() {
 	auto func = m_bind_t(&ConnApplication::OnProc, this, placeholder_1,
 		placeholder_2, placeholder_3, placeholder_4);
-	SvrNetIoHandlerSgl.Init(_now, func);
-	SvrNetIoHandlerSgl.Start(_svr_thread_cnt, false);
+	NetIoHandlerSgl.Init(_now, func);
+	NetIoHandlerSgl.Start(_svr_thread_cnt, false);
 	return 0;
 }
 
 void ConnApplication::OnStopNetWork() {
-	SvrNetIoHandlerSgl.Stop();
+	NetIoHandlerSgl.Stop();
 }
 
 int ConnApplication::UpdateNetWork() {
-	SvrNetIoHandlerSgl.Update();
+	NetIoHandlerSgl.Update();
 	return 0;
 }
 
@@ -32,8 +32,8 @@ int ConnApplication::OnInit() {
 	// listen
 	std::string ip = _svr_config.Data().listen_ip();
 	int port = _svr_config.Data().listen_port();
-	if (!SvrNetIoHandlerSgl.ListenOne(ip, port)) {
-		LogError(ip << " " << port << "listen error:" << SvrNetIoHandlerSgl.GetLastError().What());
+	if (!NetIoHandlerSgl.ListenOne(ip, port)) {
+		LogError(ip << " " << port << "listen error:" << NetIoHandlerSgl.GetLastError().What());
 		return -1;
 	}
 	else {
@@ -67,7 +67,7 @@ int ConnApplication::OnExit() {
 }
 
 int ConnApplication::OnTick(const base::timestamp& now) {
-	SvrNetIoHandlerSgl.OnTick();
+	NetIoHandlerSgl.OnTick();
 	return 0;
 }
 

@@ -19,10 +19,21 @@
 #define M_EXPIRE_INTERVAL (30)
 #endif
 
+enum ConnType {
+	Enum_ConnType_Router = 1,
+};
+
+struct ConnInfo {
+	int conn_type;
+	int serial_num;
+	int port;
+	char ip[65];
+};
+
 class NetIoHandler : public netiolib::NetIo {
 public:
-	typedef m_function_t<int(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len)>
-		callback_type;
+	typedef m_function_t<int(base::s_int64_t fd, const AppHeadFrame& frame, 
+		const char* data, base::s_uint32_t data_len)> callback_type;
 
 	int Init(base::timestamp& now, callback_type callback);
 
@@ -41,6 +52,15 @@ public:
 	netiolib::TcpConnectorPtr GetConnectorPtr(base::s_int64_t fd);
 
 	netiolib::TcpSocketPtr GetSocketPtr(base::s_int64_t fd);
+
+	bool ConnectOne(const std::string& addr, SocketLib::s_uint16_t port, 
+		int conn_type, int serial_num);
+
+	void ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port, 
+		int conn_type, int serial_num);
+
+protected:
+	void _ConnectOne(ConnInfo* info);
 
 	virtual void OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error);
 

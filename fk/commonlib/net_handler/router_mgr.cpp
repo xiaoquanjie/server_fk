@@ -1,6 +1,6 @@
 #include "commonlib/net_handler/router_mgr.h"
 #include "slience/base/logger.hpp"
-#include "commonlib/net_handler/svr_net_handler.h"
+#include "commonlib/net_handler/net_handler.h"
 #include <map>
 
 RouterMgr::RouterMgr() {
@@ -50,7 +50,7 @@ int RouterMgr::ConnectRouters() {
 	for (int idx = 0; idx < _router_config.Data().router_list_size(); ++idx) {
 		auto& item = _router_config.Data().router_list(idx);
 		if (!ExistRouter(item.listen_ip(), item.listen_port(), item.number())) {
-			SvrNetIoHandlerSgl.ConnectOne(item.listen_ip(), item.listen_port(), 
+			NetIoHandlerSgl.ConnectOne(item.listen_ip(), item.listen_port(),
 				Enum_ConnType_Router, item.number());
 
 			RouterInfo router_info;
@@ -74,7 +74,7 @@ int RouterMgr::ConnectRouters() {
 			}
 		}
 		if (!exist) {
-			SvrNetIoHandlerSgl.CloseFd(iter->fd);
+			NetIoHandlerSgl.CloseFd(iter->fd);
 		}
 		else {
 			tmp_router_info_map[iter->number] = *iter;
