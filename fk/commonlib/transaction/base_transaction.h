@@ -1,10 +1,11 @@
 #ifndef M_BASE_TRANSACTION_INCLUDE
 #define M_BASE_TRANSACTION_INCLUDE
 
-#include "google/protobuf/message.h"
+//#include "google/protobuf/message.h"
 #include "slience/base/config.hpp"
 #include "slience/base/logger.hpp"
 #include "commonlib/svr_base/svrbase.h"
+#include "commonlib/net_handler/router_mgr.h"
 
 class Transaction {
 	friend class TransactionMgrImpl;
@@ -29,11 +30,11 @@ public:
 protected:
 	virtual int InCoroutine() = 0;
 
-	int Process(base::s_int64_t fd, const AppHeadFrame& frame, const char* data);
+	int Process(base::s_int64_t fd, base::s_uint32_t self_svr_type, 
+		base::s_uint32_t self_inst_id,
+		const AppHeadFrame& frame, const char* data);
 
 	int ParseMsg(google::protobuf::Message& message);
-
-	// int SendMsgBack(google::protobuf::Message& respond);
 
 	int SendMsgByServerType(int cmd, int svr_type,
 		google::protobuf::Message& request, google::protobuf::Message& respond);
@@ -75,6 +76,10 @@ protected:
 
 	base::s_int64_t cur_fd();
 
+	base::s_uint32_t self_svr_type();
+
+	base::s_uint32_t self_inst_id();
+
 	void set_co_id(base::s_int32_t);
 
 	const AppHeadFrame& cur_frame_head();
@@ -90,6 +95,8 @@ private:
 	base::s_int32_t _co_id;
 	base::s_int64_t _fd;
 	base::s_int64_t _cur_fd;
+	base::s_uint32_t _self_svr_type;
+	base::s_uint32_t _self_inst_id;
 	const AppHeadFrame* _cur_frame_head;
 	AppHeadFrame _ori_frame_head;
 	const char* _cur_frame_data;
@@ -147,7 +154,19 @@ protected:
 		if (0 == ret) {
 			// 回包
 			LogDebug("userid: " << userid() << " cmd: " << cmd() << " RESPOND_TYPE=" << respond.GetTypeName().c_str() << "|" << respond.ShortDebugString().c_str());
-			SendMsgByFd(cmd() + 1, fd(), respond);
+			AppHeadFrame frame;
+			frame.set_is_broadcast(false);
+			frame.set_src_svr_type(self_svr_type());
+			frame.set_dst_svr_type(ori_frame_head().get_src_inst_id());
+			frame.set_src_inst_id(self_inst_id());
+			frame.set_dst_inst_id(ori_frame_head().get_src_inst_id());
+			frame.set_src_trans_id(0);
+			frame.set_dst_trans_id(ori_frame_head().get_src_trans_id());
+			frame.set_cmd(cmd() + 1);
+			std::string msg = respond.SerializePartialAsString();
+			frame.set_cmd_length(msg.length());
+			frame.set_userid(userid());
+			RouterMgrSgl.SendMsg(frame, msg);
 		}
 		return 0;
 	}

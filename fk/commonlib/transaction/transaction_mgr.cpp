@@ -36,11 +36,13 @@ void TransactionMgrImpl::Update(const base::timestamp& now) {
 	}
 }
 
-int TransactionMgrImpl::ProcessFrame(base::s_int64_t fd, const AppHeadFrame& frame, const char* data) {
+int TransactionMgrImpl::ProcessFrame(base::s_int64_t fd, base::s_uint32_t self_svr_type,
+	base::s_uint32_t self_inst_id,
+	const AppHeadFrame& frame, const char* data) {
 	if (frame.get_dst_trans_id() > 0) {
 		Transaction* p = GetTransaction(frame.get_dst_trans_id());
 		if (p) {
-			p->Process(fd, frame, data);
+			p->Process(fd, self_svr_type, self_inst_id, frame, data);
 		}
 		else {
 			LogWarn("can't find the old transaction, trans_id: " << frame.get_dst_trans_id());
@@ -50,7 +52,7 @@ int TransactionMgrImpl::ProcessFrame(base::s_int64_t fd, const AppHeadFrame& fra
 	else {
 		Transaction* p = CreateTransaction(frame.get_userid(), frame.get_cmd());
 		if (p) {
-			p->Process(fd, frame, data);
+			p->Process(fd, self_svr_type, self_inst_id, frame, data);
 		}
 		else {
 			LogWarn("can't create new transaction, cmd: " << frame.get_cmd());

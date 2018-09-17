@@ -75,7 +75,7 @@ int RouterApplication::OnProc(base::s_int64_t fd, const AppHeadFrame& frame, con
 	case proto::CMD::CMD_SOCKET_CLIENT_OUT:
 	case proto::CMD::CMD_SOCKET_CLIENT_IN:
 	case proto::CMD::CMD_REGISTER_SERVER_REQ:
-		TransactionMgr::ProcessFrame(fd, frame, data);
+		TransactionMgr::ProcessFrame(fd, ServerType(), InstanceId(), frame, data);
 		return 0;
 	default:
 		// ×ª·¢

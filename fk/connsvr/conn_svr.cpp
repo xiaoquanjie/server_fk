@@ -72,6 +72,6 @@ int ConnApplication::OnTick(const base::timestamp& now) {
 }
 
 int ConnApplication::OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) {
-	TransactionMgr::ProcessFrame(fd, frame, data);
+	TransactionMgr::ProcessFrame(fd, ServerType(), InstanceId(), frame, data);
 	return 0;
 }

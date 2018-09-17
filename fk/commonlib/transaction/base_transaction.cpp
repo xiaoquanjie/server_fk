@@ -1,6 +1,8 @@
 #include "commonlib/transaction/base_transaction.h"
 #include "slience/coroutine/coroutine.hpp"
 #include "commonlib/transaction/transaction_mgr.h"
+#include "slience/base/buffer.hpp"
+#include "commonlib/net_handler/net_handler.h"
 
 void Transaction::Construct() {
 	_trans_id = 0;
@@ -10,6 +12,8 @@ void Transaction::Construct() {
 	_cur_fd = 0;
 	_cur_frame_head = 0;
 	_cur_frame_data = 0;
+	_self_svr_type = 0;
+	_self_inst_id = 0;
 	_state = E_STATE_IDLE;
 	_timer_id = 0;
 }
@@ -39,11 +43,15 @@ int Transaction::ParseMsg(google::protobuf::Message& message) {
 	}
 }
 
-int Transaction::Process(base::s_int64_t fd, const AppHeadFrame& frame, const char* data) {
+int Transaction::Process(base::s_int64_t fd, base::s_uint32_t self_svr_type,
+	base::s_uint32_t self_inst_id,
+	const AppHeadFrame& frame, const char* data) {
 	if (!_cur_frame_data) {
 		_userid = frame.get_userid();
 		_cmd = frame.get_cmd();
 		_fd = fd;
+		_self_svr_type = self_svr_type;
+		_self_inst_id = self_inst_id;
 		_ori_frame_head = frame;
 	}
 	else {
@@ -144,6 +152,19 @@ int Transaction::SendMsgByServerType(int cmd, int svr_type,
 
 int Transaction::SendMsgByServerType(int cmd, int svr_type,
 	google::protobuf::Message& request) {
+	AppHeadFrame frame;
+	frame.set_is_broadcast(false);
+	frame.set_src_svr_type(self_svr_type());
+	frame.set_dst_svr_type(svr_type);
+	frame.set_src_inst_id(self_inst_id());
+	frame.set_dst_inst_id(0);
+	frame.set_src_trans_id(0);
+	frame.set_dst_trans_id(0);
+	frame.set_cmd(cmd);
+	frame.set_userid(userid());
+	std::string msg = request.SerializePartialAsString();
+	frame.set_cmd_length(msg.length());
+	RouterMgrSgl.SendMsg(frame, msg);
 	return 0;
 }
 
@@ -154,6 +175,20 @@ int Transaction::SendMsgByFd(int cmd, base::s_int64_t fd,
 
 int Transaction::SendMsgByFd(int cmd, base::s_int64_t fd,
 	google::protobuf::Message& request) {
+	AppHeadFrame frame;
+	frame.set_is_broadcast(false);
+	frame.set_src_svr_type(ori_frame_head().get_dst_svr_type());
+	frame.set_dst_svr_type(ori_frame_head().get_src_inst_id());
+	frame.set_src_inst_id(ori_frame_head().get_dst_inst_id());
+	frame.set_dst_inst_id(ori_frame_head().get_src_inst_id());
+	//frame.set_dst_trans_id()
+	frame.set_cmd(_cmd);
+	frame.set_userid(userid());
+	std::string data = request.SerializePartialAsString();
+	frame.set_cmd_length(data.length());
+	base::Buffer buffer;
+	buffer.Write(frame);
+	NetIoHandlerSgl.SendDataByFd(fd, buffer.Data(), buffer.Length());
 	return 0;
 }
 
@@ -179,6 +214,14 @@ base::s_int64_t Transaction::fd() {
 
 base::s_int64_t Transaction::cur_fd() {
 	return _cur_fd;
+}
+
+base::s_uint32_t Transaction::self_svr_type() {
+	return _self_svr_type;
+}
+
+base::s_uint32_t Transaction::self_inst_id() {
+	return _self_inst_id;
 }
 
 void Transaction::set_co_id(base::s_int32_t id) {

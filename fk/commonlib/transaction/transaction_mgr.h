@@ -66,7 +66,9 @@ public:
 
 	void Update(const base::timestamp& now);
 
-	int ProcessFrame(base::s_int64_t fd, const AppHeadFrame& frame, const char* data);
+	int ProcessFrame(base::s_int64_t fd, base::s_uint32_t self_svr_type,
+		base::s_uint32_t self_inst_id,
+		const AppHeadFrame& frame, const char* data);
 
 	void CoroutineEnter(void* p);
 
@@ -128,8 +130,10 @@ public:
 		return GetImpl()->Update(now);
 	}
 
-	static int ProcessFrame(base::s_int64_t fd, const AppHeadFrame& frame, const char* data) {
-		return GetImpl()->ProcessFrame(fd, frame, data);
+	static int ProcessFrame(base::s_int64_t fd, base::s_uint32_t self_svr_type,
+		base::s_uint32_t self_inst_id,
+		const AppHeadFrame& frame, const char* data) {
+		return GetImpl()->ProcessFrame(fd, self_svr_type, self_inst_id, frame, data);
 	}
 
 	static void CoroutineEnter(void* p) {

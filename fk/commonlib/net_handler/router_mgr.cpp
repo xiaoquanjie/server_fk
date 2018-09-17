@@ -128,3 +128,52 @@ int RouterMgr::DelRouter(const std::string& ip, unsigned int port, int number,
 	}
 	return -1;
 }
+
+int RouterMgr::SendMsg(AppHeadFrame& frame, const std::string& data) {
+	// 挑选一个路由
+	if (_router_info_vec.empty()) {
+		LogError("no router to send");
+		return -1;
+	}
+
+	base::Buffer buffer;
+	buffer.Write(frame);
+	buffer.Write(data.c_str(), data.length());
+	
+	int mod = frame.get_userid() % _router_info_vec.size();
+	auto& info = _router_info_vec[mod];
+	if (NetIoHandlerSgl.SendDataByFd(info.fd, buffer.Data(), buffer.Length())) {
+		return 0;
+	}
+	else {
+		return -1;
+	}
+}
+
+int RouterMgr::SendMsg(int cmd, base::s_int64_t userid, bool is_broadcast,
+	base::s_uint32_t src_svr_type, base::s_uint32_t dst_svr_type,
+	base::s_uint32_t src_inst_id, base::s_uint32_t dst_inst_id,
+	base::s_uint32_t src_trans_id, base::s_uint32_t dst_trans_id,
+	google::protobuf::Message& msg) {
+	// 挑选一个路由
+	if (_router_info_vec.empty()) {
+		LogError("no router to send");
+		return -1;
+	}
+
+	AppHeadFrame frame;
+	frame.set_is_broadcast(is_broadcast);
+	frame.set_src_svr_type(src_svr_type);
+	frame.set_dst_svr_type(dst_svr_type);
+	frame.set_src_inst_id(src_inst_id);
+	frame.set_dst_inst_id(dst_inst_id);
+	frame.set_src_trans_id(src_trans_id);
+	frame.set_dst_trans_id(dst_trans_id);
+	frame.set_cmd(cmd);
+	frame.set_userid(userid);
+	
+	std::string data = msg.SerializePartialAsString();
+	frame.set_cmd_length(data.length());
+
+	return 0;
+}

@@ -14,13 +14,15 @@ public:
 	int OnRequest(proto::SocketClientIn& request) {
 		if (M_CHECK_IS_TCP_CONNECTOR_FD(fd())) {
 			netiolib::TcpConnectorPtr ptr = NetIoHandlerSgl.GetConnectorPtr(fd());
-			if (ptr) {
-				ConnInfo* pinfo = (ConnInfo*)ptr->GetExtData();
-				if (pinfo && pinfo->conn_type == Enum_ConnType_Router) {
-					SendRegistCmd();
-					RouterMgrSgl.AddRouter(pinfo->ip, pinfo->port, pinfo->serial_num,
-						fd());
-				}
+			if (!ptr) {
+				return 0;
+			}
+
+			ConnInfo* pinfo = (ConnInfo*)ptr->GetExtData();
+			if (pinfo && pinfo->conn_type == Enum_ConnType_Router) {
+				SendRegistCmd();
+				RouterMgrSgl.AddRouter(pinfo->ip, pinfo->port, pinfo->serial_num,
+					fd());
 			}
 		}
 		return 0;
@@ -47,17 +49,19 @@ public:
 	int OnRequest(proto::SocketClientOut& request) {
 		if (M_CHECK_IS_TCP_CONNECTOR_FD(fd())) {
 			netiolib::TcpConnectorPtr ptr = NetIoHandlerSgl.GetConnectorPtr(fd());
-			if (ptr) {
-				ConnInfo* pinfo = (ConnInfo*)ptr->GetExtData();
-				if (pinfo && pinfo->conn_type == Enum_ConnType_Router) {
-					if (!RouterMgrSgl.ExistRouter(pinfo->ip, pinfo->port, pinfo->serial_num)) {
-						RouterMgrSgl.DelRouter(pinfo->ip, pinfo->port, pinfo->serial_num, fd());
-					}
-					else {
-						// жипB
-						NetIoHandlerSgl.ConnectOne(pinfo->ip, pinfo->port,
-							pinfo->conn_type, pinfo->serial_num);
-					}
+			if (!ptr) {
+				return 0;
+			}
+
+			ConnInfo* pinfo = (ConnInfo*)ptr->GetExtData();
+			if (pinfo && pinfo->conn_type == Enum_ConnType_Router) {
+				if (!RouterMgrSgl.ExistRouter(pinfo->ip, pinfo->port, pinfo->serial_num)) {
+					RouterMgrSgl.DelRouter(pinfo->ip, pinfo->port, pinfo->serial_num, fd());
+				}
+				else {
+					// жипB
+					NetIoHandlerSgl.ConnectOne(pinfo->ip, pinfo->port,
+						pinfo->conn_type, pinfo->serial_num);
 				}
 			}
 		}
