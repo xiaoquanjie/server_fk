@@ -47,10 +47,10 @@ protected:
 	int SendMsgByServerType(int cmd, int svr_type,
 		google::protobuf::Message& request);
 
-	int SendMsgByFd(int cmd, base::s_int64_t fd,
+	int SendMsgByServerId(int cmd, int svr_type, int inst_id,
 		google::protobuf::Message& request, google::protobuf::Message& respond);
 
-	int SendMsgByFd(int cmd, base::s_int64_t fd,
+	int SendMsgByServerId(int cmd, int svr_type, int inst_id,
 		google::protobuf::Message& request);
 
 protected:

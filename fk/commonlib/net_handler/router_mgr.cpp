@@ -139,6 +139,7 @@ int RouterMgr::SendMsg(int cmd, base::s_int64_t userid, bool is_broadcast,
 		LogError("no router to send");
 		return -1;
 	}
+	int r = userid % _router_info_vec.size();
 
 	AppHeadFrame frame;
 	frame.set_is_broadcast(is_broadcast);
@@ -154,5 +155,13 @@ int RouterMgr::SendMsg(int cmd, base::s_int64_t userid, bool is_broadcast,
 	std::string data = msg.SerializePartialAsString();
 	frame.set_cmd_length(data.length());
 
-	return 0;
+	base::Buffer buffer;
+	buffer.Write(frame);
+	buffer.Write(data.c_str(), data.length());
+	if (NetIoHandlerSgl.SendDataByFd(_router_info_vec[r].fd, buffer.Data(), buffer.Length())) {
+		return 0;
+	}
+	else {
+		return -1;
+	}
 }
