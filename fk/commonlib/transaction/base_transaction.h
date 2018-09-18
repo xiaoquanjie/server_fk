@@ -20,6 +20,11 @@ public:
 		E_RETURN_ACTIVE = 1,
 		E_RETURN_TIMEOUT = 2,
 	};
+	enum Wait_Time {
+		E_WAIT_THREE_SECOND = 3 * 1000,
+		E_WAIT_FIVE_SECOND = 5 * 1000,
+		E_WAIT_TEN_SECOND = 10 * 1000,
+	};
 
 	void Construct();
 
@@ -154,19 +159,17 @@ protected:
 		if (0 == ret) {
 			// 回包
 			LogDebug("userid: " << userid() << " cmd: " << cmd() << " RESPOND_TYPE=" << respond.GetTypeName().c_str() << "|" << respond.ShortDebugString().c_str());
-			AppHeadFrame frame;
-			frame.set_is_broadcast(false);
-			frame.set_src_svr_type(self_svr_type());
-			frame.set_dst_svr_type(ori_frame_head().get_src_inst_id());
-			frame.set_src_inst_id(self_inst_id());
-			frame.set_dst_inst_id(ori_frame_head().get_src_inst_id());
-			frame.set_src_trans_id(0);
-			frame.set_dst_trans_id(ori_frame_head().get_src_trans_id());
-			frame.set_cmd(cmd() + 1);
-			std::string msg = respond.SerializePartialAsString();
-			frame.set_cmd_length(msg.length());
-			frame.set_userid(userid());
-			RouterMgrSgl.SendMsg(frame, msg);
+			RouterMgrSgl.SendMsg(cmd() + 1,
+				userid(),
+				false,
+				self_svr_type(),
+				ori_frame_head().get_src_inst_id(),
+				self_inst_id(),
+				ori_frame_head().get_src_inst_id(),
+				0,
+				ori_frame_head().get_src_trans_id(),
+				respond
+			);
 		}
 		return 0;
 	}

@@ -28,8 +28,6 @@ public:
 	int DelRouter(const std::string& ip, unsigned int port, int number,
 		base::s_int64_t fd);
 
-	int SendMsg(AppHeadFrame& frame, const std::string& data);
-
 	int SendMsg(int cmd, base::s_int64_t userid, bool is_broadcast,
 		base::s_uint32_t src_svr_type, base::s_uint32_t dst_svr_type,
 		base::s_uint32_t src_inst_id, base::s_uint32_t dst_inst_id,

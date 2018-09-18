@@ -147,25 +147,47 @@ int Transaction::OnTimeOut() {
 
 int Transaction::SendMsgByServerType(int cmd, int svr_type,
 	google::protobuf::Message& request, google::protobuf::Message& respond) {
+	if (0 != SendMsgByServerType(cmd, svr_type, request)) {
+		return -1;
+	}
+	Wait_Return ret = Wait(E_WAIT_FIVE_SECOND);
+	if (ret == E_RETURN_TIMEOUT) {
+		LogError(
+			"{userid:" << userid() << 
+			" svr_type:"<< svr_type <<
+			"} Timeout to wait response of SendMsgByServerType");
+		return -1;
+	}
+	else if (ret == E_RETURN_ERROR) {
+		LogError(
+			"{userid:" << userid() <<
+			" svr_type:" << svr_type <<
+			"} Error to wait response of SendMsgByServerType");
+		return -1;
+	}
+	
+	// parse msg
+	if (0 != ParseMsg(respond)) {
+		LogError(request.GetTypeName() << ".ParseFromArray fail");
+		return -1;
+	}
 	return 0;
 }
 
 int Transaction::SendMsgByServerType(int cmd, int svr_type,
 	google::protobuf::Message& request) {
-	AppHeadFrame frame;
-	frame.set_is_broadcast(false);
-	frame.set_src_svr_type(self_svr_type());
-	frame.set_dst_svr_type(svr_type);
-	frame.set_src_inst_id(self_inst_id());
-	frame.set_dst_inst_id(0);
-	frame.set_src_trans_id(0);
-	frame.set_dst_trans_id(0);
-	frame.set_cmd(cmd);
-	frame.set_userid(userid());
-	std::string msg = request.SerializePartialAsString();
-	frame.set_cmd_length(msg.length());
-	RouterMgrSgl.SendMsg(frame, msg);
-	return 0;
+	int ret = RouterMgrSgl.SendMsg(cmd,
+		userid(),
+		false,
+		self_svr_type(),
+		svr_type,
+		self_inst_id(),
+		ori_frame_head().get_src_inst_id(),
+		trans_id(),
+		0,
+		request
+	);
+	return ret;
 }
 
 int Transaction::SendMsgByFd(int cmd, base::s_int64_t fd,
