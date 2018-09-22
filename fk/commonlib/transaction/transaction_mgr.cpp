@@ -55,7 +55,7 @@ int TransactionMgrImpl::ProcessFrame(base::s_int64_t fd, base::s_uint32_t self_s
 			p->Process(fd, self_svr_type, self_inst_id, frame, data);
 		}
 		else {
-			LogWarn("can't create new transaction, cmd: " << frame.get_cmd());
+			LogError("can't create new transaction, cmd: " << frame.get_cmd());
 			return -1;
 		}
 	}
@@ -68,7 +68,7 @@ void TransactionMgrImpl::CoroutineEnter(void* p) {
 	_active_trans_map.insert(std::make_pair(trans->trans_id(), trans));
 	
 	LogInfo(
-		"run a new transaction"
+		"run a new transaction: "
 		<< "co_id£º"
 		<< trans->co_id()
 		<< " trans_id: "
@@ -76,7 +76,7 @@ void TransactionMgrImpl::CoroutineEnter(void* p) {
 	);
 	trans->InCoroutine();
 	LogInfo(
-		"end a transaction"
+		"end a transaction: "
 		<< "co_id£º"
 		<< trans->co_id()
 		<< " trans_id: "
