@@ -56,6 +56,7 @@ int NetIoHandler::Update() {
 				tcp_conn_fd_index.modify(tmp_iter, FuncModifySocketContext(tmp_iter->msgcount + 1, GetNow().second()));
 				AppHeadFrame& pFrame = *(AppHeadFrame*)pmsg->buf.Data();
 				const char* data = (const char*)pmsg->buf.Data() + sizeof(AppHeadFrame);
+				LogDebug("recv msg: " << pFrame.ToString());
 				_callback(fd, pFrame, data, pFrame.get_cmd_length());
 			}
 			else {
@@ -84,6 +85,7 @@ int NetIoHandler::Update() {
 				tcp_socket_fd_index.modify(tmp_iter, FuncModifySocketContext(tmp_iter->msgcount + 1, GetNow().second()));
 				AppHeadFrame& pFrame = *(AppHeadFrame*)pmsg->buf.Data();
 				const char* data = (const char*)pmsg->buf.Data() + sizeof(AppHeadFrame);
+				LogDebug("recv msg: " << pFrame.ToString());
 				_callback(fd, pFrame, data, pFrame.get_cmd_length());
 			}
 			else {
@@ -165,6 +167,8 @@ void NetIoHandler::CheckTcpSocketExpire() {
 }
 
 bool NetIoHandler::SendDataByFd(base::s_int64_t fd, const char* data, base::s_int32_t len) {
+	const AppHeadFrame& frame = (const AppHeadFrame&)(*data);
+	LogDebug("send msg: " << frame.ToString());
 	if (M_CHECK_IS_TCP_FD(fd)) {
 		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
 		auto iter = fd_idx.find(fd);

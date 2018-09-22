@@ -51,7 +51,7 @@ public:
 		frame.set_dst_svr_type(ori_frame_head().get_src_svr_type());
 		frame.set_src_inst_id(self_inst_id());
 		frame.set_dst_inst_id(ori_frame_head().get_src_inst_id());
-		frame.set_src_trans_id(0);
+		frame.set_src_trans_id(trans_id());
 		frame.set_dst_trans_id(ori_frame_head().get_src_trans_id());
 		frame.set_cmd(cmd() + 1);
 		frame.set_userid(userid());

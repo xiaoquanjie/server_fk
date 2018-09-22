@@ -29,6 +29,7 @@ public:
 	}
 
 	void SendRegistCmd() {
+		LogInfo("try to regist server");
 		proto::RegisterServerReq request;
 		proto::RegisterServerRsp respond;
 		request.set_server_type(ConnApplicationSgl.ServerType());
