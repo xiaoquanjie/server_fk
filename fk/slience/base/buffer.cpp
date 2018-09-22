@@ -4,21 +4,12 @@
 
 M_BASE_NAMESPACE_BEGIN
 
-#define M_BUFFER_DEFAILT_SIZE 1024
+#define M_BUFFER_DEFAILT_SIZE 512
 
 Buffer::Buffer() {
 	_data._pos = _data._offset = (0);
 	_data._size = M_BUFFER_DEFAILT_SIZE;
 	_data._data = (s_byte_t*)malloc(_data._size);
-}
-
-Buffer::Buffer(s_uint32_t hdrlen) {
-	// hdrlen 不能大于M_BUFFER_DEFAILT_SIZE
-	_data._pos = _data._offset = (0);
-	_data._size = M_BUFFER_DEFAILT_SIZE;
-	_data._data = (s_byte_t*)malloc(_data._size);
-	if (hdrlen <= _data._size)
-		_data._pos += hdrlen;
 }
 
 Buffer::~Buffer() {
@@ -76,30 +67,12 @@ void Buffer::Write(const void* data, s_uint32_t len) {
 	_data._pos += len;
 }
 
-void Buffer::Write(std::string const& value) {
-	s_uint32_t len = value.length();
-	Write((void*)&len, sizeof(s_uint32_t));
-	Write((void*)value.c_str(), len);
-}
-
 void Buffer::Read(void* data, s_uint32_t len) {
 	if (_data._offset + len > _data._pos)
 		return;
 
 	memcpy(data, _data._data + _data._offset, len);
 	_data._offset += len;
-}
-
-void Buffer::Read(std::string& value) {
-	s_uint32_t len = 0;
-	Read(len);
-	if (len > 0) {
-		char* tmp = (char*)malloc(len + 1);
-		Read(tmp, len);
-		tmp[len] = 0;
-		value = tmp;
-		free(tmp);
-	}
 }
 
 void Buffer::Swap(Buffer& buffer) {
