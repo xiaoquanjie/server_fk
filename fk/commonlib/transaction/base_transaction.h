@@ -53,6 +53,11 @@ protected:
 	int SendMsgByServerId(int cmd, int svr_type, int inst_id,
 		google::protobuf::Message& request);
 
+	int SendMsgByFd(int cmd, google::protobuf::Message& request);
+
+	int SendMsgByFd(int cmd, google::protobuf::Message& request
+		, google::protobuf::Message& respond);
+
 protected:
 	void OnState();
 

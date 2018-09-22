@@ -3,6 +3,7 @@
 #include "commonlib/transaction/base_transaction.h"
 #include "commonlib/transaction/transaction_mgr.h"
 #include "routersvr/server_instance_mgr.h"
+#include "commonlib/net_handler/net_handler.h"
 
 class TransClientIn 
 	: public BaseTransaction<TransClientIn, proto::SocketClientIn> {
@@ -34,13 +35,39 @@ REGISTER_TRANSACTION(CMD_SOCKET_CLIENT_OUT, TransClientOut);
 ///////////////////////////////////////////////////////////////////////////
 
 class TransRegisterServer 
-	: public BaseTransaction<TransRegisterServer, proto::RegisterServerReq, proto::RegisterServerRsp> {
+	: public BaseTransaction<TransRegisterServer, proto::RegisterServerReq> {
 public:
 	TransRegisterServer(unsigned int cmd) : BaseTransaction(cmd) {}
 
-	int OnRequest(proto::RegisterServerReq& request, proto::RegisterServerRsp& respond) {
+	int OnRequest(proto::RegisterServerReq& request) {
 		SeverInstanceMgrSgl.AddInstance(request.server_type(), request.instance_id(), fd());
+
+		proto::RegisterServerRsp respond;
 		respond.mutable_ret()->set_code(0);
+
+		AppHeadFrame frame;
+		frame.set_is_broadcast(false);
+		frame.set_src_svr_type(self_svr_type());
+		frame.set_dst_svr_type(ori_frame_head().get_src_svr_type());
+		frame.set_src_inst_id(self_inst_id());
+		frame.set_dst_inst_id(ori_frame_head().get_src_inst_id());
+		frame.set_src_trans_id(0);
+		frame.set_dst_trans_id(ori_frame_head().get_src_trans_id());
+		frame.set_cmd(cmd() + 1);
+		frame.set_userid(userid());
+
+		std::string data = respond.SerializePartialAsString();
+		frame.set_cmd_length(data.length());
+
+		base::Buffer buffer;
+		buffer.Write(frame);
+		buffer.Write(data.c_str(), data.length());
+		if (NetIoHandlerSgl.SendDataByFd(fd(), buffer.Data(), buffer.Length())) {
+			return 0;
+		}
+		else {
+			return -1;
+		}
 		return 0;
 	}
 };

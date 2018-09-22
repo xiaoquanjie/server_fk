@@ -7,8 +7,7 @@ RouterMgr::RouterMgr() {
 
 }
 
-int RouterMgr::Init(const std::string& router_file) {
-	_router_file = router_file;
+int RouterMgr::Init() {
 	int ret = 0;
 	do {
 		ret = Reload();
@@ -22,7 +21,7 @@ int RouterMgr::Init(const std::string& router_file) {
 
 int RouterMgr::Reload() {
 	ServerCfg<config::RouterConfig> tmp_router_config;
-	if (!tmp_router_config.Parse(_router_file.c_str())) {
+	if (0 != tmp_router_config.Parse(_router_file.c_str())) {
 		LogError("_router_config.Parse fail: " << _router_file);
 		return -1;
 	}
@@ -44,6 +43,10 @@ int RouterMgr::Reload() {
 	return 0;
 }
 
+void RouterMgr::SetRouterFile(const std::string& router_file) {
+	_router_file = router_file;
+}
+
 int RouterMgr::ConnectRouters() {
 	// 设计原则是，多连少关
 	std::map<int, RouterInfo> tmp_router_info_map;
@@ -57,6 +60,7 @@ int RouterMgr::ConnectRouters() {
 			router_info.ip = item.listen_ip();
 			router_info.port = item.listen_port();
 			router_info.number = item.number();
+			router_info.fd = 0;
 			tmp_router_info_map[item.number()] = router_info;
 		}
 	}
@@ -140,7 +144,19 @@ int RouterMgr::SendMsg(int cmd, base::s_int64_t userid, bool is_broadcast,
 		return -1;
 	}
 	int r = userid % _router_info_vec.size();
+	return SendMsgByFd(_router_info_vec[r].fd,
+		cmd, userid, is_broadcast,
+		src_svr_type, dst_svr_type,
+		src_inst_id, dst_inst_id,
+		src_trans_id, dst_trans_id,
+		msg);
+}
 
+int RouterMgr::SendMsgByFd(base::s_int64_t fd, int cmd, base::s_int64_t userid,
+	bool is_broadcast, base::s_uint32_t src_svr_type, base::s_uint32_t dst_svr_type,
+	base::s_uint32_t src_inst_id, base::s_uint32_t dst_inst_id,
+	base::s_uint32_t src_trans_id, base::s_uint32_t dst_trans_id,
+	google::protobuf::Message& msg) {
 	AppHeadFrame frame;
 	frame.set_is_broadcast(is_broadcast);
 	frame.set_src_svr_type(src_svr_type);
@@ -151,14 +167,14 @@ int RouterMgr::SendMsg(int cmd, base::s_int64_t userid, bool is_broadcast,
 	frame.set_dst_trans_id(dst_trans_id);
 	frame.set_cmd(cmd);
 	frame.set_userid(userid);
-	
+
 	std::string data = msg.SerializePartialAsString();
 	frame.set_cmd_length(data.length());
 
 	base::Buffer buffer;
 	buffer.Write(frame);
 	buffer.Write(data.c_str(), data.length());
-	if (NetIoHandlerSgl.SendDataByFd(_router_info_vec[r].fd, buffer.Data(), buffer.Length())) {
+	if (NetIoHandlerSgl.SendDataByFd(fd, buffer.Data(), buffer.Length())) {
 		return 0;
 	}
 	else {

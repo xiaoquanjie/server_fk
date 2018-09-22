@@ -66,16 +66,16 @@ int ApplicationBase::Init(int argc, char** argv) {
 			break;
 		}
 
-		ret = OnReload();
-		if (ret != 0) {
-			LogError("reload error........");
-			break;
-		}
-
 		// init network
 		ret = OnInitNetWork();
 		if (0 != ret) {
 			LogError("OnInitNetWork error");
+		}
+
+		ret = OnReload();
+		if (ret != 0) {
+			LogError("reload error........");
+			break;
 		}
 
 		ret = OnInit();

@@ -399,9 +399,9 @@ namespace logger {
 	struct logimpl {
 		logstream _stream;
 		logimpl(loglevel level) {
+			_stream << logger::instance()._level_desc[level];
 			logtime& lg = tlsdata<logtime, 0>::data();
 			lg.to_format(_stream);
-			_stream << logger::instance()._level_desc[level];
 			logthread& lt = tlsdata<logthread, 0>::data();
 			lt.to_format(_stream);
 		}

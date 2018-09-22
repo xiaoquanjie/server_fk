@@ -28,6 +28,8 @@ struct ConnInfo {
 	int serial_num;
 	int port;
 	char ip[65];
+
+	std::string ToString();
 };
 
 class NetIoHandler : public netiolib::NetIo {

@@ -2,6 +2,16 @@
 #include "slience/base/logger.hpp"
 #include "protolib/src/cmd.pb.h"
 #include "protolib/src/svr_base.pb.h"
+#include <sstream>
+std::string ConnInfo::ToString() {
+	std::ostringstream oss;
+	oss << "{conn_type: " << conn_type;
+	oss << ", serial_num: " << serial_num;
+	oss << ", ip: " << ip;
+	oss << ", port: " << port;
+	oss << "}";
+	return oss.str();
+}
 
 ConnInfo* MakeConnInfo(const std::string& addr, SocketLib::s_uint16_t port,
 	int conn_type, int serial_num) {
@@ -10,6 +20,7 @@ ConnInfo* MakeConnInfo(const std::string& addr, SocketLib::s_uint16_t port,
 	pinfo->serial_num = serial_num;
 	pinfo->port = port;
 	memcpy(pinfo->ip, addr.c_str(), addr.length());
+	pinfo->ip[addr.length()] = 0;
 	return pinfo;
 }
 
@@ -141,9 +152,8 @@ void NetIoHandler::CheckTcpSocketExpire() {
 		for (auto iter = tt_index.begin(); iter != tt_index.end(); ++iter) {
 			if ((GetNow().second() - iter->tt) >= M_EXPIRE_INTERVAL
 				&& iter->ptr->IsConnected()) {
-				base::s_int64_t fd = M_TCP_FD_FLAG | iter->ptr->GetFd();
 				LogInfo("connection expire been closed, remote_ip: " << iter->ptr->RemoteEndpoint().Address()
-					<< " fd: " << fd);
+					<< " fd: " << iter->fd);
 				iter->ptr->Close();
 			}
 			else {
@@ -156,26 +166,26 @@ void NetIoHandler::CheckTcpSocketExpire() {
 
 bool NetIoHandler::SendDataByFd(base::s_int64_t fd, const char* data, base::s_int32_t len) {
 	if (M_CHECK_IS_TCP_FD(fd)) {
-		int real_fd = M_GET_TCP_FD(fd);
 		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
-		auto iter = fd_idx.find(real_fd);
+		auto iter = fd_idx.find(fd);
 		if (iter != fd_idx.end()) {
 			iter->ptr->Send(data, len);
 			return true;
 		}
 		else {
+			int real_fd = M_GET_TCP_FD(fd);
 			LogError("fd is not exist, real_fd: " << real_fd << " fd: " << fd);
 		}
 	}
 	else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
-		int real_fd = M_GET_TCP_CONNECTOR_FD(fd);
 		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
-		auto iter = fd_idx.find(real_fd);
+		auto iter = fd_idx.find(fd);
 		if (iter != fd_idx.end()) {
 			iter->ptr->Send(data, len);
 			return true;
 		}
 		else {
+			int real_fd = M_GET_TCP_CONNECTOR_FD(fd);
 			LogError("fd is not exist, real_fd: " << real_fd << " fd: " << fd);
 		}
 	}
@@ -184,9 +194,8 @@ bool NetIoHandler::SendDataByFd(base::s_int64_t fd, const char* data, base::s_in
 
 void NetIoHandler::CloseFd(base::s_int64_t fd) {
 	if (M_CHECK_IS_TCP_FD(fd)) {
-		int real_fd = M_GET_TCP_FD(fd);
 		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
-		auto iter = fd_idx.find(real_fd);
+		auto iter = fd_idx.find(fd);
 		if (iter != fd_idx.end()) {
 			iter->ptr->Close();
 		}
@@ -195,9 +204,8 @@ void NetIoHandler::CloseFd(base::s_int64_t fd) {
 		}
 	}
 	else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
-		int real_fd = M_GET_TCP_CONNECTOR_FD(fd);
 		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
-		auto iter = fd_idx.find(real_fd);
+		auto iter = fd_idx.find(fd);
 		if (iter != fd_idx.end()) {
 			iter->ptr->Close();
 		}
@@ -208,9 +216,8 @@ void NetIoHandler::CloseFd(base::s_int64_t fd) {
 }
 
 netiolib::TcpConnectorPtr NetIoHandler::GetConnectorPtr(base::s_int64_t fd) {
-	int real_fd = M_GET_TCP_CONNECTOR_FD(fd);
 	auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
-	auto iter = fd_idx.find(real_fd);
+	auto iter = fd_idx.find(fd);
 	if (iter != fd_idx.end()) {
 		return iter->ptr;
 	}
@@ -218,9 +225,8 @@ netiolib::TcpConnectorPtr NetIoHandler::GetConnectorPtr(base::s_int64_t fd) {
 }
 
 netiolib::TcpSocketPtr NetIoHandler::GetSocketPtr(base::s_int64_t fd) {
-	int real_fd = M_GET_TCP_FD(fd);
 	auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
-	auto iter = fd_idx.find(real_fd);
+	auto iter = fd_idx.find(fd);
 	if (iter != fd_idx.end()) {
 		return iter->ptr;
 	}
@@ -288,8 +294,9 @@ void NetIoHandler::OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::S
 	else {
 		// 默认是重连
 		ConnInfo* pinfo = (ConnInfo*)clisock->GetExtData();
+		LogError(pinfo->ToString() << " connect fail, try to reconnect");
 		ConnInfo* new_info = MakeConnInfo(pinfo->ip, pinfo->port, pinfo->conn_type, pinfo->serial_num);
-		_ConnectOne(pinfo);
+		_ConnectOne(new_info);
 	}
 }
 
@@ -329,7 +336,6 @@ void NetIoHandler::OnDisConnection(netiolib::TcpConnectorPtr& clisock) {
 		LogError("fd: " << fd << " not exist, this is a big bug!!!!!!!!!!!!!!!!!");
 	}
 	else {
-		fd_index.erase(iter);
 		proto::SocketClientOut client_out;
 		std::string str = client_out.SerializeAsString();
 		AppHeadFrame frame;
@@ -337,6 +343,7 @@ void NetIoHandler::OnDisConnection(netiolib::TcpConnectorPtr& clisock) {
 
 		LogInfo("connection broken, remote_ip: " << clisock->RemoteEndpoint().Address() << " fd: " << fd << " time: " << GetNow().format_ymd_hms());
 		_callback(fd, frame, str.c_str(), str.size());
+		fd_index.erase(iter);
 	}
 }
 

@@ -16,9 +16,11 @@ class RouterMgr {
 public:
 	RouterMgr();
 
-	int Init(const std::string& router_file);
+	int Init();
 
 	int Reload();
+
+	void SetRouterFile(const std::string& router_file);
 
 	bool ExistRouter(const std::string& ip, unsigned int port, int number);
 
@@ -31,6 +33,12 @@ public:
 	int SendMsg(int cmd, base::s_int64_t userid, bool is_broadcast,
 		base::s_uint32_t src_svr_type, base::s_uint32_t dst_svr_type,
 		base::s_uint32_t src_inst_id, base::s_uint32_t dst_inst_id,
+		base::s_uint32_t src_trans_id, base::s_uint32_t dst_trans_id,
+		google::protobuf::Message& msg);
+
+	int SendMsgByFd(base::s_int64_t fd, int cmd, base::s_int64_t userid,
+		bool is_broadcast, base::s_uint32_t src_svr_type, base::s_uint32_t dst_svr_type, 
+		base::s_uint32_t src_inst_id, base::s_uint32_t dst_inst_id, 
 		base::s_uint32_t src_trans_id, base::s_uint32_t dst_trans_id,
 		google::protobuf::Message& msg);
 

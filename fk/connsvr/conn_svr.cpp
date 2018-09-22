@@ -40,7 +40,7 @@ int ConnApplication::OnInit() {
 		LogInfo("listen in: " << ip << " " << port);
 	}
 
-	int ret = RouterMgrSgl.Init(_comm_config.Data().router_conf_file());
+	int ret = RouterMgrSgl.Init();
 	if (0 != ret) {
 		return -1;
 	}
@@ -54,6 +54,8 @@ int ConnApplication::OnReload() {
 		LogError("_svr_config.Parse fail:" << path);
 		return -1;
 	}
+
+	RouterMgrSgl.SetRouterFile(_comm_config.Data().router_conf_file());
 	if (0 != RouterMgrSgl.Reload()) {
 		LogError("RouterMgrSgl.Reload fail");
 		return -1;

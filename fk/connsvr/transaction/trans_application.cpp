@@ -33,7 +33,13 @@ public:
 		proto::RegisterServerRsp respond;
 		request.set_server_type(ConnApplicationSgl.ServerType());
 		request.set_instance_id(ConnApplicationSgl.InstanceId());
-		//int ret = SendMessgae(proto::CMD::CMD_REGISTER_SERVER_REQ, )
+		int ret = SendMsgByFd(proto::CMD::CMD_REGISTER_SERVER_REQ, request, respond);
+		if (0 == ret && respond.ret().code() == 0) {
+			LogInfo("regist server success");
+		}
+		else {
+			LogError("regist server fail: " << ret);
+		}
 	}
 };
 
@@ -60,6 +66,7 @@ public:
 				}
 				else {
 					// жипB
+					LogError(pinfo->ToString() << " connection broken, try to reconnect");
 					NetIoHandlerSgl.ConnectOne(pinfo->ip, pinfo->port,
 						pinfo->conn_type, pinfo->serial_num);
 				}
