@@ -476,6 +476,7 @@ TcpSocketMsg* NetIoHandler::CreateTcpSocketMsg() {
 	else {
 		pMessage = new TcpSocketMsg;
 	}
+	pMessage->Clear();
 	return pMessage;
 
 }
@@ -489,5 +490,6 @@ TcpConnectorMsg* NetIoHandler::CreateTcpConnectorMsg() {
 	else {
 		pMessage = new TcpConnectorMsg;
 	}
+	pMessage->Clear();
 	return pMessage;
 }

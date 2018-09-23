@@ -48,4 +48,8 @@ SocketError::operator bool()const {
 	return (_error != 0);
 }
 
+void SocketError::Clear() {
+	_error = 0;
+}
+
 M_SOCKET_NAMESPACE_END

@@ -129,6 +129,11 @@ struct TcpSocketMsg {
 	netiolib::TcpSocketPtr ptr;
 	base::Buffer buf;
 	base::s_uint16_t type;
+	void Clear() {
+		ptr.reset();
+		buf.Clear();
+		type = 0;
+	}
 };
 
 struct TcpConnectorMsg {
@@ -136,6 +141,12 @@ struct TcpConnectorMsg {
 	SocketLib::SocketError error;
 	base::Buffer buf;
 	base::s_uint16_t type;
+	void Clear() {
+		ptr.reset();
+		buf.Clear();
+		type = 0;
+		error.Clear();
+	}
 };
 
 
