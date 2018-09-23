@@ -159,7 +159,7 @@ protected:
 			LogError("userid: " << userid() << " cmd: " << cmd() << "transaction dynamic_cast error");
 			return -2;
 		}
-		RESPOND_TYPE respond;
+		RESPOND_TYPE respond; 
 		ret = trans->OnRequest(request, respond);
 		if (0 == ret) {
 			// 回包
@@ -167,9 +167,7 @@ protected:
 			RouterMgrSgl.SendMsg(cmd() + 1,
 				userid(),
 				false,
-				self_svr_type(),
 				ori_frame().get_src_svr_type(),
-				self_inst_id(),
 				ori_frame().get_src_inst_id(),
 				trans_id(),
 				ori_frame().get_src_trans_id(),
