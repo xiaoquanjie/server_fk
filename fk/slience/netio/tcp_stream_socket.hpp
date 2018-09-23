@@ -95,7 +95,7 @@ bool TcpStreamSocket<T, SocketType>::_CutMsgPack(base::s_byte_t* buf, base::s_ui
 				_reader.msgbuffer.Write(buf, tran_byte);
 				break;
 			}
-			if (header->timestamp != 0xFCFCFCFC) {
+			if (header->timestamp != M_PACGET_CODE) {
 				assert(0);
 				return false;
 			}
@@ -124,7 +124,7 @@ bool TcpStreamSocket<T, SocketType>::_CutMsgPack(base::s_byte_t* buf, base::s_ui
 				_reader.msgbuffer.Write(buf, tran_byte);
 				break;
 			}
-			if (header->timestamp != 0xFCFCFCFC) {
+			if (header->timestamp != M_PACGET_CODE) {
 				assert(0);
 				return false;
 			}
@@ -176,7 +176,7 @@ bool TcpStreamSocket<T, SocketType>::SendPacket(const base::s_byte_t* data,
 
 	PacketHeader hdr;
 	hdr.size = len;
-	hdr.timestamp = 0xFCFCFCFC;
+	hdr.timestamp = M_PACGET_CODE;
 	hdr.h2n();
 	_writer.msgbuffer2.Write(hdr);
 	_writer.msgbuffer2.Write((void*)data, len);
@@ -195,7 +195,7 @@ bool TcpStreamSocket<T, SocketType>::SendPacket(const MsgHeadType& head,
 
 	PacketHeader hdr;
 	hdr.size = len + sizeof(MsgHeadType);
-	hdr.timestamp = 0xFCFCFCFC;
+	hdr.timestamp = M_PACGET_CODE;
 	hdr.h2n();
 	_writer.msgbuffer2.Write(hdr);
 	_writer.msgbuffer2.Write(head);

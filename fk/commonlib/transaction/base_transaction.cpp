@@ -10,12 +10,13 @@ void Transaction::Construct() {
 	_co_id = 0;
 	_fd = 0;
 	_cur_fd = 0;
-	_cur_frame_head = 0;
+	_cur_frame = 0;
 	_cur_frame_data = 0;
 	_self_svr_type = 0;
 	_self_inst_id = 0;
 	_state = E_STATE_IDLE;
 	_timer_id = 0;
+	memset(&_ori_frame, 0, sizeof(_ori_frame));
 }
 
 Transaction::Transaction(int cmd) {
@@ -28,17 +29,17 @@ Transaction::~Transaction() {
 }
 
 int Transaction::ParseMsg(google::protobuf::Message& message) {
-	if (!_cur_frame_data || !_cur_frame_head) {
+	if (!_cur_frame_data || !_cur_frame) {
 		assert(0);
-		LogError("userid: " << userid() << " cmd: " << cmd() << "_cur_frame_data or _cur_frame_head is nullptr");
+		LogError("userid: " << userid() << " cmd: " << cmd() << "_cur_frame_data or _cur_frame is nullptr");
 		return -1;
 	}
-	bool ret = message.ParseFromArray(_cur_frame_data, _cur_frame_head->get_cmd_length());
+	bool ret = message.ParseFromArray(_cur_frame_data, _cur_frame->get_cmd_length());
 	if (ret) {
 		return 0;
 	}
 	else {
-		LogError("userid: " << userid() << " cmd: " << cmd() << " parse message fail, len:" << _cur_frame_head->get_cmd_length());
+		LogError("userid: " << userid() << " cmd: " << cmd() << " parse message fail, len:" << _cur_frame->get_cmd_length());
 		return -1;
 	}
 }
@@ -52,13 +53,13 @@ int Transaction::Process(base::s_int64_t fd, base::s_uint32_t self_svr_type,
 		_fd = fd;
 		_self_svr_type = self_svr_type;
 		_self_inst_id = self_inst_id;
-		_ori_frame_head = frame;
+		_ori_frame = frame;
 	}
 	else {
 		_state = E_STATE_ACTIVE;
 	}
 	_cur_frame_data = data;
-	_cur_frame_head = &frame;
+	_cur_frame = &frame;
 	_cur_fd = fd;
 	OnState();
 	return 0;
@@ -316,10 +317,10 @@ void Transaction::set_co_id(base::s_int32_t id) {
 	_co_id = id;
 }
 
-const AppHeadFrame& Transaction::cur_frame_head() {
-	return *_cur_frame_head;
+const AppHeadFrame& Transaction::cur_frame() {
+	return *_cur_frame;
 }
 
-const AppHeadFrame& Transaction::ori_frame_head() {
-	return _ori_frame_head;
+const AppHeadFrame& Transaction::ori_frame() {
+	return _ori_frame;
 }

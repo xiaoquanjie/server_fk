@@ -34,6 +34,7 @@ inline void PacketHeader::h2n() {
 
 #define M_SOCKET_READ_SIZE (4*1024)
 #define M_SOCKET_PACK_SIZE (400*1024)
+#define M_PACGET_CODE (0xFCFCFC)
 
 M_NETIO_NAMESPACE_END
 #endif

@@ -92,9 +92,9 @@ protected:
 
 	void set_co_id(base::s_int32_t);
 
-	const AppHeadFrame& cur_frame_head();
+	const AppHeadFrame& cur_frame();
 
-	const AppHeadFrame& ori_frame_head();
+	const AppHeadFrame& ori_frame();
 
 private:
 	base::s_uint16_t _state;
@@ -107,8 +107,8 @@ private:
 	base::s_int64_t _cur_fd;
 	base::s_uint32_t _self_svr_type;
 	base::s_uint32_t _self_inst_id;
-	const AppHeadFrame* _cur_frame_head;
-	AppHeadFrame _ori_frame_head;
+	const AppHeadFrame* _cur_frame;
+	AppHeadFrame _ori_frame;
 	const char* _cur_frame_data;
 };
 
@@ -168,11 +168,11 @@ protected:
 				userid(),
 				false,
 				self_svr_type(),
-				ori_frame_head().get_src_inst_id(),
+				ori_frame().get_src_svr_type(),
 				self_inst_id(),
-				ori_frame_head().get_src_inst_id(),
+				ori_frame().get_src_inst_id(),
 				trans_id(),
-				ori_frame_head().get_src_trans_id(),
+				ori_frame().get_src_trans_id(),
 				respond
 			);
 		}

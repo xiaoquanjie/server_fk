@@ -173,7 +173,7 @@ bool NetIoHandler::SendDataByFd(base::s_int64_t fd, const char* data, base::s_in
 		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
 		auto iter = fd_idx.find(fd);
 		if (iter != fd_idx.end()) {
-			iter->ptr->Send(data, len);
+			iter->ptr->SendPacket(data, len);
 			return true;
 		}
 		else {
@@ -185,7 +185,7 @@ bool NetIoHandler::SendDataByFd(base::s_int64_t fd, const char* data, base::s_in
 		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
 		auto iter = fd_idx.find(fd);
 		if (iter != fd_idx.end()) {
-			iter->ptr->Send(data, len);
+			iter->ptr->SendPacket(data, len);
 			return true;
 		}
 		else {
