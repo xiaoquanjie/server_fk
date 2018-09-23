@@ -73,3 +73,18 @@ public:
 };
 
 REGISTER_TRANSACTION(CMD_REGISTER_SERVER_REQ, TransRegisterServer);
+
+///////////////////////////////////////////////////////////////////////////
+
+class TransSvrHeatBeat
+	: public BaseTransaction<TransSvrHeatBeat, proto::SvrHeatBeat>{
+public:
+	TransSvrHeatBeat(unsigned int cmd) : BaseTransaction(cmd) {}
+
+	int OnRequest(proto::SvrHeatBeat& request) {
+		LogInfo("server heat beat: " << request.ShortDebugString());
+		return 0;
+	}
+};
+
+REGISTER_TRANSACTION(CMD_SVR_HEATBEAT, TransSvrHeatBeat);

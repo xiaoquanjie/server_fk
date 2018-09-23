@@ -25,3 +25,8 @@ message RegisterServerReq {
 message RegisterServerRsp {
 	optional Ret ret = 1;
 }
+
+message SvrHeatBeat {
+	optional int32 server_type = 1;
+	optional int32 instance_id = 2;
+}

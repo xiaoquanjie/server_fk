@@ -2,12 +2,17 @@
 #include "slience/base/logger.hpp"
 #include "commonlib/net_handler/net_handler.h"
 #include <map>
+#include "protolib/src/svr_base.pb.h"
+#include "protolib/src/cmd.pb.h"
 
 RouterMgr::RouterMgr() {
-
+	_self_server_type = 0;
+	_self_instance_id = 0;
 }
 
-int RouterMgr::Init() {
+int RouterMgr::Init(int self_svr_type, int self_inst_id) {
+	_self_server_type = self_svr_type;
+	_self_instance_id = self_inst_id;
 	int ret = 0;
 	do {
 		ret = Reload();
@@ -41,6 +46,30 @@ int RouterMgr::Reload() {
 		return -1;
 	}
 	return 0;
+}
+
+void RouterMgr::Tick(const base::timestamp& now) {
+	if ((now.second() - _last_snd_heatbeat_time.second()) > 5) {
+		// send heat beat
+		_last_snd_heatbeat_time = now;
+		proto::SvrHeatBeat msg;
+		msg.set_server_type(SelfSeverType());
+		msg.set_instance_id(SelfInstanceId());
+		for (auto iter = _router_info_vec.begin();
+			iter != _router_info_vec.end(); ++iter) {
+			SendMsgByFd(iter->fd,
+				proto::CMD::CMD_SVR_HEATBEAT,
+				0,
+				false,
+				SelfSeverType(),
+				proto::SVR_TYPE_ROUTER,
+				SelfInstanceId(),
+				iter->number,
+				0,
+				0,
+				msg);
+		}
+	}
 }
 
 void RouterMgr::SetRouterFile(const std::string& router_file) {
@@ -180,4 +209,12 @@ int RouterMgr::SendMsgByFd(base::s_int64_t fd, int cmd, base::s_int64_t userid,
 	else {
 		return -1;
 	}
+}
+
+int RouterMgr::SelfSeverType() {
+	return _self_server_type;
+}
+
+int RouterMgr::SelfInstanceId() {
+	return _self_instance_id;
 }

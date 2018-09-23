@@ -16,9 +16,11 @@ class RouterMgr {
 public:
 	RouterMgr();
 
-	int Init();
+	int Init(int self_svr_type, int self_inst_id);
 
 	int Reload();
+
+	void Tick(const base::timestamp& now);
 
 	void SetRouterFile(const std::string& router_file);
 
@@ -42,6 +44,10 @@ public:
 		base::s_uint32_t src_trans_id, base::s_uint32_t dst_trans_id,
 		google::protobuf::Message& msg);
 
+	int SelfSeverType();
+
+	int SelfInstanceId();
+
 protected:
 	int ConnectRouters();
 
@@ -49,6 +55,10 @@ private:
 	std::string _router_file;
 	ServerCfg<config::RouterConfig> _router_config;
 	std::vector<RouterInfo> _router_info_vec;
+	base::timestamp _last_snd_heatbeat_time;
+
+	int _self_server_type;
+	int _self_instance_id;
 };
 
 #ifndef RouterMgrSgl

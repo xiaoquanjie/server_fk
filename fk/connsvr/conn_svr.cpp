@@ -40,7 +40,7 @@ int ConnApplication::OnInit() {
 		LogInfo("listen in: " << ip << " " << port);
 	}
 
-	int ret = RouterMgrSgl.Init();
+	int ret = RouterMgrSgl.Init(ServerType(), InstanceId());
 	if (0 != ret) {
 		return -1;
 	}
@@ -70,6 +70,7 @@ int ConnApplication::OnExit() {
 
 int ConnApplication::OnTick(const base::timestamp& now) {
 	NetIoHandlerSgl.OnTick();
+	RouterMgrSgl.Tick(now);
 	return 0;
 }
 
