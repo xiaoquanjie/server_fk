@@ -1,5 +1,4 @@
 #include "slience/netio/netio.hpp"
-
 M_NETIO_NAMESPACE_BEGIN
 
 HttpConnector::HttpConnector(NetIo& netio)

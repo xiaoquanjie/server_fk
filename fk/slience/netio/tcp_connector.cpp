@@ -1,5 +1,4 @@
 #include "slience/netio/netio.hpp"
-
 M_NETIO_NAMESPACE_BEGIN
 
 TcpConnector::TcpConnector(NetIo& netio)
@@ -69,6 +68,5 @@ void TcpConnector::_ConnectHandler(const SocketLib::SocketError& error, TcpConne
 		lasterror = err;
 	}
 }
-
 
 M_NETIO_NAMESPACE_END

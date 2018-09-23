@@ -19,6 +19,8 @@ cc_library(
 	   'netio/http_connector.cpp',
 	   'netio/tcp_connector.cpp',
 	   'netio/netio.cpp',
+	   'netio/tcp_socket.cpp',
+	   'netio/http_socket.cpp',
     ],
 
     deps = [

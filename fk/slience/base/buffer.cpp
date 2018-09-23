@@ -18,6 +18,11 @@ Buffer::~Buffer() {
 
 void Buffer::Clear() {
 	_data._pos = _data._offset = (0);
+	if (_data._size >= 4 * 1024) {
+		free(_data._data);
+		_data._size = M_BUFFER_DEFAILT_SIZE;
+		_data._data = (s_byte_t*)malloc(_data._size);
+	}
 }
 
 void Buffer::CutData(s_int32_t len) {

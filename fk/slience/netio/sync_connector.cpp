@@ -51,10 +51,10 @@ void SyncConnector::Close() {
 bool SyncConnector::Send(const SocketLib::s_byte_t* data, SocketLib::s_uint32_t len) {
 	if (_flag != E_STATE_START)
 		return  false;
-	SocketLib::s_uint32_t hdrlen = (SocketLib::s_uint32_t)sizeof(MessageHeader);
+	SocketLib::s_uint32_t hdrlen = (SocketLib::s_uint32_t)sizeof(PacketHeader);
 	if (len > 0 && len <= (0xFFFF - hdrlen)) {
 		_sndbuffer.Clear();
-		MessageHeader hdr;
+		PacketHeader hdr;
 		hdr.size = len;
 		hdr.timestamp = (unsigned int)time(0);
 		hdr.h2n();
@@ -122,7 +122,7 @@ SocketLib::s_uint32_t SyncConnector::_LocalEndian()const {
 
 SocketLib::Buffer* SyncConnector::_CutMsgPack(SocketLib::s_byte_t* buf, SocketLib::s_uint32_t& tran_byte) {
 	// 减少内存拷贝是此函数的设计关键
-	SocketLib::s_uint32_t hdrlen = (SocketLib::s_uint32_t)sizeof(MessageHeader);
+	SocketLib::s_uint32_t hdrlen = (SocketLib::s_uint32_t)sizeof(PacketHeader);
 	do
 	{
 		// 算出头部长度

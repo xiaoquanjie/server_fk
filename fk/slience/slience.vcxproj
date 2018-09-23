@@ -158,16 +158,24 @@
     <ClInclude Include="coroutine\coroutine.hpp" />
     <ClInclude Include="coroutine\co_linux_impl.hpp" />
     <ClInclude Include="coroutine\co_win_impl.hpp" />
+    <ClInclude Include="netio\http_base_socket.hpp" />
+    <ClInclude Include="netio\http_connector.h" />
+    <ClInclude Include="netio\http_socket.h" />
+    <ClInclude Include="netio\sync_connector.h" />
+    <ClInclude Include="netio\tcp_base_socket.hpp" />
     <ClInclude Include="netio\config.hpp" />
     <ClInclude Include="netio\heartbeat.hpp" />
-    <ClInclude Include="netio\hsocket_impl.hpp" />
     <ClInclude Include="netio\httpmsg.hpp" />
     <ClInclude Include="netio\log.hpp" />
     <ClInclude Include="netio\netio.hpp" />
     <ClCompile Include="base\object_pool.cpp" />
     <ClCompile Include="base\time_pool.cpp" />
+    <ClCompile Include="netio\http_socket.cpp" />
     <ClCompile Include="netio\netio.cpp" />
-    <ClInclude Include="netio\tsocket_impl.hpp" />
+    <ClInclude Include="netio\packet.hpp" />
+    <ClInclude Include="netio\tcp_connector.h" />
+    <ClInclude Include="netio\tcp_socket.h" />
+    <ClInclude Include="netio\tcp_stream_socket.hpp" />
     <ClInclude Include="socket\acceptor_service.hpp" />
     <ClInclude Include="socket\address.hpp" />
     <ClInclude Include="socket\basic_socket.hpp" />
@@ -219,6 +227,7 @@
     <ClCompile Include="netio\http_connector.cpp" />
     <ClCompile Include="netio\sync_connector.cpp" />
     <ClCompile Include="netio\tcp_connector.cpp" />
+    <ClCompile Include="netio\tcp_socket.cpp" />
     <ClCompile Include="socket\error.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
