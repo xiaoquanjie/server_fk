@@ -5,7 +5,7 @@ M_NETIO_NAMESPACE_BEGIN
 SyncConnector::SyncConnector() {
 	_socket = new SocketLib::TcpConnector<SocketLib::IoService>(_ioservice);
 	_flag = E_STATE_STOP;
-	_readbuf = (SocketLib::s_byte_t*)g_malloc(M_SOCKET_READ_SIZE);
+	_readbuf = (base::s_byte_t*)g_malloc(M_SOCKET_READ_SIZE);
 	g_memset(_readbuf, 0, M_SOCKET_READ_SIZE);
 	_readsize = 0;
 	g_memset(&_curheader, 0, sizeof(_curheader));
@@ -15,7 +15,7 @@ SyncConnector::~SyncConnector() {
 	g_free(_readbuf);
 }
 
-bool SyncConnector::Connect(const SocketLib::Tcp::EndPoint& ep, SocketLib::s_uint32_t timeo_sec) {
+bool SyncConnector::Connect(const SocketLib::Tcp::EndPoint& ep, base::s_uint32_t timeo_sec) {
 	try {
 		this->_socket->Connect(ep, timeo_sec);
 		_flag = E_STATE_START;
@@ -28,7 +28,7 @@ bool SyncConnector::Connect(const SocketLib::Tcp::EndPoint& ep, SocketLib::s_uin
 	}
 }
 
-bool SyncConnector::Connect(const std::string& addr, SocketLib::s_uint16_t port, SocketLib::s_uint32_t timeo_sec) {
+bool SyncConnector::Connect(const std::string& addr, base::s_uint16_t port, base::s_uint32_t timeo_sec) {
 	SocketLib::Tcp::EndPoint ep(SocketLib::AddressV4(addr), port);
 	return Connect(ep, timeo_sec);
 }
@@ -48,10 +48,10 @@ void SyncConnector::Close() {
 	_flag = E_STATE_STOP;
 }
 
-bool SyncConnector::Send(const SocketLib::s_byte_t* data, SocketLib::s_uint32_t len) {
+bool SyncConnector::Send(const base::s_byte_t* data, base::s_uint32_t len) {
 	if (_flag != E_STATE_START)
 		return  false;
-	SocketLib::s_uint32_t hdrlen = (SocketLib::s_uint32_t)sizeof(PacketHeader);
+	base::s_uint32_t hdrlen = (base::s_uint32_t)sizeof(PacketHeader);
 	if (len > 0 && len <= (0xFFFF - hdrlen)) {
 		_sndbuffer.Clear();
 		PacketHeader hdr;
@@ -63,7 +63,7 @@ bool SyncConnector::Send(const SocketLib::s_byte_t* data, SocketLib::s_uint32_t 
 		SocketLib::SocketError error;
 		do
 		{
-			SocketLib::s_uint32_t snd_cnt = _socket->SendSome(_sndbuffer.Data(), _sndbuffer.Length(), error);
+			base::s_uint32_t snd_cnt = _socket->SendSome(_sndbuffer.Data(), _sndbuffer.Length(), error);
 			if (error) {
 				Close();
 				return false;
@@ -104,7 +104,7 @@ SocketLib::Buffer* SyncConnector::Recv() {
 	return reply;
 }
 
-void SyncConnector::SetTimeOut(SocketLib::s_uint32_t timeo) {
+void SyncConnector::SetTimeOut(base::s_uint32_t timeo) {
 	try {
 		SocketLib::Opts::RcvTimeOut rtimeo(timeo, 0);
 		SocketLib::Opts::SndTimeOut stimeo(timeo, 0);
@@ -115,18 +115,18 @@ void SyncConnector::SetTimeOut(SocketLib::s_uint32_t timeo) {
 	}
 }
 
-SocketLib::s_uint32_t SyncConnector::_LocalEndian()const {
-	static SocketLib::s_uint32_t endian = SocketLib::detail::Util::LocalEndian();
+base::s_uint32_t SyncConnector::_LocalEndian()const {
+	static base::s_uint32_t endian = SocketLib::detail::Util::LocalEndian();
 	return endian;
 }
 
-SocketLib::Buffer* SyncConnector::_CutMsgPack(SocketLib::s_byte_t* buf, SocketLib::s_uint32_t& tran_byte) {
+SocketLib::Buffer* SyncConnector::_CutMsgPack(base::s_byte_t* buf, base::s_uint32_t& tran_byte) {
 	// 减少内存拷贝是此函数的设计关键
-	SocketLib::s_uint32_t hdrlen = (SocketLib::s_uint32_t)sizeof(PacketHeader);
+	base::s_uint32_t hdrlen = (base::s_uint32_t)sizeof(PacketHeader);
 	do
 	{
 		// 算出头部长度
-		SocketLib::s_uint32_t datalen = _rcvbuffer.Length();
+		base::s_uint32_t datalen = _rcvbuffer.Length();
 		if (_curheader.size == 0) {
 			if (tran_byte + datalen < hdrlen) {
 				_rcvbuffer.Write(buf, tran_byte);

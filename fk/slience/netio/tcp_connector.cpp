@@ -9,7 +9,7 @@ SocketLib::TcpConnector<SocketLib::IoService>& TcpConnector::GetSocket() {
 	return *this->_socket;
 }
 
-bool TcpConnector::Connect(const SocketLib::Tcp::EndPoint& ep, SocketLib::s_uint32_t timeo_sec) {
+bool TcpConnector::Connect(const SocketLib::Tcp::EndPoint& ep, base::s_uint32_t timeo_sec) {
 	try {
 		this->_socket->Connect(ep,timeo_sec);
 		this->_flag = E_STATE_START;
@@ -17,7 +17,7 @@ bool TcpConnector::Connect(const SocketLib::Tcp::EndPoint& ep, SocketLib::s_uint
 		this->_localep = this->_socket->LocalEndPoint();
 		this->_fd = this->_socket->GetFd();
 		shard_ptr_t<TcpConnector> ref = this->shared_from_this();
-		m_function_t<void(SocketLib::s_uint32_t, SocketLib::SocketError)> handler =
+		m_function_t<void(base::s_uint32_t, SocketLib::SocketError)> handler =
 			m_bind_t(&TcpConnector::_ReadHandler, ref, placeholder_1, placeholder_2);
 		this->_socket->AsyncRecvSome(handler, this->_reader.readbuf, M_SOCKET_READ_SIZE);
 		return true;
@@ -28,7 +28,7 @@ bool TcpConnector::Connect(const SocketLib::Tcp::EndPoint& ep, SocketLib::s_uint
 	}
 }
 
-bool TcpConnector::Connect(const std::string& addr, SocketLib::s_uint16_t port, SocketLib::s_uint32_t timeo_sec) {
+bool TcpConnector::Connect(const std::string& addr, base::s_uint16_t port, base::s_uint32_t timeo_sec) {
 	SocketLib::Tcp::EndPoint ep(SocketLib::AddressV4(addr), port);
 	return Connect(ep,timeo_sec);
 }
@@ -41,7 +41,7 @@ void TcpConnector::AsyncConnect(const SocketLib::Tcp::EndPoint& ep, SocketLib::S
 		lasterror = error;
 }
 
-void TcpConnector::AsyncConnect(const std::string& addr, SocketLib::s_uint16_t port, SocketLib::SocketError& error) {
+void TcpConnector::AsyncConnect(const std::string& addr, base::s_uint16_t port, SocketLib::SocketError& error) {
 	SocketLib::Tcp::EndPoint ep(SocketLib::AddressV4(addr), port);
 	return AsyncConnect(ep, error);
 }
@@ -60,7 +60,7 @@ void TcpConnector::_ConnectHandler(const SocketLib::SocketError& error, TcpConne
 		this->_fd = _socket->GetFd();
 		shard_ptr_t<TcpConnector> ref = this->shared_from_this();
 		this->_netio.OnConnected(ref, error);
-		m_function_t<void(SocketLib::s_uint32_t, SocketLib::SocketError)> handler =
+		m_function_t<void(base::s_uint32_t, SocketLib::SocketError)> handler =
 			m_bind_t(&TcpConnector::_ReadHandler, ref, placeholder_1, placeholder_2);
 		this->_socket->AsyncRecvSome(handler, this->_reader.readbuf, M_SOCKET_READ_SIZE);
 	}

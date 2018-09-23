@@ -11,7 +11,7 @@ class HttpBaseSocket :
 {
 protected:
 	struct _readerinfo_ {
-		SocketLib::s_byte_t*  readbuf;
+		base::s_byte_t*  readbuf;
 		HttpMsgType httpmsg;
 
 		_readerinfo_();
@@ -20,10 +20,10 @@ protected:
 
 	_readerinfo_ _reader;
 
-	void _ReadHandler(SocketLib::s_uint32_t tran_byte, SocketLib::SocketError error);
+	void _ReadHandler(base::s_uint32_t tran_byte, SocketLib::SocketError error);
 
 	// 裁减出数据包，返回false意味着数据包有错
-	bool _CutMsgPack(SocketLib::s_byte_t* buf, SocketLib::s_uint32_t tran_byte);
+	bool _CutMsgPack(base::s_byte_t* buf, base::s_uint32_t tran_byte);
 
 	void _TryRecvData();
 
@@ -33,7 +33,7 @@ public:
 
 template<typename T, typename SocketType, typename HttpMsgType>
 HttpBaseSocket<T, SocketType, HttpMsgType>::_readerinfo_::_readerinfo_() {
-	readbuf = new SocketLib::s_byte_t[M_SOCKET_READ_SIZE];
+	readbuf = new base::s_byte_t[M_SOCKET_READ_SIZE];
 	g_memset(readbuf, 0, M_SOCKET_READ_SIZE);
 }
 
@@ -43,7 +43,7 @@ HttpBaseSocket<T, SocketType, HttpMsgType>::_readerinfo_::~_readerinfo_() {
 }
 
 template<typename T, typename SocketType, typename HttpMsgType>
-void HttpBaseSocket<T, SocketType, HttpMsgType>::_ReadHandler(SocketLib::s_uint32_t tran_byte, SocketLib::SocketError error) {
+void HttpBaseSocket<T, SocketType, HttpMsgType>::_ReadHandler(base::s_uint32_t tran_byte, SocketLib::SocketError error) {
 	if (error) {
 		// 出错关闭连接
 		M_NETIO_LOGGER("read handler happend error:" << M_ERROR_DESC_STR(error));
@@ -71,10 +71,10 @@ void HttpBaseSocket<T, SocketType, HttpMsgType>::_ReadHandler(SocketLib::s_uint3
 }
 
 template<typename T, typename SocketType, typename HttpMsgType>
-bool HttpBaseSocket<T, SocketType, HttpMsgType>::_CutMsgPack(SocketLib::s_byte_t* buf, SocketLib::s_uint32_t tran_byte) {
+bool HttpBaseSocket<T, SocketType, HttpMsgType>::_CutMsgPack(base::s_byte_t* buf, base::s_uint32_t tran_byte) {
 	shard_ptr_t<T> ref;
 	while (true) {
-		SocketLib::s_uint32_t copy_len = (SocketLib::s_uint32_t)_reader.httpmsg.Parse(buf, tran_byte);
+		base::s_uint32_t copy_len = (base::s_uint32_t)_reader.httpmsg.Parse(buf, tran_byte);
 		if (copy_len == 0 || copy_len <= tran_byte) {
 			if (!ref)
 				ref = this->shared_from_this();

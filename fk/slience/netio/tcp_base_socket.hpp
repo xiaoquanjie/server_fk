@@ -36,7 +36,7 @@ public:
 
 	bool Send(const SocketLib::Buffer* buffer);
 
-	bool Send(const SocketLib::s_byte_t* data, SocketLib::s_uint32_t len);
+	bool Send(const base::s_byte_t* data, base::s_uint32_t len);
 
 	bool IsConnected()const;
 
@@ -46,12 +46,12 @@ public:
 
 	void* GetExtData();
 
-	void SetKeepAlive(SocketLib::s_uint32_t timeo);
+	void SetKeepAlive(base::s_uint32_t timeo);
 
 protected:
 	bool _CheckCanSend(int len);
 
-	void _WriteHandler(SocketLib::s_uint32_t tran_byte, SocketLib::SocketError error);
+	void _WriteHandler(base::s_uint32_t tran_byte, SocketLib::SocketError error);
 
 	inline void _CloseHandler();
 
@@ -142,7 +142,7 @@ void TcpBaseSocket<T, SocketType>::_Close() {
 }
 
 template<typename T, typename SocketType>
-bool TcpBaseSocket<T, SocketType>::Send(const SocketLib::s_byte_t* data, SocketLib::s_uint32_t len) {
+bool TcpBaseSocket<T, SocketType>::Send(const base::s_byte_t* data, base::s_uint32_t len) {
 	SocketLib::ScopedLock scoped_w(_writer.lock);
 	if (!_CheckCanSend(len)) {
 		return false;
@@ -187,7 +187,7 @@ void* TcpBaseSocket<T, SocketType>::GetExtData() {
 }
 
 template<typename T, typename SocketType>
-void TcpBaseSocket<T, SocketType>::SetKeepAlive(SocketLib::s_uint32_t timeo) {
+void TcpBaseSocket<T, SocketType>::SetKeepAlive(base::s_uint32_t timeo) {
 	try {
 		typename SocketLib::Opts::Keepalive kpalive(true);
 		_socket->SetOption(kpalive);
@@ -229,7 +229,7 @@ bool TcpBaseSocket<T, SocketType>::_CheckCanSend(int len) {
 }
 
 template<typename T, typename SocketType>
-void TcpBaseSocket<T, SocketType>::_WriteHandler(SocketLib::s_uint32_t tran_byte, SocketLib::SocketError error) {
+void TcpBaseSocket<T, SocketType>::_WriteHandler(base::s_uint32_t tran_byte, SocketLib::SocketError error) {
 	/*
 	*  要注意防止_writer.lock死锁的问题。
 	*/

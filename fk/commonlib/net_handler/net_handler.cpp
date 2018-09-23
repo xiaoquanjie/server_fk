@@ -13,7 +13,7 @@ std::string ConnInfo::ToString() {
 	return oss.str();
 }
 
-ConnInfo* MakeConnInfo(const std::string& addr, SocketLib::s_uint16_t port,
+ConnInfo* MakeConnInfo(const std::string& addr, base::s_uint16_t port,
 	int conn_type, int serial_num) {
 	ConnInfo* pinfo = (ConnInfo*)malloc(sizeof(ConnInfo));
 	pinfo->conn_type = conn_type;
@@ -267,14 +267,14 @@ netiolib::TcpSocketPtr NetIoHandler::GetSocketPtr(base::s_int64_t fd) {
 	return netiolib::TcpSocketPtr();
 }
 
-bool NetIoHandler::ConnectOne(const std::string& addr, SocketLib::s_uint16_t port,
+bool NetIoHandler::ConnectOne(const std::string& addr, base::s_uint16_t port,
 	int conn_type, int serial_num) {
 	ConnInfo* pinfo = MakeConnInfo(addr, port, conn_type, serial_num);
 	_ConnectOne(pinfo);
 	return true;
 }
 
-void NetIoHandler::ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port,
+void NetIoHandler::ConnectOneHttp(const std::string& addr, base::s_uint16_t port,
 	int conn_type, int serial_num) {
 	try {
 		ConnInfo* pinfo = MakeConnInfo(addr, port, conn_type, serial_num);
@@ -437,7 +437,7 @@ void NetIoHandler::OnDisconnected(netiolib::TcpConnectorPtr& clisock) {
 	_tcp_connector_msg_list.push_back(pMessage);
 }
 
-void NetIoHandler::OnReceiveData(netiolib::TcpSocketPtr& clisock, SocketLib::Buffer& buffer) {
+void NetIoHandler::OnReceiveData(netiolib::TcpSocketPtr& clisock, const base::s_byte_t* data, base::s_uint32_t len) {
 	base::ScopedLock scoped(_msg_lock);
 	if (_tcp_socket_msg_list.size() >= M_MAX_MESSAGE_LIST) {
 		// message list is too many
@@ -448,11 +448,11 @@ void NetIoHandler::OnReceiveData(netiolib::TcpSocketPtr& clisock, SocketLib::Buf
 	TcpSocketMsg* pMessage = CreateTcpSocketMsg();
 	pMessage->ptr = clisock;
 	pMessage->type = M_SOCKET_DATA;
-	pMessage->buf.Write(buffer.Data(), buffer.Length());
+	pMessage->buf.Write(data, len);
 	_tcp_socket_msg_list.push_back(pMessage);
 }
 
-void NetIoHandler::OnReceiveData(netiolib::TcpConnectorPtr& clisock, SocketLib::Buffer& buffer) {
+void NetIoHandler::OnReceiveData(netiolib::TcpConnectorPtr& clisock, const base::s_byte_t* data, base::s_uint32_t len) {
 	base::ScopedLock scoped(_msg_lock);
 	if (_tcp_connector_msg_list.size() >= M_MAX_MESSAGE_LIST) {
 		// message list is too many
@@ -463,7 +463,7 @@ void NetIoHandler::OnReceiveData(netiolib::TcpConnectorPtr& clisock, SocketLib::
 	TcpConnectorMsg* pMessage = CreateTcpConnectorMsg();
 	pMessage->ptr = clisock;
 	pMessage->type = M_SOCKET_DATA;
-	pMessage->buf.Write(buffer.Data(), buffer.Length());
+	pMessage->buf.Write(data, len);
 	_tcp_connector_msg_list.push_back(pMessage);
 }
 

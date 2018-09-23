@@ -87,9 +87,6 @@
     <ClInclude Include="netio\config.hpp">
       <Filter>netio</Filter>
     </ClInclude>
-    <ClInclude Include="netio\heartbeat.hpp">
-      <Filter>netio</Filter>
-    </ClInclude>
     <ClInclude Include="netio\httpmsg.hpp">
       <Filter>netio</Filter>
     </ClInclude>
@@ -98,24 +95,6 @@
     </ClInclude>
     <ClInclude Include="netio\netio.hpp">
       <Filter>netio</Filter>
-    </ClInclude>
-    <ClInclude Include="synccall\config.hpp">
-      <Filter>synccall</Filter>
-    </ClInclude>
-    <ClInclude Include="synccall\server_handler.hpp">
-      <Filter>synccall</Filter>
-    </ClInclude>
-    <ClInclude Include="synccall\synccall.hpp">
-      <Filter>synccall</Filter>
-    </ClInclude>
-    <ClInclude Include="synccall\synccall_client.hpp">
-      <Filter>synccall</Filter>
-    </ClInclude>
-    <ClInclude Include="synccall\synccall_coclient.hpp">
-      <Filter>synccall</Filter>
-    </ClInclude>
-    <ClInclude Include="synccall\synccall_svr.hpp">
-      <Filter>synccall</Filter>
     </ClInclude>
     <ClInclude Include="socket\acceptor_service.hpp">
       <Filter>socket</Filter>

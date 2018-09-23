@@ -58,10 +58,10 @@ public:
 
 	netiolib::TcpSocketPtr GetSocketPtr(base::s_int64_t fd);
 
-	bool ConnectOne(const std::string& addr, SocketLib::s_uint16_t port, 
+	bool ConnectOne(const std::string& addr, base::s_uint16_t port,
 		int conn_type, int serial_num);
 
-	void ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port, 
+	void ConnectOneHttp(const std::string& addr, base::s_uint16_t port,
 		int conn_type, int serial_num);
 
 protected:
@@ -84,9 +84,9 @@ protected:
 
 	void OnDisconnected(netiolib::TcpConnectorPtr& clisock) override;
 
-	void OnReceiveData(netiolib::TcpSocketPtr& clisock, SocketLib::Buffer& buffer) override;
+	void OnReceiveData(netiolib::TcpSocketPtr& clisock, const base::s_byte_t* data, base::s_uint32_t len) override;
 
-	void OnReceiveData(netiolib::TcpConnectorPtr& clisock, SocketLib::Buffer& buffer) override;
+	void OnReceiveData(netiolib::TcpConnectorPtr& clisock, const base::s_byte_t* data, base::s_uint32_t len) override;
 
 protected:
 	// ø’ µœ÷

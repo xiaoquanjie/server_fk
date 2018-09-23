@@ -8,37 +8,35 @@ template<typename T, typename SocketType>
 class TcpStreamSocket : public TcpBaseSocket<T, SocketType> {
 protected:
 	struct _readerinfo_ {
-		SocketLib::s_byte_t* readbuf;
+		base::s_byte_t* readbuf;
 		SocketLib::Buffer msgbuffer;
-		PacketHeader curheader;
-
+		
 		_readerinfo_();
 		~_readerinfo_();
 	};
 
 	_readerinfo_ _reader;
 
-	void _ReadHandler(SocketLib::s_uint32_t tran_byte, SocketLib::SocketError error);
+	void _ReadHandler(base::s_uint32_t tran_byte, SocketLib::SocketError error);
 
 	// 裁减出数据包，返回false意味着数据包有错
-	bool _CutMsgPack(SocketLib::s_byte_t* buf, SocketLib::s_uint32_t tran_byte);
+	bool _CutMsgPack(base::s_byte_t* buf, base::s_uint32_t tran_byte);
 
 	void _TryRecvData();
 
 public:
 	TcpStreamSocket(NetIo& netio);
 
-	bool SendPacket(const SocketLib::s_byte_t* data, SocketLib::s_uint32_t len);
+	bool SendPacket(const base::s_byte_t* data, base::s_uint32_t len);
 
 	template<typename MsgHeadType>
-	bool SendPacket(const MsgHeadType& head, const SocketLib::s_byte_t* data,
-		SocketLib::s_uint32_t len);
+	bool SendPacket(const MsgHeadType& head, const base::s_byte_t* data,
+		base::s_uint32_t len);
 };
 
 template<typename T, typename SocketType>
 TcpStreamSocket<T, SocketType>::_readerinfo_::_readerinfo_() {
-	g_memset(&curheader, 0, sizeof(curheader));
-	readbuf = new SocketLib::s_byte_t[M_SOCKET_READ_SIZE];
+	readbuf = new base::s_byte_t[M_SOCKET_READ_SIZE];
 	g_memset(readbuf, 0, M_SOCKET_READ_SIZE);
 }
 
@@ -48,7 +46,7 @@ TcpStreamSocket<T, SocketType>::_readerinfo_::~_readerinfo_() {
 }
 
 template<typename T, typename SocketType>
-void TcpStreamSocket<T, SocketType>::_ReadHandler(SocketLib::s_uint32_t tran_byte, SocketLib::SocketError error) {
+void TcpStreamSocket<T, SocketType>::_ReadHandler(base::s_uint32_t tran_byte, SocketLib::SocketError error) {
 	do {
 		// 出错关闭连接
 		if (error) {
@@ -77,61 +75,57 @@ void TcpStreamSocket<T, SocketType>::_ReadHandler(SocketLib::s_uint32_t tran_byt
 }
 
 template<typename T, typename SocketType>
-bool TcpStreamSocket<T, SocketType>::_CutMsgPack(SocketLib::s_byte_t* buf, SocketLib::s_uint32_t tran_byte) {
+bool TcpStreamSocket<T, SocketType>::_CutMsgPack(base::s_byte_t* buf, base::s_uint32_t tran_byte) {
 	// 减少内存拷贝是此函数的设计关键
-	SocketLib::s_uint32_t hdrlen = (SocketLib::s_uint32_t)sizeof(PacketHeader);
+	base::s_uint32_t hdrlen = (base::s_uint32_t)sizeof(PacketHeader);
 	shard_ptr_t<T> ref;
-	do
-	{
-		/*SocketLib::s_uint32_t datalen = _reader.msgbuffer.Length() + tran_byte;
-		if (datalen < hdrlen) {
-			_reader.msgbuffer.Write(buf, tran_byte);
-			break;
-		}*/
-		
+	base::s_byte_t* data = 0;
+	base::s_uint32_t datalen = 0;
 
-		// 算出头部长度
-		SocketLib::s_uint32_t datalen = _reader.msgbuffer.Length();
-		if (_reader.curheader.size == 0) {
-			if (tran_byte + datalen < hdrlen) {
+	do {
+		if (_reader.msgbuffer.Length() == 0) {
+			if (tran_byte < hdrlen) {
 				_reader.msgbuffer.Write(buf, tran_byte);
-				return true;
+				break;
 			}
-			else if (datalen >= hdrlen) {
-				_reader.msgbuffer.Read(_reader.curheader);
+			PacketHeader* header = (PacketHeader*)buf;
+			header->n2h();
+			if (tran_byte - hdrlen < header->size) {
+				header->n2h();
+				_reader.msgbuffer.Write(buf, tran_byte);
+				break;
 			}
-			else {
-				_reader.msgbuffer.Write(buf, hdrlen - datalen);
-				buf += (hdrlen - datalen);
-				tran_byte -= (hdrlen - datalen);
-				_reader.msgbuffer.Read(_reader.curheader);
-			}
-
-			// convert byte order
-			_reader.curheader.n2h();
-
-			// check
-			if (_reader.curheader.size > (M_SOCKET_PACK_SIZE /*- hdrlen*/))
+			if (header->timestamp != 0xFCFCFCFC) {
 				return false;
-		}
-
-		// copy body data
-		datalen = _reader.msgbuffer.Length();
-		if (tran_byte + datalen < _reader.curheader.size) {
-			_reader.msgbuffer.Write(buf, tran_byte);
-			return true;
+			}
+			
+			data = buf + hdrlen;
+			datalen = header->size;
+			tran_byte -= (hdrlen + header->size);
+			buf += (hdrlen + header->size);
 		}
 		else {
-			_reader.msgbuffer.Write(buf, _reader.curheader.size - datalen);
-			buf += (_reader.curheader.size - datalen);
-			tran_byte -= (_reader.curheader.size - datalen);
+			// base
 
-			// notify
-			_reader.curheader.size = 0;
-			if (!ref)
+			if (_reader.msgbuffer.Length() + tran_byte < hdrlen) {
+				_reader.msgbuffer.Write(buf, tran_byte);
+				break;
+			}
+			if (_reader.msgbuffer.Length() < hdrlen) {
+				//_reader.msgbuffer.Write(buf, )
+			}
+		}
+
+		if (data) {
+			if (datalen > M_SOCKET_PACK_SIZE) {
+				return false;
+			}
+			if (!ref) {
 				ref = this->shared_from_this();
-			this->_netio.OnReceiveData(ref, _reader.msgbuffer);
-			_reader.msgbuffer.Clear();
+			}
+			this->_netio.OnReceiveData(ref, data, datalen);
+			data = 0;
+			datalen = 0;
 		}
 	} while (true);
 	return true;
@@ -152,8 +146,8 @@ TcpStreamSocket<T, SocketType>::TcpStreamSocket(NetIo& netio)
 }
 
 template<typename T, typename SocketType>
-bool TcpStreamSocket<T, SocketType>::SendPacket(const SocketLib::s_byte_t* data, 
-	SocketLib::s_uint32_t len) {
+bool TcpStreamSocket<T, SocketType>::SendPacket(const base::s_byte_t* data,
+	base::s_uint32_t len) {
 	SocketLib::ScopedLock scoped_w(_writer.lock);
 	if (!_CheckCanSend(len + sizeof(PacketHeader))) {
 		return false;
@@ -172,7 +166,7 @@ bool TcpStreamSocket<T, SocketType>::SendPacket(const SocketLib::s_byte_t* data,
 template<typename T, typename SocketType>
 template<typename MsgHeadType>
 bool TcpStreamSocket<T, SocketType>::SendPacket(const MsgHeadType& head, 
-	const SocketLib::s_byte_t* data, SocketLib::s_uint32_t len) {
+	const base::s_byte_t* data, base::s_uint32_t len) {
 	SocketLib::ScopedLock scoped_w(_writer.lock);
 	if (!_CheckCanSend(len + sizeof(PacketHeader) + sizeof(MsgHeadType))) {
 		return false;

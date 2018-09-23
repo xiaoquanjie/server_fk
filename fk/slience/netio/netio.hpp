@@ -40,24 +40,24 @@ typedef shard_ptr_t<SyncConnector>  SyncConnectorPtr;
 class NetIo {
 public:
 	NetIo();
-	NetIo(SocketLib::s_uint32_t backlog);
+	NetIo(base::s_uint32_t backlog);
 
 	virtual ~NetIo();
 
 	// 建立一个监听
 	bool ListenOne(const SocketLib::Tcp::EndPoint& ep);
-	bool ListenOne(const std::string& addr, SocketLib::s_uint16_t port);
+	bool ListenOne(const std::string& addr, base::s_uint16_t port);
 
 	// 建立一个http监听
 	bool ListenOneHttp(const SocketLib::Tcp::EndPoint& ep);
-	bool ListenOneHttp(const std::string& addr, SocketLib::s_uint16_t port);
+	bool ListenOneHttp(const std::string& addr, base::s_uint16_t port);
 
 	// 异步建接
 	void ConnectOne(const SocketLib::Tcp::EndPoint& ep);
-	void ConnectOne(const std::string& addr, SocketLib::s_uint16_t port);
+	void ConnectOne(const std::string& addr, base::s_uint16_t port);
 
 	void ConnectOneHttp(const SocketLib::Tcp::EndPoint& ep);
-	void ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port);
+	void ConnectOneHttp(const std::string& addr, base::s_uint16_t port);
 
 	virtual void Start(unsigned int thread_cnt, bool isco = false);
 	virtual void Stop();
@@ -67,7 +67,7 @@ public:
 	// 获取最后的异常
 	SocketLib::SocketError GetLastError()const;
 	SocketLib::IoService& GetIoService();
-	SocketLib::s_uint32_t LocalEndian()const;
+	base::s_uint32_t LocalEndian()const;
 
 	/*
 	*以下三个函数定义为虚函数，以便根据实际业务的模式来做具体模式的消息包分发处理。
@@ -88,8 +88,8 @@ public:
 	virtual void OnDisconnected(HttpConnectorPtr& clisock);
 
 	// 数据包通知,这个函数里不要处理业务，防止堵塞
-	virtual void OnReceiveData(TcpSocketPtr& clisock, SocketLib::Buffer& buffer);
-	virtual void OnReceiveData(TcpConnectorPtr& clisock, SocketLib::Buffer& buffer);
+	virtual void OnReceiveData(TcpSocketPtr& clisock, const base::s_byte_t* data, base::s_uint32_t len);
+	virtual void OnReceiveData(TcpConnectorPtr& clisock, const base::s_byte_t* data, base::s_uint32_t len);
 	virtual void OnReceiveData(HttpSocketPtr& clisock, HttpSvrRecvMsg& httpmsg);
 	virtual void OnReceiveData(HttpConnectorPtr& clisock, HttpCliRecvMsg& httpmsg);
 
@@ -106,8 +106,8 @@ protected:
 
 protected:
 	SocketLib::IoService   _ioservice;
-	SocketLib::s_uint32_t  _backlog;
-	SocketLib::s_uint32_t  _endian;
+	base::s_uint32_t  _backlog;
+	base::s_uint32_t  _endian;
 	base::slist<base::thread*> _threadlist;
 };
 

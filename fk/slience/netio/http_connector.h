@@ -14,11 +14,11 @@ public:
 
 	bool Connect(const SocketLib::Tcp::EndPoint& ep);
 
-	bool Connect(const std::string& addr, SocketLib::s_uint16_t port);
+	bool Connect(const std::string& addr, base::s_uint16_t port);
 
 	void AsyncConnect(const SocketLib::Tcp::EndPoint& ep);
 
-	void AsyncConnect(const std::string& addr, SocketLib::s_uint16_t port);
+	void AsyncConnect(const std::string& addr, base::s_uint16_t port);
 
 protected:
 	void _ConnectHandler(const SocketLib::SocketError& error, HttpConnectorPtr conector);
