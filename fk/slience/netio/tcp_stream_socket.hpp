@@ -91,11 +91,12 @@ bool TcpStreamSocket<T, SocketType>::_CutMsgPack(base::s_byte_t* buf, base::s_ui
 			PacketHeader* header = (PacketHeader*)buf;
 			header->n2h();
 			if (tran_byte - hdrlen < header->size) {
-				header->n2h();
+				header->h2n();
 				_reader.msgbuffer.Write(buf, tran_byte);
 				break;
 			}
 			if (header->timestamp != 0xFCFCFCFC) {
+				assert(0);
 				return false;
 			}
 			
@@ -105,15 +106,34 @@ bool TcpStreamSocket<T, SocketType>::_CutMsgPack(base::s_byte_t* buf, base::s_ui
 			buf += (hdrlen + header->size);
 		}
 		else {
-			// base
-
-			if (_reader.msgbuffer.Length() + tran_byte < hdrlen) {
+			base::s_uint32_t buf_len = _reader.msgbuffer.Length();
+			if (buf_len + tran_byte < hdrlen) {
 				_reader.msgbuffer.Write(buf, tran_byte);
 				break;
 			}
-			if (_reader.msgbuffer.Length() < hdrlen) {
-				//_reader.msgbuffer.Write(buf, )
+			if (buf_len < hdrlen) {
+				_reader.msgbuffer.Write(buf, hdrlen - buf_len);
+				buf += (hdrlen - buf_len);
+				tran_byte -= (hdrlen - buf_len);
 			}
+			PacketHeader* header = (PacketHeader*)_reader.msgbuffer.Data();
+			header->n2h();
+			buf_len = _reader.msgbuffer.Length() - hdrlen;
+			if (header->size > (tran_byte += buf_len)) {
+				header->h2n();
+				_reader.msgbuffer.Write(buf, tran_byte);
+				break;
+			}
+			if (header->timestamp != 0xFCFCFCFC) {
+				assert(0);
+				return false;
+			}
+
+			_reader.msgbuffer.Write(buf, (header->size - buf_len));
+			tran_byte -= (header->size - buf_len);
+			buf += (header->size - buf_len);
+			data = _reader.msgbuffer.Data();
+			datalen = header->size;
 		}
 
 		if (data) {
@@ -126,6 +146,7 @@ bool TcpStreamSocket<T, SocketType>::_CutMsgPack(base::s_byte_t* buf, base::s_ui
 			this->_netio.OnReceiveData(ref, data, datalen);
 			data = 0;
 			datalen = 0;
+			_reader.msgbuffer.Clear();
 		}
 	} while (true);
 	return true;
