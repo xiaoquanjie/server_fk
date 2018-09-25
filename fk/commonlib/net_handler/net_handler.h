@@ -19,10 +19,23 @@
 #define M_EXPIRE_INTERVAL (30)
 #endif
 
+enum ConnType {
+	Enum_ConnType_Router = 1,
+};
+
+struct ConnInfo {
+	int conn_type;
+	int serial_num;
+	int port;
+	char ip[65];
+
+	std::string ToString();
+};
+
 class NetIoHandler : public netiolib::NetIo {
 public:
-	typedef m_function_t<int(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len)>
-		callback_type;
+	typedef m_function_t<int(base::s_int64_t fd, const AppHeadFrame& frame, 
+		const char* data, base::s_uint32_t data_len)> callback_type;
 
 	int Init(base::timestamp& now, callback_type callback);
 
@@ -35,6 +48,24 @@ public:
 	void CheckTcpSocketExpire();
 
 	bool SendDataByFd(base::s_int64_t fd, const char* data, base::s_int32_t len);
+
+	bool SendDataByFd(base::s_int64_t fd, const AppHeadFrame& frame,
+		const char* data, base::s_int32_t len);
+
+	void CloseFd(base::s_int64_t fd);
+
+	netiolib::TcpConnectorPtr GetConnectorPtr(base::s_int64_t fd);
+
+	netiolib::TcpSocketPtr GetSocketPtr(base::s_int64_t fd);
+
+	bool ConnectOne(const std::string& addr, base::s_uint16_t port,
+		int conn_type, int serial_num);
+
+	void ConnectOneHttp(const std::string& addr, base::s_uint16_t port,
+		int conn_type, int serial_num);
+
+protected:
+	void _ConnectOne(ConnInfo* info);
 
 	virtual void OnConnection(netiolib::TcpConnectorPtr& clisock, SocketLib::SocketError error);
 
@@ -53,9 +84,9 @@ protected:
 
 	void OnDisconnected(netiolib::TcpConnectorPtr& clisock) override;
 
-	void OnReceiveData(netiolib::TcpSocketPtr& clisock, SocketLib::Buffer& buffer) override;
+	void OnReceiveData(netiolib::TcpSocketPtr& clisock, const base::s_byte_t* data, base::s_uint32_t len) override;
 
-	void OnReceiveData(netiolib::TcpConnectorPtr& clisock, SocketLib::Buffer& buffer) override;
+	void OnReceiveData(netiolib::TcpConnectorPtr& clisock, const base::s_byte_t* data, base::s_uint32_t len) override;
 
 protected:
 	// ø’ µœ÷

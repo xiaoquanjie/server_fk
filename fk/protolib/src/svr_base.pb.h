@@ -37,7 +37,7 @@ namespace protobuf_svr_5fbase_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[5];
+  static const ::google::protobuf::internal::ParseTable schema[6];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -53,12 +53,15 @@ void InitDefaultsRegisterServerReqImpl();
 void InitDefaultsRegisterServerReq();
 void InitDefaultsRegisterServerRspImpl();
 void InitDefaultsRegisterServerRsp();
+void InitDefaultsSvrHeatBeatImpl();
+void InitDefaultsSvrHeatBeat();
 inline void InitDefaults() {
   InitDefaultsRet();
   InitDefaultsSocketClientIn();
   InitDefaultsSocketClientOut();
   InitDefaultsRegisterServerReq();
   InitDefaultsRegisterServerRsp();
+  InitDefaultsSvrHeatBeat();
 }
 }  // namespace protobuf_svr_5fbase_2eproto
 namespace proto {
@@ -77,6 +80,9 @@ extern SocketClientInDefaultTypeInternal _SocketClientIn_default_instance_;
 class SocketClientOut;
 class SocketClientOutDefaultTypeInternal;
 extern SocketClientOutDefaultTypeInternal _SocketClientOut_default_instance_;
+class SvrHeatBeat;
+class SvrHeatBeatDefaultTypeInternal;
+extern SvrHeatBeatDefaultTypeInternal _SvrHeatBeat_default_instance_;
 }  // namespace proto
 namespace proto {
 
@@ -659,6 +665,126 @@ class RegisterServerRsp : public ::google::protobuf::Message /* @@protoc_inserti
   friend struct ::protobuf_svr_5fbase_2eproto::TableStruct;
   friend void ::protobuf_svr_5fbase_2eproto::InitDefaultsRegisterServerRspImpl();
 };
+// -------------------------------------------------------------------
+
+class SvrHeatBeat : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:proto.SvrHeatBeat) */ {
+ public:
+  SvrHeatBeat();
+  virtual ~SvrHeatBeat();
+
+  SvrHeatBeat(const SvrHeatBeat& from);
+
+  inline SvrHeatBeat& operator=(const SvrHeatBeat& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  SvrHeatBeat(SvrHeatBeat&& from) noexcept
+    : SvrHeatBeat() {
+    *this = ::std::move(from);
+  }
+
+  inline SvrHeatBeat& operator=(SvrHeatBeat&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const SvrHeatBeat& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const SvrHeatBeat* internal_default_instance() {
+    return reinterpret_cast<const SvrHeatBeat*>(
+               &_SvrHeatBeat_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    5;
+
+  void Swap(SvrHeatBeat* other);
+  friend void swap(SvrHeatBeat& a, SvrHeatBeat& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline SvrHeatBeat* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  SvrHeatBeat* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const SvrHeatBeat& from);
+  void MergeFrom(const SvrHeatBeat& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(SvrHeatBeat* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 server_type = 1;
+  bool has_server_type() const;
+  void clear_server_type();
+  static const int kServerTypeFieldNumber = 1;
+  ::google::protobuf::int32 server_type() const;
+  void set_server_type(::google::protobuf::int32 value);
+
+  // optional int32 instance_id = 2;
+  bool has_instance_id() const;
+  void clear_instance_id();
+  static const int kInstanceIdFieldNumber = 2;
+  ::google::protobuf::int32 instance_id() const;
+  void set_instance_id(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:proto.SvrHeatBeat)
+ private:
+  void set_has_server_type();
+  void clear_has_server_type();
+  void set_has_instance_id();
+  void clear_has_instance_id();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable int _cached_size_;
+  ::google::protobuf::int32 server_type_;
+  ::google::protobuf::int32 instance_id_;
+  friend struct ::protobuf_svr_5fbase_2eproto::TableStruct;
+  friend void ::protobuf_svr_5fbase_2eproto::InitDefaultsSvrHeatBeatImpl();
+};
 // ===================================================================
 
 
@@ -875,9 +1001,63 @@ inline void RegisterServerRsp::set_allocated_ret(::proto::Ret* ret) {
   // @@protoc_insertion_point(field_set_allocated:proto.RegisterServerRsp.ret)
 }
 
+// -------------------------------------------------------------------
+
+// SvrHeatBeat
+
+// optional int32 server_type = 1;
+inline bool SvrHeatBeat::has_server_type() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void SvrHeatBeat::set_has_server_type() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void SvrHeatBeat::clear_has_server_type() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void SvrHeatBeat::clear_server_type() {
+  server_type_ = 0;
+  clear_has_server_type();
+}
+inline ::google::protobuf::int32 SvrHeatBeat::server_type() const {
+  // @@protoc_insertion_point(field_get:proto.SvrHeatBeat.server_type)
+  return server_type_;
+}
+inline void SvrHeatBeat::set_server_type(::google::protobuf::int32 value) {
+  set_has_server_type();
+  server_type_ = value;
+  // @@protoc_insertion_point(field_set:proto.SvrHeatBeat.server_type)
+}
+
+// optional int32 instance_id = 2;
+inline bool SvrHeatBeat::has_instance_id() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void SvrHeatBeat::set_has_instance_id() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void SvrHeatBeat::clear_has_instance_id() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void SvrHeatBeat::clear_instance_id() {
+  instance_id_ = 0;
+  clear_has_instance_id();
+}
+inline ::google::protobuf::int32 SvrHeatBeat::instance_id() const {
+  // @@protoc_insertion_point(field_get:proto.SvrHeatBeat.instance_id)
+  return instance_id_;
+}
+inline void SvrHeatBeat::set_instance_id(::google::protobuf::int32 value) {
+  set_has_instance_id();
+  instance_id_ = value;
+  // @@protoc_insertion_point(field_set:proto.SvrHeatBeat.instance_id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

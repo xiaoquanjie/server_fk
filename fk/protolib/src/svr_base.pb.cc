@@ -45,6 +45,11 @@ class RegisterServerRspDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<RegisterServerRsp>
       _instance;
 } _RegisterServerRsp_default_instance_;
+class SvrHeatBeatDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<SvrHeatBeat>
+      _instance;
+} _SvrHeatBeat_default_instance_;
 }  // namespace proto
 namespace protobuf_svr_5fbase_2eproto {
 void InitDefaultsRetImpl() {
@@ -153,7 +158,28 @@ void InitDefaultsRegisterServerRsp() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsRegisterServerRspImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[5];
+void InitDefaultsSvrHeatBeatImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  {
+    void* ptr = &::proto::_SvrHeatBeat_default_instance_;
+    new (ptr) ::proto::SvrHeatBeat();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::proto::SvrHeatBeat::InitAsDefaultInstance();
+}
+
+void InitDefaultsSvrHeatBeat() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsSvrHeatBeatImpl);
+}
+
+::google::protobuf::Metadata file_level_metadata[6];
 const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
@@ -192,6 +218,15 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,  // no _weak_field_map_
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::proto::RegisterServerRsp, ret_),
   0,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::proto::SvrHeatBeat, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::proto::SvrHeatBeat, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::proto::SvrHeatBeat, server_type_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::proto::SvrHeatBeat, instance_id_),
+  0,
+  1,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 7, sizeof(::proto::Ret)},
@@ -199,6 +234,7 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
   { 14, 19, sizeof(::proto::SocketClientOut)},
   { 19, 26, sizeof(::proto::RegisterServerReq)},
   { 28, 34, sizeof(::proto::RegisterServerRsp)},
+  { 35, 42, sizeof(::proto::SvrHeatBeat)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -207,6 +243,7 @@ static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::proto::_SocketClientOut_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::proto::_RegisterServerReq_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::proto::_RegisterServerRsp_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::proto::_SvrHeatBeat_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -225,7 +262,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 5);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 6);
 }
 
 void AddDescriptorsImpl() {
@@ -236,11 +273,12 @@ void AddDescriptorsImpl() {
       "SocketClientOut\"=\n\021RegisterServerReq\022\023\n\013"
       "server_type\030\001 \001(\005\022\023\n\013instance_id\030\002 \001(\005\","
       "\n\021RegisterServerRsp\022\027\n\003ret\030\001 \001(\0132\n.proto"
-      ".Ret*4\n\nServerType\022\023\n\017SVR_TYPE_ROUTER\020\001\022"
-      "\021\n\rSVR_TYPE_CONN\020\002"
+      ".Ret\"7\n\013SvrHeatBeat\022\023\n\013server_type\030\001 \001(\005"
+      "\022\023\n\013instance_id\030\002 \001(\005*4\n\nServerType\022\023\n\017S"
+      "VR_TYPE_ROUTER\020\001\022\021\n\rSVR_TYPE_CONN\020\002"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 258);
+      descriptor, 315);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "svr_base.proto", &protobuf_RegisterTypes);
 }
@@ -1520,6 +1558,300 @@ void RegisterServerRsp::InternalSwap(RegisterServerRsp* other) {
 }
 
 ::google::protobuf::Metadata RegisterServerRsp::GetMetadata() const {
+  protobuf_svr_5fbase_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_svr_5fbase_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void SvrHeatBeat::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int SvrHeatBeat::kServerTypeFieldNumber;
+const int SvrHeatBeat::kInstanceIdFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+SvrHeatBeat::SvrHeatBeat()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_svr_5fbase_2eproto::InitDefaultsSvrHeatBeat();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:proto.SvrHeatBeat)
+}
+SvrHeatBeat::SvrHeatBeat(const SvrHeatBeat& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&server_type_, &from.server_type_,
+    static_cast<size_t>(reinterpret_cast<char*>(&instance_id_) -
+    reinterpret_cast<char*>(&server_type_)) + sizeof(instance_id_));
+  // @@protoc_insertion_point(copy_constructor:proto.SvrHeatBeat)
+}
+
+void SvrHeatBeat::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(&server_type_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&instance_id_) -
+      reinterpret_cast<char*>(&server_type_)) + sizeof(instance_id_));
+}
+
+SvrHeatBeat::~SvrHeatBeat() {
+  // @@protoc_insertion_point(destructor:proto.SvrHeatBeat)
+  SharedDtor();
+}
+
+void SvrHeatBeat::SharedDtor() {
+}
+
+void SvrHeatBeat::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* SvrHeatBeat::descriptor() {
+  ::protobuf_svr_5fbase_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_svr_5fbase_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const SvrHeatBeat& SvrHeatBeat::default_instance() {
+  ::protobuf_svr_5fbase_2eproto::InitDefaultsSvrHeatBeat();
+  return *internal_default_instance();
+}
+
+SvrHeatBeat* SvrHeatBeat::New(::google::protobuf::Arena* arena) const {
+  SvrHeatBeat* n = new SvrHeatBeat;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void SvrHeatBeat::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto.SvrHeatBeat)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 3u) {
+    ::memset(&server_type_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&instance_id_) -
+        reinterpret_cast<char*>(&server_type_)) + sizeof(instance_id_));
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool SvrHeatBeat::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:proto.SvrHeatBeat)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional int32 server_type = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
+          set_has_server_type();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &server_type_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional int32 instance_id = 2;
+      case 2: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
+          set_has_instance_id();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &instance_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:proto.SvrHeatBeat)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:proto.SvrHeatBeat)
+  return false;
+#undef DO_
+}
+
+void SvrHeatBeat::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:proto.SvrHeatBeat)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional int32 server_type = 1;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->server_type(), output);
+  }
+
+  // optional int32 instance_id = 2;
+  if (cached_has_bits & 0x00000002u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->instance_id(), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:proto.SvrHeatBeat)
+}
+
+::google::protobuf::uint8* SvrHeatBeat::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:proto.SvrHeatBeat)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional int32 server_type = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->server_type(), target);
+  }
+
+  // optional int32 instance_id = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->instance_id(), target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:proto.SvrHeatBeat)
+  return target;
+}
+
+size_t SvrHeatBeat::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:proto.SvrHeatBeat)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  if (_has_bits_[0 / 32] & 3u) {
+    // optional int32 server_type = 1;
+    if (has_server_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->server_type());
+    }
+
+    // optional int32 instance_id = 2;
+    if (has_instance_id()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->instance_id());
+    }
+
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void SvrHeatBeat::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:proto.SvrHeatBeat)
+  GOOGLE_DCHECK_NE(&from, this);
+  const SvrHeatBeat* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const SvrHeatBeat>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:proto.SvrHeatBeat)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:proto.SvrHeatBeat)
+    MergeFrom(*source);
+  }
+}
+
+void SvrHeatBeat::MergeFrom(const SvrHeatBeat& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto.SvrHeatBeat)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 3u) {
+    if (cached_has_bits & 0x00000001u) {
+      server_type_ = from.server_type_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      instance_id_ = from.instance_id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void SvrHeatBeat::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:proto.SvrHeatBeat)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void SvrHeatBeat::CopyFrom(const SvrHeatBeat& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto.SvrHeatBeat)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SvrHeatBeat::IsInitialized() const {
+  return true;
+}
+
+void SvrHeatBeat::Swap(SvrHeatBeat* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void SvrHeatBeat::InternalSwap(SvrHeatBeat* other) {
+  using std::swap;
+  swap(server_type_, other->server_type_);
+  swap(instance_id_, other->instance_id_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata SvrHeatBeat::GetMetadata() const {
   protobuf_svr_5fbase_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_svr_5fbase_2eproto::file_level_metadata[kIndexInFileMessages];
 }

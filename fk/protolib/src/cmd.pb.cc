@@ -88,13 +88,14 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\tcmd.proto\022\005proto\"\177\n\003CMD\"x\n\007SvrBase\022\030\n\024"
-      "CMD_SOCKET_CLIENT_IN\020\001\022\031\n\025CMD_SOCKET_CLI"
-      "ENT_OUT\020\002\022\033\n\027CMD_REGISTER_SERVER_REQ\020\003\022\033"
-      "\n\027CMD_REGISTER_SERVER_RSP\020\004"
+      "\n\tcmd.proto\022\005proto\"\226\001\n\003CMD\"\216\001\n\007SvrBase\022\030"
+      "\n\024CMD_SOCKET_CLIENT_IN\020\001\022\031\n\025CMD_SOCKET_C"
+      "LIENT_OUT\020\002\022\033\n\027CMD_REGISTER_SERVER_REQ\020\003"
+      "\022\033\n\027CMD_REGISTER_SERVER_RSP\020\004\022\024\n\020CMD_SVR"
+      "_HEATBEAT\020\005"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 147);
+      descriptor, 171);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "cmd.proto", &protobuf_RegisterTypes);
 }
@@ -121,6 +122,7 @@ bool CMD_SvrBase_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+    case 5:
       return true;
     default:
       return false;
@@ -132,6 +134,7 @@ const CMD_SvrBase CMD::CMD_SOCKET_CLIENT_IN;
 const CMD_SvrBase CMD::CMD_SOCKET_CLIENT_OUT;
 const CMD_SvrBase CMD::CMD_REGISTER_SERVER_REQ;
 const CMD_SvrBase CMD::CMD_REGISTER_SERVER_RSP;
+const CMD_SvrBase CMD::CMD_SVR_HEATBEAT;
 const CMD_SvrBase CMD::SvrBase_MIN;
 const CMD_SvrBase CMD::SvrBase_MAX;
 const int CMD::SvrBase_ARRAYSIZE;

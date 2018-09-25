@@ -7,6 +7,7 @@
 #include "boost/multi_index_container.hpp"
 #include "boost/multi_index/member.hpp"
 #include "boost/multi_index/ordered_index.hpp"
+#include <sstream>
 
 #ifndef GETSETVAR
 #define GETSETVAR(type, name) \
@@ -46,6 +47,21 @@ public:
 		cmd = 0;
 		cmd_length = 0;
 		userid = 0;
+	}
+
+	std::string ToString() const {
+		std::ostringstream oss;
+		oss << "userid:" << userid;
+		oss << " cmd:" << cmd;
+		oss << " cmd_length:" << cmd_length;
+		oss << " is_broadcast:" << is_broadcast;
+		oss << " src_svr_type:" << src_svr_type;
+		oss << " dst_svr_type:" << dst_svr_type;
+		oss << " src_inst_id:" << src_inst_id;
+		oss << " dst_inst_id:" << dst_inst_id;
+		oss << " src_trans_id:" << src_trans_id;
+		oss << " dst_trans_id:" << dst_trans_id;
+		return oss.str();
 	}
 };
 #ifdef M_PLATFORM_WIN
@@ -113,6 +129,11 @@ struct TcpSocketMsg {
 	netiolib::TcpSocketPtr ptr;
 	base::Buffer buf;
 	base::s_uint16_t type;
+	void Clear() {
+		ptr.reset();
+		buf.Clear();
+		type = 0;
+	}
 };
 
 struct TcpConnectorMsg {
@@ -120,6 +141,12 @@ struct TcpConnectorMsg {
 	SocketLib::SocketError error;
 	base::Buffer buf;
 	base::s_uint16_t type;
+	void Clear() {
+		ptr.reset();
+		buf.Clear();
+		type = 0;
+		error.Clear();
+	}
 };
 
 

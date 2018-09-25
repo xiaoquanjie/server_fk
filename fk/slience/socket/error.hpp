@@ -72,6 +72,8 @@ public:
 
 	operator bool()const;
 
+	void Clear();
+
 protected:
 	bool operator!=(const SocketError&)const;
 	bool operator==(const SocketError&)const;

@@ -18,8 +18,6 @@ public:
 
 	Buffer();
 
-	Buffer(s_uint32_t hdrlen);
-
 	~Buffer();
 
 	void Clear();
@@ -47,27 +45,11 @@ public:
 		Write(&value, sizeof(value));
 	}
 
-	void Write(std::string const& value);
-
-	template<typename T>
-	Buffer& operator<<(T const& value){
-		Write(value);
-		return *this;
-	}
-
 	void Read(void* data, s_uint32_t len);
 
 	template<typename T>
 	void Read(T& value) {
 		Read(&value, sizeof(value));
-	}
-
-	void Read(std::string& value);
-
-	template<typename T>
-	Buffer& operator >> (T& value){
-		Read(value);
-		return *this;
 	}
 
 	void Swap(Buffer& buffer);

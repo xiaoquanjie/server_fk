@@ -175,17 +175,10 @@ class ConnsvrConfig : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::google::protobuf::int32 listen_port() const;
   void set_listen_port(::google::protobuf::int32 value);
 
-  // optional uint32 svr_type = 4;
-  bool has_svr_type() const;
-  void clear_svr_type();
-  static const int kSvrTypeFieldNumber = 4;
-  ::google::protobuf::uint32 svr_type() const;
-  void set_svr_type(::google::protobuf::uint32 value);
-
-  // optional int32 svr_inst_id = 5;
+  // optional int32 svr_inst_id = 4;
   bool has_svr_inst_id() const;
   void clear_svr_inst_id();
-  static const int kSvrInstIdFieldNumber = 5;
+  static const int kSvrInstIdFieldNumber = 4;
   ::google::protobuf::int32 svr_inst_id() const;
   void set_svr_inst_id(::google::protobuf::int32 value);
 
@@ -197,8 +190,6 @@ class ConnsvrConfig : public ::google::protobuf::Message /* @@protoc_insertion_p
   void clear_has_listen_ip();
   void set_has_listen_port();
   void clear_has_listen_port();
-  void set_has_svr_type();
-  void clear_has_svr_type();
   void set_has_svr_inst_id();
   void clear_has_svr_inst_id();
 
@@ -208,7 +199,6 @@ class ConnsvrConfig : public ::google::protobuf::Message /* @@protoc_insertion_p
   ::google::protobuf::internal::ArenaStringPtr listen_ip_;
   bool open_svr_;
   ::google::protobuf::int32 listen_port_;
-  ::google::protobuf::uint32 svr_type_;
   ::google::protobuf::int32 svr_inst_id_;
   friend struct ::protobuf_connsvr_5fconfig_2eproto::TableStruct;
   friend void ::protobuf_connsvr_5fconfig_2eproto::InitDefaultsConnsvrConfigImpl();
@@ -335,39 +325,15 @@ inline void ConnsvrConfig::set_listen_port(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:config.ConnsvrConfig.listen_port)
 }
 
-// optional uint32 svr_type = 4;
-inline bool ConnsvrConfig::has_svr_type() const {
+// optional int32 svr_inst_id = 4;
+inline bool ConnsvrConfig::has_svr_inst_id() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void ConnsvrConfig::set_has_svr_type() {
+inline void ConnsvrConfig::set_has_svr_inst_id() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void ConnsvrConfig::clear_has_svr_type() {
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline void ConnsvrConfig::clear_svr_type() {
-  svr_type_ = 0u;
-  clear_has_svr_type();
-}
-inline ::google::protobuf::uint32 ConnsvrConfig::svr_type() const {
-  // @@protoc_insertion_point(field_get:config.ConnsvrConfig.svr_type)
-  return svr_type_;
-}
-inline void ConnsvrConfig::set_svr_type(::google::protobuf::uint32 value) {
-  set_has_svr_type();
-  svr_type_ = value;
-  // @@protoc_insertion_point(field_set:config.ConnsvrConfig.svr_type)
-}
-
-// optional int32 svr_inst_id = 5;
-inline bool ConnsvrConfig::has_svr_inst_id() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
-}
-inline void ConnsvrConfig::set_has_svr_inst_id() {
-  _has_bits_[0] |= 0x00000010u;
-}
 inline void ConnsvrConfig::clear_has_svr_inst_id() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void ConnsvrConfig::clear_svr_inst_id() {
   svr_inst_id_ = 0;

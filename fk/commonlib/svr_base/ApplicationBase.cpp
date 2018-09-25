@@ -66,16 +66,16 @@ int ApplicationBase::Init(int argc, char** argv) {
 			break;
 		}
 
-		ret = OnReload();
-		if (ret != 0) {
-			LogError("reload error........");
-			break;
-		}
-
 		// init network
 		ret = OnInitNetWork();
 		if (0 != ret) {
 			LogError("OnInitNetWork error");
+		}
+
+		ret = OnReload();
+		if (ret != 0) {
+			LogError("reload error........");
+			break;
 		}
 
 		ret = OnInit();
@@ -103,6 +103,27 @@ int ApplicationBase::Init(int argc, char** argv) {
 		exit(-1);
 	}
 	return ret;
+}
+
+int ApplicationBase::OnInit() {
+	return 0;
+}
+
+int ApplicationBase::OnTick(const base::timestamp& now) {
+	return 0;
+}
+
+int ApplicationBase::OnReload() {
+	return 0;
+}
+
+int ApplicationBase::OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) {
+	return -1;
+}
+
+int ApplicationBase::OnExit() {
+	OnStopNetWork();
+	return 0;
 }
 
 const std::string& ApplicationBase::ConfigFilePath()const {

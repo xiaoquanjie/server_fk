@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include "slience/base/timer.hpp"
 #include "protolib/src/comm_conf.pb.h"
+#include "protolib/src/svr_base.pb.h"
 #include "commonlib/svr_base/svrbase.h"
 #include "commonlib/svr_base/server_cfg.h"
 
@@ -27,17 +28,15 @@ public:
 	const base::timestamp& GetNow()const;
 
 protected:
-	virtual int OnInit() {
-		return 0;
-	}
+	virtual int OnInit();
 
-	virtual int OnTick(const base::timestamp& now) {
-		return 0;
-	}
+	virtual int OnTick(const base::timestamp& now);
 
-	virtual int OnReload() {
-		return 0;
-	}
+	virtual int OnReload();
+
+	virtual int ServerType() = 0;
+
+	virtual int InstanceId() = 0;
 
 	virtual int OnInitNetWork() = 0;
 
@@ -45,14 +44,9 @@ protected:
 
 	virtual int UpdateNetWork() = 0;
 
-	virtual int OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) {
-		return -1;
-	}
+	virtual int OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len);
 
-	virtual int OnExit() {
-		OnStopNetWork();
-		return -1;
-	}
+	virtual int OnExit();
 
 protected:
 	int ParseOpt(int argc, char** argv);

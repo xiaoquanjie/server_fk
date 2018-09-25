@@ -87,12 +87,6 @@
     <ClInclude Include="netio\config.hpp">
       <Filter>netio</Filter>
     </ClInclude>
-    <ClInclude Include="netio\heartbeat.hpp">
-      <Filter>netio</Filter>
-    </ClInclude>
-    <ClInclude Include="netio\hsocket_impl.hpp">
-      <Filter>netio</Filter>
-    </ClInclude>
     <ClInclude Include="netio\httpmsg.hpp">
       <Filter>netio</Filter>
     </ClInclude>
@@ -101,27 +95,6 @@
     </ClInclude>
     <ClInclude Include="netio\netio.hpp">
       <Filter>netio</Filter>
-    </ClInclude>
-    <ClInclude Include="netio\tsocket_impl.hpp">
-      <Filter>netio</Filter>
-    </ClInclude>
-    <ClInclude Include="synccall\config.hpp">
-      <Filter>synccall</Filter>
-    </ClInclude>
-    <ClInclude Include="synccall\server_handler.hpp">
-      <Filter>synccall</Filter>
-    </ClInclude>
-    <ClInclude Include="synccall\synccall.hpp">
-      <Filter>synccall</Filter>
-    </ClInclude>
-    <ClInclude Include="synccall\synccall_client.hpp">
-      <Filter>synccall</Filter>
-    </ClInclude>
-    <ClInclude Include="synccall\synccall_coclient.hpp">
-      <Filter>synccall</Filter>
-    </ClInclude>
-    <ClInclude Include="synccall\synccall_svr.hpp">
-      <Filter>synccall</Filter>
     </ClInclude>
     <ClInclude Include="socket\acceptor_service.hpp">
       <Filter>socket</Filter>
@@ -228,6 +201,42 @@
     <ClInclude Include="base\time_pool.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="base\random.hpp">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="base\md5.hpp">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="base\md5_helper.ipp">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="netio\packet.hpp">
+      <Filter>netio</Filter>
+    </ClInclude>
+    <ClInclude Include="netio\tcp_base_socket.hpp">
+      <Filter>netio</Filter>
+    </ClInclude>
+    <ClInclude Include="netio\tcp_stream_socket.hpp">
+      <Filter>netio</Filter>
+    </ClInclude>
+    <ClInclude Include="netio\tcp_socket.h">
+      <Filter>netio</Filter>
+    </ClInclude>
+    <ClInclude Include="netio\tcp_connector.h">
+      <Filter>netio</Filter>
+    </ClInclude>
+    <ClInclude Include="netio\http_base_socket.hpp">
+      <Filter>netio</Filter>
+    </ClInclude>
+    <ClInclude Include="netio\http_socket.h">
+      <Filter>netio</Filter>
+    </ClInclude>
+    <ClInclude Include="netio\http_connector.h">
+      <Filter>netio</Filter>
+    </ClInclude>
+    <ClInclude Include="netio\sync_connector.h">
+      <Filter>netio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\buffer.cpp">
@@ -271,6 +280,12 @@
     </ClCompile>
     <ClCompile Include="base\time_pool.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="netio\tcp_socket.cpp">
+      <Filter>netio</Filter>
+    </ClCompile>
+    <ClCompile Include="netio\http_socket.cpp">
+      <Filter>netio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

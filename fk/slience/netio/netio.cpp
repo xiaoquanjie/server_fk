@@ -9,7 +9,7 @@ NetIo::NetIo()
 	_ioservice.SetRunCallback(handler);
 }
 
-NetIo::NetIo(SocketLib::s_uint32_t backlog)
+NetIo::NetIo(base::s_uint32_t backlog)
 	: _backlog(backlog) {
 	_endian = SocketLib::detail::Util::LocalEndian();
 	m_function_t<void()> handler = m_bind_t(&NetIo::RunHandler, this);
@@ -31,7 +31,7 @@ bool NetIo::ListenOne(const SocketLib::Tcp::EndPoint& ep) {
 	return true;
 }
 
-bool NetIo::ListenOne(const std::string& addr, SocketLib::s_uint16_t port) {
+bool NetIo::ListenOne(const std::string& addr, base::s_uint16_t port) {
 	SocketLib::Tcp::EndPoint ep(SocketLib::AddressV4(addr), port);
 	return ListenOne(ep);
 }
@@ -50,7 +50,7 @@ bool NetIo::ListenOneHttp(const SocketLib::Tcp::EndPoint& ep) {
 	return true;
 }
 
-bool NetIo::ListenOneHttp(const std::string& addr, SocketLib::s_uint16_t port) {
+bool NetIo::ListenOneHttp(const std::string& addr, base::s_uint16_t port) {
 	SocketLib::Tcp::EndPoint ep(SocketLib::AddressV4(addr), port);
 	return ListenOneHttp(ep);
 }
@@ -62,7 +62,7 @@ void NetIo::ConnectOne(const SocketLib::Tcp::EndPoint& ep) {
 	connector.reset();
 }
 
-void NetIo::ConnectOne(const std::string& addr, SocketLib::s_uint16_t port) {
+void NetIo::ConnectOne(const std::string& addr, base::s_uint16_t port) {
 	SocketLib::Tcp::EndPoint ep(SocketLib::AddressV4(addr), port);
 	return ConnectOne(ep);
 }
@@ -78,7 +78,7 @@ void NetIo::ConnectOneHttp(const SocketLib::Tcp::EndPoint& ep) {
 	}
 }
 
-void NetIo::ConnectOneHttp(const std::string& addr, SocketLib::s_uint16_t port) {
+void NetIo::ConnectOneHttp(const std::string& addr, base::s_uint16_t port) {
 	SocketLib::Tcp::EndPoint ep(SocketLib::AddressV4(addr), port);
 	return ConnectOneHttp(ep);
 }
@@ -125,7 +125,7 @@ SocketLib::IoService& NetIo::GetIoService() {
 	return _ioservice;
 }
 
-SocketLib::s_uint32_t NetIo::LocalEndian()const {
+base::s_uint32_t NetIo::LocalEndian()const {
 	return _endian;
 }
 
@@ -234,14 +234,14 @@ void NetIo::OnDisconnected(HttpConnectorPtr& clisock) {
 }
 
 // 数据包通知,这个函数里不要处理业务，防止堵塞
-void NetIo::OnReceiveData(TcpSocketPtr& clisock, SocketLib::Buffer& buffer) {
+void NetIo::OnReceiveData(TcpSocketPtr& clisock, const base::s_byte_t* data, base::s_uint32_t len) {
 	M_PRINT("tcp socket | OnReceiveData one : %s %d %d\n", clisock->RemoteEndpoint().Address().c_str(),
-		clisock->RemoteEndpoint().Port(), buffer.Length());
+		clisock->RemoteEndpoint().Port(), len);
 }
 
-void NetIo::OnReceiveData(TcpConnectorPtr& clisock, SocketLib::Buffer& buffer) {
+void NetIo::OnReceiveData(TcpConnectorPtr& clisock, const base::s_byte_t* data, base::s_uint32_t len) {
 	M_PRINT("tcp connector | OnReceiveData one : %s %d %d\n", clisock->RemoteEndpoint().Address().c_str(),
-		clisock->RemoteEndpoint().Port(), buffer.Length());
+		clisock->RemoteEndpoint().Port(), len);
 }
 
 void NetIo::OnReceiveData(HttpSocketPtr& clisock, HttpSvrRecvMsg& httpmsg) {

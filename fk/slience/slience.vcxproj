@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B6D43274-EE16-4488-BA38-863805CB3CCB}</ProjectGuid>
     <RootNamespace>slience</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -139,9 +139,12 @@
     <ClInclude Include="base\condition.hpp" />
     <ClInclude Include="base\config.hpp" />
     <ClInclude Include="base\logger.hpp" />
+    <ClInclude Include="base\md5.hpp" />
+    <ClInclude Include="base\md5_helper.ipp" />
     <ClInclude Include="base\mutexlock.hpp" />
     <ClInclude Include="base\noncopyable.hpp" />
     <ClInclude Include="base\object_pool.h" />
+    <ClInclude Include="base\random.hpp" />
     <ClInclude Include="base\singletion.hpp" />
     <ClInclude Include="base\slist.hpp" />
     <ClInclude Include="base\string_util.hpp" />
@@ -155,16 +158,23 @@
     <ClInclude Include="coroutine\coroutine.hpp" />
     <ClInclude Include="coroutine\co_linux_impl.hpp" />
     <ClInclude Include="coroutine\co_win_impl.hpp" />
+    <ClInclude Include="netio\http_base_socket.hpp" />
+    <ClInclude Include="netio\http_connector.h" />
+    <ClInclude Include="netio\http_socket.h" />
+    <ClInclude Include="netio\sync_connector.h" />
+    <ClInclude Include="netio\tcp_base_socket.hpp" />
     <ClInclude Include="netio\config.hpp" />
-    <ClInclude Include="netio\heartbeat.hpp" />
-    <ClInclude Include="netio\hsocket_impl.hpp" />
     <ClInclude Include="netio\httpmsg.hpp" />
     <ClInclude Include="netio\log.hpp" />
     <ClInclude Include="netio\netio.hpp" />
     <ClCompile Include="base\object_pool.cpp" />
     <ClCompile Include="base\time_pool.cpp" />
+    <ClCompile Include="netio\http_socket.cpp" />
     <ClCompile Include="netio\netio.cpp" />
-    <ClInclude Include="netio\tsocket_impl.hpp" />
+    <ClInclude Include="netio\packet.hpp" />
+    <ClInclude Include="netio\tcp_connector.h" />
+    <ClInclude Include="netio\tcp_socket.h" />
+    <ClInclude Include="netio\tcp_stream_socket.hpp" />
     <ClInclude Include="socket\acceptor_service.hpp" />
     <ClInclude Include="socket\address.hpp" />
     <ClInclude Include="socket\basic_socket.hpp" />
@@ -198,12 +208,6 @@
     <ClInclude Include="socket\winsock_init.hpp" />
     <ClInclude Include="socket\win_config.hpp" />
     <ClInclude Include="socket\win_iocp.hpp" />
-    <ClInclude Include="synccall\config.hpp" />
-    <ClInclude Include="synccall\server_handler.hpp" />
-    <ClInclude Include="synccall\synccall.hpp" />
-    <ClInclude Include="synccall\synccall_client.hpp" />
-    <ClInclude Include="synccall\synccall_coclient.hpp" />
-    <ClInclude Include="synccall\synccall_svr.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\buffer.cpp" />
@@ -216,6 +220,7 @@
     <ClCompile Include="netio\http_connector.cpp" />
     <ClCompile Include="netio\sync_connector.cpp" />
     <ClCompile Include="netio\tcp_connector.cpp" />
+    <ClCompile Include="netio\tcp_socket.cpp" />
     <ClCompile Include="socket\error.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

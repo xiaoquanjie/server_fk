@@ -132,14 +132,16 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::RouterSvrConfig, listen_list_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::RouterSvrConfig, legal_svr_list_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::RouterSvrConfig, policy_list_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::RouterSvrConfig, svr_inst_id_),
   ~0u,
   ~0u,
   ~0u,
+  0,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 7, sizeof(::config::ListenInfo)},
   { 9, 16, sizeof(::config::Policy)},
-  { 18, 26, sizeof(::config::RouterSvrConfig)},
+  { 18, 27, sizeof(::config::RouterSvrConfig)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -173,15 +175,16 @@ void AddDescriptorsImpl() {
       "\n\026routersvr_config.proto\022\006config\"4\n\nList"
       "enInfo\022\021\n\tlisten_ip\030\001 \001(\t\022\023\n\013listen_port"
       "\030\002 \001(\005\"*\n\006Policy\022\020\n\010svr_type\030\001 \001(\r\022\016\n\006po"
-      "licy\030\002 \001(\r\"w\n\017RouterSvrConfig\022\'\n\013listen_"
-      "list\030\001 \003(\0132\022.config.ListenInfo\022\026\n\016legal_"
-      "svr_list\030\002 \003(\005\022#\n\013policy_list\030\003 \003(\0132\016.co"
-      "nfig.Policy*X\n\nPolicyType\022\021\n\rPOLICY_ROUT"
-      "ER\020\000\022\021\n\rPOLICY_RANDOM\020\001\022\016\n\nPOLICY_MOD\020\002\022"
-      "\024\n\020POLICY_BROADCAST\020\003"
+      "licy\030\002 \001(\r\"\214\001\n\017RouterSvrConfig\022\'\n\013listen"
+      "_list\030\001 \003(\0132\022.config.ListenInfo\022\026\n\016legal"
+      "_svr_list\030\002 \003(\005\022#\n\013policy_list\030\003 \003(\0132\016.c"
+      "onfig.Policy\022\023\n\013svr_inst_id\030\004 \001(\005*X\n\nPol"
+      "icyType\022\021\n\rPOLICY_ROUTER\020\000\022\021\n\rPOLICY_RAN"
+      "DOM\020\001\022\016\n\nPOLICY_MOD\020\002\022\024\n\020POLICY_BROADCAS"
+      "T\020\003"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 341);
+      descriptor, 363);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "routersvr_config.proto", &protobuf_RegisterTypes);
 }
@@ -827,6 +830,7 @@ void RouterSvrConfig::InitAsDefaultInstance() {
 const int RouterSvrConfig::kListenListFieldNumber;
 const int RouterSvrConfig::kLegalSvrListFieldNumber;
 const int RouterSvrConfig::kPolicyListFieldNumber;
+const int RouterSvrConfig::kSvrInstIdFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 RouterSvrConfig::RouterSvrConfig()
@@ -846,11 +850,13 @@ RouterSvrConfig::RouterSvrConfig(const RouterSvrConfig& from)
       legal_svr_list_(from.legal_svr_list_),
       policy_list_(from.policy_list_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  svr_inst_id_ = from.svr_inst_id_;
   // @@protoc_insertion_point(copy_constructor:config.RouterSvrConfig)
 }
 
 void RouterSvrConfig::SharedCtor() {
   _cached_size_ = 0;
+  svr_inst_id_ = 0;
 }
 
 RouterSvrConfig::~RouterSvrConfig() {
@@ -893,6 +899,7 @@ void RouterSvrConfig::Clear() {
   listen_list_.Clear();
   legal_svr_list_.Clear();
   policy_list_.Clear();
+  svr_inst_id_ = 0;
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -948,6 +955,20 @@ bool RouterSvrConfig::MergePartialFromCodedStream(
         break;
       }
 
+      // optional int32 svr_inst_id = 4;
+      case 4: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
+          set_has_svr_inst_id();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &svr_inst_id_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -994,6 +1015,12 @@ void RouterSvrConfig::SerializeWithCachedSizes(
       3, this->policy_list(static_cast<int>(i)), output);
   }
 
+  cached_has_bits = _has_bits_[0];
+  // optional int32 svr_inst_id = 4;
+  if (cached_has_bits & 0x00000001u) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->svr_inst_id(), output);
+  }
+
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
@@ -1026,6 +1053,12 @@ void RouterSvrConfig::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
         3, this->policy_list(static_cast<int>(i)), deterministic, target);
+  }
+
+  cached_has_bits = _has_bits_[0];
+  // optional int32 svr_inst_id = 4;
+  if (cached_has_bits & 0x00000001u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->svr_inst_id(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -1076,6 +1109,13 @@ size_t RouterSvrConfig::ByteSizeLong() const {
     }
   }
 
+  // optional int32 svr_inst_id = 4;
+  if (has_svr_inst_id()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->svr_inst_id());
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -1108,6 +1148,9 @@ void RouterSvrConfig::MergeFrom(const RouterSvrConfig& from) {
   listen_list_.MergeFrom(from.listen_list_);
   legal_svr_list_.MergeFrom(from.legal_svr_list_);
   policy_list_.MergeFrom(from.policy_list_);
+  if (from.has_svr_inst_id()) {
+    set_svr_inst_id(from.svr_inst_id());
+  }
 }
 
 void RouterSvrConfig::CopyFrom(const ::google::protobuf::Message& from) {
@@ -1137,6 +1180,7 @@ void RouterSvrConfig::InternalSwap(RouterSvrConfig* other) {
   listen_list_.InternalSwap(&other->listen_list_);
   legal_svr_list_.InternalSwap(&other->legal_svr_list_);
   policy_list_.InternalSwap(&other->policy_list_);
+  swap(svr_inst_id_, other->svr_inst_id_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);

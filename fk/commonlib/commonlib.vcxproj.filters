@@ -41,11 +41,14 @@
     <Filter Include="transaction">
       <UniqueIdentifier>{e01d65f2-5f03-4791-b0dc-d4fe7806b96d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="net_helper">
-      <UniqueIdentifier>{a3b60c9e-fbb0-4bb5-93f9-f43bb282b223}</UniqueIdentifier>
-    </Filter>
     <Filter Include="tinyxml">
       <UniqueIdentifier>{7b9957a3-a0c1-4984-9fd9-372d8b83a612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="traits">
+      <UniqueIdentifier>{1f72ab24-058f-4629-8549-4f5afbdfc730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net_handler">
+      <UniqueIdentifier>{a3b60c9e-fbb0-4bb5-93f9-f43bb282b223}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -73,12 +76,6 @@
     <ClCompile Include="svr_base\server_manager.cpp">
       <Filter>svr_base</Filter>
     </ClCompile>
-    <ClCompile Include="net_helper\net_helper.cpp">
-      <Filter>net_helper</Filter>
-    </ClCompile>
-    <ClCompile Include="net_helper\router_mgr.cpp">
-      <Filter>net_helper</Filter>
-    </ClCompile>
     <ClCompile Include="..\tinyxml\tinystr.cpp">
       <Filter>tinyxml</Filter>
     </ClCompile>
@@ -91,11 +88,11 @@
     <ClCompile Include="..\tinyxml\tinyxmlparser.cpp">
       <Filter>tinyxml</Filter>
     </ClCompile>
-    <ClCompile Include="net_helper\net_handler.cpp">
-      <Filter>net_helper</Filter>
+    <ClCompile Include="net_handler\net_handler.cpp">
+      <Filter>net_handler</Filter>
     </ClCompile>
-    <ClCompile Include="net_helper\svr_net_handler.cpp">
-      <Filter>net_helper</Filter>
+    <ClCompile Include="net_handler\router_mgr.cpp">
+      <Filter>net_handler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -744,23 +741,32 @@
     <ClInclude Include="svr_base\server_manager.h">
       <Filter>svr_base</Filter>
     </ClInclude>
-    <ClInclude Include="net_helper\net_helper.h">
-      <Filter>net_helper</Filter>
-    </ClInclude>
-    <ClInclude Include="net_helper\router_mgr.h">
-      <Filter>net_helper</Filter>
-    </ClInclude>
     <ClInclude Include="..\tinyxml\tinystr.h">
       <Filter>tinyxml</Filter>
     </ClInclude>
     <ClInclude Include="..\tinyxml\tinyxml.h">
       <Filter>tinyxml</Filter>
     </ClInclude>
-    <ClInclude Include="net_helper\net_handler.h">
-      <Filter>net_helper</Filter>
+    <ClInclude Include="traits\fun_to_mem_converter.hpp">
+      <Filter>traits</Filter>
     </ClInclude>
-    <ClInclude Include="net_helper\svr_net_handler.h">
-      <Filter>net_helper</Filter>
+    <ClInclude Include="traits\function_traits.hpp">
+      <Filter>traits</Filter>
+    </ClInclude>
+    <ClInclude Include="traits\macro_practical.hpp">
+      <Filter>traits</Filter>
+    </ClInclude>
+    <ClInclude Include="traits\mem_to_fun_converter.hpp">
+      <Filter>traits</Filter>
+    </ClInclude>
+    <ClInclude Include="traits\mfunction_traits.hpp">
+      <Filter>traits</Filter>
+    </ClInclude>
+    <ClInclude Include="net_handler\net_handler.h">
+      <Filter>net_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="net_handler\router_mgr.h">
+      <Filter>net_handler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

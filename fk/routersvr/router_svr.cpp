@@ -3,7 +3,15 @@
 #include "commonlib/transaction/transaction_mgr.h"
 #include "protolib/src/cmd.pb.h"
 #include "routersvr/server_instance_mgr.h"
-#include "commonlib/net_helper/net_handler.h"
+#include "commonlib/net_handler/net_handler.h"
+
+int RouterApplication::ServerType() {
+	return proto::SVR_TYPE_ROUTER;
+}
+
+int RouterApplication::InstanceId() {
+	return _svr_config.Data().svr_inst_id();
+}
 
 int RouterApplication::OnInitNetWork() {
 	// start network thread
@@ -67,7 +75,8 @@ int RouterApplication::OnProc(base::s_int64_t fd, const AppHeadFrame& frame, con
 	case proto::CMD::CMD_SOCKET_CLIENT_OUT:
 	case proto::CMD::CMD_SOCKET_CLIENT_IN:
 	case proto::CMD::CMD_REGISTER_SERVER_REQ:
-		TransactionMgr::ProcessFrame(fd, frame, data);
+	case proto::CMD::CMD_SVR_HEATBEAT:
+		TransactionMgr::ProcessFrame(fd, ServerType(), InstanceId(), frame, data);
 		return 0;
 	default:
 		// ×ª·¢

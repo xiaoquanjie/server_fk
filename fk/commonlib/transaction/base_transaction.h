@@ -1,10 +1,11 @@
 #ifndef M_BASE_TRANSACTION_INCLUDE
 #define M_BASE_TRANSACTION_INCLUDE
 
-#include "google/protobuf/message.h"
+//#include "google/protobuf/message.h"
 #include "slience/base/config.hpp"
 #include "slience/base/logger.hpp"
 #include "commonlib/svr_base/svrbase.h"
+#include "commonlib/net_handler/router_mgr.h"
 
 class Transaction {
 	friend class TransactionMgrImpl;
@@ -19,6 +20,11 @@ public:
 		E_RETURN_ACTIVE = 1,
 		E_RETURN_TIMEOUT = 2,
 	};
+	enum Wait_Time {
+		E_WAIT_THREE_SECOND = 3 * 1000,
+		E_WAIT_FIVE_SECOND = 5 * 1000,
+		E_WAIT_TEN_SECOND = 10 * 1000,
+	};
 
 	void Construct();
 
@@ -29,12 +35,30 @@ public:
 protected:
 	virtual int InCoroutine() = 0;
 
-	int Process(base::s_int64_t fd, const AppHeadFrame& frame, const char* data);
+	int Process(base::s_int64_t fd, base::s_uint32_t self_svr_type, 
+		base::s_uint32_t self_inst_id,
+		const AppHeadFrame& frame, const char* data);
 
 	int ParseMsg(google::protobuf::Message& message);
 
-	void SendMessageBack(google::protobuf::Message& message);
+	int SendMsgByServerType(int cmd, int svr_type,
+		google::protobuf::Message& request, google::protobuf::Message& respond);
+	
+	int SendMsgByServerType(int cmd, int svr_type,
+		google::protobuf::Message& request);
 
+	int SendMsgByServerId(int cmd, int svr_type, int inst_id,
+		google::protobuf::Message& request, google::protobuf::Message& respond);
+
+	int SendMsgByServerId(int cmd, int svr_type, int inst_id,
+		google::protobuf::Message& request);
+
+	int SendMsgByFd(int cmd, google::protobuf::Message& request);
+
+	int SendMsgByFd(int cmd, google::protobuf::Message& request
+		, google::protobuf::Message& respond);
+
+protected:
 	void OnState();
 
 	void CancelTimer();
@@ -62,11 +86,15 @@ protected:
 
 	base::s_int64_t cur_fd();
 
+	base::s_uint32_t self_svr_type();
+
+	base::s_uint32_t self_inst_id();
+
 	void set_co_id(base::s_int32_t);
 
-	const AppHeadFrame& cur_frame_head();
+	const AppHeadFrame& cur_frame();
 
-	const AppHeadFrame& ori_frame_head();
+	const AppHeadFrame& ori_frame();
 
 private:
 	base::s_uint16_t _state;
@@ -77,8 +105,10 @@ private:
 	base::s_int32_t _co_id;
 	base::s_int64_t _fd;
 	base::s_int64_t _cur_fd;
-	const AppHeadFrame* _cur_frame_head;
-	AppHeadFrame _ori_frame_head;
+	base::s_uint32_t _self_svr_type;
+	base::s_uint32_t _self_inst_id;
+	const AppHeadFrame* _cur_frame;
+	AppHeadFrame _ori_frame;
 	const char* _cur_frame_data;
 };
 
@@ -129,12 +159,20 @@ protected:
 			LogError("userid: " << userid() << " cmd: " << cmd() << "transaction dynamic_cast error");
 			return -2;
 		}
-		RESPOND_TYPE respond;
+		RESPOND_TYPE respond; 
 		ret = trans->OnRequest(request, respond);
 		if (0 == ret) {
 			// 回包
 			LogDebug("userid: " << userid() << " cmd: " << cmd() << " RESPOND_TYPE=" << respond.GetTypeName().c_str() << "|" << respond.ShortDebugString().c_str());
-			SendMessageBack(respond);
+			RouterMgrSgl.SendMsg(cmd() + 1,
+				userid(),
+				false,
+				ori_frame().get_src_svr_type(),
+				ori_frame().get_src_inst_id(),
+				trans_id(),
+				ori_frame().get_src_trans_id(),
+				respond
+			);
 		}
 		return 0;
 	}

@@ -3,6 +3,7 @@ cc_binary(
     srcs = [
        'main.cpp',
        'conn_svr.cpp',
+	   'transaction/trans_application.cpp',
     ],
     deps = [
         '//commonlib:common',

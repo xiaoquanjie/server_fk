@@ -30,6 +30,10 @@ public:
 		return _cfg;
 	}
 
+	CfgType& Data() {
+		return _cfg;
+	}
+
 private:
 	CfgType _cfg;
 };
