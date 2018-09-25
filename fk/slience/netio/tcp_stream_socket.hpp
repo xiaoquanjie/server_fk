@@ -34,6 +34,8 @@ public:
 		base::s_uint32_t len);
 };
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 template<typename T, typename SocketType>
 TcpStreamSocket<T, SocketType>::_readerinfo_::_readerinfo_() {
 	readbuf = new base::s_byte_t[M_SOCKET_READ_SIZE];
@@ -169,8 +171,8 @@ TcpStreamSocket<T, SocketType>::TcpStreamSocket(NetIo& netio)
 template<typename T, typename SocketType>
 bool TcpStreamSocket<T, SocketType>::SendPacket(const base::s_byte_t* data,
 	base::s_uint32_t len) {
-	SocketLib::ScopedLock scoped_w(_writer.lock);
-	if (!_CheckCanSend(len + sizeof(PacketHeader))) {
+	SocketLib::ScopedLock scoped_w(this->_writer.lock);
+	if (!this->_CheckCanSend(len + sizeof(PacketHeader))) {
 		return false;
 	}
 
@@ -178,9 +180,9 @@ bool TcpStreamSocket<T, SocketType>::SendPacket(const base::s_byte_t* data,
 	hdr.size = len;
 	hdr.timestamp = M_PACGET_CODE;
 	hdr.h2n();
-	_writer.msgbuffer2.Write(hdr);
-	_writer.msgbuffer2.Write((void*)data, len);
-	_TrySendData();
+	this->_writer.msgbuffer2.Write(hdr);
+	this->_writer.msgbuffer2.Write((void*)data, len);
+	this->_TrySendData();
 	return true;
 }
 
@@ -188,7 +190,7 @@ template<typename T, typename SocketType>
 template<typename MsgHeadType>
 bool TcpStreamSocket<T, SocketType>::SendPacket(const MsgHeadType& head, 
 	const base::s_byte_t* data, base::s_uint32_t len) {
-	SocketLib::ScopedLock scoped_w(_writer.lock);
+	SocketLib::ScopedLock scoped_w(this->_writer.lock);
 	if (!_CheckCanSend(len + sizeof(PacketHeader) + sizeof(MsgHeadType))) {
 		return false;
 	}
@@ -197,10 +199,10 @@ bool TcpStreamSocket<T, SocketType>::SendPacket(const MsgHeadType& head,
 	hdr.size = len + sizeof(MsgHeadType);
 	hdr.timestamp = M_PACGET_CODE;
 	hdr.h2n();
-	_writer.msgbuffer2.Write(hdr);
-	_writer.msgbuffer2.Write(head);
-	_writer.msgbuffer2.Write((void*)data, len);
-	_TrySendData();
+	this->_writer.msgbuffer2.Write(hdr);
+	this->_writer.msgbuffer2.Write(head);
+	this->_writer.msgbuffer2.Write((void*)data, len);
+	this->_TrySendData();
 	return true;
 }
 
