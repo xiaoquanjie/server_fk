@@ -191,7 +191,7 @@ template<typename MsgHeadType>
 bool TcpStreamSocket<T, SocketType>::SendPacket(const MsgHeadType& head, 
 	const base::s_byte_t* data, base::s_uint32_t len) {
 	SocketLib::ScopedLock scoped_w(this->_writer.lock);
-	if (!_CheckCanSend(len + sizeof(PacketHeader) + sizeof(MsgHeadType))) {
+	if (!this->_CheckCanSend(len + sizeof(PacketHeader) + sizeof(MsgHeadType))) {
 		return false;
 	}
 
