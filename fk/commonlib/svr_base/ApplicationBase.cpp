@@ -98,6 +98,7 @@ int ApplicationBase::Init(int argc, char** argv) {
 	}
 	else {
 		LogError("application start fail");
+		StopLogger();
 		// stop network 
 		OnStopNetWork();
 		exit(-1);
