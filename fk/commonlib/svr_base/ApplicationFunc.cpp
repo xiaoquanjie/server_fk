@@ -140,3 +140,12 @@ int KillExist(const std::string& pid_file) {
 
 	return 0;
 }
+
+void SendSignal(const std::string& pid_file, int sig) {
+#ifndef M_PLATFORM_WIN
+	int pid = ReadPid(pid_file);
+	if (-1 != pid) {
+		kill(pid, sig);
+	}
+#endif
+}

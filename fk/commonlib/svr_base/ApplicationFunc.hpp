@@ -24,4 +24,6 @@ int WritePid(const std::string& pid_file);
 
 int KillExist(const std::string& pid_file);
 
+void SendSignal(const std::string& pid_file, int sig);
+
 #endif

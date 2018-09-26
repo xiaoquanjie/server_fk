@@ -11,6 +11,9 @@
 
 /////////////////////////////////////////////////////////////
 
+const char* App_Cmd_Stop = "stop";
+const char* App_Cmd_Reload = "reload";
+
 ApplicationBase::ApplicationBase() {
 	_log_level = base::logger::LOG_LEVEL_TRACE;
 	_log_withpid = 0;
