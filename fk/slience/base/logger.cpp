@@ -103,7 +103,7 @@ namespace logger {
 			if (now != _lastctime) {
 				_lastctime = now;
 				if (!_issameday_(_rolltime, now))
-					_roll_file(false, now);
+					_roll_file(true, now);
 			}
 			if (_writesize >= _rollsize) {
 				_roll_file(false, now);

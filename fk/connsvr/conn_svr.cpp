@@ -55,7 +55,8 @@ int ConnApplication::OnReload() {
 		return -1;
 	}
 
-	RouterMgrSgl.SetRouterFile(_comm_config.Data().router_conf_file());
+	std::string router_conf_file = _confdir + _comm_config.Data().router_conf_file();
+	RouterMgrSgl.SetRouterFile(router_conf_file);
 	if (0 != RouterMgrSgl.Reload()) {
 		LogError("RouterMgrSgl.Reload fail");
 		return -1;

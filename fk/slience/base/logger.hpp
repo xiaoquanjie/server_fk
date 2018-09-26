@@ -434,6 +434,8 @@ M_BASE_NAMESPACE_END
 	base::logger::logger::instance().setrollsize(size)
 #define SetLogNodeCount(cnt)\
 	base::logger::logger::instance().setnodecnt(cnt)
+#define StopLogger()\
+	base::logger::logger::instance().stop()
 
 #define LogTrace(content)\
 {\

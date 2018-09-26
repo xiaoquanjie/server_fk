@@ -58,6 +58,7 @@ protected:
 protected:
 	ServerCfg<config::CommConf> _comm_config;
 	std::string _workdir;
+	std::string _confdir;
 	std::string _appname;
 	std::string _pid_file;
 	std::string _conf_file;

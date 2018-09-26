@@ -98,6 +98,7 @@ int ApplicationBase::Init(int argc, char** argv) {
 	}
 	else {
 		LogError("application start fail");
+		StopLogger();
 		// stop network 
 		OnStopNetWork();
 		exit(-1);
@@ -146,6 +147,12 @@ int ApplicationBase::ParseOpt(int argc, char** argv) {
 	_workdir = base::StringUtil::directory(argv[0]);
 	_appname = base::StringUtil::basename(argv[0]);
 	_appname = base::StringUtil::remove_from_end(_appname, ".exe");
+#ifdef M_PLATFORM_WIN
+#ifdef _DEBUG
+	if (_appname.back() == 'd')
+		_appname.pop_back();
+#endif
+#endif
 	_pid_file = _appname + ".pid";
 
 	if (argc < 2) {
@@ -155,13 +162,13 @@ int ApplicationBase::ParseOpt(int argc, char** argv) {
 
 	static int opt_char = 0;
 	static base::Option long_option[] = {
-		{"config_file", 1, &opt_char, 'C'},
 		{"help", 0, 0, 'h'},
 		{"daemon", 0, 0, 'D'},
 		{"log_file", 1, &opt_char, 'L'},
 		{"log_level", 1, &opt_char, 'l'},
 		{"log_withpid", 1, &opt_char, 'p'},
-		{"thread_cnt", 1, &opt_char, 'T'}
+		{"thread_cnt", 1, &opt_char, 'T'},
+		{"conf_dir", 1, &opt_char, 'W'}
 	};
 
 	int opt_idx = 0;
@@ -170,9 +177,6 @@ int ApplicationBase::ParseOpt(int argc, char** argv) {
 		switch (opt) {
 		case 0:
 			switch (*long_option[opt_idx].flag) {
-			case 'C':
-				_conf_file = base::GetOptArg();
-				break;
 			case 'L':
 				_log_file = base::GetOptArg();
 				break;
@@ -184,6 +188,9 @@ int ApplicationBase::ParseOpt(int argc, char** argv) {
 				break;
 			case 'T':
 				_svr_thread_cnt = base::GetOptArgI();
+				break;
+			case 'W':
+				_confdir = base::GetOptArg();
 				break;
 			}
 			break;
@@ -204,8 +211,8 @@ int ApplicationBase::ParseOpt(int argc, char** argv) {
 		_log_file = _appname;
 	}
 
-	_comm_conf_file = base::StringUtil::directory(base::StringUtil::directory(_conf_file));
-	_comm_conf_file += "/comm_conf/comm.conf";
+	_conf_file = _confdir + _appname + "/" + _appname + ".conf";
+	_comm_conf_file = _confdir + "comm_conf/comm.conf";
 	return 0;
 }
 
