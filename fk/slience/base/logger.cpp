@@ -277,13 +277,17 @@ namespace logger {
 
 	void logger::setfilename(const std::string& filename, bool withpid) {
 		if (_filename.empty()) {
-			_run = true;
 			_circular = new buffer_circular(_node_cnt);
 			_producer = _circular->first();
 			_consumer = _circular->first();
 			_filename = filename;
 			_file = new logfile(_filename, _rollsize, withpid);
 			_thread = new thread(&logger::dump, this, 0);
+			_mutex.lock();
+			if (!_run) {
+				_condition.wait();
+			}
+			_mutex.unlock();
 		}
 	}
 
@@ -307,7 +311,7 @@ namespace logger {
 		}
 		if (_producer->status
 			== buffer_circular::Enum_Buffer_Full) {
-			// »º´æÐ´Âú£¬ÈÕÖ¾ÐèÒª¶ªµô
+			// ç¼“å­˜å†™æ»¡ï¼Œæ—¥å¿—éœ€è¦ä¸¢æŽ‰
 			fwrite(_logerror, 1, strlen(_logerror), stderr);
 			return;
 		}
@@ -315,12 +319,12 @@ namespace logger {
 			_producer->buffer.append(data, len);
 		}
 		else {
-			// ±êÖ¾ÎªÂúµÄ
+			// æ ‡å¿—ä¸ºæ»¡çš„
 			_producer->status = buffer_circular::Enum_Buffer_Full;
 			_producer = _circular->next(_producer);
 			if (_producer->status
 				== buffer_circular::Enum_Buffer_Full) {
-				// »º´æÐ´Âú£¬ÈÕÖ¾ÐèÒª¶ªµô
+				// ç¼“å­˜å†™æ»¡ï¼Œæ—¥å¿—éœ€è¦ä¸¢æŽ‰
 				fwrite(_logerror, 1, strlen(_logerror), stderr);
 			}
 			else {
@@ -339,6 +343,8 @@ namespace logger {
 	}
 
 	void logger::dump(void*) {
+		_run = true;
+		_condition.notify();
 		while (_run) {
 			_mutex.lock();
 			if (_consumer->status == buffer_circular::Enum_Buffer_Free) {

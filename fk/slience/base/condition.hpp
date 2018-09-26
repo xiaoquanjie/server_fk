@@ -12,13 +12,11 @@ public:
 
 	~Condition();
 
-	// 这个函数会自动解锁互斥量，等条件满足后又会自动锁上互斥量
 	void wait();
 
 	// returns true if time out, false otherwise.
-	bool wait(int second);
+	bool wait(int millisecond);
 
-	// 会唤配正在等待条件的线程
 	void notify();
 
 	void notifyall();
