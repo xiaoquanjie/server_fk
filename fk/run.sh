@@ -4,18 +4,25 @@ root_path=`pwd`
 #export LD_LIBRARY_PATH=/usr/local/lib
 #echo library path: ${root_path}/protobuflib/linux
 
-echo "root_path:${root_path}"
+
+start()
+{
+   SVR_NAME=$1
+   echo "starting ${SVR_NAME}.........."  
+   ./blade-bin/${SVR_NAME}/${SVR_NAME} -D --conf_dir ${root_path}/conf/
+}
 
 svr_array=(routersvr connsvr)
 
 if [ $# == 1 ];then
-   echo "starting $1.........."
-   ./blade-bin/$1/$1 -D --conf_dir ${root_path}/conf/
+   start $1
 else
-   for item in ${svr_array[@]}
+   cat svr_list.txt |
+   while read line
    do
-     echo "starting $item.........."
-     ./blade-bin/$item/$item -D --conf_dir ${root_path}/conf/
+     if [ -n "$line" ];then
+        start $line
+     fi
    done
 fi
 
