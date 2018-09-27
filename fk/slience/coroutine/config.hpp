@@ -39,8 +39,14 @@
 #define DEFAULT_COROUTINE (1024)
 #endif
 
+// invalid coroutine id
 #ifndef M_INVALID_COROUTINE_ID
-#define M_INVALID_COROUTINE_ID (0)
+#define M_INVALID_COROUTINE_ID (-1)
+#endif
+
+// main coroutine id
+#ifndef M_MAIN_COROUTINE_ID
+#define M_MAIN_COROUTINE_ID (0)
 #endif
 
 // for private stack

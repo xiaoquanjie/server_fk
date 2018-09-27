@@ -72,12 +72,6 @@
     <ClInclude Include="base\win.hpp">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="coroutine\co_linux_impl.hpp">
-      <Filter>coroutine</Filter>
-    </ClInclude>
-    <ClInclude Include="coroutine\co_win_impl.hpp">
-      <Filter>coroutine</Filter>
-    </ClInclude>
     <ClInclude Include="coroutine\config.hpp">
       <Filter>coroutine</Filter>
     </ClInclude>
