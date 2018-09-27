@@ -11,15 +11,6 @@
 #include "slience/base/thread.hpp"
 M_COROUTINE_NAMESPACE_BEGIN
 
-typedef void(*_coroutine_func_)(void*ud);
-#define COROUTINE_READY   (1)
-#define COROUTINE_RUNNING (2)
-#define COROUTINE_SUSPEND (3)
-#define COROUTINE_DEAD	  (4)
-
-#define DEFAULT_COROUTINE (1024)
-#define M_INVALID_COROUTINE_ID (0)
-
 #ifdef M_PLATFORM_WIN
 struct _coroutine_ {
 	int _id;

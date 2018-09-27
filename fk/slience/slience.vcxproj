@@ -155,7 +155,9 @@
     <ClInclude Include="base\tls.hpp" />
     <ClInclude Include="base\win.hpp" />
     <ClInclude Include="coroutine\config.hpp" />
+    <ClInclude Include="coroutine\coroutine.h" />
     <ClInclude Include="coroutine\coroutine.hpp" />
+    <ClInclude Include="coroutine\courtouine_task.h" />
     <ClInclude Include="coroutine\co_linux_impl.hpp" />
     <ClInclude Include="coroutine\co_win_impl.hpp" />
     <ClInclude Include="netio\http_base_socket.hpp" />
@@ -169,6 +171,10 @@
     <ClInclude Include="netio\netio.hpp" />
     <ClCompile Include="base\object_pool.cpp" />
     <ClCompile Include="base\time_pool.cpp" />
+    <ClCompile Include="coroutine\coroutine.cpp" />
+    <ClCompile Include="coroutine\coroutine_linux.cpp" />
+    <ClCompile Include="coroutine\coroutine_win.cpp" />
+    <ClCompile Include="coroutine\courtouine_task.cpp" />
     <ClCompile Include="netio\http_socket.cpp" />
     <ClCompile Include="netio\netio.cpp" />
     <ClInclude Include="netio\packet.hpp" />

@@ -237,6 +237,12 @@
     <ClInclude Include="netio\sync_connector.h">
       <Filter>netio</Filter>
     </ClInclude>
+    <ClInclude Include="coroutine\courtouine_task.h">
+      <Filter>coroutine</Filter>
+    </ClInclude>
+    <ClInclude Include="coroutine\coroutine.h">
+      <Filter>coroutine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\buffer.cpp">
@@ -286,6 +292,18 @@
     </ClCompile>
     <ClCompile Include="netio\http_socket.cpp">
       <Filter>netio</Filter>
+    </ClCompile>
+    <ClCompile Include="coroutine\coroutine.cpp">
+      <Filter>coroutine</Filter>
+    </ClCompile>
+    <ClCompile Include="coroutine\coroutine_linux.cpp">
+      <Filter>coroutine</Filter>
+    </ClCompile>
+    <ClCompile Include="coroutine\coroutine_win.cpp">
+      <Filter>coroutine</Filter>
+    </ClCompile>
+    <ClCompile Include="coroutine\courtouine_task.cpp">
+      <Filter>coroutine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

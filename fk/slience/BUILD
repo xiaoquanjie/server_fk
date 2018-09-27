@@ -21,6 +21,10 @@ cc_library(
 	   'netio/netio.cpp',
 	   'netio/tcp_socket.cpp',
 	   'netio/http_socket.cpp',
+	   'coroutine/coroutine.cpp',
+	   'coroutine/coroutine_linux.cpp',
+	   'coroutine/coroutine_win.cpp',
+	   'coroutine/courtouine_task.cpp'
     ],
 
     deps = [
