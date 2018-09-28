@@ -49,7 +49,7 @@ struct _schedule_ : public _base_schedule_ {
 
 #else
 
-struct _coroutine_ public _base_coroutine_ {
+struct _coroutine_ : public _base_coroutine_ {
 	char*_stack;
 	int	_size;
 	int	_cap;

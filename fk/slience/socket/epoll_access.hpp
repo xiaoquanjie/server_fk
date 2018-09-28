@@ -65,7 +65,7 @@ inline void EpollService::Access::Run(EpollService& service, SocketError& error)
 inline void EpollService::Access::CoRun(EpollService& service, SocketError& error) {
 	IoServiceImpl* psimpl = _CreateIoImpl(service, error);
 	if (psimpl) {
-		Coroutine::initEnv();
+		Coroutine::init();
 		_DoRun(service, *psimpl, true, error);
 		_ReleaseIoImpl(service, psimpl);
 		CoroutineTask::clrTask();
@@ -107,7 +107,7 @@ inline void EpollService::Access::_DoRun(EpollService& service, IoServiceImpl& s
 			runhandler();
 		_DoClose(&simpl, closes1, closes2);
 		if (isco)
-			CoroutineTask::doThrResume();
+			CoroutineTask::resumeTask();
 		g_setlasterr(0);
 		g_bzero(&events, sizeof(events));
 		s_int32_t ret = g_epoll_wait(simpl._handler, events, max_events, 20);
