@@ -29,6 +29,7 @@ void save_stack(_coroutine_* c, char* top) {
 ////////////////////////////////////////////////////////////
 
 bool Coroutine::init(unsigned int stack_size, bool pri_stack) {
+	_schedule_& schedule = gschedule;
 	schedule._pri_stack = pri_stack;
 	schedule._stack_size = stack_size;
 	return true;
