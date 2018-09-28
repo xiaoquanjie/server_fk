@@ -20,7 +20,7 @@ TransactionMgrImpl::TransactionMgrImpl() {
 }
 
 void TransactionMgrImpl::Init() {
-	coroutine::Coroutine::initEnv(128 * 1024, true);
+	coroutine::Coroutine::init(128 * 1024, true);
 }
 
 void TransactionMgrImpl::Init(base::s_int32_t max_concurrent_trans) {

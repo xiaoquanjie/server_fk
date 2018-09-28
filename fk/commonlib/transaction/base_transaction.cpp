@@ -132,7 +132,7 @@ int Transaction::OnIdle() {
 int Transaction::OnActive() {
 	// 唤醒协程
 	if (0 != co_id()) {
-		coroutine::Coroutine::resume(co_id());
+		coroutine::CoroutineTask::resumeTask(co_id());
 	}
 	return 0;
 }
@@ -141,7 +141,7 @@ int Transaction::OnTimeOut() {
 	// 唤醒协程
 	_timer_id = 0;
 	if (0 != co_id()) {
-		coroutine::Coroutine::resume(co_id());
+		coroutine::CoroutineTask::resumeTask(co_id());
 	}
 	return 0;
 }

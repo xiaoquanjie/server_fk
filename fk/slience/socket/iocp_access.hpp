@@ -59,7 +59,7 @@ inline void IocpService::Access::Run(IocpService& service, SocketError& error) {
 inline void IocpService::Access::CoRun(IocpService& service, SocketError& error) {
 	IoServiceImpl* psimpl = _CreateIoImpl(service, error);
 	if (psimpl) {
-		Coroutine::initEnv();
+		Coroutine::init();
 		_DoRun(service, *psimpl, true, error);
 		_ReleaseIoImpl(service, psimpl);
 		CoroutineTask::clrTask();
@@ -352,7 +352,7 @@ inline void IocpService::Access::_DoRun(IocpService& service, IoServiceImpl& sim
 			runhandler();
 		_DoClose(&simpl, closes1, closes2);
 		if (isco)
-			CoroutineTask::doThrResume();
+			CoroutineTask::resumeTask();
 		trans_bytes = 0;
 		comple_key = 0;
 		overlapped = 0;

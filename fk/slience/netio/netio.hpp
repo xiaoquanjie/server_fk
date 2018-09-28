@@ -15,6 +15,7 @@
 #define M_NETIO_NETIO_INCLUDE
 
 #include "slience/netio/config.hpp"
+#include "slience/base/thread.hpp"
 M_NETIO_NAMESPACE_BEGIN
 
 class NetIo;

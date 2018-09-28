@@ -1,4 +1,5 @@
 #include "slience/coroutine/coroutine.hpp"
+#include "slience/base/tls.hpp"
 #include <cassert>
 
 M_COROUTINE_NAMESPACE_BEGIN
