@@ -26,23 +26,19 @@ CRITICAL_SECTION& MutexLock::mutex() {
 
 #else
 MutexLock::MutexLock() {
-	int ret = pthread_mutex_init(&_mutex, 0);
-	assert(ret == 0);
+	pthread_mutex_init(&_mutex, 0);
 }
 
 MutexLock::~MutexLock() {
 	pthread_mutex_destroy(&_mutex);
-	
 }
 
 void MutexLock::lock() {
-	int ret = pthread_mutex_lock(&_mutex);
-	assert(ret == 0);
+	pthread_mutex_lock(&_mutex);
 }
 
 void MutexLock::unlock() {
-	int ret = pthread_mutex_unlock(&_mutex);
-	assert(ret == 0);
+	pthread_mutex_unlock(&_mutex);
 }
 
 pthread_mutex_t& MutexLock::mutex() {
