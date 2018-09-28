@@ -42,7 +42,7 @@ int Coroutine::create(_coroutine_func_ routine, void* data) {
 	}
 
 	_coroutine_* co = _alloc_co_(schedule, routine, data);
-	assert(getcontext(&co->_ctx) == 0);
+	getcontext(&co->_ctx);
 	co->_ctx.uc_link = &schedule._ctx;
 	co->_size = 0;
 
