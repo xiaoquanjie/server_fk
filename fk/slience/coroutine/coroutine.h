@@ -53,7 +53,7 @@ struct _coroutine_ : public _base_coroutine_ {
 	char*_stack;
 	int	_size;
 	int	_cap;
-	ucontext_t_ctx;
+	ucontext_t _ctx;
 };
 
 struct _schedule_ : public _base_schedule_ {
