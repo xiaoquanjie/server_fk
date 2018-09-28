@@ -47,6 +47,7 @@ bool CoroutineTask::doTask() {
             return true;
         }
     }
+	return false;
 }
 
 void CoroutineTask::doTask(_coroutine_func_ func, void*p) {
