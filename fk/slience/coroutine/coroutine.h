@@ -64,7 +64,7 @@ struct _schedule_ : public _base_schedule_ {
 		_cap = 0;
 		_nco = 0;
 		_curco = 0;
-		_ctx = 0;
+		// _ctx = 0;
 		_co = 0;
 		_freeid.clear();
 		_pri_stack = false;
