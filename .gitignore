@@ -10,4 +10,6 @@
 /fk/.SConstruct.lock
 /fk/.sconsign.dblite
 /fk/.vs
+./.idea
+./cmake-build-debug
 
