@@ -12,4 +12,6 @@
 /fk/.vs
 ./.idea
 ./cmake-build-debug
+/fk/excel/data
+/fk/excel/proto
 
