@@ -15,4 +15,6 @@
 /fk/excel/data
 /fk/excel/proto
 /fk/excel/.idea/
+/fk/excel/*.pyc
+/fk/excel/xls_translator.log
 
