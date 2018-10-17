@@ -1,5 +1,5 @@
 cc_library(
-	name = 'excelconf'
+	name = 'excelconf',
 	srcs = [
 		'src/dataconfig_x_zone_conf.pb.cc',
 	],

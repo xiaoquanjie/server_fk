@@ -6,7 +6,7 @@ import platform
 
 def generator_build_file():
     file_str = "cc_library(\n"
-    file_str += "\tname = 'excelconf'\n"
+    file_str += "\tname = 'excelconf',\n"
     file_str += "\tsrcs = [\n"
 
     files = os.listdir('./src/')
