@@ -291,9 +291,10 @@ class DataParser:
         try:
             global g_pb_file_name
             self._module_name = g_pb_file_name.replace(".proto", "_pb2");
-            sys.path.append(os.getcwd() + "./proto")
+            sys.path.append(os.getcwd() + "/proto")
             if not os.path.exists('./proto/' + self._module_name + '.py'):
                 LOG_INFO("file not exist")
+            
             exec ('from ' + self._module_name + ' import *');
             self._module = sys.modules[self._module_name]
         except BaseException, e:
