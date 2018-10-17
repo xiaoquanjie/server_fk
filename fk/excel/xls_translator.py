@@ -100,10 +100,10 @@ class SheetInterpreter:
         # 将PB转换成py格式
         try:
             if platform.system() == "Windows":
-                command = "start ../bin/protoc.exe --proto_path=./proto --python_out=./proto " + g_pb_file_name
+                command = "..\\bin\\protoc.exe --proto_path=./proto --python_out=./proto " + g_pb_file_name
                 os.system(command)
             else:
-                command = "cd proto; protoc --python_out=. " + g_pb_file_name
+                command = "protoc --proto_path=./proto --python_out=./proto " + g_pb_file_name
                 os.system(command)
         except BaseException, e:
             LOG_ERROR("protoc failed!")
@@ -255,7 +255,10 @@ class SheetInterpreter:
 
     def _Write2File(self):
         """输出到文件"""
-        pb_file = open("./proto/" + g_pb_file_name, "w+")
+        dir = './proto/'
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        pb_file = open(dir + g_pb_file_name, "w+")
         pb_file.writelines(self._output)
         pb_file.close()
 
@@ -289,10 +292,12 @@ class DataParser:
             global g_pb_file_name
             self._module_name = g_pb_file_name.replace(".proto", "_pb2");
             sys.path.append(os.getcwd() + "./proto")
+            if not os.path.exists('./proto/' + self._module_name + '.py'):
+                LOG_INFO("file not exist")
             exec ('from ' + self._module_name + ' import *');
             self._module = sys.modules[self._module_name]
         except BaseException, e:
-            print "load module(%s) failed" % (self._module_name)
+            LOG_ERROR("load module(%s) failed" % (self._module_name))
             raise
 
     def Parse(self):
@@ -320,7 +325,7 @@ class DataParser:
             item = item_array.items.add()
             self._ParseLine(item)
 
-        LOG_INFO("parse result:\n%s", item_array)
+        # LOG_INFO("parse result:\n%s", item_array)
 
         self._WriteReadableData2File(str(item_array))
         data = item_array.SerializeToString()
@@ -451,13 +456,19 @@ class DataParser:
             raise
 
     def _WriteData2File(self, data):
-        file_name = "./data/" + OUTPUT_FULE_PATH_BASE + g_struct_name + ".data"
+        dir = './data/'
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        file_name = dir + OUTPUT_FULE_PATH_BASE + g_struct_name + ".data"
         file = open(file_name, 'wb+')
         file.write(data)
         file.close()
 
     def _WriteReadableData2File(self, data):
-        file_name = "./data/" + OUTPUT_FULE_PATH_BASE + g_struct_name + ".conf"
+        dir = './data/'
+        if not os.path.exists(dir):
+            os.makedirs(dir)
+        file_name = dir + OUTPUT_FULE_PATH_BASE + g_struct_name + ".conf"
         file = open(file_name, 'wb+')
         file.write(data)
         file.close()
@@ -485,6 +496,7 @@ if __name__ == '__main__':
         parser = DataParser(file_path, sheet_name)
         parser.Parse()
         LOG_INFO("end interpreted %s file" % (file_path))
+        LOG_INFO("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     except BaseException, e:
         LOG_ERROR("Interpreted %s Failed!!!" % (file_path))
         LOG_ERROR("col: ", interpreter._col + 1, "ERROR: ", e, Color.NONE)
