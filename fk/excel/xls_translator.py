@@ -103,7 +103,7 @@ class SheetInterpreter:
                 command = "..\\bin\\protoc.exe --proto_path=./proto --python_out=./proto " + g_pb_file_name
                 os.system(command)
             else:
-                command = "protoc --proto_path=./proto --python_out=./proto " + g_pb_file_name
+                command = "cd proto; protoc --python_out=. " + g_pb_file_name
                 os.system(command)
         except BaseException, e:
             LOG_ERROR("protoc failed!")
