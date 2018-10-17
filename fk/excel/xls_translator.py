@@ -294,7 +294,7 @@ class DataParser:
             sys.path.append(os.getcwd() + "/proto")
             if not os.path.exists('./proto/' + self._module_name + '.py'):
                 LOG_INFO("file not exist")
-            
+
             exec ('from ' + self._module_name + ' import *');
             self._module = sys.modules[self._module_name]
         except BaseException, e:

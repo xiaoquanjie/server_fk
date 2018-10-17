@@ -1,11 +1,9 @@
 cc_library(
-    name = 'excelconf',
-    srcs = [
-	   'main.cpp',
-    ],
+	name = 'excelconf'
+	srcs = [
+		'src/dataconfig_x_zone_conf.pb.cc',
+	],
 	deps = [
 		'//google:protobuf',
-    ],
-	
-    # link_all_symbols = True,
+	],
 )
