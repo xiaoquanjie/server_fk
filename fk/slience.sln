@@ -52,6 +52,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "connsvr", "connsvr\connsvr.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "excel", "excel\excel.vcxproj", "{EFD454C9-B52A-445A-8A68-DA7C07375805}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dbtool", "dbtool\dbtool.vcxproj", "{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -144,6 +146,14 @@ Global
 		{EFD454C9-B52A-445A-8A68-DA7C07375805}.Release|Win32.Build.0 = Release|Win32
 		{EFD454C9-B52A-445A-8A68-DA7C07375805}.Release|x64.ActiveCfg = Release|x64
 		{EFD454C9-B52A-445A-8A68-DA7C07375805}.Release|x64.Build.0 = Release|x64
+		{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}.Debug|Win32.Build.0 = Debug|Win32
+		{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}.Debug|x64.ActiveCfg = Debug|x64
+		{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}.Debug|x64.Build.0 = Debug|x64
+		{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}.Release|Win32.ActiveCfg = Release|Win32
+		{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}.Release|Win32.Build.0 = Release|Win32
+		{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}.Release|x64.ActiveCfg = Release|x64
+		{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

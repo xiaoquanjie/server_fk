@@ -1,0 +1,18 @@
+ERROR 20181019 16:15:44.792 1140 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:20(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|google::protobuf::TextFormat::Parse failed, file_path=dbtool_example.conf
+ERROR 20181019 16:15:44.792 1140 e:\git2\server_fk\fk\dbtool\main.cpp:21(main)|parse file: dbtool_example.conf fail
+INFO  20181019 16:20:54.131 7272 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181019 16:21:47.153 16944 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 16:22:22.258 10132 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:20(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|google::protobuf::TextFormat::Parse failed, file_path=dbtool_example.conf
+ERROR 20181019 16:22:22.258 10132 e:\git2\server_fk\fk\dbtool\main.cpp:21(main)|parse file: dbtool_example.conf fail
+ERROR 20181019 16:29:48.926 14208 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:20(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|google::protobuf::TextFormat::Parse failed, file_path=dbtool_example.conf
+ERROR 20181019 16:29:48.926 14208 e:\git2\server_fk\fk\dbtool\main.cpp:21(main)|parse file: dbtool_example.conf fail
+ERROR 20181019 16:30:06.446 19444 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:20(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|google::protobuf::TextFormat::Parse failed, file_path=dbtool_example.conf
+ERROR 20181019 16:30:06.446 19444 e:\git2\server_fk\fk\dbtool\main.cpp:21(main)|parse file: dbtool_example.conf fail
+INFO  20181019 16:31:30.264 7436 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181019 16:32:22.977 15072 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 16:34:05.908 18664 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:20(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|google::protobuf::TextFormat::Parse failed, file_path=dbtool_example.conf
+ERROR 20181019 16:34:05.909 18664 e:\git2\server_fk\fk\dbtool\main.cpp:21(main)|parse file: dbtool_example.conf fail
+INFO  20181019 16:35:38.963 19116 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 16:36:07.228 19284 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:20(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|google::protobuf::TextFormat::Parse failed, file_path=dbtool_example.conf
+ERROR 20181019 16:36:07.228 19284 e:\git2\server_fk\fk\dbtool\main.cpp:21(main)|parse file: dbtool_example.conf fail
+INFO  20181019 16:37:33.522 15068 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
