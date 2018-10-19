@@ -224,6 +224,25 @@ public:
 	}
 
 protected:
+	bool _UseDb(const char* new_db) {
+		int ret = mysql_select_db(&_st_mysql, new_db);
+		if (ret != 0) {
+			unsigned int code = mysql_errno(&_st_mysql);
+			if (CR_SERVER_GONE_ERROR == code
+				|| CR_SERVER_LOST == code) {
+				if (mariadb_reconnect(&_st_mysql)) {
+					ret = mysql_select_db(&_st_mysql, new_db);
+				}
+				else {
+					_set_errno(CR_SERVER_LOST);
+					_set_err_msg("reconnect fail");
+					return -1;
+				}
+			}
+		}
+		return (ret == 0);
+	}
+
 	SqlConnection() {
 		_errno = 0;
 		memset(_err_msg, 0, sizeof(_err_msg));
@@ -245,10 +264,19 @@ protected:
 		_errno = mysql_errno(&_st_mysql);
 	}
 
+	void _set_unistr(const std::string& str) {
+		_unistr = str;
+	}
+
+	std::string _get_unistr() const {
+		return _unistr;
+	}
+
 private:
 	MYSQL _st_mysql;
 	char _err_msg[256];
 	unsigned int _errno;
+	std::string _unistr;
 };
 
 
@@ -273,12 +301,7 @@ public:
 			snprintf(info.error_msg, sizeof(info.error_msg), "%s", "some param is empty");
 			return SqlConnectionPtr();
 		}
-		std::string uni_str = host;
-		uni_str += user;
-		uni_str += passwd;
-		uni_str += db;
-		uni_str += std::to_string(3306);
-
+		std::string uni_str = _CalcUniStr(host, user, passwd, db, port);
 		auto iter = info.info.find(uni_str);
 		if (iter != info.info.end()) {
 			return iter->second;
@@ -306,6 +329,7 @@ public:
 				}
 				ptr.reset(conn);
 				info.info[uni_str] = ptr;
+				ptr->_set_unistr(uni_str);
 			} while (false);
 
 			if (!ptr) {
@@ -316,9 +340,84 @@ public:
 		}
 	}
 
+	static bool UseDb(SqlConnectionPtr ptr, const char* new_db) {
+		if (!ptr) {
+			return false;
+		}
+		std::string old_unistr = ptr->_get_unistr();
+		std::string host, user, passwd, db, port;
+		if (!_AnalyseUniStr(old_unistr, host, user, passwd, db, port)) {
+			return false;
+		}
+
+		if (!ptr->_UseDb(new_db)) {
+			return false;
+		}
+
+		std::string new_unistr = _CalcUniStr(host.c_str(), user.c_str(), 
+			passwd.c_str(), new_db, atoi(port.c_str()));
+		ptr->_set_unistr(new_unistr);
+		_mysqlinfo_& info = _mysql_detail::ThreadLocalData<_mysqlinfo_>::data();
+		info.info[new_unistr] = ptr;
+		info.info.erase(old_unistr);
+		return false;
+	}
+
 	static const char* GetErrorMsg() {
 		_mysqlinfo_& info = _mysql_detail::ThreadLocalData<_mysqlinfo_>::data();
 		return info.error_msg;
+	}
+
+protected:
+	static std::string _CalcUniStr(const char* host, const char* user, const char* passwd,
+		const char* db, unsigned short port) {
+		std::string uni_str = host;
+		uni_str += ":";
+		uni_str += user;
+		uni_str += ":";
+		uni_str += passwd;
+		uni_str += ":";
+		uni_str += db;
+		uni_str += ":";
+		uni_str += std::to_string(port);
+		return uni_str;
+	}
+
+	static bool _AnalyseUniStr(const std::string& str, std::string& host, std::string& user, std::string& passwd,
+		std::string& db, std::string& port) {
+		std::string separator = ":";
+		std::vector<std::string> array;
+		std::string::size_type start = 0;
+		while (true) {
+			std::string::size_type pos = str.find_first_of(separator, start);
+			if (pos == std::string::npos) {
+				std::string sub = str.substr(start, str.size());
+				if (!sub.empty())
+					array.push_back(sub.c_str());
+				else
+					array.push_back("");
+				break;
+			}
+
+			std::string sub = str.substr(start, pos - start);
+			start = pos + separator.size();
+			if (!sub.empty())
+				array.push_back(sub.c_str());
+			else
+				array.push_back("");
+		}
+
+		if (array.size() != 5) {
+			return false;
+		}
+		else {
+			host = array[0];
+			user = array[1];
+			passwd = array[2];
+			db = array[3];
+			port = array[4];
+			return true;
+		}
 	}
 };
 
