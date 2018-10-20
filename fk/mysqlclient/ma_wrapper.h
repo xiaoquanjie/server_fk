@@ -7,6 +7,8 @@
 #include <memory>
 #include <functional>
 #include <Windows.h>
+#pragma comment(lib, "WS2_32.lib")
+#pragma comment(lib, "Shlwapi.lib")
 #else
 #include <tr1/memory>
 #include <tr1/functional>
@@ -236,7 +238,7 @@ protected:
 				else {
 					_set_errno(CR_SERVER_LOST);
 					_set_err_msg("reconnect fail");
-					return -1;
+					return false;
 				}
 			}
 		}
