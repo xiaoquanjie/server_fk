@@ -171,7 +171,7 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, auto_incr_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, default__),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, add_col_after_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, rename_from_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, rename_to_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, modify_type_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, varchar_len_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, is_delete_),
@@ -270,35 +270,36 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\014dbtool.proto\022\006dbtool\"\374\001\n\nTableField\022\014\n"
+      "\n\014dbtool.proto\022\006dbtool\"\372\001\n\nTableField\022\014\n"
       "\004name\030\001 \001(\t\022$\n\004type\030\002 \001(\0162\026.dbtool.Mysql"
       "FieldType\022\020\n\010not_null\030\003 \001(\010\022\021\n\tauto_incr"
       "\030\004 \001(\010\022\017\n\007default\030\005 \001(\t\022\025\n\radd_col_after"
-      "\030\006 \001(\t\022\023\n\013rename_from\030\007 \001(\t\022+\n\013modify_ty"
-      "pe\030\010 \001(\0162\026.dbtool.MysqlFieldType\022\030\n\013varc"
-      "har_len\030\t \001(\r:\003255\022\021\n\tis_delete\030\n \001(\010\"L\n"
-      "\010TableKey\022\014\n\004name\030\001 \001(\t\022\"\n\004type\030\002 \001(\0162\024."
-      "dbtool.MysqlKeyType\022\016\n\006fields\030\003 \003(\t\"d\n\nM"
-      "ysqlTable\022\022\n\ntable_name\030\001 \001(\t\022\"\n\006fields\030"
-      "\002 \003(\0132\022.dbtool.TableField\022\036\n\004keys\030\003 \003(\0132"
-      "\020.dbtool.TableKey\"\226\001\n\013MysqlSchema\022\020\n\010mys"
-      "ql_ip\030\001 \001(\t\022\022\n\nmysql_port\030\002 \001(\r\022\022\n\nmysql"
-      "_user\030\003 \001(\t\022\024\n\014mysql_passwd\030\004 \001(\t\022\023\n\013sch"
-      "ema_name\030\005 \001(\t\022\"\n\006tables\030\006 \003(\0132\022.dbtool."
-      "MysqlTable\"=\n\017MysqlSchemaConf\022*\n\rmysql_s"
-      "chemas\030\001 \003(\0132\023.dbtool.MysqlSchema*\226\002\n\016My"
-      "sqlFieldType\022\027\n\023E_FieldType_TinyInt\020\001\022\023\n"
-      "\017E_FieldType_Int\020\002\022\024\n\020E_FieldType_UInt\020\003"
-      "\022\026\n\022E_FieldType_BigInt\020\004\022\026\n\022E_FieldType_"
-      "Double\020\005\022\027\n\023E_FieldType_Varchar\020\006\022\024\n\020E_F"
-      "ieldType_Blob\020\007\022\032\n\026E_FieldType_MediumBlo"
-      "b\020\010\022\024\n\020E_FieldType_Date\020\t\022\024\n\020E_FieldType"
-      "_Time\020\n\022\031\n\025E_FieldType_TimeStamp\020\013*Q\n\014My"
-      "sqlKeyType\022\025\n\021E_KeyType_Primary\020\001\022\024\n\020E_K"
-      "eyType_Normal\020\002\022\024\n\020E_KeyType_Unique\020\003"
+      "\030\006 \001(\t\022\021\n\trename_to\030\007 \001(\t\022+\n\013modify_type"
+      "\030\010 \001(\0162\026.dbtool.MysqlFieldType\022\030\n\013varcha"
+      "r_len\030\t \001(\r:\003255\022\021\n\tis_delete\030\n \001(\010\"L\n\010T"
+      "ableKey\022\014\n\004name\030\001 \001(\t\022\"\n\004type\030\002 \001(\0162\024.db"
+      "tool.MysqlKeyType\022\016\n\006fields\030\003 \003(\t\"d\n\nMys"
+      "qlTable\022\022\n\ntable_name\030\001 \001(\t\022\"\n\006fields\030\002 "
+      "\003(\0132\022.dbtool.TableField\022\036\n\004keys\030\003 \003(\0132\020."
+      "dbtool.TableKey\"\226\001\n\013MysqlSchema\022\020\n\010mysql"
+      "_ip\030\001 \001(\t\022\022\n\nmysql_port\030\002 \001(\r\022\022\n\nmysql_u"
+      "ser\030\003 \001(\t\022\024\n\014mysql_passwd\030\004 \001(\t\022\023\n\013schem"
+      "a_name\030\005 \001(\t\022\"\n\006tables\030\006 \003(\0132\022.dbtool.My"
+      "sqlTable\"=\n\017MysqlSchemaConf\022*\n\rmysql_sch"
+      "emas\030\001 \003(\0132\023.dbtool.MysqlSchema*\254\002\n\016Mysq"
+      "lFieldType\022\027\n\023E_FieldType_TinyInt\020\001\022\023\n\017E"
+      "_FieldType_Int\020\002\022\024\n\020E_FieldType_UInt\020\003\022\026"
+      "\n\022E_FieldType_BigInt\020\004\022\026\n\022E_FieldType_Do"
+      "uble\020\005\022\027\n\023E_FieldType_Varchar\020\006\022\024\n\020E_Fie"
+      "ldType_Blob\020\007\022\032\n\026E_FieldType_MediumBlob\020"
+      "\010\022\024\n\020E_FieldType_Text\020\t\022\024\n\020E_FieldType_D"
+      "ate\020\n\022\024\n\020E_FieldType_Time\020\013\022\031\n\025E_FieldTy"
+      "pe_TimeStamp\020\014*Q\n\014MysqlKeyType\022\025\n\021E_KeyT"
+      "ype_Primary\020\001\022\024\n\020E_KeyType_Normal\020\002\022\024\n\020E"
+      "_KeyType_Unique\020\003"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1037);
+      descriptor, 1057);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "dbtool.proto", &protobuf_RegisterTypes);
 }
@@ -332,6 +333,7 @@ bool MysqlFieldType_IsValid(int value) {
     case 9:
     case 10:
     case 11:
+    case 12:
       return true;
     default:
       return false;
@@ -365,7 +367,7 @@ const int TableField::kNotNullFieldNumber;
 const int TableField::kAutoIncrFieldNumber;
 const int TableField::kDefaultFieldNumber;
 const int TableField::kAddColAfterFieldNumber;
-const int TableField::kRenameFromFieldNumber;
+const int TableField::kRenameToFieldNumber;
 const int TableField::kModifyTypeFieldNumber;
 const int TableField::kVarcharLenFieldNumber;
 const int TableField::kIsDeleteFieldNumber;
@@ -397,9 +399,9 @@ TableField::TableField(const TableField& from)
   if (from.has_add_col_after()) {
     add_col_after_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.add_col_after_);
   }
-  rename_from_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_rename_from()) {
-    rename_from_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.rename_from_);
+  rename_to_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_rename_to()) {
+    rename_to_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.rename_to_);
   }
   ::memcpy(&not_null_, &from.not_null_,
     static_cast<size_t>(reinterpret_cast<char*>(&modify_type_) -
@@ -412,7 +414,7 @@ void TableField::SharedCtor() {
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   default__.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   add_col_after_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  rename_from_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  rename_to_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&not_null_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&is_delete_) -
       reinterpret_cast<char*>(&not_null_)) + sizeof(is_delete_));
@@ -430,7 +432,7 @@ void TableField::SharedDtor() {
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   default__.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   add_col_after_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  rename_from_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  rename_to_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void TableField::SetCachedSize(int size) const {
@@ -477,8 +479,8 @@ void TableField::Clear() {
       (*add_col_after_.UnsafeRawStringPointer())->clear();
     }
     if (cached_has_bits & 0x00000008u) {
-      GOOGLE_DCHECK(!rename_from_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
-      (*rename_from_.UnsafeRawStringPointer())->clear();
+      GOOGLE_DCHECK(!rename_to_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
+      (*rename_to_.UnsafeRawStringPointer())->clear();
     }
   }
   ::memset(&not_null_, 0, static_cast<size_t>(
@@ -599,16 +601,16 @@ bool TableField::MergePartialFromCodedStream(
         break;
       }
 
-      // optional string rename_from = 7;
+      // optional string rename_to = 7;
       case 7: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_rename_from()));
+                input, this->mutable_rename_to()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->rename_from().data(), static_cast<int>(this->rename_from().length()),
+            this->rename_to().data(), static_cast<int>(this->rename_to().length()),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "dbtool.TableField.rename_from");
+            "dbtool.TableField.rename_to");
         } else {
           goto handle_unusual;
         }
@@ -736,14 +738,14 @@ void TableField::SerializeWithCachedSizes(
       6, this->add_col_after(), output);
   }
 
-  // optional string rename_from = 7;
+  // optional string rename_to = 7;
   if (cached_has_bits & 0x00000008u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->rename_from().data(), static_cast<int>(this->rename_from().length()),
+      this->rename_to().data(), static_cast<int>(this->rename_to().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "dbtool.TableField.rename_from");
+      "dbtool.TableField.rename_to");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      7, this->rename_from(), output);
+      7, this->rename_to(), output);
   }
 
   // optional .dbtool.MysqlFieldType modify_type = 8;
@@ -826,15 +828,15 @@ void TableField::SerializeWithCachedSizes(
         6, this->add_col_after(), target);
   }
 
-  // optional string rename_from = 7;
+  // optional string rename_to = 7;
   if (cached_has_bits & 0x00000008u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->rename_from().data(), static_cast<int>(this->rename_from().length()),
+      this->rename_to().data(), static_cast<int>(this->rename_to().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "dbtool.TableField.rename_from");
+      "dbtool.TableField.rename_to");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        7, this->rename_from(), target);
+        7, this->rename_to(), target);
   }
 
   // optional .dbtool.MysqlFieldType modify_type = 8;
@@ -892,11 +894,11 @@ size_t TableField::ByteSizeLong() const {
           this->add_col_after());
     }
 
-    // optional string rename_from = 7;
-    if (has_rename_from()) {
+    // optional string rename_to = 7;
+    if (has_rename_to()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->rename_from());
+          this->rename_to());
     }
 
     // optional bool not_null = 3;
@@ -980,8 +982,8 @@ void TableField::MergeFrom(const TableField& from) {
       add_col_after_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.add_col_after_);
     }
     if (cached_has_bits & 0x00000008u) {
-      set_has_rename_from();
-      rename_from_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.rename_from_);
+      set_has_rename_to();
+      rename_to_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.rename_to_);
     }
     if (cached_has_bits & 0x00000010u) {
       not_null_ = from.not_null_;
@@ -1035,7 +1037,7 @@ void TableField::InternalSwap(TableField* other) {
   name_.Swap(&other->name_);
   default__.Swap(&other->default__);
   add_col_after_.Swap(&other->add_col_after_);
-  rename_from_.Swap(&other->rename_from_);
+  rename_to_.Swap(&other->rename_to_);
   swap(not_null_, other->not_null_);
   swap(auto_incr_, other->auto_incr_);
   swap(is_delete_, other->is_delete_);

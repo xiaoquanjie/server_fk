@@ -27,7 +27,7 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 				if (field.has_add_col_after()) {
 					tmp++;
 				}
-				if (field.has_rename_from()) {
+				if (field.has_rename_to()) {
 					tmp++;
 				}
 				if (field.has_modify_type()) {
@@ -43,6 +43,12 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 
 				if (!field.has_type()) {
 					LogError("need has type in field: " << field.name() << " in table: " << table.table_name()
+						<< " in schema: " << schema.schema_name());
+					return false;
+				}
+				if (field.type() < dbtool::E_FieldType_TinyInt
+					|| field.type() > dbtool::E_FieldType_TimeStamp) {
+					LogError("illegal field type in field: " << field.name() << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
@@ -81,6 +87,13 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
+				if (key.type() < dbtool::E_KeyType_Primary
+					|| key.type() > dbtool::E_KeyType_Unique) {
+					LogError("illegal type in key: " << key.name() << " in table: " << table.table_name()
+						<< " in schema: " << schema.schema_name());
+					return false;
+				}
+
 				if (key.type() == dbtool::E_KeyType_Primary) {
 					primary_key_cnt++;
 				}
@@ -201,7 +214,17 @@ int main(int argc, char* argv[]) {
 		MysqlExecutor executor;
 		for (auto iter = SchemaCfgVec.begin(); iter != SchemaCfgVec.end(); ++iter) {
 			auto& cfg = iter->Data();
-			executor.Execute(cfg);
+			if (0 != executor.Execute(cfg)) {
+				flag = false;
+				break;
+			}
+		}
+
+		if (flag) {
+			LogInfo("dbtool finish successfully");
+		}
+		else {
+			LogInfo("Error: dbtool fail to finish");
 		}
 
 	} while (false);

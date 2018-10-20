@@ -128,10 +128,6 @@ public:
 		return (_errno == ER_DUP_ENTRY);
 	}
 
-	int Execute(const std::string& sql, int& affected_rows) {
-		return Execute(sql.c_str(), sql.length(), affected_rows);
-	}
-
 	int Execute(const char* sql, unsigned int sql_len, int& affected_rows) {
 		affected_rows = 0;
 		int ret = mysql_real_query(&_st_mysql, sql, sql_len);
@@ -160,13 +156,9 @@ public:
 		return ret;
 	}
 
-	int Query(const std::string& sql, int expected_fields, RowCallBack callback) {
-		int row_cnt = 0;
-		return Query(sql.c_str(), sql.length(), expected_fields, row_cnt, callback);
-	}
-
-	int Query(const std::string& sql, int expected_fields, int& row_cnt, RowCallBack callback) {
-		return Query(sql.c_str(), sql.length(), expected_fields, row_cnt, callback);
+	int Execute(const char* sql, unsigned int sql_len) {
+		int affected_rows = 0;
+		return Execute(sql, sql_len, affected_rows);
 	}
 
 	int Query(const char* sql, unsigned int sql_len, int expected_fields, RowCallBack callback) {
@@ -362,7 +354,7 @@ public:
 		_mysqlinfo_& info = _mysql_detail::ThreadLocalData<_mysqlinfo_>::data();
 		info.info[new_unistr] = ptr;
 		info.info.erase(old_unistr);
-		return false;
+		return true;
 	}
 
 	static const char* GetErrorMsg() {
