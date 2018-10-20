@@ -90,6 +90,7 @@ int MysqlExecutor::GetTableFields(SqlConnectionPtr conn_ptr, const std::string& 
 
 	if(ret != 0) {
 		LogError("Error: fail to query table " << table.table_name() << "'s column name");
+		LogError(conn_ptr->GetErrorMsg());
 	}
 	return ret;
 }
@@ -136,6 +137,7 @@ int MysqlExecutor::CreateNewTable(SqlConnectionPtr conn_ptr, const std::string& 
 	}
 	else {
 		LogError("Error: fail to create table " << table.table_name() << " in database " << schema_name);
+		LogError(conn_ptr->GetErrorMsg());
 	}
 
 	return ret;
@@ -150,6 +152,10 @@ int MysqlExecutor::ChangeTable(SqlConnectionPtr conn_ptr, const std::string& sch
 
 		// 更改类型
 		if (0 != ModifyTableColumn(conn_ptr, schema_name, table)) {
+			break;
+		}
+
+		if (0 != AddTableColumn(conn_ptr, schema_name, table)) {
 			break;
 		}
 
@@ -203,8 +209,9 @@ std::string MysqlExecutor::GetFieldKeyDesc(const dbtool::TableKey& key) {
 int MysqlExecutor::RenameTableColumn(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table) {
 	std::vector<std::string> table_fields;
 	if (0 != GetTableFields(conn_ptr, schema_name, table, table_fields)) {
-		LogError("Error: fail to delete column in" << table.table_name() << " in table.table_name() in " << schema_name)
-			return -1;
+		LogError("Error: fail to delete column in" << table.table_name() << " in table.table_name() in " << schema_name);
+		LogError(conn_ptr->GetErrorMsg());
+		return -1;
 	}
 
 	std::map<std::string, const dbtool::TableField*> want_rename_fields;
@@ -241,6 +248,7 @@ int MysqlExecutor::RenameTableColumn(SqlConnectionPtr conn_ptr, const std::strin
 		int ret = conn_ptr->Execute(sql.c_str(), sql.length());
 		if (ret != 0) {
 			LogError("Error: rename from " << iter->first << " to " << iter->second->rename_to() << " in table " << table.table_name() << " in database " << schema_name);
+			LogError(conn_ptr->GetErrorMsg());
 			return -1;
 		}
 		else {
@@ -253,8 +261,9 @@ int MysqlExecutor::RenameTableColumn(SqlConnectionPtr conn_ptr, const std::strin
 int MysqlExecutor::ModifyTableColumn(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table) {
 	std::vector<std::string> table_fields;
 	if (0 != GetTableFields(conn_ptr, schema_name, table, table_fields)) {
-		LogError("Error: fail to delete column in" << table.table_name() << " in table.table_name() in " << schema_name)
-			return -1;
+		LogError("Error: fail to delete column in" << table.table_name() << " in table.table_name() in " << schema_name);
+		LogError(conn_ptr->GetErrorMsg());
+		return -1;
 	}
 
 	std::map<std::string, const dbtool::TableField*> want_modify_fields;
@@ -290,6 +299,7 @@ int MysqlExecutor::ModifyTableColumn(SqlConnectionPtr conn_ptr, const std::strin
 		int ret = conn_ptr->Execute(sql.c_str(), sql.length());
 		if (ret != 0) {
 			LogError("Error: fail to modify type in field " << iter->first << " in table " << table.table_name() << " in database " << schema_name);
+			LogError(conn_ptr->GetErrorMsg());
 			return -1;
 		}
 		else {
@@ -302,7 +312,8 @@ int MysqlExecutor::ModifyTableColumn(SqlConnectionPtr conn_ptr, const std::strin
 int MysqlExecutor::DeleteTableColumn(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table) {
 	std::vector<std::string> table_fields;
 	if (0 != GetTableFields(conn_ptr, schema_name, table, table_fields)) {
-		LogError("Error: fail to delete column in" << table.table_name() << " in table.table_name() in " << schema_name)
+		LogError("Error: fail to delete column in" << table.table_name() << " in table.table_name() in " << schema_name);
+		LogError(conn_ptr->GetErrorMsg());
 		return -1;
 	}
 
@@ -355,6 +366,99 @@ int MysqlExecutor::DeleteTableColumn(SqlConnectionPtr conn_ptr, const std::strin
 			LogInfo("Error: fail to delete column " << col_str << " in table.table_name() in " << schema_name);
 			LogInfo(conn_ptr->GetErrorMsg());
 			return -1;
+		}
+	}
+	return 0;
+}
+
+int MysqlExecutor::AddTableColumn(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table) {
+	std::vector<std::string> table_fields;
+	if (0 != GetTableFields(conn_ptr, schema_name, table, table_fields)) {
+		LogError("Error: fail to delete column in" << table.table_name() << " in table.table_name() in " << schema_name);
+		LogError(conn_ptr->GetErrorMsg());
+		return -1;
+	}
+
+	// 不允许缺字段
+	std::set<std::string> old_fields_set;
+	for (auto iter = table_fields.begin(); iter != table_fields.end(); ++iter) {
+		old_fields_set.insert(*iter);
+		bool flag = false;
+		for (auto iter2 = table.fields().begin(); iter2 != table.fields().end(); ++iter2) {
+			if (iter2->name() == *iter) {
+				flag = true;
+				break;
+			}
+		}
+		if (!flag) {
+			LogError("Error: " << *iter << " column is not exist in table " << table.table_name() << " in database " << schema_name);
+			return -1;
+		}
+	}
+
+	std::map<std::string, const dbtool::TableField*> insert_field_map;
+	std::vector<std::string> insert_fields;
+	for (auto iter = table.fields().begin(); iter != table.fields().end(); ++iter) {
+		insert_fields.push_back(iter->name());
+		insert_field_map[iter->name()] = &(*iter);
+	}
+	// 排序
+	std::vector<std::string> new_table_fields;
+	int idx1 = 0, idx2 = 0;
+	while (idx1 != table_fields.size() && idx2 != insert_fields.size()) {
+		new_table_fields.push_back(insert_fields[idx2]);
+		if (insert_fields[idx2] == table_fields[idx1]) {
+			++idx1;
+			++idx2;
+		}
+		else {
+			++idx2;
+		}
+	}
+	while (idx1 != table_fields.size()) {
+		new_table_fields.push_back(table_fields[idx1]);
+		++idx1;
+	}
+	while (idx2 != insert_fields.size()) {
+		new_table_fields.push_back(insert_fields[idx2]);
+		++idx2;
+	}
+
+	// 判断是否有重,有重则说明排序不对
+	for (size_t i = 0; i < new_table_fields.size(); ++i) {
+		for (size_t j = i + 1; j < new_table_fields.size(); ++j) {
+			if (new_table_fields[i] == new_table_fields[j]) {
+				LogError("Error: " << new_table_fields[i] << " column  is out of order in table " << table.table_name() << " in database " << schema_name);
+				return false;
+			}
+		}
+	}
+
+	// 按位置添加列
+	for (size_t i = 0; i < new_table_fields.size(); ++i) {
+		// 已有列不修改
+		std::string& field = new_table_fields[i];
+		if (old_fields_set.find(field) != old_fields_set.end()) {
+			continue;
+		}
+		std::string sql = "ALTER TABLE " + table.table_name();
+		sql += " ADD COLUMN `" + field + "`";
+		sql += " " + GetFieldTypeDesc(*insert_field_map[field]);
+		if (i == 0) {
+			sql += " FIRST";
+		}
+		else {
+			sql += " AFTER " + std::string("`") + new_table_fields[i - 1] + std::string("`");
+		}
+		sql += ";";
+		int ret = conn_ptr->Execute(sql.c_str(), sql.length());
+		if (ret != 0) {
+			LogError("Error: fail to add coloumn " << field << " in table " << table.table_name() << " in database " << schema_name);
+			LogError(conn_ptr->GetErrorMsg());
+			return -1;
+		}
+		else {
+			LogInfo("add coloumn " << field << " successfully in table " << table.table_name() << " in database " << schema_name);
 		}
 	}
 	return 0;

@@ -30,6 +30,8 @@ protected:
 
 	int DeleteTableColumn(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table);
 
+	int AddTableColumn(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table);
+
 protected:
 	std::string _GetFieldTypeDesc(const dbtool::TableField& field, dbtool::MysqlFieldType type);
 };
