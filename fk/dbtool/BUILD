@@ -3,6 +3,7 @@ cc_binary(
     srcs = [
        'main.cpp',
 	   'dbtool.pb.cc',
+	   'mysql_executor.cpp',
     ],
     deps = [
 		'//google:protobuf',
