@@ -161,7 +161,7 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 	return true;
 }
 
-int main(_In_ int argc, _In_reads_(argc) _Pre_z_ char** argv, _In_z_ char** envp) {
+int main(int argc, char* argv[]) {
 	do {
 		SetLogFileName("dbtool", false);
 		if (argc < 2) {
