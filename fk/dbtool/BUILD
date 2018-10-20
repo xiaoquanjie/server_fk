@@ -9,6 +9,6 @@ cc_binary(
 		'//google:protobuf',
         '//commonlib:common',
 		'//slience:slience',
-		'//mysqlclient:mysqlclient'
+		'//mariadb-connector-c-master:mysqlclient'
     ],
 )
