@@ -60,3 +60,18 @@ INFO  20181020 18:37:17.610 10436 e:\git2\server_fk\fk\dbtool\main.cpp:224(main)
 INFO  20181020 18:37:57.678 18224 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
 INFO  20181020 18:37:57.706 18224 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
 INFO  20181020 18:37:57.713 18224 e:\git2\server_fk\fk\dbtool\main.cpp:224(main)|dbtool finish successfully
+INFO  20181020 19:02:11.819 14640 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181020 19:02:25.407 14488 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181020 19:02:25.459 14488 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181020 19:02:57.220 17452 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181020 19:02:57.247 17452 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+ERROR 20181020 19:02:57.255 17452 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:503(MysqlExecutor::ChangeKey)|Error: fail to drop index PRIMARY in table mystery_box in database mytest
+ERROR 20181020 19:02:57.255 17452 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:504(MysqlExecutor::ChangeKey)|You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'PRIMARY ON mystery_box' at line 1
+INFO  20181020 19:02:57.255 17452 e:\git2\server_fk\fk\dbtool\main.cpp:227(main)|Error: dbtool fail to finish
+INFO  20181020 19:03:25.987 18084 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181020 19:03:26.013 18084 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+ERROR 20181020 19:03:26.021 18084 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:503(MysqlExecutor::ChangeKey)|Error: fail to drop index PRIMARY in table mystery_box in database mytest
+ERROR 20181020 19:03:26.021 18084 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:504(MysqlExecutor::ChangeKey)|Incorrect table definition; there can be only one auto column and it must be defined as a key
+INFO  20181020 19:03:26.021 18084 e:\git2\server_fk\fk\dbtool\main.cpp:227(main)|Error: dbtool fail to finish
+INFO  20181020 19:03:32.579 18332 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181020 19:03:32.630 18332 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205

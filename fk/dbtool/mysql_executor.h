@@ -32,6 +32,11 @@ protected:
 
 	int AddTableColumn(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table);
 
+	int GetTableKeys(SqlConnectionPtr conn_ptr, const std::string& schema_name,
+		const dbtool::MysqlTable& table, std::set<std::string>& table_keys);
+
+	int ChangeKey(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table);
+
 protected:
 	std::string _GetFieldTypeDesc(const dbtool::TableField& field, dbtool::MysqlFieldType type);
 };

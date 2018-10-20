@@ -164,6 +164,11 @@ int MysqlExecutor::ChangeTable(SqlConnectionPtr conn_ptr, const std::string& sch
 			break;
 		}
 
+		// ²Ù×÷Ë÷Òý
+		if (0 != ChangeKey(conn_ptr, schema_name, table)) {
+			break;
+		}
+
 		return 0;
 	} while (false);
 	return -1;
@@ -209,7 +214,7 @@ std::string MysqlExecutor::GetFieldKeyDesc(const dbtool::TableKey& key) {
 int MysqlExecutor::RenameTableColumn(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table) {
 	std::vector<std::string> table_fields;
 	if (0 != GetTableFields(conn_ptr, schema_name, table, table_fields)) {
-		LogError("Error: fail to delete column in" << table.table_name() << " in table.table_name() in " << schema_name);
+		LogError("Error: fail to get table fields in" << table.table_name() << " in table.table_name() in " << schema_name);
 		LogError(conn_ptr->GetErrorMsg());
 		return -1;
 	}
@@ -261,7 +266,7 @@ int MysqlExecutor::RenameTableColumn(SqlConnectionPtr conn_ptr, const std::strin
 int MysqlExecutor::ModifyTableColumn(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table) {
 	std::vector<std::string> table_fields;
 	if (0 != GetTableFields(conn_ptr, schema_name, table, table_fields)) {
-		LogError("Error: fail to delete column in" << table.table_name() << " in table.table_name() in " << schema_name);
+		LogError("Error: fail to get table fields in" << table.table_name() << " in table.table_name() in " << schema_name);
 		LogError(conn_ptr->GetErrorMsg());
 		return -1;
 	}
@@ -312,7 +317,7 @@ int MysqlExecutor::ModifyTableColumn(SqlConnectionPtr conn_ptr, const std::strin
 int MysqlExecutor::DeleteTableColumn(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table) {
 	std::vector<std::string> table_fields;
 	if (0 != GetTableFields(conn_ptr, schema_name, table, table_fields)) {
-		LogError("Error: fail to delete column in" << table.table_name() << " in table.table_name() in " << schema_name);
+		LogError("Error: fail to get table fields in" << table.table_name() << " in table.table_name() in " << schema_name);
 		LogError(conn_ptr->GetErrorMsg());
 		return -1;
 	}
@@ -374,7 +379,7 @@ int MysqlExecutor::DeleteTableColumn(SqlConnectionPtr conn_ptr, const std::strin
 int MysqlExecutor::AddTableColumn(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table) {
 	std::vector<std::string> table_fields;
 	if (0 != GetTableFields(conn_ptr, schema_name, table, table_fields)) {
-		LogError("Error: fail to delete column in" << table.table_name() << " in table.table_name() in " << schema_name);
+		LogError("Error: fail to get table fields in" << table.table_name() << " in table.table_name() in " << schema_name);
 		LogError(conn_ptr->GetErrorMsg());
 		return -1;
 	}
@@ -461,6 +466,46 @@ int MysqlExecutor::AddTableColumn(SqlConnectionPtr conn_ptr, const std::string& 
 			LogInfo("add coloumn " << field << " successfully in table " << table.table_name() << " in database " << schema_name);
 		}
 	}
+	return 0;
+}
+
+
+int MysqlExecutor::GetTableKeys(SqlConnectionPtr conn_ptr, const std::string& schema_name,
+	const dbtool::MysqlTable& table, std::set<std::string>& table_keys) {
+	std::string sql = "SELECT DISTINCT INDEX_NAME FROM information_schema.statistics where table_schema='";
+	sql += schema_name;
+	sql += "' and table_name='";
+	sql += table.table_name();
+	sql += "';";
+	int ret = conn_ptr->Query(sql.c_str(), sql.length(), 1, [&table_keys](int, MYSQL_ROW row) {
+		table_keys.insert(row[0]);
+	});
+	return ret;
+}
+
+int MysqlExecutor::ChangeKey(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table) {
+	std::set<std::string> table_keys;
+	if (0 != GetTableKeys(conn_ptr, schema_name, table, table_keys)) {
+		LogError("Error: fail to table keys in table " << table.table_name() << " in database " << schema_name);
+		return -1;
+	}
+
+	// add
+	for (auto key : table.keys()) {
+
+	}
+
+	for (auto name : table_keys) {
+		std::string drop_key_sql;
+		drop_key_sql = "DROP INDEX `" + name + "` ON " + table.table_name();
+		int ret = conn_ptr->Execute(drop_key_sql.c_str(), drop_key_sql.length());
+		if (ret != 0) {
+			LogError("Error: fail to drop index " << name << " in table " << table.table_name() << " in database " << schema_name);
+			LogError(conn_ptr->GetErrorMsg());
+			return -1;
+		}
+	}
+
 	return 0;
 }
 
