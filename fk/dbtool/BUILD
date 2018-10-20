@@ -6,6 +6,7 @@ cc_binary(
     deps = [
 		'//google:protobuf',
         '//commonlib:common',
-		'//slience:slience'
+		'//slience:slience',
+		'//mysqlclient:mysqlclient'
     ],
 )

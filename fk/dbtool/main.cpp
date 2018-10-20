@@ -197,6 +197,13 @@ int main(_In_ int argc, _In_reads_(argc) _Pre_z_ char** argv, _In_z_ char** envp
 			}
 		}
 
+		// Ö´ÐÐ
+		MysqlExecutor executor;
+		for (auto iter = SchemaCfgVec.begin(); iter != SchemaCfgVec.end(); ++iter) {
+			auto& cfg = iter->Data();
+			executor.Execute(cfg);
+		}
+
 	} while (false);
 
 	Sleep(1000);

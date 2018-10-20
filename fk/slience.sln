@@ -53,6 +53,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "excel", "excel\excel.vcxproj", "{EFD454C9-B52A-445A-8A68-DA7C07375805}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dbtool", "dbtool\dbtool.vcxproj", "{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9FC43226-167E-4CF2-8E53-983045281446} = {9FC43226-167E-4CF2-8E53-983045281446}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

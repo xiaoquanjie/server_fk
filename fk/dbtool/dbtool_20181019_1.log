@@ -16,3 +16,47 @@ INFO  20181019 16:35:38.963 19116 e:\git2\server_fk\fk\commonlib\svr_base\server
 ERROR 20181019 16:36:07.228 19284 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:20(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|google::protobuf::TextFormat::Parse failed, file_path=dbtool_example.conf
 ERROR 20181019 16:36:07.228 19284 e:\git2\server_fk\fk\dbtool\main.cpp:21(main)|parse file: dbtool_example.conf fail
 INFO  20181019 16:37:33.522 15068 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181019 18:07:47.768 17400 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:07:47.769 17400 e:\git2\server_fk\fk\dbtool\main.cpp:20(CheckMysqlSyntax)|duplicate field: name_int in table: mystery_box in schema: mytest
+ERROR 20181019 18:07:47.769 17400 e:\git2\server_fk\fk\dbtool\main.cpp:178(main)|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO  20181019 18:10:21.384 13664 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181019 18:10:21.384 13664 e:\git2\server_fk\fk\dbtool\main.cpp:178(main)|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO  20181019 18:10:53.842 14488 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181019 18:22:18.022 12656 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:22:18.022 12656 e:\git2\server_fk\fk\dbtool\main.cpp:137(CheckMysqlSyntax)|auto_incr has to be key in field: name_tiny_int in table: mystery_box in schema: mytest
+INFO  20181019 18:22:18.022 12656 e:\git2\server_fk\fk\dbtool\main.cpp:178(main)|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO  20181019 18:24:13.624 19592 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:24:13.625 19592 e:\git2\server_fk\fk\dbtool\main.cpp:137(CheckMysqlSyntax)|auto_incr column has to be key in field: name_tiny_int in table: mystery_box in schema: mytest
+INFO  20181019 18:24:13.625 19592 e:\git2\server_fk\fk\dbtool\main.cpp:178(main)|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO  20181019 18:25:03.422 18140 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:25:03.422 18140 e:\git2\server_fk\fk\dbtool\main.cpp:20(CheckMysqlSyntax)|duplicate field: name_int in table: mystery_box in schema: mytest
+INFO  20181019 18:25:03.422 18140 e:\git2\server_fk\fk\dbtool\main.cpp:178(main)|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO  20181019 18:25:44.956 14756 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:25:44.956 14756 e:\git2\server_fk\fk\dbtool\main.cpp:61(CheckMysqlSyntax)|auto_incr has to be with integer type in field: name_varchar in table: mystery_box in schema: mytest
+INFO  20181019 18:25:44.956 14756 e:\git2\server_fk\fk\dbtool\main.cpp:178(main)|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO  20181019 18:26:49.225 13664 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:26:49.225 13664 e:\git2\server_fk\fk\dbtool\main.cpp:61(CheckMysqlSyntax)|auto_incr column must be integer type in field: name_varchar in table: mystery_box in schema: mytest
+INFO  20181019 18:26:49.225 13664 e:\git2\server_fk\fk\dbtool\main.cpp:178(main)|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO  20181019 18:27:17.255 8884 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:27:17.255 8884 e:\git2\server_fk\fk\dbtool\main.cpp:108(CheckMysqlSyntax)|key_field: name_varchar2 is illegal in key: unique in table: mystery_box in schema: mytest
+INFO  20181019 18:27:17.255 8884 e:\git2\server_fk\fk\dbtool\main.cpp:178(main)|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO  20181019 18:27:58.651 14712 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:27:58.651 14712 e:\git2\server_fk\fk\dbtool\main.cpp:91(CheckMysqlSyntax)|can't have over one primary key in table: mystery_box in schema: mytest
+INFO  20181019 18:27:58.651 14712 e:\git2\server_fk\fk\dbtool\main.cpp:178(main)|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO  20181019 18:28:24.954 16728 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181019 18:28:47.264 18080 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:28:47.264 18080 e:\git2\server_fk\fk\dbtool\main.cpp:114(CheckMysqlSyntax)|duplicate key_field: name_varchar in key: unique in table: mystery_box in schema: mytest
+INFO  20181019 18:28:47.264 18080 e:\git2\server_fk\fk\dbtool\main.cpp:178(main)|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+INFO  20181019 18:29:16.774 18028 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:29:16.774 18028 e:\git2\server_fk\fk\dbtool\main.cpp:108(CheckMysqlSyntax)|key_field: name_varchar2 is illegal in key: unique in table: mystery_box in schema: mytest
+INFO  20181019 18:30:34.330 20264 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181019 18:30:54.801 16196 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:30:54.801 16196 e:\git2\server_fk\fk\dbtool\main.cpp:40(CheckMysqlSyntax)|add_col_after¡¢rename_from¡¢modify_type must be exclusive in field: name_timestamp in table: mystery_box in schema: mytest
+INFO  20181019 18:32:02.789 20028 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181019 18:36:44.611 18204 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181019 18:37:13.758 14952 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:37:13.759 14952 e:\git2\server_fk\fk\dbtool\main.cpp:154(CheckMysqlSyntax)|add_col_after: id is illegal in field: name_timestamp in table: mystery_box in schema: mytest
+INFO  20181019 18:37:37.568 12068 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:37:37.568 12068 e:\git2\server_fk\fk\dbtool\main.cpp:154(CheckMysqlSyntax)|add_col_after: id column is illegal in field: name_timestamp in table: mystery_box in schema: mytest
+INFO  20181019 18:38:15.309 17368 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181019 18:38:15.310 17368 e:\git2\server_fk\fk\dbtool\main.cpp:149(CheckMysqlSyntax)|field name conflict with add_col_after in field: name_timestamp in table: mystery_box in schema: mytest
