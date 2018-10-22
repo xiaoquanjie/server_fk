@@ -216,7 +216,42 @@ public:
 		}
 		return ret;
 	}
+	
+	int Autocommit(bool open_or_close) {
+		int ret = mysql_autocommit(&_st_mysql, open_or_close);
+		if (ret != 0) {
+			unsigned int code = mysql_errno(&_st_mysql);
+			if (CR_SERVER_GONE_ERROR == code
+				|| CR_SERVER_LOST == code) {
+				if (mariadb_reconnect(&_st_mysql)) {
+					ret = mysql_autocommit(&_st_mysql, open_or_close);
+				}
+				else {
+					_set_errno(CR_SERVER_LOST);
+					_set_err_msg("reconnect fail");
+					return -1;
+				}
+			}
+		}
+		if (0 != ret) {
+			_set_err_msg();
+			_set_errno();
+		}
+		return ret;
+	}
 
+	int StartTransaction() {
+		std::string sql = "START TRANSACTION;";
+		return Execute(sql.c_str(), sql.length());
+	}
+
+	int Rollback() {
+		return mysql_rollback(&_st_mysql);
+	}
+
+	int Commit() {
+		return mysql_commit(&_st_mysql);
+	}
 protected:
 	bool _UseDb(const char* new_db) {
 		int ret = mysql_select_db(&_st_mysql, new_db);
