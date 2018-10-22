@@ -1,4 +1,3 @@
-#include <windows.h>
 #include "dbtool/mysql_executor.h"
 #include "slience/base/logger.hpp"
 #include "mariadb-connector-c-master/include/mysql.h"
