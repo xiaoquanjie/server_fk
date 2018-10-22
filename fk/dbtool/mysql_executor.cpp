@@ -454,7 +454,7 @@ int MysqlExecutor::AddTableColumn(SqlConnectionPtr conn_ptr, const std::string& 
 	}
 	// ≈≈–Ú
 	std::vector<std::string> new_table_fields;
-	int idx1 = 0, idx2 = 0;
+	size_t idx1 = 0, idx2 = 0;
 	while (idx1 != table_fields.size() && idx2 != insert_fields.size()) {
 		new_table_fields.push_back(insert_fields[idx2]);
 		if (insert_fields[idx2] == table_fields[idx1]) {
