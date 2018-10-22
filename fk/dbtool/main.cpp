@@ -219,6 +219,10 @@ int main(int argc, char* argv[]) {
 			}
 		}
 
+		if (!flag) {
+			break;
+		}
+
 		// Ö´ÐÐ
 		MysqlExecutor executor;
 		for (auto iter = SchemaCfgVec.begin(); iter != SchemaCfgVec.end(); ++iter) {

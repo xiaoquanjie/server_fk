@@ -4,17 +4,21 @@
 
 class MysqlExecutor {
 public:
-	int Execute(const dbtool::MysqlSchemaConf& cfg);
+	int Execute(dbtool::MysqlSchemaConf& cfg);
 
 protected:
 	int CreateSchema(SqlConnectionPtr conn_ptr, const dbtool::MysqlSchema& schema);
 
-	int CreateTable(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table);
+	int CreateTable(SqlConnectionPtr conn_ptr, const std::string& schema_name, dbtool::MysqlTable& table);
 
 	int GetTableFields(SqlConnectionPtr conn_ptr, const std::string& schema_name,
 		const dbtool::MysqlTable& table, std::vector<std::string>& table_fields);
 
 	int CreateNewTable(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table);
+
+	int CopyTable(SqlConnectionPtr conn_ptr, const std::string& schema_name, const std::string& newname, const std::string& oldname);
+
+	int DropTable(SqlConnectionPtr conn_ptr, const std::string& schema_name, const std::string& name);
 
 	int ChangeTable(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table);
 

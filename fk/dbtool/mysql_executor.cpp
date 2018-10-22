@@ -3,9 +3,9 @@
 #include "slience/base/logger.hpp"
 #include "mariadb-connector-c-master/include/mysql.h"
 
-int MysqlExecutor::Execute(const dbtool::MysqlSchemaConf& cfg) {
+int MysqlExecutor::Execute(dbtool::MysqlSchemaConf& cfg) {
 	for (int idx_schema = 0; idx_schema < cfg.mysql_schemas_size(); ++idx_schema) {
-		auto& schema = cfg.mysql_schemas(idx_schema);
+		auto& schema = *(cfg.mutable_mysql_schemas(idx_schema));
 
 		// connection
 		SqlConnectionPtr sql_conn = MysqlPool::GetConnection(schema.mysql_ip().c_str(), schema.mysql_user().c_str(),
@@ -29,14 +29,13 @@ int MysqlExecutor::Execute(const dbtool::MysqlSchemaConf& cfg) {
 		}
 
 		// create table
-		for (auto iter = schema.tables().begin(); iter != schema.tables().end(); ++iter) {
-			auto& table = *iter;
+		for (int idx_table = 0; idx_table < schema.tables_size(); ++idx_table) {
+			auto& table = *(schema.mutable_tables(idx_table));
 			int ret = CreateTable(sql_conn, schema.schema_name(), table);
 			if (ret != 0) {
 				return -1;
 			}
 		}
-
 	}
 	return 0;
 }
@@ -56,7 +55,7 @@ int MysqlExecutor::CreateSchema(SqlConnectionPtr conn_ptr, const dbtool::MysqlSc
 	return ret;
 }
 
-int MysqlExecutor::CreateTable(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table) {
+int MysqlExecutor::CreateTable(SqlConnectionPtr conn_ptr, const std::string& schema_name, dbtool::MysqlTable& table) {
 	do {
 		std::vector<std::string> old_table_fields;
 		if (0 != GetTableFields(conn_ptr, schema_name, table, old_table_fields)) {
@@ -68,6 +67,19 @@ int MysqlExecutor::CreateTable(SqlConnectionPtr conn_ptr, const std::string& sch
 			}
 		}
 		else {
+			// 复制一张新表
+			std::string old_table_name = table.table_name();
+			std::string new_table_name = old_table_name + "_tmp";
+			if (0 != CopyTable(conn_ptr, schema_name, new_table_name, old_table_name)) {
+				break;
+			}
+			table.set_table_name(new_table_name);
+			int ret = ChangeTable(conn_ptr, schema_name, table);
+			DropTable(conn_ptr, schema_name, new_table_name);
+			if (ret != 0) {
+				break;
+			}
+			table.set_table_name(old_table_name);
 			if (0 != ChangeTable(conn_ptr, schema_name, table)) {
 				break;
 			}
@@ -148,6 +160,27 @@ int MysqlExecutor::CreateNewTable(SqlConnectionPtr conn_ptr, const std::string& 
 	}
 
 	return ret;
+}
+
+int MysqlExecutor::CopyTable(SqlConnectionPtr conn_ptr, const std::string& schema_name, const std::string& newname, const std::string& oldname) {
+	DropTable(conn_ptr, schema_name, newname);
+	std::string sql = "CREATE TABLE " + newname;
+	sql += " like " + oldname;
+	int ret = conn_ptr->Execute(sql.c_str(), sql.length());
+	if (ret != 0) {
+		LogError("Error: fail to copy table " << oldname << " in database " << schema_name);
+		LogError(conn_ptr->GetErrorMsg());
+		return -1;
+	}
+	else {
+		return 0;
+	}
+}
+
+int MysqlExecutor::DropTable(SqlConnectionPtr conn_ptr, const std::string& schema_name, const std::string& name) {
+	std::string sql = "DROP TABLE " + name;
+	conn_ptr->Execute(sql.c_str(), sql.length());
+	return 0;
 }
 
 int MysqlExecutor::ChangeTable(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table) {
