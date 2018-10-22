@@ -265,20 +265,20 @@ class TableField : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_add_col_after();
   void set_allocated_add_col_after(::std::string* add_col_after);
 
-  // optional string rename_to = 7;
-  bool has_rename_to() const;
-  void clear_rename_to();
-  static const int kRenameToFieldNumber = 7;
-  const ::std::string& rename_to() const;
-  void set_rename_to(const ::std::string& value);
+  // optional string rename_from = 7;
+  bool has_rename_from() const;
+  void clear_rename_from();
+  static const int kRenameFromFieldNumber = 7;
+  const ::std::string& rename_from() const;
+  void set_rename_from(const ::std::string& value);
   #if LANG_CXX11
-  void set_rename_to(::std::string&& value);
+  void set_rename_from(::std::string&& value);
   #endif
-  void set_rename_to(const char* value);
-  void set_rename_to(const char* value, size_t size);
-  ::std::string* mutable_rename_to();
-  ::std::string* release_rename_to();
-  void set_allocated_rename_to(::std::string* rename_to);
+  void set_rename_from(const char* value);
+  void set_rename_from(const char* value, size_t size);
+  ::std::string* mutable_rename_from();
+  ::std::string* release_rename_from();
+  void set_allocated_rename_from(::std::string* rename_from);
 
   // optional bool not_null = 3;
   bool has_not_null() const;
@@ -336,8 +336,8 @@ class TableField : public ::google::protobuf::Message /* @@protoc_insertion_poin
   void clear_has_default_();
   void set_has_add_col_after();
   void clear_has_add_col_after();
-  void set_has_rename_to();
-  void clear_has_rename_to();
+  void set_has_rename_from();
+  void clear_has_rename_from();
   void set_has_modify_type();
   void clear_has_modify_type();
   void set_has_varchar_len();
@@ -351,7 +351,7 @@ class TableField : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::internal::ArenaStringPtr default__;
   ::google::protobuf::internal::ArenaStringPtr add_col_after_;
-  ::google::protobuf::internal::ArenaStringPtr rename_to_;
+  ::google::protobuf::internal::ArenaStringPtr rename_from_;
   bool not_null_;
   bool auto_incr_;
   bool is_delete_;
@@ -1237,67 +1237,67 @@ inline void TableField::set_allocated_add_col_after(::std::string* add_col_after
   // @@protoc_insertion_point(field_set_allocated:dbtool.TableField.add_col_after)
 }
 
-// optional string rename_to = 7;
-inline bool TableField::has_rename_to() const {
+// optional string rename_from = 7;
+inline bool TableField::has_rename_from() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void TableField::set_has_rename_to() {
+inline void TableField::set_has_rename_from() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void TableField::clear_has_rename_to() {
+inline void TableField::clear_has_rename_from() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void TableField::clear_rename_to() {
-  rename_to_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_rename_to();
+inline void TableField::clear_rename_from() {
+  rename_from_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_rename_from();
 }
-inline const ::std::string& TableField::rename_to() const {
-  // @@protoc_insertion_point(field_get:dbtool.TableField.rename_to)
-  return rename_to_.GetNoArena();
+inline const ::std::string& TableField::rename_from() const {
+  // @@protoc_insertion_point(field_get:dbtool.TableField.rename_from)
+  return rename_from_.GetNoArena();
 }
-inline void TableField::set_rename_to(const ::std::string& value) {
-  set_has_rename_to();
-  rename_to_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:dbtool.TableField.rename_to)
+inline void TableField::set_rename_from(const ::std::string& value) {
+  set_has_rename_from();
+  rename_from_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:dbtool.TableField.rename_from)
 }
 #if LANG_CXX11
-inline void TableField::set_rename_to(::std::string&& value) {
-  set_has_rename_to();
-  rename_to_.SetNoArena(
+inline void TableField::set_rename_from(::std::string&& value) {
+  set_has_rename_from();
+  rename_from_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:dbtool.TableField.rename_to)
+  // @@protoc_insertion_point(field_set_rvalue:dbtool.TableField.rename_from)
 }
 #endif
-inline void TableField::set_rename_to(const char* value) {
+inline void TableField::set_rename_from(const char* value) {
   GOOGLE_DCHECK(value != NULL);
-  set_has_rename_to();
-  rename_to_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:dbtool.TableField.rename_to)
+  set_has_rename_from();
+  rename_from_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:dbtool.TableField.rename_from)
 }
-inline void TableField::set_rename_to(const char* value, size_t size) {
-  set_has_rename_to();
-  rename_to_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+inline void TableField::set_rename_from(const char* value, size_t size) {
+  set_has_rename_from();
+  rename_from_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:dbtool.TableField.rename_to)
+  // @@protoc_insertion_point(field_set_pointer:dbtool.TableField.rename_from)
 }
-inline ::std::string* TableField::mutable_rename_to() {
-  set_has_rename_to();
-  // @@protoc_insertion_point(field_mutable:dbtool.TableField.rename_to)
-  return rename_to_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline ::std::string* TableField::mutable_rename_from() {
+  set_has_rename_from();
+  // @@protoc_insertion_point(field_mutable:dbtool.TableField.rename_from)
+  return rename_from_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* TableField::release_rename_to() {
-  // @@protoc_insertion_point(field_release:dbtool.TableField.rename_to)
-  clear_has_rename_to();
-  return rename_to_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline ::std::string* TableField::release_rename_from() {
+  // @@protoc_insertion_point(field_release:dbtool.TableField.rename_from)
+  clear_has_rename_from();
+  return rename_from_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void TableField::set_allocated_rename_to(::std::string* rename_to) {
-  if (rename_to != NULL) {
-    set_has_rename_to();
+inline void TableField::set_allocated_rename_from(::std::string* rename_from) {
+  if (rename_from != NULL) {
+    set_has_rename_from();
   } else {
-    clear_has_rename_to();
+    clear_has_rename_from();
   }
-  rename_to_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), rename_to);
-  // @@protoc_insertion_point(field_set_allocated:dbtool.TableField.rename_to)
+  rename_from_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), rename_from);
+  // @@protoc_insertion_point(field_set_allocated:dbtool.TableField.rename_from)
 }
 
 // optional .dbtool.MysqlFieldType modify_type = 8;

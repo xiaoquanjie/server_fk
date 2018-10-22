@@ -1,0 +1,92 @@
+INFO  20181022 09:59:05.473 14680 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 09:59:05.505 14680 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+ERROR 20181022 09:59:05.509 14680 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:146(MysqlExecutor::CreateNewTable)|Error: fail to create table mystery_box in database mytest
+ERROR 20181022 09:59:05.509 14680 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:147(MysqlExecutor::CreateNewTable)|You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ' `name_int` INT NOT NULL AUTO_INCREMENT`name_tiny_int` TINYINT`name_uint` INT UN' at line 1
+INFO  20181022 09:59:05.509 14680 e:\git2\server_fk\fk\dbtool\main.cpp:235(main)|Error: dbtool fail to finish
+INFO  20181022 10:01:22.083 17668 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:01:22.108 17668 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:01:22.339 17668 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:143(MysqlExecutor::CreateNewTable)|create table mystery_box in database mytest success
+INFO  20181022 10:01:22.340 17668 e:\git2\server_fk\fk\dbtool\main.cpp:232(main)|dbtool finish successfully
+ERROR 20181022 10:02:15.190 13052 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:20(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|google::protobuf::TextFormat::Parse failed, file_path=dbtool_example.conf
+ERROR 20181022 10:02:15.190 13052 e:\git2\server_fk\fk\dbtool\main.cpp:200(main)|Error: parse file: dbtool_example.conf fail
+INFO  20181022 10:02:52.700 14564 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:02:52.727 14564 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:02:52.769 14564 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:267(MysqlExecutor::RenameTableColumn)|rename from name_time to name_time successfully in table mystery_box in database mytest
+ERROR 20181022 10:02:52.774 14564 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:406(MysqlExecutor::AddTableColumn)|Error: name_time column is not exist in table mystery_box in database mytest
+INFO  20181022 10:02:52.774 14564 e:\git2\server_fk\fk\dbtool\main.cpp:235(main)|Error: dbtool fail to finish
+INFO  20181022 10:06:10.485 15192 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:06:10.512 15192 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:06:10.552 15192 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:267(MysqlExecutor::RenameTableColumn)|rename from name_time to name_time successfully in table mystery_box in database mytest
+ERROR 20181022 10:06:10.556 15192 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:409(MysqlExecutor::AddTableColumn)|Error: name_time column is not exist in table mystery_box in database mytest
+INFO  20181022 10:06:10.556 15192 e:\git2\server_fk\fk\dbtool\main.cpp:235(main)|Error: dbtool fail to finish
+INFO  20181022 10:08:37.599 9836 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:08:37.625 9836 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:08:37.674 9836 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:267(MysqlExecutor::RenameTableColumn)|rename from name_time to name_time successfully in table mystery_box in database mytest
+ERROR 20181022 10:08:37.677 9836 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:409(MysqlExecutor::AddTableColumn)|Error: name_time column is not exist in table mystery_box in database mytest
+INFO  20181022 10:08:37.677 9836 e:\git2\server_fk\fk\dbtool\main.cpp:235(main)|Error: dbtool fail to finish
+INFO  20181022 10:19:33.433 8724 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:19:33.459 8724 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:19:33.500 8724 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:267(MysqlExecutor::RenameTableColumn)|rename from name_time to name_time successfully in table mystery_box in database mytest
+ERROR 20181022 10:19:33.503 8724 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:409(MysqlExecutor::AddTableColumn)|Error: name_time column is not exist in table mystery_box in database mytest
+INFO  20181022 10:19:33.503 8724 e:\git2\server_fk\fk\dbtool\main.cpp:235(main)|Error: dbtool fail to finish
+INFO  20181022 10:24:25.445 11924 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:24:25.508 11924 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:28:28.373 15720 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:28:28.400 15720 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:28:28.665 15720 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:267(MysqlExecutor::RenameTableColumn)|rename from name_time to name_time2 successfully in table mystery_box in database mytest
+ERROR 20181022 10:28:28.669 15720 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:409(MysqlExecutor::AddTableColumn)|Error: name_timestamp column is not exist in table mystery_box in database mytest
+INFO  20181022 10:28:28.669 15720 e:\git2\server_fk\fk\dbtool\main.cpp:235(main)|Error: dbtool fail to finish
+INFO  20181022 10:31:38.851 17800 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:31:38.898 17800 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:31:39.131 17800 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:375(MysqlExecutor::DeleteTableColumn)|delete column name_timestamp successfully in mystery_box in mytest
+ERROR 20181022 10:31:39.160 17800 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:516(MysqlExecutor::ChangeKey)|Error: fail to drop index PRIMARY in table mystery_box in database mytest
+ERROR 20181022 10:31:39.160 17800 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:517(MysqlExecutor::ChangeKey)|Incorrect table definition; there can be only one auto column and it must be defined as a key
+INFO  20181022 10:31:39.160 17800 e:\git2\server_fk\fk\dbtool\main.cpp:235(main)|Error: dbtool fail to finish
+INFO  20181022 10:32:30.120 8360 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:32:30.187 8360 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:39:42.660 14180 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:40:04.699 16540 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:41:27.127 5824 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:41:35.150 13588 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:52:09.942 17800 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:52:09.972 17800 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:52:10.155 17800 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:143(MysqlExecutor::CreateNewTable)|create table mystery_box in database mytest success
+INFO  20181022 10:52:10.155 17800 e:\git2\server_fk\fk\dbtool\main.cpp:233(main)|dbtool finish successfully
+ERROR 20181022 10:52:45.846 17736 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:20(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|google::protobuf::TextFormat::Parse failed, file_path=dbtool_example.conf
+ERROR 20181022 10:52:45.847 17736 e:\git2\server_fk\fk\dbtool\main.cpp:201(main)|Error: parse file: dbtool_example.conf fail
+INFO  20181022 10:53:12.590 8724 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:53:12.618 8724 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:53:12.805 8724 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:143(MysqlExecutor::CreateNewTable)|create table mystery_box in database mytest success
+INFO  20181022 10:53:12.805 8724 e:\git2\server_fk\fk\dbtool\main.cpp:233(main)|dbtool finish successfully
+INFO  20181022 10:53:32.841 11872 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:53:32.867 11872 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:53:33.074 11872 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:143(MysqlExecutor::CreateNewTable)|create table mystery_box in database mytest success
+INFO  20181022 10:53:33.074 11872 e:\git2\server_fk\fk\dbtool\main.cpp:233(main)|dbtool finish successfully
+INFO  20181022 10:54:21.495 12844 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181022 10:54:21.496 12844 e:\git2\server_fk\fk\dbtool\main.cpp:47(CheckMysqlSyntax)|Error: rename_from is equal to name in field: name_time in table: mystery_box in schema: mytest
+INFO  20181022 10:54:21.523 12844 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:54:21.739 12844 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:375(MysqlExecutor::DeleteTableColumn)|delete column name_timestamp successfully in mystery_box in mytest
+INFO  20181022 10:54:21.775 12844 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:267(MysqlExecutor::RenameTableColumn)|rename from name_time to name_time successfully in table mystery_box in database mytest
+ERROR 20181022 10:54:21.780 12844 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:537(MysqlExecutor::ChangeKey)|Error: fail to drop index PRIMARY in table mystery_box in database mytest
+ERROR 20181022 10:54:21.780 12844 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:538(MysqlExecutor::ChangeKey)|Incorrect table definition; there can be only one auto column and it must be defined as a key
+INFO  20181022 10:54:21.780 12844 e:\git2\server_fk\fk\dbtool\main.cpp:236(main)|Error: dbtool fail to finish
+INFO  20181022 10:54:59.163 15812 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181022 10:54:59.164 15812 e:\git2\server_fk\fk\dbtool\main.cpp:159(CheckMysqlSyntax)|Error: auto_incr column has to be key in field: name_int in table: mystery_box in schema: mytest
+INFO  20181022 10:54:59.194 15812 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:54:59.602 15812 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:267(MysqlExecutor::RenameTableColumn)|rename from name_time to name_time2 successfully in table mystery_box in database mytest
+ERROR 20181022 10:54:59.611 15812 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:537(MysqlExecutor::ChangeKey)|Error: fail to drop index PRIMARY in table mystery_box in database mytest
+ERROR 20181022 10:54:59.611 15812 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:538(MysqlExecutor::ChangeKey)|Incorrect table definition; there can be only one auto column and it must be defined as a key
+INFO  20181022 10:54:59.611 15812 e:\git2\server_fk\fk\dbtool\main.cpp:236(main)|Error: dbtool fail to finish
+INFO  20181022 10:55:43.654 13848 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181022 10:55:43.655 13848 e:\git2\server_fk\fk\dbtool\main.cpp:159(CheckMysqlSyntax)|Error: auto_incr column has to be key in field: name_int in table: mystery_box in schema: mytest
+INFO  20181022 10:55:43.708 13848 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:56:51.901 11372 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181022 10:56:51.901 11372 e:\git2\server_fk\fk\dbtool\main.cpp:159(CheckMysqlSyntax)|Error: auto_incr column has to be key in field: name_int in table: mystery_box in schema: mytest
+INFO  20181022 10:56:51.971 11372 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:59:20.679 10676 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:59:20.708 10676 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:59:20.777 10676 e:\git2\server_fk\fk\dbtool\main.cpp:233(main)|dbtool finish successfully
+INFO  20181022 10:59:41.863 14388 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 10:59:41.892 14388 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:54(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 10:59:42.063 14388 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:143(MysqlExecutor::CreateNewTable)|create table mystery_box in database mytest success
+INFO  20181022 10:59:42.063 14388 e:\git2\server_fk\fk\dbtool\main.cpp:233(main)|dbtool finish successfully

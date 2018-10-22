@@ -8,15 +8,15 @@
 
 bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 	for (int idx_schema = 0; idx_schema < cfg.Data().mysql_schemas_size(); ++idx_schema) {
-		auto& schema = cfg.Data().mysql_schemas(idx_schema);
+		auto& schema = *(cfg.Data().mutable_mysql_schemas(idx_schema));
 		for (int idx_table = 0; idx_table < schema.tables_size(); ++idx_table) {
-			auto& table = schema.tables(idx_table);
+			auto& table = *(schema.mutable_tables(idx_table));
 			std::map<std::string, const dbtool::TableField*> field_map;
 			// 收集field
 			for (int idx_field = 0; idx_field < table.fields_size(); ++idx_field) {
 				auto& field = table.fields(idx_field);
 				if (field_map.find(field.name()) != field_map.end()) {
-					LogError("duplicate field: " << field.name() << " in table: " << table.table_name()
+					LogError("Error: duplicate field: " << field.name() << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
@@ -27,7 +27,7 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 				if (field.has_add_col_after()) {
 					tmp++;
 				}
-				if (field.has_rename_to()) {
+				if (field.has_rename_from()) {
 					tmp++;
 				}
 				if (field.has_modify_type()) {
@@ -36,19 +36,27 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 
 				if (tmp >= 2) {
 					// 上以三者不能同时存在两个及以上
-					LogError("add_col_after、rename_from、modify_type must be exclusive in field: " << field.name() << " in table: " << table.table_name()
+					LogError("Error: add_col_after、rename_from、modify_type must be exclusive in field: " << field.name() << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
 
+				if (field.has_rename_from()) {
+					if (field.rename_from() == field.name()) {
+						LogError("Error: rename_from is equal to name in field: " << field.name() << " in table: " << table.table_name()
+							<< " in schema: " << schema.schema_name());
+						return false;
+					}
+				}
+
 				if (!field.has_type()) {
-					LogError("need has type in field: " << field.name() << " in table: " << table.table_name()
+					LogError("Error: need has type in field: " << field.name() << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
 				if (field.type() < dbtool::E_FieldType_TinyInt
 					|| field.type() > dbtool::E_FieldType_TimeStamp) {
-					LogError("illegal field type in field: " << field.name() << " in table: " << table.table_name()
+					LogError("Error: illegal field type in field: " << field.name() << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
@@ -63,51 +71,52 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 					case dbtool::E_FieldType_Double:
 						break;
 					default:
-						LogError("auto_incr column must be integer type in field: " << field.name() << " in table: " << table.table_name()
+						LogError("Error: auto_incr column must be integer type in field: " << field.name() << " in table: " << table.table_name()
 							<< " in schema: " << schema.schema_name());
 						return false;
 					}
 				}
 			}
 
-			std::map<std::string, const dbtool::TableKey*> key_map;
+			std::map<std::string, dbtool::TableKey*> key_map;
 			int primary_key_cnt = 0;
 			// 收集keys
 			for (int idx_key = 0; idx_key < table.keys_size(); ++idx_key) {
-				auto& key = table.keys(idx_key);
+				auto& key = *(table.mutable_keys(idx_key));
 				if (key_map.find(key.name()) != key_map.end()) {
-					LogError("duplicate key: " << key.name() << " in table: " << table.table_name()
+					LogError("Error: duplicate key: " << key.name() << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
 
 				key_map[key.name()] = &key;
 				if (!key.has_type()) {
-					LogError("need have type in key: " << key.name() << " in table: " << table.table_name()
+					LogError("Error: need have type in key: " << key.name() << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
 				if (key.type() < dbtool::E_KeyType_Primary
 					|| key.type() > dbtool::E_KeyType_Unique) {
-					LogError("illegal type in key: " << key.name() << " in table: " << table.table_name()
+					LogError("Error: illegal type in key: " << key.name() << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
 
 				if (key.type() == dbtool::E_KeyType_Primary) {
+					key.set_name("PRIMARY");
 					primary_key_cnt++;
 				}
 
 				// 不能存在多个主键
 				if (primary_key_cnt > 1) {
-					LogError("can't have over one primary key in table: " << table.table_name()
+					LogError("Error: can't have over one primary key in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
 
 				// 需要存在域名
 				if (key.fields_size() == 0) {
-					LogError("field can't be empty in key: " << key.name() << " in table: " << table.table_name()
+					LogError("Error: field can't be empty in key: " << key.name() << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
@@ -117,13 +126,13 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 				for (int idx_key_field = 0; idx_key_field < key.fields_size(); ++idx_key_field) {
 					auto key_field = key.fields(idx_key_field);
 					if (field_map.find(key_field) == field_map.end()) {
-						LogError("key_field: " << key_field << " is illegal in key: " << key.name() << " in table: " << table.table_name()
+						LogError("Error: key_field: " << key_field << " is illegal in key: " << key.name() << " in table: " << table.table_name()
 							<< " in schema: " << schema.schema_name());
 						return false;
 					}
 
 					if (!key_field_set.insert(key_field).second) {
-						LogError("duplicate key_field: " << key_field << " in key: " << key.name() << " in table: " << table.table_name()
+						LogError("Error: duplicate key_field: " << key_field << " in key: " << key.name() << " in table: " << table.table_name()
 							<< " in schema: " << schema.schema_name());
 						return false;
 					}
@@ -146,7 +155,7 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 					}
 				}
 				if (!flag) {
-					LogError("auto_incr column has to be key in field: " << iter_field->first << " in table: " << table.table_name()
+					LogError("Error: auto_incr column has to be key in field: " << iter_field->first << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
@@ -158,12 +167,12 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 					continue;
 				}
 				if (iter_field->second->add_col_after() == iter_field->first) {
-					LogError("field name conflict with add_col_after in field: " << iter_field->first << " in table: " << table.table_name()
+					LogError("Error: field name conflict with add_col_after in field: " << iter_field->first << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
 				if (field_map.find(iter_field->second->add_col_after()) == field_map.end()) {
-					LogError("add_col_after: " << iter_field->second->add_col_after() << " column is illegal in field: " << iter_field->first << " in table: " << table.table_name()
+					LogError("Error: add_col_after: " << iter_field->second->add_col_after() << " column is illegal in field: " << iter_field->first << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
@@ -189,7 +198,7 @@ int main(int argc, char* argv[]) {
 			SchemaCfg cfg;
 			int ret = cfg.Parse(argv[idx]);
 			if (ret != 0) {
-				LogError("parse file: " << argv[1] << " fail");
+				LogError("Error: parse file: " << argv[1] << " fail");
 				flag = false;
 				break;
 			}

@@ -67,8 +67,10 @@ int MysqlExecutor::CreateTable(SqlConnectionPtr conn_ptr, const std::string& sch
 				break;
 			}
 		}
-		if (0 != ChangeTable(conn_ptr, schema_name, table)) {
-			break;
+		else {
+			if (0 != ChangeTable(conn_ptr, schema_name, table)) {
+				break;
+			}
 		}
 		return 0;
 	} while (false);
@@ -99,9 +101,13 @@ int MysqlExecutor::CreateNewTable(SqlConnectionPtr conn_ptr, const std::string& 
 	std::string sql = "CREATE TABLE ";
 	sql += table.table_name();
 	sql += "(";
+	int tmp_idx = 0;
 	for (auto iter = table.fields().begin(); iter != table.fields().end(); ++iter) {
 		auto& field = *iter;
-		if (iter != table.fields().begin()) {
+		if (field.is_delete()) {
+			continue;
+		}
+		if (tmp_idx != 0) {
 			sql += ", ";
 		}
 		sql += "`";
@@ -121,6 +127,7 @@ int MysqlExecutor::CreateNewTable(SqlConnectionPtr conn_ptr, const std::string& 
 		if (field.default_().size()) {
 			sql += " DEFAULT '" + field.default_() + "'";
 		}
+		++tmp_idx;
 	}
 
 	for (auto iter = table.keys().begin(); iter != table.keys().end(); ++iter) {
@@ -145,6 +152,11 @@ int MysqlExecutor::CreateNewTable(SqlConnectionPtr conn_ptr, const std::string& 
 
 int MysqlExecutor::ChangeTable(SqlConnectionPtr conn_ptr, const std::string& schema_name, const dbtool::MysqlTable& table) {
 	do {
+		// 执行删除列
+		if (0 != DeleteTableColumn(conn_ptr, schema_name, table)) {
+			break;
+		}
+
 		// 执行改名
 		if (0 != RenameTableColumn(conn_ptr, schema_name, table)) {
 			break;
@@ -156,11 +168,6 @@ int MysqlExecutor::ChangeTable(SqlConnectionPtr conn_ptr, const std::string& sch
 		}
 
 		if (0 != AddTableColumn(conn_ptr, schema_name, table)) {
-			break;
-		}
-
-		// 执行删除列
-		if (0 != DeleteTableColumn(conn_ptr, schema_name, table)) {
 			break;
 		}
 
@@ -222,8 +229,8 @@ int MysqlExecutor::RenameTableColumn(SqlConnectionPtr conn_ptr, const std::strin
 	std::map<std::string, const dbtool::TableField*> want_rename_fields;
 	for (auto iter = table.fields().begin(); iter != table.fields().end(); ++iter) {
 		auto& field = *iter;
-		if (field.has_rename_to()) {
-			want_rename_fields[field.name()] = &field;
+		if (field.has_rename_from()) {
+			want_rename_fields[field.rename_from()] = &field;
 		}
 	}
 
@@ -246,18 +253,18 @@ int MysqlExecutor::RenameTableColumn(SqlConnectionPtr conn_ptr, const std::strin
 
 	for (auto iter = want_rename_fields.begin(); iter != want_rename_fields.end(); ++iter) {
 		std::string sql = "ALTER TABLE " + table.table_name();
-		sql += " CHANGE " + iter->first;
-		sql += " " + iter->second->rename_to();
+		sql += " CHANGE " + iter->second->rename_from();
+		sql += " " + iter->second->name();
 		sql += " " + GetFieldTypeDesc(*(iter->second));
 		sql += ";";
 		int ret = conn_ptr->Execute(sql.c_str(), sql.length());
 		if (ret != 0) {
-			LogError("Error: rename from " << iter->first << " to " << iter->second->rename_to() << " in table " << table.table_name() << " in database " << schema_name);
+			LogError("Error: rename from " << iter->second->rename_from() << " to " << iter->second->name() << " in table " << table.table_name() << " in database " << schema_name);
 			LogError(conn_ptr->GetErrorMsg());
 			return -1;
 		}
 		else {
-			LogInfo("rename from " << iter->first << " to " << iter->second->rename_to() << " successfully in table " << table.table_name() << " in database " << schema_name);
+			LogInfo("rename from " << iter->second->rename_from() << " to " << iter->second->name() << " successfully in table " << table.table_name() << " in database " << schema_name);
 		}
 	}
 	return 0;
@@ -390,6 +397,9 @@ int MysqlExecutor::AddTableColumn(SqlConnectionPtr conn_ptr, const std::string& 
 		old_fields_set.insert(*iter);
 		bool flag = false;
 		for (auto iter2 = table.fields().begin(); iter2 != table.fields().end(); ++iter2) {
+			if (iter2->is_delete()) {
+				continue;
+			}
 			if (iter2->name() == *iter) {
 				flag = true;
 				break;
@@ -404,6 +414,9 @@ int MysqlExecutor::AddTableColumn(SqlConnectionPtr conn_ptr, const std::string& 
 	std::map<std::string, const dbtool::TableField*> insert_field_map;
 	std::vector<std::string> insert_fields;
 	for (auto iter = table.fields().begin(); iter != table.fields().end(); ++iter) {
+		if (iter->is_delete()) {
+			continue;
+		}
 		insert_fields.push_back(iter->name());
 		insert_field_map[iter->name()] = &(*iter);
 	}
@@ -490,14 +503,35 @@ int MysqlExecutor::ChangeKey(SqlConnectionPtr conn_ptr, const std::string& schem
 		return -1;
 	}
 
-	// add
+	// add keys
+	std::set<std::string> insert_keys;
 	for (auto key : table.keys()) {
-
+		insert_keys.insert(key.name());
+		if (table_keys.find(key.name()) != table_keys.end()) {
+			continue;
+		}
+		std::string sql = "ALTER TABLE " + table.table_name();
+		sql += " ADD " + GetFieldKeyDesc(key);
+		int ret = conn_ptr->Execute(sql.c_str(), sql.length());
+		if (ret != 0) {
+			LogError("Error: fail to add index " << key.name() << " in table " << table.table_name() << " in database " << schema_name);
+			LogError(conn_ptr->GetErrorMsg());
+			return -1;
+		}
 	}
 
 	for (auto name : table_keys) {
-		std::string drop_key_sql;
-		drop_key_sql = "DROP INDEX `" + name + "` ON " + table.table_name();
+		if (insert_keys.find(name) != insert_keys.end()) {
+			continue;
+		}
+
+		std::string drop_key_sql = "ALTER TABLE " + table.table_name();
+		if (name == "PRIMARY") {
+			drop_key_sql += " DROP PRIMARY KEY";
+		}
+		else {
+			drop_key_sql += " DROP INDEX " + name;
+		}
 		int ret = conn_ptr->Execute(drop_key_sql.c_str(), drop_key_sql.length());
 		if (ret != 0) {
 			LogError("Error: fail to drop index " << name << " in table " << table.table_name() << " in database " << schema_name);

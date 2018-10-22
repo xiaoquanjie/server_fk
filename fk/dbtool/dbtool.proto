@@ -28,7 +28,7 @@ message TableField {
 	optional bool auto_incr = 4;
 	optional string default = 5;
 	optional string add_col_after = 6;	// 加列
-	optional string rename_to = 7;	// 改名
+	optional string rename_from = 7;	// 改名
 	optional MysqlFieldType modify_type = 8;	// 改类型
 	optional uint32 varchar_len = 9 [default = 255];
 	optional bool is_delete = 10;	// 删除此列
