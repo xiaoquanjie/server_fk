@@ -183,7 +183,7 @@ void AgentApplication::CheckAlive() {
 			continue;
 		}
 
-		if (item.check_cnt() > _svr_config.Data().max_pullup_server_cnt()) {
+		if ((unsigned int)item.check_cnt() > _svr_config.Data().max_pullup_server_cnt()) {
 			del_instances.push_back(item.inst_name());
 			LogError(item.inst_name() << " server been pull up too much times");
 			continue;
