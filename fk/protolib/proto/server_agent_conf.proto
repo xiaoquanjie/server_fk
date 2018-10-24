@@ -1,6 +1,6 @@
 package config;
 
-message ListenInfo {
+message AgentListenInfo {
 	optional string listen_ip = 1;		// ¼àÌýip
 	optional int32 listen_port = 2;
 }
@@ -20,7 +20,7 @@ message ScriptInfo {
 }
 
 message ServerAgentConfig {
-	optional ListenInfo listen_info = 1;
+	optional AgentListenInfo listen_info = 1;
 	repeated ScriptInfo script_info_list = 2;
 	optional uint32 max_pullup_server_cnt = 3;
 }

@@ -20,11 +20,11 @@
 #endif
 // @@protoc_insertion_point(includes)
 namespace config {
-class ListenInfoDefaultTypeInternal {
+class AgentListenInfoDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<ListenInfo>
+  ::google::protobuf::internal::ExplicitlyConstructed<AgentListenInfo>
       _instance;
-} _ListenInfo_default_instance_;
+} _AgentListenInfo_default_instance_;
 class ScriptInfoDefaultTypeInternal {
  public:
   ::google::protobuf::internal::ExplicitlyConstructed<ScriptInfo>
@@ -37,7 +37,7 @@ class ServerAgentConfigDefaultTypeInternal {
 } _ServerAgentConfig_default_instance_;
 }  // namespace config
 namespace protobuf_server_5fagent_5fconf_2eproto {
-void InitDefaultsListenInfoImpl() {
+void InitDefaultsAgentListenInfoImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
 #ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
@@ -46,16 +46,16 @@ void InitDefaultsListenInfoImpl() {
   ::google::protobuf::internal::InitProtobufDefaults();
 #endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
   {
-    void* ptr = &::config::_ListenInfo_default_instance_;
-    new (ptr) ::config::ListenInfo();
+    void* ptr = &::config::_AgentListenInfo_default_instance_;
+    new (ptr) ::config::AgentListenInfo();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::config::ListenInfo::InitAsDefaultInstance();
+  ::config::AgentListenInfo::InitAsDefaultInstance();
 }
 
-void InitDefaultsListenInfo() {
+void InitDefaultsAgentListenInfo() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsListenInfoImpl);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsAgentListenInfoImpl);
 }
 
 void InitDefaultsScriptInfoImpl() {
@@ -87,7 +87,7 @@ void InitDefaultsServerAgentConfigImpl() {
 #else
   ::google::protobuf::internal::InitProtobufDefaults();
 #endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  protobuf_server_5fagent_5fconf_2eproto::InitDefaultsListenInfo();
+  protobuf_server_5fagent_5fconf_2eproto::InitDefaultsAgentListenInfo();
   protobuf_server_5fagent_5fconf_2eproto::InitDefaultsScriptInfo();
   {
     void* ptr = &::config::_ServerAgentConfig_default_instance_;
@@ -106,13 +106,13 @@ void InitDefaultsServerAgentConfig() {
 const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::ListenInfo, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::ListenInfo, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::AgentListenInfo, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::AgentListenInfo, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::ListenInfo, listen_ip_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::ListenInfo, listen_port_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::AgentListenInfo, listen_ip_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::AgentListenInfo, listen_port_),
   0,
   1,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::ScriptInfo, _has_bits_),
@@ -145,13 +145,13 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   1,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 7, sizeof(::config::ListenInfo)},
+  { 0, 7, sizeof(::config::AgentListenInfo)},
   { 9, 20, sizeof(::config::ScriptInfo)},
   { 26, 34, sizeof(::config::ServerAgentConfig)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::google::protobuf::Message*>(&::config::_ListenInfo_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::config::_AgentListenInfo_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::config::_ScriptInfo_default_instance_),
   reinterpret_cast<const ::google::protobuf::Message*>(&::config::_ServerAgentConfig_default_instance_),
 };
@@ -178,21 +178,21 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\027server_agent_conf.proto\022\006config\"4\n\nLis"
-      "tenInfo\022\021\n\tlisten_ip\030\001 \001(\t\022\023\n\013listen_por"
-      "t\030\002 \001(\005\"\237\001\n\nScriptInfo\022 \n\004type\030\001 \001(\0162\022.c"
-      "onfig.ScriptType\022\016\n\006script\030\002 \001(\t\022\030\n\020inte"
-      "rval_seconds\030\003 \001(\r\022\030\n\020day_certain_time\030\004"
-      " \001(\t\022\027\n\017next_check_time\030\005 \001(\r\022\022\n\nscript_"
-      "dir\030\006 \001(\t\"\211\001\n\021ServerAgentConfig\022\'\n\013liste"
-      "n_info\030\001 \001(\0132\022.config.ListenInfo\022,\n\020scri"
-      "pt_info_list\030\002 \003(\0132\022.config.ScriptInfo\022\035"
-      "\n\025max_pullup_server_cnt\030\003 \001(\r*K\n\nScriptT"
-      "ype\022\036\n\032E_SCRIPT_TYPE_CERTAIN_TIME\020\001\022\035\n\031E"
-      "_SCRIPT_TYPE_PERIOD_TIME\020\002"
+      "\n\027server_agent_conf.proto\022\006config\"9\n\017Age"
+      "ntListenInfo\022\021\n\tlisten_ip\030\001 \001(\t\022\023\n\013liste"
+      "n_port\030\002 \001(\005\"\237\001\n\nScriptInfo\022 \n\004type\030\001 \001("
+      "\0162\022.config.ScriptType\022\016\n\006script\030\002 \001(\t\022\030\n"
+      "\020interval_seconds\030\003 \001(\r\022\030\n\020day_certain_t"
+      "ime\030\004 \001(\t\022\027\n\017next_check_time\030\005 \001(\r\022\022\n\nsc"
+      "ript_dir\030\006 \001(\t\"\216\001\n\021ServerAgentConfig\022,\n\013"
+      "listen_info\030\001 \001(\0132\027.config.AgentListenIn"
+      "fo\022,\n\020script_info_list\030\002 \003(\0132\022.config.Sc"
+      "riptInfo\022\035\n\025max_pullup_server_cnt\030\003 \001(\r*"
+      "K\n\nScriptType\022\036\n\032E_SCRIPT_TYPE_CERTAIN_T"
+      "IME\020\001\022\035\n\031E_SCRIPT_TYPE_PERIOD_TIME\020\002"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 466);
+      descriptor, 476);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "server_agent_conf.proto", &protobuf_RegisterTypes);
 }
@@ -226,22 +226,22 @@ bool ScriptType_IsValid(int value) {
 
 // ===================================================================
 
-void ListenInfo::InitAsDefaultInstance() {
+void AgentListenInfo::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int ListenInfo::kListenIpFieldNumber;
-const int ListenInfo::kListenPortFieldNumber;
+const int AgentListenInfo::kListenIpFieldNumber;
+const int AgentListenInfo::kListenPortFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-ListenInfo::ListenInfo()
+AgentListenInfo::AgentListenInfo()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
-    ::protobuf_server_5fagent_5fconf_2eproto::InitDefaultsListenInfo();
+    ::protobuf_server_5fagent_5fconf_2eproto::InitDefaultsAgentListenInfo();
   }
   SharedCtor();
-  // @@protoc_insertion_point(constructor:config.ListenInfo)
+  // @@protoc_insertion_point(constructor:config.AgentListenInfo)
 }
-ListenInfo::ListenInfo(const ListenInfo& from)
+AgentListenInfo::AgentListenInfo(const AgentListenInfo& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -252,49 +252,49 @@ ListenInfo::ListenInfo(const ListenInfo& from)
     listen_ip_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.listen_ip_);
   }
   listen_port_ = from.listen_port_;
-  // @@protoc_insertion_point(copy_constructor:config.ListenInfo)
+  // @@protoc_insertion_point(copy_constructor:config.AgentListenInfo)
 }
 
-void ListenInfo::SharedCtor() {
+void AgentListenInfo::SharedCtor() {
   _cached_size_ = 0;
   listen_ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   listen_port_ = 0;
 }
 
-ListenInfo::~ListenInfo() {
-  // @@protoc_insertion_point(destructor:config.ListenInfo)
+AgentListenInfo::~AgentListenInfo() {
+  // @@protoc_insertion_point(destructor:config.AgentListenInfo)
   SharedDtor();
 }
 
-void ListenInfo::SharedDtor() {
+void AgentListenInfo::SharedDtor() {
   listen_ip_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
-void ListenInfo::SetCachedSize(int size) const {
+void AgentListenInfo::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* ListenInfo::descriptor() {
+const ::google::protobuf::Descriptor* AgentListenInfo::descriptor() {
   ::protobuf_server_5fagent_5fconf_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_server_5fagent_5fconf_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const ListenInfo& ListenInfo::default_instance() {
-  ::protobuf_server_5fagent_5fconf_2eproto::InitDefaultsListenInfo();
+const AgentListenInfo& AgentListenInfo::default_instance() {
+  ::protobuf_server_5fagent_5fconf_2eproto::InitDefaultsAgentListenInfo();
   return *internal_default_instance();
 }
 
-ListenInfo* ListenInfo::New(::google::protobuf::Arena* arena) const {
-  ListenInfo* n = new ListenInfo;
+AgentListenInfo* AgentListenInfo::New(::google::protobuf::Arena* arena) const {
+  AgentListenInfo* n = new AgentListenInfo;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void ListenInfo::Clear() {
-// @@protoc_insertion_point(message_clear_start:config.ListenInfo)
+void AgentListenInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:config.AgentListenInfo)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -309,11 +309,11 @@ void ListenInfo::Clear() {
   _internal_metadata_.Clear();
 }
 
-bool ListenInfo::MergePartialFromCodedStream(
+bool AgentListenInfo::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:config.ListenInfo)
+  // @@protoc_insertion_point(parse_start:config.AgentListenInfo)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
@@ -328,7 +328,7 @@ bool ListenInfo::MergePartialFromCodedStream(
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->listen_ip().data(), static_cast<int>(this->listen_ip().length()),
             ::google::protobuf::internal::WireFormat::PARSE,
-            "config.ListenInfo.listen_ip");
+            "config.AgentListenInfo.listen_ip");
         } else {
           goto handle_unusual;
         }
@@ -361,17 +361,17 @@ bool ListenInfo::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:config.ListenInfo)
+  // @@protoc_insertion_point(parse_success:config.AgentListenInfo)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:config.ListenInfo)
+  // @@protoc_insertion_point(parse_failure:config.AgentListenInfo)
   return false;
 #undef DO_
 }
 
-void ListenInfo::SerializeWithCachedSizes(
+void AgentListenInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:config.ListenInfo)
+  // @@protoc_insertion_point(serialize_start:config.AgentListenInfo)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -381,7 +381,7 @@ void ListenInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->listen_ip().data(), static_cast<int>(this->listen_ip().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "config.ListenInfo.listen_ip");
+      "config.AgentListenInfo.listen_ip");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->listen_ip(), output);
   }
@@ -395,13 +395,13 @@ void ListenInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:config.ListenInfo)
+  // @@protoc_insertion_point(serialize_end:config.AgentListenInfo)
 }
 
-::google::protobuf::uint8* ListenInfo::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* AgentListenInfo::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:config.ListenInfo)
+  // @@protoc_insertion_point(serialize_to_array_start:config.AgentListenInfo)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -411,7 +411,7 @@ void ListenInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->listen_ip().data(), static_cast<int>(this->listen_ip().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "config.ListenInfo.listen_ip");
+      "config.AgentListenInfo.listen_ip");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->listen_ip(), target);
@@ -426,12 +426,12 @@ void ListenInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:config.ListenInfo)
+  // @@protoc_insertion_point(serialize_to_array_end:config.AgentListenInfo)
   return target;
 }
 
-size_t ListenInfo::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:config.ListenInfo)
+size_t AgentListenInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:config.AgentListenInfo)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -462,23 +462,23 @@ size_t ListenInfo::ByteSizeLong() const {
   return total_size;
 }
 
-void ListenInfo::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:config.ListenInfo)
+void AgentListenInfo::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:config.AgentListenInfo)
   GOOGLE_DCHECK_NE(&from, this);
-  const ListenInfo* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const ListenInfo>(
+  const AgentListenInfo* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const AgentListenInfo>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:config.ListenInfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:config.AgentListenInfo)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:config.ListenInfo)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:config.AgentListenInfo)
     MergeFrom(*source);
   }
 }
 
-void ListenInfo::MergeFrom(const ListenInfo& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:config.ListenInfo)
+void AgentListenInfo::MergeFrom(const AgentListenInfo& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:config.AgentListenInfo)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
@@ -497,29 +497,29 @@ void ListenInfo::MergeFrom(const ListenInfo& from) {
   }
 }
 
-void ListenInfo::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:config.ListenInfo)
+void AgentListenInfo::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:config.AgentListenInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void ListenInfo::CopyFrom(const ListenInfo& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:config.ListenInfo)
+void AgentListenInfo::CopyFrom(const AgentListenInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:config.AgentListenInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool ListenInfo::IsInitialized() const {
+bool AgentListenInfo::IsInitialized() const {
   return true;
 }
 
-void ListenInfo::Swap(ListenInfo* other) {
+void AgentListenInfo::Swap(AgentListenInfo* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void ListenInfo::InternalSwap(ListenInfo* other) {
+void AgentListenInfo::InternalSwap(AgentListenInfo* other) {
   using std::swap;
   listen_ip_.Swap(&other->listen_ip_);
   swap(listen_port_, other->listen_port_);
@@ -528,7 +528,7 @@ void ListenInfo::InternalSwap(ListenInfo* other) {
   swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata ListenInfo::GetMetadata() const {
+::google::protobuf::Metadata AgentListenInfo::GetMetadata() const {
   protobuf_server_5fagent_5fconf_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_server_5fagent_5fconf_2eproto::file_level_metadata[kIndexInFileMessages];
 }
@@ -1058,8 +1058,8 @@ void ScriptInfo::InternalSwap(ScriptInfo* other) {
 // ===================================================================
 
 void ServerAgentConfig::InitAsDefaultInstance() {
-  ::config::_ServerAgentConfig_default_instance_._instance.get_mutable()->listen_info_ = const_cast< ::config::ListenInfo*>(
-      ::config::ListenInfo::internal_default_instance());
+  ::config::_ServerAgentConfig_default_instance_._instance.get_mutable()->listen_info_ = const_cast< ::config::AgentListenInfo*>(
+      ::config::AgentListenInfo::internal_default_instance());
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int ServerAgentConfig::kListenInfoFieldNumber;
@@ -1083,7 +1083,7 @@ ServerAgentConfig::ServerAgentConfig(const ServerAgentConfig& from)
       script_info_list_(from.script_info_list_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   if (from.has_listen_info()) {
-    listen_info_ = new ::config::ListenInfo(*from.listen_info_);
+    listen_info_ = new ::config::AgentListenInfo(*from.listen_info_);
   } else {
     listen_info_ = NULL;
   }
@@ -1157,7 +1157,7 @@ bool ServerAgentConfig::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .config.ListenInfo listen_info = 1;
+      // optional .config.AgentListenInfo listen_info = 1;
       case 1: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
             static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
@@ -1221,7 +1221,7 @@ void ServerAgentConfig::SerializeWithCachedSizes(
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional .config.ListenInfo listen_info = 1;
+  // optional .config.AgentListenInfo listen_info = 1;
   if (cached_has_bits & 0x00000001u) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, *this->listen_info_, output);
@@ -1254,7 +1254,7 @@ void ServerAgentConfig::SerializeWithCachedSizes(
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional .config.ListenInfo listen_info = 1;
+  // optional .config.AgentListenInfo listen_info = 1;
   if (cached_has_bits & 0x00000001u) {
     target = ::google::protobuf::internal::WireFormatLite::
       InternalWriteMessageToArray(
@@ -1303,7 +1303,7 @@ size_t ServerAgentConfig::ByteSizeLong() const {
   }
 
   if (_has_bits_[0 / 32] & 3u) {
-    // optional .config.ListenInfo listen_info = 1;
+    // optional .config.AgentListenInfo listen_info = 1;
     if (has_listen_info()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSize(
@@ -1351,7 +1351,7 @@ void ServerAgentConfig::MergeFrom(const ServerAgentConfig& from) {
   cached_has_bits = from._has_bits_[0];
   if (cached_has_bits & 3u) {
     if (cached_has_bits & 0x00000001u) {
-      mutable_listen_info()->::config::ListenInfo::MergeFrom(from.listen_info());
+      mutable_listen_info()->::config::AgentListenInfo::MergeFrom(from.listen_info());
     }
     if (cached_has_bits & 0x00000002u) {
       max_pullup_server_cnt_ = from.max_pullup_server_cnt_;

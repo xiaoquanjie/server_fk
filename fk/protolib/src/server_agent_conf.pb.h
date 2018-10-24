@@ -43,22 +43,22 @@ struct TableStruct {
   static const ::google::protobuf::uint32 offsets[];
 };
 void AddDescriptors();
-void InitDefaultsListenInfoImpl();
-void InitDefaultsListenInfo();
+void InitDefaultsAgentListenInfoImpl();
+void InitDefaultsAgentListenInfo();
 void InitDefaultsScriptInfoImpl();
 void InitDefaultsScriptInfo();
 void InitDefaultsServerAgentConfigImpl();
 void InitDefaultsServerAgentConfig();
 inline void InitDefaults() {
-  InitDefaultsListenInfo();
+  InitDefaultsAgentListenInfo();
   InitDefaultsScriptInfo();
   InitDefaultsServerAgentConfig();
 }
 }  // namespace protobuf_server_5fagent_5fconf_2eproto
 namespace config {
-class ListenInfo;
-class ListenInfoDefaultTypeInternal;
-extern ListenInfoDefaultTypeInternal _ListenInfo_default_instance_;
+class AgentListenInfo;
+class AgentListenInfoDefaultTypeInternal;
+extern AgentListenInfoDefaultTypeInternal _AgentListenInfo_default_instance_;
 class ScriptInfo;
 class ScriptInfoDefaultTypeInternal;
 extern ScriptInfoDefaultTypeInternal _ScriptInfo_default_instance_;
@@ -89,24 +89,24 @@ inline bool ScriptType_Parse(
 }
 // ===================================================================
 
-class ListenInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:config.ListenInfo) */ {
+class AgentListenInfo : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:config.AgentListenInfo) */ {
  public:
-  ListenInfo();
-  virtual ~ListenInfo();
+  AgentListenInfo();
+  virtual ~AgentListenInfo();
 
-  ListenInfo(const ListenInfo& from);
+  AgentListenInfo(const AgentListenInfo& from);
 
-  inline ListenInfo& operator=(const ListenInfo& from) {
+  inline AgentListenInfo& operator=(const AgentListenInfo& from) {
     CopyFrom(from);
     return *this;
   }
   #if LANG_CXX11
-  ListenInfo(ListenInfo&& from) noexcept
-    : ListenInfo() {
+  AgentListenInfo(AgentListenInfo&& from) noexcept
+    : AgentListenInfo() {
     *this = ::std::move(from);
   }
 
-  inline ListenInfo& operator=(ListenInfo&& from) noexcept {
+  inline AgentListenInfo& operator=(AgentListenInfo&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -123,30 +123,30 @@ class ListenInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const ListenInfo& default_instance();
+  static const AgentListenInfo& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const ListenInfo* internal_default_instance() {
-    return reinterpret_cast<const ListenInfo*>(
-               &_ListenInfo_default_instance_);
+  static inline const AgentListenInfo* internal_default_instance() {
+    return reinterpret_cast<const AgentListenInfo*>(
+               &_AgentListenInfo_default_instance_);
   }
   static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
     0;
 
-  void Swap(ListenInfo* other);
-  friend void swap(ListenInfo& a, ListenInfo& b) {
+  void Swap(AgentListenInfo* other);
+  friend void swap(AgentListenInfo& a, AgentListenInfo& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline ListenInfo* New() const PROTOBUF_FINAL { return New(NULL); }
+  inline AgentListenInfo* New() const PROTOBUF_FINAL { return New(NULL); }
 
-  ListenInfo* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  AgentListenInfo* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
   void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
   void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
-  void CopyFrom(const ListenInfo& from);
-  void MergeFrom(const ListenInfo& from);
+  void CopyFrom(const AgentListenInfo& from);
+  void MergeFrom(const AgentListenInfo& from);
   void Clear() PROTOBUF_FINAL;
   bool IsInitialized() const PROTOBUF_FINAL;
 
@@ -162,7 +162,7 @@ class ListenInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const PROTOBUF_FINAL;
-  void InternalSwap(ListenInfo* other);
+  void InternalSwap(AgentListenInfo* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
@@ -200,7 +200,7 @@ class ListenInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::int32 listen_port() const;
   void set_listen_port(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:config.ListenInfo)
+  // @@protoc_insertion_point(class_scope:config.AgentListenInfo)
  private:
   void set_has_listen_ip();
   void clear_has_listen_ip();
@@ -213,7 +213,7 @@ class ListenInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::google::protobuf::internal::ArenaStringPtr listen_ip_;
   ::google::protobuf::int32 listen_port_;
   friend struct ::protobuf_server_5fagent_5fconf_2eproto::TableStruct;
-  friend void ::protobuf_server_5fagent_5fconf_2eproto::InitDefaultsListenInfoImpl();
+  friend void ::protobuf_server_5fagent_5fconf_2eproto::InitDefaultsAgentListenInfoImpl();
 };
 // -------------------------------------------------------------------
 
@@ -502,14 +502,14 @@ class ServerAgentConfig : public ::google::protobuf::Message /* @@protoc_inserti
   const ::google::protobuf::RepeatedPtrField< ::config::ScriptInfo >&
       script_info_list() const;
 
-  // optional .config.ListenInfo listen_info = 1;
+  // optional .config.AgentListenInfo listen_info = 1;
   bool has_listen_info() const;
   void clear_listen_info();
   static const int kListenInfoFieldNumber = 1;
-  const ::config::ListenInfo& listen_info() const;
-  ::config::ListenInfo* release_listen_info();
-  ::config::ListenInfo* mutable_listen_info();
-  void set_allocated_listen_info(::config::ListenInfo* listen_info);
+  const ::config::AgentListenInfo& listen_info() const;
+  ::config::AgentListenInfo* release_listen_info();
+  ::config::AgentListenInfo* mutable_listen_info();
+  void set_allocated_listen_info(::config::AgentListenInfo* listen_info);
 
   // optional uint32 max_pullup_server_cnt = 3;
   bool has_max_pullup_server_cnt() const;
@@ -529,7 +529,7 @@ class ServerAgentConfig : public ::google::protobuf::Message /* @@protoc_inserti
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable int _cached_size_;
   ::google::protobuf::RepeatedPtrField< ::config::ScriptInfo > script_info_list_;
-  ::config::ListenInfo* listen_info_;
+  ::config::AgentListenInfo* listen_info_;
   ::google::protobuf::uint32 max_pullup_server_cnt_;
   friend struct ::protobuf_server_5fagent_5fconf_2eproto::TableStruct;
   friend void ::protobuf_server_5fagent_5fconf_2eproto::InitDefaultsServerAgentConfigImpl();
@@ -543,93 +543,93 @@ class ServerAgentConfig : public ::google::protobuf::Message /* @@protoc_inserti
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
-// ListenInfo
+// AgentListenInfo
 
 // optional string listen_ip = 1;
-inline bool ListenInfo::has_listen_ip() const {
+inline bool AgentListenInfo::has_listen_ip() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void ListenInfo::set_has_listen_ip() {
+inline void AgentListenInfo::set_has_listen_ip() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void ListenInfo::clear_has_listen_ip() {
+inline void AgentListenInfo::clear_has_listen_ip() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void ListenInfo::clear_listen_ip() {
+inline void AgentListenInfo::clear_listen_ip() {
   listen_ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   clear_has_listen_ip();
 }
-inline const ::std::string& ListenInfo::listen_ip() const {
-  // @@protoc_insertion_point(field_get:config.ListenInfo.listen_ip)
+inline const ::std::string& AgentListenInfo::listen_ip() const {
+  // @@protoc_insertion_point(field_get:config.AgentListenInfo.listen_ip)
   return listen_ip_.GetNoArena();
 }
-inline void ListenInfo::set_listen_ip(const ::std::string& value) {
+inline void AgentListenInfo::set_listen_ip(const ::std::string& value) {
   set_has_listen_ip();
   listen_ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:config.ListenInfo.listen_ip)
+  // @@protoc_insertion_point(field_set:config.AgentListenInfo.listen_ip)
 }
 #if LANG_CXX11
-inline void ListenInfo::set_listen_ip(::std::string&& value) {
+inline void AgentListenInfo::set_listen_ip(::std::string&& value) {
   set_has_listen_ip();
   listen_ip_.SetNoArena(
     &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:config.ListenInfo.listen_ip)
+  // @@protoc_insertion_point(field_set_rvalue:config.AgentListenInfo.listen_ip)
 }
 #endif
-inline void ListenInfo::set_listen_ip(const char* value) {
+inline void AgentListenInfo::set_listen_ip(const char* value) {
   GOOGLE_DCHECK(value != NULL);
   set_has_listen_ip();
   listen_ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:config.ListenInfo.listen_ip)
+  // @@protoc_insertion_point(field_set_char:config.AgentListenInfo.listen_ip)
 }
-inline void ListenInfo::set_listen_ip(const char* value, size_t size) {
+inline void AgentListenInfo::set_listen_ip(const char* value, size_t size) {
   set_has_listen_ip();
   listen_ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:config.ListenInfo.listen_ip)
+  // @@protoc_insertion_point(field_set_pointer:config.AgentListenInfo.listen_ip)
 }
-inline ::std::string* ListenInfo::mutable_listen_ip() {
+inline ::std::string* AgentListenInfo::mutable_listen_ip() {
   set_has_listen_ip();
-  // @@protoc_insertion_point(field_mutable:config.ListenInfo.listen_ip)
+  // @@protoc_insertion_point(field_mutable:config.AgentListenInfo.listen_ip)
   return listen_ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* ListenInfo::release_listen_ip() {
-  // @@protoc_insertion_point(field_release:config.ListenInfo.listen_ip)
+inline ::std::string* AgentListenInfo::release_listen_ip() {
+  // @@protoc_insertion_point(field_release:config.AgentListenInfo.listen_ip)
   clear_has_listen_ip();
   return listen_ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void ListenInfo::set_allocated_listen_ip(::std::string* listen_ip) {
+inline void AgentListenInfo::set_allocated_listen_ip(::std::string* listen_ip) {
   if (listen_ip != NULL) {
     set_has_listen_ip();
   } else {
     clear_has_listen_ip();
   }
   listen_ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), listen_ip);
-  // @@protoc_insertion_point(field_set_allocated:config.ListenInfo.listen_ip)
+  // @@protoc_insertion_point(field_set_allocated:config.AgentListenInfo.listen_ip)
 }
 
 // optional int32 listen_port = 2;
-inline bool ListenInfo::has_listen_port() const {
+inline bool AgentListenInfo::has_listen_port() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void ListenInfo::set_has_listen_port() {
+inline void AgentListenInfo::set_has_listen_port() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void ListenInfo::clear_has_listen_port() {
+inline void AgentListenInfo::clear_has_listen_port() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void ListenInfo::clear_listen_port() {
+inline void AgentListenInfo::clear_listen_port() {
   listen_port_ = 0;
   clear_has_listen_port();
 }
-inline ::google::protobuf::int32 ListenInfo::listen_port() const {
-  // @@protoc_insertion_point(field_get:config.ListenInfo.listen_port)
+inline ::google::protobuf::int32 AgentListenInfo::listen_port() const {
+  // @@protoc_insertion_point(field_get:config.AgentListenInfo.listen_port)
   return listen_port_;
 }
-inline void ListenInfo::set_listen_port(::google::protobuf::int32 value) {
+inline void AgentListenInfo::set_listen_port(::google::protobuf::int32 value) {
   set_has_listen_port();
   listen_port_ = value;
-  // @@protoc_insertion_point(field_set:config.ListenInfo.listen_port)
+  // @@protoc_insertion_point(field_set:config.AgentListenInfo.listen_port)
 }
 
 // -------------------------------------------------------------------
@@ -902,7 +902,7 @@ inline void ScriptInfo::set_allocated_script_dir(::std::string* script_dir) {
 
 // ServerAgentConfig
 
-// optional .config.ListenInfo listen_info = 1;
+// optional .config.AgentListenInfo listen_info = 1;
 inline bool ServerAgentConfig::has_listen_info() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
@@ -916,28 +916,28 @@ inline void ServerAgentConfig::clear_listen_info() {
   if (listen_info_ != NULL) listen_info_->Clear();
   clear_has_listen_info();
 }
-inline const ::config::ListenInfo& ServerAgentConfig::listen_info() const {
-  const ::config::ListenInfo* p = listen_info_;
+inline const ::config::AgentListenInfo& ServerAgentConfig::listen_info() const {
+  const ::config::AgentListenInfo* p = listen_info_;
   // @@protoc_insertion_point(field_get:config.ServerAgentConfig.listen_info)
-  return p != NULL ? *p : *reinterpret_cast<const ::config::ListenInfo*>(
-      &::config::_ListenInfo_default_instance_);
+  return p != NULL ? *p : *reinterpret_cast<const ::config::AgentListenInfo*>(
+      &::config::_AgentListenInfo_default_instance_);
 }
-inline ::config::ListenInfo* ServerAgentConfig::release_listen_info() {
+inline ::config::AgentListenInfo* ServerAgentConfig::release_listen_info() {
   // @@protoc_insertion_point(field_release:config.ServerAgentConfig.listen_info)
   clear_has_listen_info();
-  ::config::ListenInfo* temp = listen_info_;
+  ::config::AgentListenInfo* temp = listen_info_;
   listen_info_ = NULL;
   return temp;
 }
-inline ::config::ListenInfo* ServerAgentConfig::mutable_listen_info() {
+inline ::config::AgentListenInfo* ServerAgentConfig::mutable_listen_info() {
   set_has_listen_info();
   if (listen_info_ == NULL) {
-    listen_info_ = new ::config::ListenInfo;
+    listen_info_ = new ::config::AgentListenInfo;
   }
   // @@protoc_insertion_point(field_mutable:config.ServerAgentConfig.listen_info)
   return listen_info_;
 }
-inline void ServerAgentConfig::set_allocated_listen_info(::config::ListenInfo* listen_info) {
+inline void ServerAgentConfig::set_allocated_listen_info(::config::AgentListenInfo* listen_info) {
   ::google::protobuf::Arena* message_arena = GetArenaNoVirtual();
   if (message_arena == NULL) {
     delete listen_info_;

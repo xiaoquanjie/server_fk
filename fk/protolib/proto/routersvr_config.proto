@@ -1,6 +1,6 @@
 package config;
 
-message ListenInfo {
+message RouterListenInfo {
 	optional string listen_ip = 1;		// 监听ip
 	optional int32 listen_port = 2;
 }
@@ -19,7 +19,7 @@ message Policy {
 }
 
 message RouterSvrConfig {
-	repeated ListenInfo listen_list = 1;
+	repeated RouterListenInfo listen_list = 1;
 	repeated int32 legal_svr_list = 2;	// 合法服务列表
 	repeated Policy policy_list = 3;
 	optional int32 svr_inst_id = 4;
