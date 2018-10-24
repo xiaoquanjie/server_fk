@@ -57,6 +57,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dbtool", "dbtool\dbtool.vcx
 		{9FC43226-167E-4CF2-8E53-983045281446} = {9FC43226-167E-4CF2-8E53-983045281446}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{52984E99-F9F4-4AF1-BCAB-6997C860B3CD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server_agent", "server_agent\server_agent.vcxproj", "{B9D9DA5E-6FD8-4828-9EB4-A88841788A0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -157,9 +161,20 @@ Global
 		{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}.Release|Win32.Build.0 = Release|Win32
 		{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}.Release|x64.ActiveCfg = Release|x64
 		{79D67DC5-5AEB-4786-BA7D-B74830B01E4B}.Release|x64.Build.0 = Release|x64
+		{B9D9DA5E-6FD8-4828-9EB4-A88841788A0B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B9D9DA5E-6FD8-4828-9EB4-A88841788A0B}.Debug|Win32.Build.0 = Debug|Win32
+		{B9D9DA5E-6FD8-4828-9EB4-A88841788A0B}.Debug|x64.ActiveCfg = Debug|x64
+		{B9D9DA5E-6FD8-4828-9EB4-A88841788A0B}.Debug|x64.Build.0 = Debug|x64
+		{B9D9DA5E-6FD8-4828-9EB4-A88841788A0B}.Release|Win32.ActiveCfg = Release|Win32
+		{B9D9DA5E-6FD8-4828-9EB4-A88841788A0B}.Release|Win32.Build.0 = Release|Win32
+		{B9D9DA5E-6FD8-4828-9EB4-A88841788A0B}.Release|x64.ActiveCfg = Release|x64
+		{B9D9DA5E-6FD8-4828-9EB4-A88841788A0B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B9D9DA5E-6FD8-4828-9EB4-A88841788A0B} = {52984E99-F9F4-4AF1-BCAB-6997C860B3CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {48CCF2BC-0553-4BBD-B608-9591FD33656D}
