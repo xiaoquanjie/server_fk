@@ -125,6 +125,7 @@ def append_filelist_to_project_filter_xml(xml_file, filelist):
 
     project = dom_tree.documentElement
     item_groups = project.getElementsByTagName("ItemGroup")
+    chang_flag = False
     for f in filelist:
         add_flag = False
         is_header = True if f.endswith('.h') else False
@@ -139,13 +140,15 @@ def append_filelist_to_project_filter_xml(xml_file, filelist):
                 break
 
         if not add_flag:
+            chang_flag = True
             group = get_include_group_node(dom_tree) if is_header else get_compile_group_node(dom_tree)
             if is_header:
                 append_include_filter_node(dom_tree, group, f)
             else:
                 append_compile_filter_node(dom_tree, group, f)
 
-    save_xml(dom_tree, xml_file)
+    if chang_flag:
+        save_xml(dom_tree, xml_file)
 
 def append_filelist_to_project_xml(xml_file, filelist):
     dom_tree = xml.dom.minidom.parse(xml_file)
@@ -154,6 +157,7 @@ def append_filelist_to_project_xml(xml_file, filelist):
 
     project = dom_tree.documentElement
     item_groups = project.getElementsByTagName("ItemGroup")
+    chang_flag = False
     for f in filelist:
         add_flag = False
         is_header = True if f.endswith('.h') else False
@@ -168,13 +172,15 @@ def append_filelist_to_project_xml(xml_file, filelist):
                 break
 
         if not add_flag:
+            chang_flag = True
             group = get_include_group_node(dom_tree) if is_header else get_compile_group_node(dom_tree)
             if is_header:
                 append_include_node(dom_tree, group, f)
             else:
                 append_compile_node(dom_tree, group, f)
 
-    save_xml(dom_tree, xml_file)
+    if chang_flag:
+        save_xml(dom_tree, xml_file)
 
 
 if __name__ == '__main__':
