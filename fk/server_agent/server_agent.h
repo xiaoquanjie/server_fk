@@ -1,10 +1,10 @@
 #pragma once
 
-#include "commonlib/svr_base/ApplicationBase.h"
 #include "slience/base/singletion.hpp"
-#include "commonlib/svr_base/server_cfg.h"
 #include "protolib/src/server_agent_conf.pb.h"
 #include "protolib/src/server_agent_data.pb.h"
+#include "commonlib/svr_base/server_cfg.h"
+#include "commonlib/svr_base/ApplicationBase.h"
 
 class AgentApplication : public ApplicationBase {
 public:
