@@ -336,12 +336,34 @@ class ScriptInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_day_certain_time();
   void set_allocated_day_certain_time(::std::string* day_certain_time);
 
+  // optional string script_dir = 6;
+  bool has_script_dir() const;
+  void clear_script_dir();
+  static const int kScriptDirFieldNumber = 6;
+  const ::std::string& script_dir() const;
+  void set_script_dir(const ::std::string& value);
+  #if LANG_CXX11
+  void set_script_dir(::std::string&& value);
+  #endif
+  void set_script_dir(const char* value);
+  void set_script_dir(const char* value, size_t size);
+  ::std::string* mutable_script_dir();
+  ::std::string* release_script_dir();
+  void set_allocated_script_dir(::std::string* script_dir);
+
   // optional uint32 interval_seconds = 3;
   bool has_interval_seconds() const;
   void clear_interval_seconds();
   static const int kIntervalSecondsFieldNumber = 3;
   ::google::protobuf::uint32 interval_seconds() const;
   void set_interval_seconds(::google::protobuf::uint32 value);
+
+  // optional uint32 next_check_time = 5;
+  bool has_next_check_time() const;
+  void clear_next_check_time();
+  static const int kNextCheckTimeFieldNumber = 5;
+  ::google::protobuf::uint32 next_check_time() const;
+  void set_next_check_time(::google::protobuf::uint32 value);
 
   // optional .config.ScriptType type = 1;
   bool has_type() const;
@@ -360,13 +382,19 @@ class ScriptInfo : public ::google::protobuf::Message /* @@protoc_insertion_poin
   void clear_has_interval_seconds();
   void set_has_day_certain_time();
   void clear_has_day_certain_time();
+  void set_has_next_check_time();
+  void clear_has_next_check_time();
+  void set_has_script_dir();
+  void clear_has_script_dir();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
   mutable int _cached_size_;
   ::google::protobuf::internal::ArenaStringPtr script_;
   ::google::protobuf::internal::ArenaStringPtr day_certain_time_;
+  ::google::protobuf::internal::ArenaStringPtr script_dir_;
   ::google::protobuf::uint32 interval_seconds_;
+  ::google::protobuf::uint32 next_check_time_;
   int type_;
   friend struct ::protobuf_server_5fagent_5fconf_2eproto::TableStruct;
   friend void ::protobuf_server_5fagent_5fconf_2eproto::InitDefaultsScriptInfoImpl();
@@ -610,13 +638,13 @@ inline void ListenInfo::set_listen_port(::google::protobuf::int32 value) {
 
 // optional .config.ScriptType type = 1;
 inline bool ScriptInfo::has_type() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void ScriptInfo::set_has_type() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void ScriptInfo::clear_has_type() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void ScriptInfo::clear_type() {
   type_ = 1;
@@ -698,13 +726,13 @@ inline void ScriptInfo::set_allocated_script(::std::string* script) {
 
 // optional uint32 interval_seconds = 3;
 inline bool ScriptInfo::has_interval_seconds() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void ScriptInfo::set_has_interval_seconds() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void ScriptInfo::clear_has_interval_seconds() {
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void ScriptInfo::clear_interval_seconds() {
   interval_seconds_ = 0u;
@@ -781,6 +809,93 @@ inline void ScriptInfo::set_allocated_day_certain_time(::std::string* day_certai
   }
   day_certain_time_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), day_certain_time);
   // @@protoc_insertion_point(field_set_allocated:config.ScriptInfo.day_certain_time)
+}
+
+// optional uint32 next_check_time = 5;
+inline bool ScriptInfo::has_next_check_time() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+inline void ScriptInfo::set_has_next_check_time() {
+  _has_bits_[0] |= 0x00000010u;
+}
+inline void ScriptInfo::clear_has_next_check_time() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline void ScriptInfo::clear_next_check_time() {
+  next_check_time_ = 0u;
+  clear_has_next_check_time();
+}
+inline ::google::protobuf::uint32 ScriptInfo::next_check_time() const {
+  // @@protoc_insertion_point(field_get:config.ScriptInfo.next_check_time)
+  return next_check_time_;
+}
+inline void ScriptInfo::set_next_check_time(::google::protobuf::uint32 value) {
+  set_has_next_check_time();
+  next_check_time_ = value;
+  // @@protoc_insertion_point(field_set:config.ScriptInfo.next_check_time)
+}
+
+// optional string script_dir = 6;
+inline bool ScriptInfo::has_script_dir() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void ScriptInfo::set_has_script_dir() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void ScriptInfo::clear_has_script_dir() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void ScriptInfo::clear_script_dir() {
+  script_dir_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_script_dir();
+}
+inline const ::std::string& ScriptInfo::script_dir() const {
+  // @@protoc_insertion_point(field_get:config.ScriptInfo.script_dir)
+  return script_dir_.GetNoArena();
+}
+inline void ScriptInfo::set_script_dir(const ::std::string& value) {
+  set_has_script_dir();
+  script_dir_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:config.ScriptInfo.script_dir)
+}
+#if LANG_CXX11
+inline void ScriptInfo::set_script_dir(::std::string&& value) {
+  set_has_script_dir();
+  script_dir_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:config.ScriptInfo.script_dir)
+}
+#endif
+inline void ScriptInfo::set_script_dir(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_script_dir();
+  script_dir_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:config.ScriptInfo.script_dir)
+}
+inline void ScriptInfo::set_script_dir(const char* value, size_t size) {
+  set_has_script_dir();
+  script_dir_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:config.ScriptInfo.script_dir)
+}
+inline ::std::string* ScriptInfo::mutable_script_dir() {
+  set_has_script_dir();
+  // @@protoc_insertion_point(field_mutable:config.ScriptInfo.script_dir)
+  return script_dir_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* ScriptInfo::release_script_dir() {
+  // @@protoc_insertion_point(field_release:config.ScriptInfo.script_dir)
+  clear_has_script_dir();
+  return script_dir_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void ScriptInfo::set_allocated_script_dir(::std::string* script_dir) {
+  if (script_dir != NULL) {
+    set_has_script_dir();
+  } else {
+    clear_has_script_dir();
+  }
+  script_dir_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), script_dir);
+  // @@protoc_insertion_point(field_set_allocated:config.ScriptInfo.script_dir)
 }
 
 // -------------------------------------------------------------------

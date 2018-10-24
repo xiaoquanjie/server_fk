@@ -124,10 +124,14 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::ScriptInfo, script_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::ScriptInfo, interval_seconds_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::ScriptInfo, day_certain_time_),
-  3,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::ScriptInfo, next_check_time_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::ScriptInfo, script_dir_),
+  5,
   0,
-  2,
+  3,
   1,
+  4,
+  2,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::ServerAgentConfig, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::config::ServerAgentConfig, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -142,8 +146,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 7, sizeof(::config::ListenInfo)},
-  { 9, 18, sizeof(::config::ScriptInfo)},
-  { 22, 30, sizeof(::config::ServerAgentConfig)},
+  { 9, 20, sizeof(::config::ScriptInfo)},
+  { 26, 34, sizeof(::config::ServerAgentConfig)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -176,18 +180,19 @@ void AddDescriptorsImpl() {
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
       "\n\027server_agent_conf.proto\022\006config\"4\n\nLis"
       "tenInfo\022\021\n\tlisten_ip\030\001 \001(\t\022\023\n\013listen_por"
-      "t\030\002 \001(\005\"r\n\nScriptInfo\022 \n\004type\030\001 \001(\0162\022.co"
-      "nfig.ScriptType\022\016\n\006script\030\002 \001(\t\022\030\n\020inter"
-      "val_seconds\030\003 \001(\r\022\030\n\020day_certain_time\030\004 "
-      "\001(\t\"\211\001\n\021ServerAgentConfig\022\'\n\013listen_info"
-      "\030\001 \001(\0132\022.config.ListenInfo\022,\n\020script_inf"
-      "o_list\030\002 \003(\0132\022.config.ScriptInfo\022\035\n\025max_"
-      "pullup_server_cnt\030\003 \001(\r*K\n\nScriptType\022\036\n"
-      "\032E_SCRIPT_TYPE_CERTAIN_TIME\020\001\022\035\n\031E_SCRIP"
-      "T_TYPE_PERIOD_TIME\020\002"
+      "t\030\002 \001(\005\"\237\001\n\nScriptInfo\022 \n\004type\030\001 \001(\0162\022.c"
+      "onfig.ScriptType\022\016\n\006script\030\002 \001(\t\022\030\n\020inte"
+      "rval_seconds\030\003 \001(\r\022\030\n\020day_certain_time\030\004"
+      " \001(\t\022\027\n\017next_check_time\030\005 \001(\r\022\022\n\nscript_"
+      "dir\030\006 \001(\t\"\211\001\n\021ServerAgentConfig\022\'\n\013liste"
+      "n_info\030\001 \001(\0132\022.config.ListenInfo\022,\n\020scri"
+      "pt_info_list\030\002 \003(\0132\022.config.ScriptInfo\022\035"
+      "\n\025max_pullup_server_cnt\030\003 \001(\r*K\n\nScriptT"
+      "ype\022\036\n\032E_SCRIPT_TYPE_CERTAIN_TIME\020\001\022\035\n\031E"
+      "_SCRIPT_TYPE_PERIOD_TIME\020\002"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 420);
+      descriptor, 466);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "server_agent_conf.proto", &protobuf_RegisterTypes);
 }
@@ -538,6 +543,8 @@ const int ScriptInfo::kTypeFieldNumber;
 const int ScriptInfo::kScriptFieldNumber;
 const int ScriptInfo::kIntervalSecondsFieldNumber;
 const int ScriptInfo::kDayCertainTimeFieldNumber;
+const int ScriptInfo::kNextCheckTimeFieldNumber;
+const int ScriptInfo::kScriptDirFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 ScriptInfo::ScriptInfo()
@@ -562,6 +569,10 @@ ScriptInfo::ScriptInfo(const ScriptInfo& from)
   if (from.has_day_certain_time()) {
     day_certain_time_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.day_certain_time_);
   }
+  script_dir_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_script_dir()) {
+    script_dir_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.script_dir_);
+  }
   ::memcpy(&interval_seconds_, &from.interval_seconds_,
     static_cast<size_t>(reinterpret_cast<char*>(&type_) -
     reinterpret_cast<char*>(&interval_seconds_)) + sizeof(type_));
@@ -572,7 +583,10 @@ void ScriptInfo::SharedCtor() {
   _cached_size_ = 0;
   script_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   day_certain_time_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  interval_seconds_ = 0u;
+  script_dir_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&interval_seconds_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&next_check_time_) -
+      reinterpret_cast<char*>(&interval_seconds_)) + sizeof(next_check_time_));
   type_ = 1;
 }
 
@@ -584,6 +598,7 @@ ScriptInfo::~ScriptInfo() {
 void ScriptInfo::SharedDtor() {
   script_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   day_certain_time_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  script_dir_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void ScriptInfo::SetCachedSize(int size) const {
@@ -616,7 +631,7 @@ void ScriptInfo::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 3u) {
+  if (cached_has_bits & 7u) {
     if (cached_has_bits & 0x00000001u) {
       GOOGLE_DCHECK(!script_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
       (*script_.UnsafeRawStringPointer())->clear();
@@ -625,9 +640,15 @@ void ScriptInfo::Clear() {
       GOOGLE_DCHECK(!day_certain_time_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
       (*day_certain_time_.UnsafeRawStringPointer())->clear();
     }
+    if (cached_has_bits & 0x00000004u) {
+      GOOGLE_DCHECK(!script_dir_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
+      (*script_dir_.UnsafeRawStringPointer())->clear();
+    }
   }
-  if (cached_has_bits & 12u) {
-    interval_seconds_ = 0u;
+  if (cached_has_bits & 56u) {
+    ::memset(&interval_seconds_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&next_check_time_) -
+        reinterpret_cast<char*>(&interval_seconds_)) + sizeof(next_check_time_));
     type_ = 1;
   }
   _has_bits_.Clear();
@@ -710,6 +731,36 @@ bool ScriptInfo::MergePartialFromCodedStream(
         break;
       }
 
+      // optional uint32 next_check_time = 5;
+      case 5: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(40u /* 40 & 0xFF */)) {
+          set_has_next_check_time();
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &next_check_time_)));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      // optional string script_dir = 6;
+      case 6: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_script_dir()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->script_dir().data(), static_cast<int>(this->script_dir().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "config.ScriptInfo.script_dir");
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
       default: {
       handle_unusual:
         if (tag == 0) {
@@ -738,7 +789,7 @@ void ScriptInfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional .config.ScriptType type = 1;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000020u) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       1, this->type(), output);
   }
@@ -754,7 +805,7 @@ void ScriptInfo::SerializeWithCachedSizes(
   }
 
   // optional uint32 interval_seconds = 3;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->interval_seconds(), output);
   }
 
@@ -766,6 +817,21 @@ void ScriptInfo::SerializeWithCachedSizes(
       "config.ScriptInfo.day_certain_time");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       4, this->day_certain_time(), output);
+  }
+
+  // optional uint32 next_check_time = 5;
+  if (cached_has_bits & 0x00000010u) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->next_check_time(), output);
+  }
+
+  // optional string script_dir = 6;
+  if (cached_has_bits & 0x00000004u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->script_dir().data(), static_cast<int>(this->script_dir().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "config.ScriptInfo.script_dir");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      6, this->script_dir(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -784,7 +850,7 @@ void ScriptInfo::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional .config.ScriptType type = 1;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000020u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       1, this->type(), target);
   }
@@ -801,7 +867,7 @@ void ScriptInfo::SerializeWithCachedSizes(
   }
 
   // optional uint32 interval_seconds = 3;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->interval_seconds(), target);
   }
 
@@ -814,6 +880,22 @@ void ScriptInfo::SerializeWithCachedSizes(
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         4, this->day_certain_time(), target);
+  }
+
+  // optional uint32 next_check_time = 5;
+  if (cached_has_bits & 0x00000010u) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->next_check_time(), target);
+  }
+
+  // optional string script_dir = 6;
+  if (cached_has_bits & 0x00000004u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->script_dir().data(), static_cast<int>(this->script_dir().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "config.ScriptInfo.script_dir");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        6, this->script_dir(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -833,7 +915,7 @@ size_t ScriptInfo::ByteSizeLong() const {
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         _internal_metadata_.unknown_fields());
   }
-  if (_has_bits_[0 / 32] & 15u) {
+  if (_has_bits_[0 / 32] & 63u) {
     // optional string script = 2;
     if (has_script()) {
       total_size += 1 +
@@ -848,11 +930,25 @@ size_t ScriptInfo::ByteSizeLong() const {
           this->day_certain_time());
     }
 
+    // optional string script_dir = 6;
+    if (has_script_dir()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->script_dir());
+    }
+
     // optional uint32 interval_seconds = 3;
     if (has_interval_seconds()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->interval_seconds());
+    }
+
+    // optional uint32 next_check_time = 5;
+    if (has_next_check_time()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->next_check_time());
     }
 
     // optional .config.ScriptType type = 1;
@@ -892,7 +988,7 @@ void ScriptInfo::MergeFrom(const ScriptInfo& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 15u) {
+  if (cached_has_bits & 63u) {
     if (cached_has_bits & 0x00000001u) {
       set_has_script();
       script_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.script_);
@@ -902,9 +998,16 @@ void ScriptInfo::MergeFrom(const ScriptInfo& from) {
       day_certain_time_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.day_certain_time_);
     }
     if (cached_has_bits & 0x00000004u) {
-      interval_seconds_ = from.interval_seconds_;
+      set_has_script_dir();
+      script_dir_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.script_dir_);
     }
     if (cached_has_bits & 0x00000008u) {
+      interval_seconds_ = from.interval_seconds_;
+    }
+    if (cached_has_bits & 0x00000010u) {
+      next_check_time_ = from.next_check_time_;
+    }
+    if (cached_has_bits & 0x00000020u) {
       type_ = from.type_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -937,7 +1040,9 @@ void ScriptInfo::InternalSwap(ScriptInfo* other) {
   using std::swap;
   script_.Swap(&other->script_);
   day_certain_time_.Swap(&other->day_certain_time_);
+  script_dir_.Swap(&other->script_dir_);
   swap(interval_seconds_, other->interval_seconds_);
+  swap(next_check_time_, other->next_check_time_);
   swap(type_, other->type_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);

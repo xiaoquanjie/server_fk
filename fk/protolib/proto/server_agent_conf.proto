@@ -14,7 +14,9 @@ message ScriptInfo {
 	optional ScriptType type = 1;
 	optional string script = 2;
 	optional uint32 interval_seconds = 3;
-	optional string day_certain_time = 4;		
+	optional string day_certain_time = 4;
+	optional uint32 next_check_time = 5;
+	optional string script_dir = 6;
 }
 
 message ServerAgentConfig {

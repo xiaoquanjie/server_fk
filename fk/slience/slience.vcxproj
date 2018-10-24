@@ -153,6 +153,7 @@
     <ClInclude Include="base\timer.hpp" />
     <ClInclude Include="base\time_pool.h" />
     <ClInclude Include="base\tls.hpp" />
+    <ClInclude Include="base\util.h" />
     <ClInclude Include="base\win.hpp" />
     <ClInclude Include="coroutine\config.hpp" />
     <ClInclude Include="coroutine\coroutine.h" />
@@ -169,6 +170,7 @@
     <ClInclude Include="netio\netio.hpp" />
     <ClCompile Include="base\object_pool.cpp" />
     <ClCompile Include="base\time_pool.cpp" />
+    <ClCompile Include="base\util.cpp" />
     <ClCompile Include="coroutine\coroutine.cpp" />
     <ClCompile Include="coroutine\coroutine_linux.cpp" />
     <ClCompile Include="coroutine\coroutine_win.cpp" />

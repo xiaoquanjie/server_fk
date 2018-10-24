@@ -27,6 +27,11 @@ public:
 
 	int OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const char* data, base::s_uint32_t data_len) override;
 
+protected:
+	void ExecuteScript();
+
+	int System(const std::string& cmd);
+
 private:
 	ServerCfg<config::ServerAgentConfig> _svr_config;
 };
