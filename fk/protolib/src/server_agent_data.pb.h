@@ -37,7 +37,7 @@ namespace protobuf_server_5fagent_5fdata_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[3];
+  static const ::google::protobuf::internal::ParseTable schema[4];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -49,16 +49,22 @@ void InitDefaultsSvrAgentDataImpl();
 void InitDefaultsSvrAgentData();
 void InitDefaultsExecuteCommandReqImpl();
 void InitDefaultsExecuteCommandReq();
+void InitDefaultsExecuteCommandRspImpl();
+void InitDefaultsExecuteCommandRsp();
 inline void InitDefaults() {
   InitDefaultsInstance();
   InitDefaultsSvrAgentData();
   InitDefaultsExecuteCommandReq();
+  InitDefaultsExecuteCommandRsp();
 }
 }  // namespace protobuf_server_5fagent_5fdata_2eproto
 namespace agent {
 class ExecuteCommandReq;
 class ExecuteCommandReqDefaultTypeInternal;
 extern ExecuteCommandReqDefaultTypeInternal _ExecuteCommandReq_default_instance_;
+class ExecuteCommandRsp;
+class ExecuteCommandRspDefaultTypeInternal;
+extern ExecuteCommandRspDefaultTypeInternal _ExecuteCommandRsp_default_instance_;
 class Instance;
 class InstanceDefaultTypeInternal;
 extern InstanceDefaultTypeInternal _Instance_default_instance_;
@@ -253,6 +259,13 @@ class Instance : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::std::string* release_check_cmd();
   void set_allocated_check_cmd(::std::string* check_cmd);
 
+  // optional int32 check_cnt = 6;
+  bool has_check_cnt() const;
+  void clear_check_cnt();
+  static const int kCheckCntFieldNumber = 6;
+  ::google::protobuf::int32 check_cnt() const;
+  void set_check_cnt(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:agent.Instance)
  private:
   void set_has_inst_name();
@@ -265,6 +278,8 @@ class Instance : public ::google::protobuf::Message /* @@protoc_insertion_point(
   void clear_has_clean_cmd();
   void set_has_check_cmd();
   void clear_has_check_cmd();
+  void set_has_check_cnt();
+  void clear_has_check_cnt();
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::HasBits<1> _has_bits_;
@@ -274,6 +289,7 @@ class Instance : public ::google::protobuf::Message /* @@protoc_insertion_point(
   ::google::protobuf::internal::ArenaStringPtr stop_cmd_;
   ::google::protobuf::internal::ArenaStringPtr clean_cmd_;
   ::google::protobuf::internal::ArenaStringPtr check_cmd_;
+  ::google::protobuf::int32 check_cnt_;
   friend struct ::protobuf_server_5fagent_5fdata_2eproto::TableStruct;
   friend void ::protobuf_server_5fagent_5fdata_2eproto::InitDefaultsInstanceImpl();
 };
@@ -519,6 +535,116 @@ class ExecuteCommandReq : public ::google::protobuf::Message /* @@protoc_inserti
   ::agent::Instance* instance_;
   friend struct ::protobuf_server_5fagent_5fdata_2eproto::TableStruct;
   friend void ::protobuf_server_5fagent_5fdata_2eproto::InitDefaultsExecuteCommandReqImpl();
+};
+// -------------------------------------------------------------------
+
+class ExecuteCommandRsp : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:agent.ExecuteCommandRsp) */ {
+ public:
+  ExecuteCommandRsp();
+  virtual ~ExecuteCommandRsp();
+
+  ExecuteCommandRsp(const ExecuteCommandRsp& from);
+
+  inline ExecuteCommandRsp& operator=(const ExecuteCommandRsp& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  ExecuteCommandRsp(ExecuteCommandRsp&& from) noexcept
+    : ExecuteCommandRsp() {
+    *this = ::std::move(from);
+  }
+
+  inline ExecuteCommandRsp& operator=(ExecuteCommandRsp&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ExecuteCommandRsp& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ExecuteCommandRsp* internal_default_instance() {
+    return reinterpret_cast<const ExecuteCommandRsp*>(
+               &_ExecuteCommandRsp_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    3;
+
+  void Swap(ExecuteCommandRsp* other);
+  friend void swap(ExecuteCommandRsp& a, ExecuteCommandRsp& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ExecuteCommandRsp* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  ExecuteCommandRsp* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const ExecuteCommandRsp& from);
+  void MergeFrom(const ExecuteCommandRsp& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(ExecuteCommandRsp* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 ret = 1;
+  bool has_ret() const;
+  void clear_ret();
+  static const int kRetFieldNumber = 1;
+  ::google::protobuf::int32 ret() const;
+  void set_ret(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:agent.ExecuteCommandRsp)
+ private:
+  void set_has_ret();
+  void clear_has_ret();
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable int _cached_size_;
+  ::google::protobuf::int32 ret_;
+  friend struct ::protobuf_server_5fagent_5fdata_2eproto::TableStruct;
+  friend void ::protobuf_server_5fagent_5fdata_2eproto::InitDefaultsExecuteCommandRspImpl();
 };
 // ===================================================================
 
@@ -846,6 +972,30 @@ inline void Instance::set_allocated_check_cmd(::std::string* check_cmd) {
   // @@protoc_insertion_point(field_set_allocated:agent.Instance.check_cmd)
 }
 
+// optional int32 check_cnt = 6;
+inline bool Instance::has_check_cnt() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+inline void Instance::set_has_check_cnt() {
+  _has_bits_[0] |= 0x00000020u;
+}
+inline void Instance::clear_has_check_cnt() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline void Instance::clear_check_cnt() {
+  check_cnt_ = 0;
+  clear_has_check_cnt();
+}
+inline ::google::protobuf::int32 Instance::check_cnt() const {
+  // @@protoc_insertion_point(field_get:agent.Instance.check_cnt)
+  return check_cnt_;
+}
+inline void Instance::set_check_cnt(::google::protobuf::int32 value) {
+  set_has_check_cnt();
+  check_cnt_ = value;
+  // @@protoc_insertion_point(field_set:agent.Instance.check_cnt)
+}
+
 // -------------------------------------------------------------------
 
 // SvrAgentData
@@ -1001,9 +1151,39 @@ inline void ExecuteCommandReq::set_allocated_cur_cmd(::std::string* cur_cmd) {
   // @@protoc_insertion_point(field_set_allocated:agent.ExecuteCommandReq.cur_cmd)
 }
 
+// -------------------------------------------------------------------
+
+// ExecuteCommandRsp
+
+// optional int32 ret = 1;
+inline bool ExecuteCommandRsp::has_ret() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void ExecuteCommandRsp::set_has_ret() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void ExecuteCommandRsp::clear_has_ret() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void ExecuteCommandRsp::clear_ret() {
+  ret_ = 0;
+  clear_has_ret();
+}
+inline ::google::protobuf::int32 ExecuteCommandRsp::ret() const {
+  // @@protoc_insertion_point(field_get:agent.ExecuteCommandRsp.ret)
+  return ret_;
+}
+inline void ExecuteCommandRsp::set_ret(::google::protobuf::int32 value) {
+  set_has_ret();
+  ret_ = value;
+  // @@protoc_insertion_point(field_set:agent.ExecuteCommandRsp.ret)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

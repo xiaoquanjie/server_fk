@@ -60,6 +60,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{52984E99-F9F4-4AF1-BCAB-6997C860B3CD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server_agent", "server_agent\server_agent.vcxproj", "{B9D9DA5E-6FD8-4828-9EB4-A88841788A0B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B6D43274-EE16-4488-BA38-863805CB3CCB} = {B6D43274-EE16-4488-BA38-863805CB3CCB}
+		{BD516388-238C-4DE9-9E1E-AE28AC51A8ED} = {BD516388-238C-4DE9-9E1E-AE28AC51A8ED}
+		{EE769691-8A57-41AD-904B-35606660162E} = {EE769691-8A57-41AD-904B-35606660162E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

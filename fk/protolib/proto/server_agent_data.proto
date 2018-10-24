@@ -6,6 +6,7 @@ message Instance {
 	optional string stop_cmd = 3;
 	optional string clean_cmd = 4;
 	optional string check_cmd = 5;
+	optional int32  check_cnt = 6;
 }
 
 message SvrAgentData {
@@ -21,4 +22,8 @@ enum CMD {
 message ExecuteCommandReq {
 	optional Instance instance = 1;
 	optional string cur_cmd = 2;
+}
+
+message ExecuteCommandRsp {
+	optional int32 ret = 1;
 }
