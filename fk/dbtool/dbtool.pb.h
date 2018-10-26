@@ -89,9 +89,10 @@ enum MysqlFieldType {
   E_FieldType_Varchar = 6,
   E_FieldType_Blob = 7,
   E_FieldType_MediumBlob = 8,
-  E_FieldType_Date = 9,
-  E_FieldType_Time = 10,
-  E_FieldType_TimeStamp = 11
+  E_FieldType_Text = 9,
+  E_FieldType_Date = 10,
+  E_FieldType_Time = 11,
+  E_FieldType_TimeStamp = 12
 };
 bool MysqlFieldType_IsValid(int value);
 const MysqlFieldType MysqlFieldType_MIN = E_FieldType_TinyInt;

@@ -199,6 +199,8 @@ namespace logger {
 
 		logstream& operator<<(const std::string& value);
 
+		logstream& operator<<(const long int& value);
+
 		template<int len>
 		logstream& operator<<(const char(&value)[len]);
 

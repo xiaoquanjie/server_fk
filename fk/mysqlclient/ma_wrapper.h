@@ -7,6 +7,8 @@
 #include <memory>
 #include <functional>
 #include <Windows.h>
+#pragma comment(lib, "WS2_32.lib")
+#pragma comment(lib, "Shlwapi.lib")
 #else
 #include <tr1/memory>
 #include <tr1/functional>
@@ -126,10 +128,6 @@ public:
 		return (_errno == ER_DUP_ENTRY);
 	}
 
-	int Execute(const std::string& sql, int& affected_rows) {
-		return Execute(sql.c_str(), sql.length(), affected_rows);
-	}
-
 	int Execute(const char* sql, unsigned int sql_len, int& affected_rows) {
 		affected_rows = 0;
 		int ret = mysql_real_query(&_st_mysql, sql, sql_len);
@@ -158,13 +156,9 @@ public:
 		return ret;
 	}
 
-	int Query(const std::string& sql, int expected_fields, RowCallBack callback) {
-		int row_cnt = 0;
-		return Query(sql.c_str(), sql.length(), expected_fields, row_cnt, callback);
-	}
-
-	int Query(const std::string& sql, int expected_fields, int& row_cnt, RowCallBack callback) {
-		return Query(sql.c_str(), sql.length(), expected_fields, row_cnt, callback);
+	int Execute(const char* sql, unsigned int sql_len) {
+		int affected_rows = 0;
+		return Execute(sql, sql_len, affected_rows);
 	}
 
 	int Query(const char* sql, unsigned int sql_len, int expected_fields, RowCallBack callback) {
@@ -222,7 +216,42 @@ public:
 		}
 		return ret;
 	}
+	
+	int Autocommit(bool open_or_close) {
+		int ret = mysql_autocommit(&_st_mysql, open_or_close);
+		if (ret != 0) {
+			unsigned int code = mysql_errno(&_st_mysql);
+			if (CR_SERVER_GONE_ERROR == code
+				|| CR_SERVER_LOST == code) {
+				if (mariadb_reconnect(&_st_mysql)) {
+					ret = mysql_autocommit(&_st_mysql, open_or_close);
+				}
+				else {
+					_set_errno(CR_SERVER_LOST);
+					_set_err_msg("reconnect fail");
+					return -1;
+				}
+			}
+		}
+		if (0 != ret) {
+			_set_err_msg();
+			_set_errno();
+		}
+		return ret;
+	}
 
+	int StartTransaction() {
+		std::string sql = "START TRANSACTION;";
+		return Execute(sql.c_str(), sql.length());
+	}
+
+	int Rollback() {
+		return mysql_rollback(&_st_mysql);
+	}
+
+	int Commit() {
+		return mysql_commit(&_st_mysql);
+	}
 protected:
 	bool _UseDb(const char* new_db) {
 		int ret = mysql_select_db(&_st_mysql, new_db);
@@ -236,7 +265,7 @@ protected:
 				else {
 					_set_errno(CR_SERVER_LOST);
 					_set_err_msg("reconnect fail");
-					return -1;
+					return false;
 				}
 			}
 		}
@@ -360,7 +389,7 @@ public:
 		_mysqlinfo_& info = _mysql_detail::ThreadLocalData<_mysqlinfo_>::data();
 		info.info[new_unistr] = ptr;
 		info.info.erase(old_unistr);
-		return false;
+		return true;
 	}
 
 	static const char* GetErrorMsg() {

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?><Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -24,7 +23,7 @@
     <RootNamespace>protolib</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -51,24 +50,24 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"/>
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"/>
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"/>
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"/>
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros"/>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\bin\</OutDir>
     <IntDir>..\output\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
@@ -138,33 +137,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="..\conf\comm_conf\comm.conf" />
-    <None Include="..\conf\comm_conf\router.conf" />
-    <None Include="BUILD" />
-    <None Include="proto\cmd.proto" />
-    <None Include="proto\comm_conf.proto" />
-    <None Include="proto\connsvr_config.proto" />
-    <None Include="proto\router.proto" />
-    <None Include="proto\routersvr_config.proto" />
-    <None Include="proto\svr_base.proto" />
+    <None Include="..\conf\comm_conf\comm.conf"/>
+    <None Include="..\conf\comm_conf\router.conf"/>
+    <None Include="BUILD"/>
+    <None Include="proto\cmd.proto"/>
+    <None Include="proto\comm_conf.proto"/>
+    <None Include="proto\connsvr_config.proto"/>
+    <None Include="proto\router.proto"/>
+    <None Include="proto\routersvr_config.proto"/>
+    <None Include="proto\server_agent_conf.proto"/>
+    <None Include="proto\server_agent_data.proto"/>
+    <None Include="proto\svr_base.proto"/>
+    <None Include="run_me.py"/>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\cmd.pb.cc" />
-    <ClCompile Include="src\comm_conf.pb.cc" />
-    <ClCompile Include="src\connsvr_config.pb.cc" />
-    <ClCompile Include="src\router.pb.cc" />
-    <ClCompile Include="src\routersvr_config.pb.cc" />
-    <ClCompile Include="src\svr_base.pb.cc" />
+    
+    
+    
+    
+    
+    
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\cmd.pb.h" />
-    <ClInclude Include="src\comm_conf.pb.h" />
-    <ClInclude Include="src\connsvr_config.pb.h" />
-    <ClInclude Include="src\router.pb.h" />
-    <ClInclude Include="src\routersvr_config.pb.h" />
-    <ClInclude Include="src\svr_base.pb.h" />
+    
+    
+    
+    
+    
+    
   </ItemGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project>
+<ItemGroup><ClCompile Include="src/cmd.pb.cc"/><ClCompile Include="src/comm_conf.pb.cc"/><ClCompile Include="src/connsvr_config.pb.cc"/><ClCompile Include="src/router.pb.cc"/><ClCompile Include="src/routersvr_config.pb.cc"/><ClCompile Include="src/server_agent_conf.pb.cc"/><ClCompile Include="src/server_agent_data.pb.cc"/><ClCompile Include="src/svr_base.pb.cc"/></ItemGroup><ItemGroup><ClInclude Include="src/cmd.pb.h"/><ClInclude Include="src/comm_conf.pb.h"/><ClInclude Include="src/connsvr_config.pb.h"/><ClInclude Include="src/router.pb.h"/><ClInclude Include="src/routersvr_config.pb.h"/><ClInclude Include="src/server_agent_conf.pb.h"/><ClInclude Include="src/server_agent_data.pb.h"/><ClInclude Include="src/svr_base.pb.h"/></ItemGroup></Project>

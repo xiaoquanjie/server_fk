@@ -9,7 +9,7 @@ from xml.etree.ElementTree import ElementTree
 
 def generator_build_file():
     file_str = "cc_library(\n"
-    file_str += "\tname = 'excelconf',\n"
+    file_str += "\tname = 'proto',\n"
     file_str += "\tsrcs = [\n"
 
     files = os.listdir('./src/')
@@ -125,7 +125,7 @@ def append_filelist_to_project_filter_xml(xml_file, filelist):
 
     project = dom_tree.documentElement
     item_groups = project.getElementsByTagName("ItemGroup")
-    chang_flag = False
+    change_flag = False
     for f in filelist:
         add_flag = False
         is_header = True if f.endswith('.h') else False
@@ -140,14 +140,14 @@ def append_filelist_to_project_filter_xml(xml_file, filelist):
                 break
 
         if not add_flag:
-            chang_flag = True
+            change_flag = True
             group = get_include_group_node(dom_tree) if is_header else get_compile_group_node(dom_tree)
             if is_header:
                 append_include_filter_node(dom_tree, group, f)
             else:
                 append_compile_filter_node(dom_tree, group, f)
 
-    if chang_flag:
+    if change_flag:
         save_xml(dom_tree, xml_file)
 
 def append_filelist_to_project_xml(xml_file, filelist):
@@ -157,7 +157,7 @@ def append_filelist_to_project_xml(xml_file, filelist):
 
     project = dom_tree.documentElement
     item_groups = project.getElementsByTagName("ItemGroup")
-    chang_flag = False
+    change_flag = False
     for f in filelist:
         add_flag = False
         is_header = True if f.endswith('.h') else False
@@ -172,24 +172,18 @@ def append_filelist_to_project_xml(xml_file, filelist):
                 break
 
         if not add_flag:
-            chang_flag = True
+            change_flag = True
             group = get_include_group_node(dom_tree) if is_header else get_compile_group_node(dom_tree)
             if is_header:
                 append_include_node(dom_tree, group, f)
             else:
                 append_compile_node(dom_tree, group, f)
 
-    if chang_flag:
+    if change_flag:
         save_xml(dom_tree, xml_file)
 
 
 if __name__ == '__main__':
-    dir_path = './excel/'
-    files = os.listdir(dir_path)
-    for f in files:
-        cmd = 'python xls_translator.py Data ' + dir_path + f
-        os.system(cmd)
-
     if not os.path.exists('./src'):
         os.makedirs('./src/')
     files = os.listdir('./proto/')
@@ -202,6 +196,7 @@ if __name__ == '__main__':
             command = "..\\bin\\protoc.exe --proto_path=./proto --cpp_out=./src/ " + f
         else:
             command = "cd proto; protoc --cpp_out=../src/ " + f
+        print (command)
         os.system(command)
 
     generator_build_file()
@@ -210,7 +205,7 @@ if __name__ == '__main__':
     files = os.listdir('./src/')
     for f in files:
         source_files.append('src/' + f)
-        append_filelist_to_project_filter_xml("excel.vcxproj.filters", source_files)
-        append_filelist_to_project_xml("excel.vcxproj", source_files)
+        append_filelist_to_project_filter_xml("protolib.vcxproj.filters", source_files)
+        append_filelist_to_project_xml("protolib.vcxproj", source_files)
 
 

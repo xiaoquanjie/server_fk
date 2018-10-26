@@ -237,6 +237,9 @@
     <ClInclude Include="coroutine\coroutine.h">
       <Filter>coroutine</Filter>
     </ClInclude>
+    <ClInclude Include="base\util.h">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\buffer.cpp">
@@ -298,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="coroutine\courtouine_task.cpp">
       <Filter>coroutine</Filter>
+    </ClCompile>
+    <ClCompile Include="base\util.cpp">
+      <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

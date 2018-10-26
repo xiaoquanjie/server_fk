@@ -286,19 +286,20 @@ void AddDescriptorsImpl() {
       "_user\030\003 \001(\t\022\024\n\014mysql_passwd\030\004 \001(\t\022\023\n\013sch"
       "ema_name\030\005 \001(\t\022\"\n\006tables\030\006 \003(\0132\022.dbtool."
       "MysqlTable\"=\n\017MysqlSchemaConf\022*\n\rmysql_s"
-      "chemas\030\001 \003(\0132\023.dbtool.MysqlSchema*\226\002\n\016My"
+      "chemas\030\001 \003(\0132\023.dbtool.MysqlSchema*\254\002\n\016My"
       "sqlFieldType\022\027\n\023E_FieldType_TinyInt\020\001\022\023\n"
       "\017E_FieldType_Int\020\002\022\024\n\020E_FieldType_UInt\020\003"
       "\022\026\n\022E_FieldType_BigInt\020\004\022\026\n\022E_FieldType_"
       "Double\020\005\022\027\n\023E_FieldType_Varchar\020\006\022\024\n\020E_F"
       "ieldType_Blob\020\007\022\032\n\026E_FieldType_MediumBlo"
-      "b\020\010\022\024\n\020E_FieldType_Date\020\t\022\024\n\020E_FieldType"
-      "_Time\020\n\022\031\n\025E_FieldType_TimeStamp\020\013*Q\n\014My"
-      "sqlKeyType\022\025\n\021E_KeyType_Primary\020\001\022\024\n\020E_K"
-      "eyType_Normal\020\002\022\024\n\020E_KeyType_Unique\020\003"
+      "b\020\010\022\024\n\020E_FieldType_Text\020\t\022\024\n\020E_FieldType"
+      "_Date\020\n\022\024\n\020E_FieldType_Time\020\013\022\031\n\025E_Field"
+      "Type_TimeStamp\020\014*Q\n\014MysqlKeyType\022\025\n\021E_Ke"
+      "yType_Primary\020\001\022\024\n\020E_KeyType_Normal\020\002\022\024\n"
+      "\020E_KeyType_Unique\020\003"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1037);
+      descriptor, 1059);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "dbtool.proto", &protobuf_RegisterTypes);
 }
@@ -332,6 +333,7 @@ bool MysqlFieldType_IsValid(int value) {
     case 9:
     case 10:
     case 11:
+    case 12:
       return true;
     default:
       return false;

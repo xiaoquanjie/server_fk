@@ -49,6 +49,7 @@
     <ClCompile Include="..\mariadb-connector-c-master\zlib\trees.c" />
     <ClCompile Include="..\mariadb-connector-c-master\zlib\uncompr.c" />
     <ClCompile Include="..\mariadb-connector-c-master\zlib\zutil.c" />
+    <ClCompile Include="..\mariadb-connector-c-master\libmariadb\ma_client_plugin.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\mariadb-connector-c-master\BUILD" />

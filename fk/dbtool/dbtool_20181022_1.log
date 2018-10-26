@@ -1,0 +1,23 @@
+INFO  20181022 14:46:26.257 18388 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181022 14:46:26.258 18388 e:\git2\server_fk\fk\dbtool\main.cpp:47(CheckMysqlSyntax)|Error: rename_from is equal to name in field: name_time2 in table: mystery_box in schema: mytest
+INFO  20181022 14:48:55.316 12912 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 14:48:55.341 12912 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:53(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 14:48:55.794 12912 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:408(MysqlExecutor::DeleteTableColumn)|delete column name_date successfully in mystery_box_tmp in mytest
+INFO  20181022 14:48:56.052 12912 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:300(MysqlExecutor::RenameTableColumn)|rename from name_time2 to name_time3 successfully in table mystery_box_tmp in database mytest
+INFO  20181022 14:48:56.311 12912 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:408(MysqlExecutor::DeleteTableColumn)|delete column name_date successfully in mystery_box in mytest
+INFO  20181022 14:48:56.561 12912 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:300(MysqlExecutor::RenameTableColumn)|rename from name_time2 to name_time3 successfully in table mystery_box in database mytest
+INFO  20181022 14:48:56.569 12912 e:\git2\server_fk\fk\dbtool\main.cpp:237(main)|dbtool finish successfully
+INFO  20181022 14:49:25.164 13936 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 14:49:25.191 13936 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:53(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 14:49:25.441 13936 e:\git2\server_fk\fk\dbtool\main.cpp:237(main)|dbtool finish successfully
+INFO  20181022 14:50:21.534 11624 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+ERROR 20181022 14:50:21.534 11624 e:\git2\server_fk\fk\dbtool\main.cpp:47(CheckMysqlSyntax)|Error: rename_from is equal to name in field: name_time2 in table: mystery_box in schema: mytest
+INFO  20181022 14:50:29.544 16504 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 14:50:29.582 16504 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:53(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+ERROR 20181022 14:50:29.823 16504 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:442(MysqlExecutor::AddTableColumn)|Error: name_time3 column is not exist in table mystery_box_tmp in database mytest
+INFO  20181022 14:50:29.831 16504 e:\git2\server_fk\fk\dbtool\main.cpp:240(main)|Error: dbtool fail to finish
+INFO  20181022 14:51:10.431 15396 e:\git2\server_fk\fk\commonlib\svr_base\server_cfg.h:25(ServerCfg<class dbtool::MysqlSchemaConf>::Parse)|parse server cfg file success, file_path=dbtool_example.conf
+INFO  20181022 14:51:10.467 15396 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:53(MysqlExecutor::CreateSchema)|create database success: mytest in 192.168.1.205
+INFO  20181022 14:51:10.887 15396 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:408(MysqlExecutor::DeleteTableColumn)|delete column name_medblob successfully in mystery_box_tmp in mytest
+ERROR 20181022 14:51:10.890 15396 e:\git2\server_fk\fk\dbtool\mysql_executor.cpp:442(MysqlExecutor::AddTableColumn)|Error: name_time3 column is not exist in table mystery_box_tmp in database mytest
+INFO  20181022 14:51:10.895 15396 e:\git2\server_fk\fk\dbtool\main.cpp:240(main)|Error: dbtool fail to finish

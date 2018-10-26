@@ -209,6 +209,11 @@ namespace logger {
 		return *this;
 	}
 
+	logstream& logstream::operator<<(const long int& value) {
+		_convert(value, 2);
+		return *this;
+	}
+
 	logstream& logstream::operator<<(const char* value) {
 		_buffer.append(value, strlen(value));
 		return *this;

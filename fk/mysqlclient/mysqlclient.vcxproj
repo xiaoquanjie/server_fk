@@ -130,6 +130,7 @@
     <ClCompile Include="..\mariadb-connector-c-master\libmariadb\ma_alloc.c" />
     <ClCompile Include="..\mariadb-connector-c-master\libmariadb\ma_array.c" />
     <ClCompile Include="..\mariadb-connector-c-master\libmariadb\ma_charset.c" />
+    <ClCompile Include="..\mariadb-connector-c-master\libmariadb\ma_client_plugin.c" />
     <ClCompile Include="..\mariadb-connector-c-master\libmariadb\ma_compress.c" />
     <ClCompile Include="..\mariadb-connector-c-master\libmariadb\ma_context.c" />
     <ClCompile Include="..\mariadb-connector-c-master\libmariadb\ma_default.c" />
