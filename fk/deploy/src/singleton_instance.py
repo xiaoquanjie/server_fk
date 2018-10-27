@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import platform
 
-# https://github.com/mhammond/pywin32/releases 下载安装pywin32
+# windows版下载安装pywin32
+# https://github.com/mhammond/pywin32/releases
+# pip install pywin32
 
 if platform.system() == 'Windows':
     import win32event
@@ -23,8 +25,8 @@ class SingletonInstance:
             try:
                 fcntl.flock(self.file, fcntl.LOCK_EX | fcntl.LOCK_NB)
                 self.last_error = None
-            except IOError, err:
-                self.last_error = err
+            except IOError:
+                self.last_error = IOError()
 
     def already_running(self):
         if platform.system() == 'Windows':
