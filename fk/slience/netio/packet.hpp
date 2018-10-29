@@ -23,13 +23,13 @@ struct __attribute__((__packed__)) PacketHeader {
 #endif
 
 inline void PacketHeader::n2h() {
-	timestamp = ::ntohl(timestamp);
-	size = ::ntohl(size);
+	timestamp = ntohl(timestamp);
+	size = ntohl(size);
 }
 
 inline void PacketHeader::h2n() {
-	timestamp = ::htonl(timestamp);
-	size = ::htonl(size);
+	timestamp = htonl(timestamp);
+	size = htonl(size);
 }
 
 #define M_SOCKET_READ_SIZE (4*1024)

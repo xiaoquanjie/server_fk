@@ -55,6 +55,7 @@ public:
 		frame.set_dst_trans_id(ori_frame().get_src_trans_id());
 		frame.set_cmd(cmd() + 1);
 		frame.set_userid(userid());
+		frame.set_req_random(ori_frame().get_req_random());
 
 		std::string data = respond.SerializePartialAsString();
 		frame.set_cmd_length(data.length());

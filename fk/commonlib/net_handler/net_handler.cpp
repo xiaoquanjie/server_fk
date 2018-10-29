@@ -56,6 +56,7 @@ int NetIoHandler::Update() {
 				tcp_conn_fd_index.modify(tmp_iter, FuncModifySocketContext(tmp_iter->msgcount + 1, GetNow().second()));
 				AppHeadFrame& pFrame = *(AppHeadFrame*)pmsg->buf.Data();
 				const char* data = (const char*)pmsg->buf.Data() + sizeof(AppHeadFrame);
+				pFrame.n2h();
 				LogDebug("recv msg: " << pFrame.ToString());
 				_callback(fd, pFrame, data, pFrame.get_cmd_length());
 			}
@@ -85,6 +86,7 @@ int NetIoHandler::Update() {
 				tcp_socket_fd_index.modify(tmp_iter, FuncModifySocketContext(tmp_iter->msgcount + 1, GetNow().second()));
 				AppHeadFrame& pFrame = *(AppHeadFrame*)pmsg->buf.Data();
 				const char* data = (const char*)pmsg->buf.Data() + sizeof(AppHeadFrame);
+				pFrame.n2h();
 				LogDebug("recv msg: " << pFrame.ToString());
 				_callback(fd, pFrame, data, pFrame.get_cmd_length());
 			}
@@ -167,63 +169,41 @@ void NetIoHandler::CheckTcpSocketExpire() {
 }
 
 bool NetIoHandler::SendDataByFd(base::s_int64_t fd, const char* data, base::s_int32_t len) {
-	const AppHeadFrame& frame = (const AppHeadFrame&)(*data);
+	char* data2 = const_cast<char*>(data);
+	AppHeadFrame& frame = (AppHeadFrame&)(*data2);
 	LogDebug("send msg: " << frame.ToString());
-	if (M_CHECK_IS_TCP_FD(fd)) {
-		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
-		auto iter = fd_idx.find(fd);
-		if (iter != fd_idx.end()) {
-			iter->ptr->SendPacket(data, len);
-			return true;
-		}
-		else {
-			int real_fd = M_GET_TCP_FD(fd);
-			LogError("fd is not exist, real_fd: " << real_fd << " fd: " << fd);
-		}
-	}
-	else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
-		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
-		auto iter = fd_idx.find(fd);
-		if (iter != fd_idx.end()) {
-			iter->ptr->SendPacket(data, len);
-			return true;
-		}
-		else {
-			int real_fd = M_GET_TCP_CONNECTOR_FD(fd);
-			LogError("fd is not exist, real_fd: " << real_fd << " fd: " << fd);
-		}
-	}
-	return false;
-}
+	frame.h2n();
+	bool ret = false;
 
-bool NetIoHandler::SendDataByFd(base::s_int64_t fd, const AppHeadFrame& frame,
-	const char* data, base::s_int32_t len) {
-	LogDebug("send msg: " << frame.ToString());
-	if (M_CHECK_IS_TCP_FD(fd)) {
-		auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
-		auto iter = fd_idx.find(fd);
-		if (iter != fd_idx.end()) {
-			iter->ptr->SendPacket(frame, data, len);
-			return true;
+	do {
+		if (M_CHECK_IS_TCP_FD(fd)) {
+			auto &fd_idx = _tcp_socket_container.get<tag_socket_context_fd>();
+			auto iter = fd_idx.find(fd);
+			if (iter != fd_idx.end()) {
+				iter->ptr->SendPacket(data, len);
+				ret = true;
+			}
+			else {
+				int real_fd = M_GET_TCP_FD(fd);
+				LogError("fd is not exist, real_fd: " << real_fd << " fd: " << fd);
+			}
 		}
-		else {
-			int real_fd = M_GET_TCP_FD(fd);
-			LogError("fd is not exist, real_fd: " << real_fd << " fd: " << fd);
+		else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
+			auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
+			auto iter = fd_idx.find(fd);
+			if (iter != fd_idx.end()) {
+				iter->ptr->SendPacket(data, len);
+				ret = true;
+			}
+			else {
+				int real_fd = M_GET_TCP_CONNECTOR_FD(fd);
+				LogError("fd is not exist, real_fd: " << real_fd << " fd: " << fd);
+			}
 		}
-	}
-	else if (M_CHECK_IS_TCP_CONNECTOR_FD(fd)) {
-		auto &fd_idx = _tcp_connector_container.get<tag_socket_context_fd>();
-		auto iter = fd_idx.find(fd);
-		if (iter != fd_idx.end()) {
-			iter->ptr->SendPacket(frame, data, len);
-			return true;
-		}
-		else {
-			int real_fd = M_GET_TCP_CONNECTOR_FD(fd);
-			LogError("fd is not exist, real_fd: " << real_fd << " fd: " << fd);
-		}
-	}
-	return false;
+	} while (false);
+
+	frame.n2h();
+	return ret;
 }
 
 void NetIoHandler::CloseFd(base::s_int64_t fd) {

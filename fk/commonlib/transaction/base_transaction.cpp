@@ -3,6 +3,7 @@
 #include "commonlib/transaction/transaction_mgr.h"
 #include "slience/base/buffer.hpp"
 #include "commonlib/net_handler/net_handler.h"
+#include "slience/base/random.hpp"
 
 void Transaction::Construct() {
 	_trans_id = 0;
@@ -16,6 +17,7 @@ void Transaction::Construct() {
 	_self_inst_id = 0;
 	_state = E_STATE_IDLE;
 	_timer_id = 0;
+	_req_random = 0;
 	memset(&_ori_frame, 0, sizeof(_ori_frame));
 }
 
@@ -141,6 +143,7 @@ int Transaction::OnTimeOut() {
 	// »½ÐÑÐ­³Ì
 	_timer_id = 0;
 	if (0 != co_id()) {
+		set_req_random(0);
 		coroutine::CoroutineTask::resumeTask(co_id());
 	}
 	return 0;
@@ -177,6 +180,7 @@ int Transaction::SendMsgByServerType(int cmd, int svr_type,
 
 int Transaction::SendMsgByServerType(int cmd, int svr_type,
 	google::protobuf::Message& request) {
+	set_req_random(base::random().rand(10000, 100000));
 	int ret = RouterMgrSgl.SendMsg(cmd,
 		userid(),
 		false,
@@ -221,6 +225,7 @@ int Transaction::SendMsgByServerId(int cmd, int svr_type, int inst_id,
 
 int Transaction::SendMsgByServerId(int cmd, int svr_type, int inst_id,
 	google::protobuf::Message& request) {
+	set_req_random(base::random().rand(10000, 100000));
 	int ret = RouterMgrSgl.SendMsg(cmd,
 		userid(),
 		false,
@@ -234,6 +239,7 @@ int Transaction::SendMsgByServerId(int cmd, int svr_type, int inst_id,
 }
 
 int Transaction::SendMsgByFd(int cmd, google::protobuf::Message& request) {
+	set_req_random(base::random().rand(10000, 100000));
 	int ret = RouterMgrSgl.SendMsgByFd(fd(),
 		cmd,
 		userid(),
@@ -317,4 +323,12 @@ const AppHeadFrame& Transaction::cur_frame() {
 
 const AppHeadFrame& Transaction::ori_frame() {
 	return _ori_frame;
+}
+
+void Transaction::set_req_random(base::s_uint32_t r) {
+	_req_random = r;
+}
+
+base::s_uint32_t Transaction::req_random() {
+	return _req_random;
 }

@@ -49,9 +49,6 @@ public:
 
 	bool SendDataByFd(base::s_int64_t fd, const char* data, base::s_int32_t len);
 
-	bool SendDataByFd(base::s_int64_t fd, const AppHeadFrame& frame,
-		const char* data, base::s_int32_t len);
-
 	void CloseFd(base::s_int64_t fd);
 
 	netiolib::TcpConnectorPtr GetConnectorPtr(base::s_int64_t fd);

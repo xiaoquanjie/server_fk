@@ -34,6 +34,7 @@ struct __attribute__((__packed__)) AppHeadFrame {
 	GETSETVAR(base::s_uint32_t, cmd);					// cmd
 	GETSETVAR(base::s_uint32_t, cmd_length);			// cmd长度
 	GETSETVAR(base::s_uint64_t, userid);				// user id
+	GETSETVAR(base::s_uint32_t, req_random);			// cmd长度
 
 public:
 	AppHeadFrame() {
@@ -47,6 +48,7 @@ public:
 		cmd = 0;
 		cmd_length = 0;
 		userid = 0;
+		req_random = 0;
 	}
 
 	std::string ToString() const {
@@ -61,7 +63,36 @@ public:
 		oss << " dst_inst_id:" << dst_inst_id;
 		oss << " src_trans_id:" << src_trans_id;
 		oss << " dst_trans_id:" << dst_trans_id;
+		oss << " req_random:" << req_random;
 		return oss.str();
+	}
+
+	void n2h() {
+		is_broadcast = ntohs(is_broadcast);
+		src_svr_type = ntohl(src_svr_type);
+		dst_svr_type = ntohl(dst_svr_type);
+		src_inst_id = ntohl(src_inst_id);
+		dst_inst_id = ntohl(dst_inst_id);
+		src_trans_id = ntohl(src_trans_id);
+		dst_trans_id = ntohl(dst_trans_id);
+		cmd = ntohl(cmd);
+		cmd_length = ntohl(cmd_length);
+		userid = ntohll(userid);
+		req_random = ntohl(req_random);
+	}
+
+	void h2n() {
+		is_broadcast = htons(is_broadcast);
+		src_svr_type = htonl(src_svr_type);
+		dst_svr_type = htonl(dst_svr_type);
+		src_inst_id = htonl(src_inst_id);
+		dst_inst_id = htonl(dst_inst_id);
+		src_trans_id = htonl(src_trans_id);
+		dst_trans_id = htonl(dst_trans_id);
+		cmd = htonl(cmd);
+		cmd_length = htonl(cmd_length);
+		userid = htonll(userid);
+		req_random = htonl(req_random);
 	}
 };
 #ifdef M_PLATFORM_WIN
