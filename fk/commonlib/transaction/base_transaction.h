@@ -176,6 +176,7 @@ protected:
 				ori_frame().get_src_inst_id(),
 				trans_id(),
 				ori_frame().get_src_trans_id(),
+				cur_frame().req_random(),
 				respond
 			);
 		}

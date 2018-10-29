@@ -40,10 +40,10 @@ public:
 	TransRegisterServer(unsigned int cmd) : BaseTransaction(cmd) {}
 
 	int OnRequest(proto::RegisterServerReq& request) {
-		SeverInstanceMgrSgl.AddInstance(request.server_type(), request.instance_id(), fd());
+		int ret_code = SeverInstanceMgrSgl.AddInstance(request.server_type(), request.instance_id(), fd());
 
 		proto::RegisterServerRsp respond;
-		respond.mutable_ret()->set_code(0);
+		respond.mutable_ret()->set_code(ret_code);
 
 		AppHeadFrame frame;
 		frame.set_is_broadcast(false);

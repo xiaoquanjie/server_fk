@@ -44,7 +44,7 @@ public:
 
 	int Init(const config::RouterSvrConfig* conf);
 
-	void AddInstance(unsigned int server_type, int instance_id, base::s_int64_t fd = 0);
+	int AddInstance(unsigned int server_type, int instance_id, base::s_int64_t fd = 0);
 
 	void DelInstance(unsigned int server_type, int instance_id);
 

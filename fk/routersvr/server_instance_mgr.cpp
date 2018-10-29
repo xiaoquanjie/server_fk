@@ -14,11 +14,11 @@ int SeverInstanceMgr::Init(const config::RouterSvrConfig* conf) {
 	return 0;
 }
 
-void SeverInstanceMgr::AddInstance(unsigned int server_type, int instance_id, base::s_int64_t fd) {
+int SeverInstanceMgr::AddInstance(unsigned int server_type, int instance_id, base::s_int64_t fd) {
 	const config::Policy* policy = GetPolicy(server_type);
 	if (!policy) {
 		LogError("add instance fail, server_type:" << server_type << "instance_id" << instance_id);
-		return;
+		return -1;
 	}
 
 	auto iter_type = _type_id_map.find(server_type);
@@ -37,6 +37,7 @@ void SeverInstanceMgr::AddInstance(unsigned int server_type, int instance_id, ba
 	_svrinfo_fd_map[svrinfo] = fd;
 	_fd_svrinfo_map[fd] = svrinfo;
 	LogInfo("add server instance: server_type=" << server_type << " instance_id=" << instance_id << " fd=" << fd);
+	return 0;
 }
 
 void SeverInstanceMgr::DelInstance(unsigned int server_type, int instance_id) {

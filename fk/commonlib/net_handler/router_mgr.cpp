@@ -65,6 +65,7 @@ void RouterMgr::Tick(const base::timestamp& now) {
 				iter->number,
 				0,
 				0,
+				0,
 				msg);
 		}
 	}
@@ -163,6 +164,7 @@ int RouterMgr::DelRouter(const std::string& ip, unsigned int port, int number,
 int RouterMgr::SendMsg(int cmd, base::s_int64_t userid, bool is_broadcast,
 	base::s_uint32_t dst_svr_type, base::s_uint32_t dst_inst_id,
 	base::s_uint32_t src_trans_id, base::s_uint32_t dst_trans_id,
+	base::s_uint32_t req_random,
 	google::protobuf::Message& msg) {
 	// 挑选一个路由
 	if (_router_info_vec.empty()) {
@@ -174,13 +176,14 @@ int RouterMgr::SendMsg(int cmd, base::s_int64_t userid, bool is_broadcast,
 		cmd, userid, is_broadcast,
 		dst_svr_type, dst_inst_id,
 		src_trans_id, dst_trans_id,
-		msg);
+		req_random, msg);
 }
 
 int RouterMgr::SendMsgByFd(base::s_int64_t fd, int cmd, base::s_int64_t userid,
 	bool is_broadcast, base::s_uint32_t dst_svr_type,
 	base::s_uint32_t dst_inst_id, base::s_uint32_t src_trans_id, 
-	base::s_uint32_t dst_trans_id, google::protobuf::Message& msg) {
+	base::s_uint32_t dst_trans_id, base::s_uint32_t req_random,
+	google::protobuf::Message& msg) {
 	AppHeadFrame frame;
 	frame.set_is_broadcast(is_broadcast);
 	frame.set_src_svr_type(SelfSeverType());
@@ -191,6 +194,7 @@ int RouterMgr::SendMsgByFd(base::s_int64_t fd, int cmd, base::s_int64_t userid,
 	frame.set_dst_trans_id(dst_trans_id);
 	frame.set_cmd(cmd);
 	frame.set_userid(userid);
+	frame.set_req_random(req_random);
 
 	std::string data = msg.SerializePartialAsString();
 	frame.set_cmd_length(data.length());

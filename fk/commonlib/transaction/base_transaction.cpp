@@ -63,6 +63,12 @@ int Transaction::Process(base::s_int64_t fd, base::s_uint32_t self_svr_type,
 	_cur_frame_data = data;
 	_cur_frame = &frame;
 	_cur_fd = fd;
+	if (req_random() != 0) {
+		if (req_random() != frame.get_req_random()) {
+			LogWarn(frame.ToString() << " is not waiting cmd packet");
+			return -1;
+		}
+	}
 	OnState();
 	return 0;
 }
@@ -188,6 +194,7 @@ int Transaction::SendMsgByServerType(int cmd, int svr_type,
 		0,
 		trans_id(),
 		0,
+		req_random(),
 		request
 	);
 	return ret;
@@ -233,6 +240,7 @@ int Transaction::SendMsgByServerId(int cmd, int svr_type, int inst_id,
 		inst_id,
 		trans_id(),
 		0,
+		req_random(),
 		request
 	);
 	return ret;
@@ -248,6 +256,7 @@ int Transaction::SendMsgByFd(int cmd, google::protobuf::Message& request) {
 		0,
 		trans_id(),
 		0,
+		req_random(),
 		request);
 	return ret;
 }
