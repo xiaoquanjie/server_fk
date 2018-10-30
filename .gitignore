@@ -17,4 +17,8 @@
 /fk/excel/.idea/
 /fk/excel/*.pyc
 /fk/excel/xls_translator.log
+/fk/deploy/src/*.pyc
+/fk/deploy/src/*.log
+/fk/deploy/proto/*.pyc
+
 
