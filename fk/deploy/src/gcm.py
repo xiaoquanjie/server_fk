@@ -2,6 +2,7 @@
 
 from loghelper import LogInfo
 from gcm_data import GcmData
+import re
 
 class Gcm:
     def __init__(self, user, password, conf_paths, temp_path):
@@ -54,5 +55,25 @@ class Gcm:
         self.do_cmd('clean', pattern)
 
     def do_cmd(self, cmd, pattern):
-        pass
+        instance_list = self._get_instance(pattern)
+        for instance in instance_list:
+            LogInfo(instance.instance_name)
 
+    @staticmethod
+    def _regex_pattern(pattern):
+        return "^" + "\\.".join([s if s != "*" else ".+" for s in pattern.split(".")]) + "$"
+
+    def _get_instance(self, pattern):
+        def Priority(instance):
+            LogInfo('priotiry: %d' % instance.start_priority)
+            return instance.start_priority
+
+        regex_pattern = self._regex_pattern(pattern)
+        instance_list = []
+        for instance in self.gcm_data.artifact_instances:
+            if not re.match(regex_pattern, instance.instance_name):
+                continue
+            instance_list.append(instance)
+
+        instance_list.sort(key=Priority, reverse=True)
+        return instance_list

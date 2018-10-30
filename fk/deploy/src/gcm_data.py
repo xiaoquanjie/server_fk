@@ -19,8 +19,8 @@ class ArtifactInstance:
         self.inner_ip = None                    # instance将被部署的目标服务器的内网IP。比如：192.168.1.100
         self.outer_ip = None                    # instance将被部署的目标服务器的外网IP。比如：100.233.66.39
         self.deploy_ip = None                   # instance将被部署的目标服务器的部署IP。比如：192.168.1.100
-        self.start_priority = None              # instance的启动优先级，默认为0。值越大，越先启动。
-        self.__emergence_order = None           # instance在deploy.conf中出现的顺序。（用于确定启动顺序）
+        self.start_priority = 0                 # instance的启动优先级，默认为0。值越大，越先启动。
+        # self.__emergence_order = None           # instance在deploy.conf中出现的顺序。（用于确定启动顺序）
         self.artifact = None
         self.index = 0
 
