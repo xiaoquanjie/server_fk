@@ -49,6 +49,12 @@ int Transaction::ParseMsg(google::protobuf::Message& message) {
 int Transaction::Process(base::s_int64_t fd, base::s_uint32_t self_svr_type,
 	base::s_uint32_t self_inst_id,
 	const AppHeadFrame& frame, const char* data) {
+	if (req_random() != 0) {
+		if (req_random() != frame.get_req_random()) {
+			LogWarn(frame.ToString() << " is not waiting cmd packet");
+			return -1;
+		}
+	}
 	if (!_cur_frame_data) {
 		_userid = frame.get_userid();
 		_cmd = frame.get_cmd();
@@ -63,12 +69,6 @@ int Transaction::Process(base::s_int64_t fd, base::s_uint32_t self_svr_type,
 	_cur_frame_data = data;
 	_cur_frame = &frame;
 	_cur_fd = fd;
-	if (req_random() != 0) {
-		if (req_random() != frame.get_req_random()) {
-			LogWarn(frame.ToString() << " is not waiting cmd packet");
-			return -1;
-		}
-	}
 	OnState();
 	return 0;
 }
