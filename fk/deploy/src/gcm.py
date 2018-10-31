@@ -5,9 +5,8 @@ from loghelper import LogError
 from gcm_data import GcmData
 import re
 import os
-import shutil
-import tar
 import tarfile
+import ssh
 
 class Gcm:
     def __init__(self, user, password, conf_paths, src_path):
@@ -70,7 +69,10 @@ class Gcm:
             host_set.add(instance.deploy_ip)
 
         # pack file
-        self._pack_files(instance_list)
+        repo = self._pack_files(instance_list)
+        remote_repo = os.path.join(self.gcm_data.deploy_info.dst_root_path, 'repo.tar.gz')
+        for host in host_set:
+            ssh.ssh_upload(host, 'user00', 'Iron@gbl', repo, remote_repo)
 
     @staticmethod
     def _regex_pattern(pattern):
