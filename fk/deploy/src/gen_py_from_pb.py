@@ -2,7 +2,7 @@
 import os
 import platform
 from loghelper import LogError
-
+from loghelper import LogInfo
 
 # 将PB转换成py格式
 def gen_py_from_pb(proto_path):
@@ -20,6 +20,7 @@ def gen_py_from_pb(proto_path):
         else:
             command = "protoc --proto_path=../proto --python_out=../proto " + file
         try:
+            LogInfo(command)
             os.system(command)
         except BaseException:
             LogError('protoc %s failed' % file)

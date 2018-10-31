@@ -97,6 +97,8 @@ class Gcm:
         if not os.path.exists(self.src_path):
             LogError('src_path: %s is not exist' % self.src_path)
             raise BaseException()
+        if not os.path.exists(tmp_path):
+            os.mkdir(tmp_path)
 
         tar_file = tarfile.open(repo_path, "w:gz")
         cwd = os.getcwd()
@@ -110,3 +112,4 @@ class Gcm:
         tar_file.close()
         os.chdir(cwd)
         LogInfo('tar.gz file: %s' % repo_path)
+        return repo_path
