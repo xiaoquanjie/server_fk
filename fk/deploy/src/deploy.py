@@ -4,8 +4,17 @@ import os
 from singleton_instance import SingletonInstance
 import argparse
 from loghelper import LogError
-import platform
+from loghelper import LogInfo
 from gcm import Gcm
+
+
+def CheckDeployRootEXist(dir_path, deploy_name):
+    files = os.listdir(dir_path)
+    for file in files:
+        if file == deploy_name:
+            return True
+
+    return False
 
 
 if __name__ == '__main__':
@@ -39,9 +48,27 @@ if __name__ == '__main__':
                 LogError('%s is not dir' % conf)
                 sys.exit(-1)
 
+    # 查找出DEPLOY_ROOT文件目录
+    exec_path = os.path.split(os.path.realpath(__file__))[0]
+    exe_dir = os.path.dirname(exec_path)
+    deploy_root = None
+    while True:
+        if CheckDeployRootEXist(exe_dir, 'DEPLOY_ROOT'):
+            deploy_root = exe_dir
+            break
+        new_exe_dir = os.path.dirname(exe_dir)
+        if new_exe_dir == exe_dir:
+            break
+        exe_dir = new_exe_dir
+
+    if not deploy_root:
+        LogError("can't find the DEPLOY_ROOT file")
+        sys.exit(-1)
+
+    LogInfo('DEPLOY_ROOT file in: %s' % deploy_root)
+
     try:
-        temp_path = './tmp'
-        gcm = Gcm(args.user, args.password, args.conf, temp_path)
+        gcm = Gcm(args.user, args.password, args.conf, deploy_root)
         if args.cmd == 'push_agent':
             gcm.push_agent(args.pattern)
         elif args.cmd == 'start_agent':

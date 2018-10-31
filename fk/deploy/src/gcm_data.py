@@ -91,7 +91,6 @@ class GcmData:
             self.variable_map[var.key] = var.value
 
         # parse global const variable
-        self.deploy_info.src_root_path = deploy.src_root_path
         self.deploy_info.tmp_root_path = deploy.tmp_root_path
         self.deploy_info.dst_root_path = deploy.dst_root_path
 

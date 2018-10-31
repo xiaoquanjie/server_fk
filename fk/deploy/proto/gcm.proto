@@ -44,6 +44,7 @@ message NormalArtifactItem {
     optional int32 function_id = 3;
     optional int32 start_priority = 4;
     repeated ArtifactFile files = 5;
+    optional uint32 copies = 6 [default = 1];
 }
 
 message NormalArtifact {
@@ -86,13 +87,11 @@ message World {
 }
 
 message DeployInfo {
-    optional string src_root_path = 1;
     optional string tmp_root_path = 2;
     optional string dst_root_path = 3;
 }
 
 message Deploy {
-    optional string src_root_path = 1;
     optional string tmp_root_path = 2;
     optional string dst_root_path = 3;
     repeated KeyValue variables = 4;

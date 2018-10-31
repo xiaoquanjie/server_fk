@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 
 from loghelper import LogInfo
+from loghelper import LogError
 from gcm_data import GcmData
 import re
+import os
+import shutil
+import tar
+import tarfile
 
 class Gcm:
-    def __init__(self, user, password, conf_paths, temp_path):
+    def __init__(self, user, password, conf_paths, src_path):
         self.user = user
         self.password = password
         self.conf_paths = conf_paths
-        self.temp_path = temp_path
+        self.src_path = src_path
         self.gcm_data = GcmData()
         self.gcm_data.init(self.conf_paths)
 
@@ -56,8 +61,16 @@ class Gcm:
 
     def do_cmd(self, cmd, pattern):
         instance_list = self._get_instance(pattern)
+        if not instance_list:
+            LogError('find no instance in pattern: %s' % pattern)
+            return
+
+        host_set = set()
         for instance in instance_list:
-            LogInfo(instance.instance_name)
+            host_set.add(instance.deploy_ip)
+
+        # pack file
+        self._pack_files(instance_list)
 
     @staticmethod
     def _regex_pattern(pattern):
@@ -65,7 +78,6 @@ class Gcm:
 
     def _get_instance(self, pattern):
         def Priority(instance):
-            LogInfo('priotiry: %d' % instance.start_priority)
             return instance.start_priority
 
         regex_pattern = self._regex_pattern(pattern)
@@ -77,3 +89,24 @@ class Gcm:
 
         instance_list.sort(key=Priority, reverse=True)
         return instance_list
+
+    def _pack_files(self, instance_list):
+        LogInfo('\n\n==================================== collecting file or directory ====================================')
+        tmp_path = self.gcm_data.deploy_info.tmp_root_path
+        repo_path = os.path.join(tmp_path, 'repo.tar.gz')
+        if not os.path.exists(self.src_path):
+            LogError('src_path: %s is not exist' % self.src_path)
+            raise BaseException()
+
+        tar_file = tarfile.open(repo_path, "w:gz")
+        cwd = os.getcwd()
+        os.chdir(self.src_path)
+        for instance in instance_list:
+            artifacts = self.gcm_data.artifact_map[instance.artifact_name]
+            for f in artifacts.files:
+                LogInfo(f.src)
+                tar_file.add(f.src)
+
+        tar_file.close()
+        os.chdir(cwd)
+        LogInfo('tar.gz file: %s' % repo_path)

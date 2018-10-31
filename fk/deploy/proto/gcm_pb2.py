@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='gcm.proto',
   package='gcm',
   syntax='proto2',
-  serialized_pb=_b('\n\tgcm.proto\x12\x03gcm\"K\n\x04Host\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08inner_ip\x18\x02 \x01(\t\x12\x10\n\x08outer_ip\x18\x03 \x01(\t\x12\x11\n\tdeploy_ip\x18\x04 \x01(\t\"#\n\x07HostCfg\x12\x18\n\x05hosts\x18\x01 \x03(\x0b\x32\t.gcm.Host\"[\n\x0c\x41rtifactFile\x12\x0b\n\x03src\x18\x01 \x01(\t\x12\x0b\n\x03\x64st\x18\x02 \x01(\t\x12\x0e\n\x06is_dir\x18\x03 \x01(\x08\x12\x13\n\x0bneed_backup\x18\x04 \x01(\x08\x12\x0c\n\x04tags\x18\x05 \x03(\t\"\x9f\x01\n\rAgentArtifact\x12 \n\x05\x66iles\x18\x01 \x03(\x0b\x32\x11.gcm.ArtifactFile\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x66unction_id\x18\x03 \x01(\x05\x12\x11\n\tstart_cmd\x18\x04 \x01(\t\x12\x10\n\x08stop_cmd\x18\x05 \x01(\t\x12\x11\n\tclean_cmd\x18\x06 \x01(\t\x12\x11\n\tcheck_cmd\x18\x07 \x01(\t\"O\n\x14TemplateArtifactItem\x12\x15\n\rtemplate_name\x18\x01 \x01(\t\x12 \n\x05\x66iles\x18\x02 \x03(\x0b\x32\x11.gcm.ArtifactFile\"I\n\x10TemplateArtifact\x12\x35\n\x12template_artifacts\x18\x01 \x03(\x0b\x32\x19.gcm.TemplateArtifactItem\"\x88\x01\n\x12NormalArtifactItem\x12\x15\n\rtemplate_name\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x66unction_id\x18\x03 \x01(\x05\x12\x16\n\x0estart_priority\x18\x04 \x01(\x05\x12 \n\x05\x66iles\x18\x05 \x03(\x0b\x32\x11.gcm.ArtifactFile\"<\n\x0eNormalArtifact\x12*\n\tartifacts\x18\x01 \x03(\x0b\x32\x17.gcm.NormalArtifactItem\"9\n\x11\x41rtifactGroupItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x16\n\x0e\x61rtifact_names\x18\x02 \x03(\t\"@\n\rArtifactGroup\x12/\n\x0f\x61rtifact_groups\x18\x01 \x03(\x0b\x32\x16.gcm.ArtifactGroupItem\"&\n\x08KeyValue\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"T\n\rInstanceGroup\x12\x1b\n\x13\x61rtifact_group_name\x18\x01 \x01(\t\x12\x11\n\thost_name\x18\x02 \x01(\t\x12\x13\n\x0binstance_id\x18\x03 \x01(\x05\"M\n\x04Zone\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x05\x12+\n\x0finstance_groups\x18\x04 \x03(\x0b\x32\x12.gcm.InstanceGroup\"{\n\x05World\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x05\x12\x0c\n\x04user\x18\x03 \x01(\t\x12\x0e\n\x06passwd\x18\x04 \x01(\t\x12 \n\tvariables\x18\x05 \x03(\x0b\x32\r.gcm.KeyValue\x12\x18\n\x05zones\x18\x06 \x03(\x0b\x32\t.gcm.Zone\"Q\n\nDeployInfo\x12\x15\n\rsrc_root_path\x18\x01 \x01(\t\x12\x15\n\rtmp_root_path\x18\x02 \x01(\t\x12\x15\n\rdst_root_path\x18\x03 \x01(\t\"\x8b\x01\n\x06\x44\x65ploy\x12\x15\n\rsrc_root_path\x18\x01 \x01(\t\x12\x15\n\rtmp_root_path\x18\x02 \x01(\t\x12\x15\n\rdst_root_path\x18\x03 \x01(\t\x12 \n\tvariables\x18\x04 \x03(\x0b\x32\r.gcm.KeyValue\x12\x1a\n\x06worlds\x18\x05 \x03(\x0b\x32\n.gcm.World')
+  serialized_pb=_b('\n\tgcm.proto\x12\x03gcm\"K\n\x04Host\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08inner_ip\x18\x02 \x01(\t\x12\x10\n\x08outer_ip\x18\x03 \x01(\t\x12\x11\n\tdeploy_ip\x18\x04 \x01(\t\"#\n\x07HostCfg\x12\x18\n\x05hosts\x18\x01 \x03(\x0b\x32\t.gcm.Host\"[\n\x0c\x41rtifactFile\x12\x0b\n\x03src\x18\x01 \x01(\t\x12\x0b\n\x03\x64st\x18\x02 \x01(\t\x12\x0e\n\x06is_dir\x18\x03 \x01(\x08\x12\x13\n\x0bneed_backup\x18\x04 \x01(\x08\x12\x0c\n\x04tags\x18\x05 \x03(\t\"\x9f\x01\n\rAgentArtifact\x12 \n\x05\x66iles\x18\x01 \x03(\x0b\x32\x11.gcm.ArtifactFile\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x66unction_id\x18\x03 \x01(\x05\x12\x11\n\tstart_cmd\x18\x04 \x01(\t\x12\x10\n\x08stop_cmd\x18\x05 \x01(\t\x12\x11\n\tclean_cmd\x18\x06 \x01(\t\x12\x11\n\tcheck_cmd\x18\x07 \x01(\t\"O\n\x14TemplateArtifactItem\x12\x15\n\rtemplate_name\x18\x01 \x01(\t\x12 \n\x05\x66iles\x18\x02 \x03(\x0b\x32\x11.gcm.ArtifactFile\"I\n\x10TemplateArtifact\x12\x35\n\x12template_artifacts\x18\x01 \x03(\x0b\x32\x19.gcm.TemplateArtifactItem\"\x9b\x01\n\x12NormalArtifactItem\x12\x15\n\rtemplate_name\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x13\n\x0b\x66unction_id\x18\x03 \x01(\x05\x12\x16\n\x0estart_priority\x18\x04 \x01(\x05\x12 \n\x05\x66iles\x18\x05 \x03(\x0b\x32\x11.gcm.ArtifactFile\x12\x11\n\x06\x63opies\x18\x06 \x01(\r:\x01\x31\"<\n\x0eNormalArtifact\x12*\n\tartifacts\x18\x01 \x03(\x0b\x32\x17.gcm.NormalArtifactItem\"9\n\x11\x41rtifactGroupItem\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x16\n\x0e\x61rtifact_names\x18\x02 \x03(\t\"@\n\rArtifactGroup\x12/\n\x0f\x61rtifact_groups\x18\x01 \x03(\x0b\x32\x16.gcm.ArtifactGroupItem\"&\n\x08KeyValue\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"T\n\rInstanceGroup\x12\x1b\n\x13\x61rtifact_group_name\x18\x01 \x01(\t\x12\x11\n\thost_name\x18\x02 \x01(\t\x12\x13\n\x0binstance_id\x18\x03 \x01(\x05\"M\n\x04Zone\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x05\x12+\n\x0finstance_groups\x18\x04 \x03(\x0b\x32\x12.gcm.InstanceGroup\"{\n\x05World\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x05\x12\x0c\n\x04user\x18\x03 \x01(\t\x12\x0e\n\x06passwd\x18\x04 \x01(\t\x12 \n\tvariables\x18\x05 \x03(\x0b\x32\r.gcm.KeyValue\x12\x18\n\x05zones\x18\x06 \x03(\x0b\x32\t.gcm.Zone\":\n\nDeployInfo\x12\x15\n\rtmp_root_path\x18\x02 \x01(\t\x12\x15\n\rdst_root_path\x18\x03 \x01(\t\"t\n\x06\x44\x65ploy\x12\x15\n\rtmp_root_path\x18\x02 \x01(\t\x12\x15\n\rdst_root_path\x18\x03 \x01(\t\x12 \n\tvariables\x18\x04 \x03(\x0b\x32\r.gcm.KeyValue\x12\x1a\n\x06worlds\x18\x05 \x03(\x0b\x32\n.gcm.World')
 )
 
 
@@ -351,6 +351,13 @@ _NORMALARTIFACTITEM = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='copies', full_name='gcm.NormalArtifactItem.copies', index=5,
+      number=6, type=13, cpp_type=3, label=1,
+      has_default_value=True, default_value=1,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -364,7 +371,7 @@ _NORMALARTIFACTITEM = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=544,
-  serialized_end=680,
+  serialized_end=699,
 )
 
 
@@ -394,8 +401,8 @@ _NORMALARTIFACT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=682,
-  serialized_end=742,
+  serialized_start=701,
+  serialized_end=761,
 )
 
 
@@ -432,8 +439,8 @@ _ARTIFACTGROUPITEM = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=744,
-  serialized_end=801,
+  serialized_start=763,
+  serialized_end=820,
 )
 
 
@@ -463,8 +470,8 @@ _ARTIFACTGROUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=803,
-  serialized_end=867,
+  serialized_start=822,
+  serialized_end=886,
 )
 
 
@@ -501,8 +508,8 @@ _KEYVALUE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=869,
-  serialized_end=907,
+  serialized_start=888,
+  serialized_end=926,
 )
 
 
@@ -546,8 +553,8 @@ _INSTANCEGROUP = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=909,
-  serialized_end=993,
+  serialized_start=928,
+  serialized_end=1012,
 )
 
 
@@ -591,8 +598,8 @@ _ZONE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=995,
-  serialized_end=1072,
+  serialized_start=1014,
+  serialized_end=1091,
 )
 
 
@@ -657,8 +664,8 @@ _WORLD = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1074,
-  serialized_end=1197,
+  serialized_start=1093,
+  serialized_end=1216,
 )
 
 
@@ -670,21 +677,14 @@ _DEPLOYINFO = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='src_root_path', full_name='gcm.DeployInfo.src_root_path', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='tmp_root_path', full_name='gcm.DeployInfo.tmp_root_path', index=1,
+      name='tmp_root_path', full_name='gcm.DeployInfo.tmp_root_path', index=0,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='dst_root_path', full_name='gcm.DeployInfo.dst_root_path', index=2,
+      name='dst_root_path', full_name='gcm.DeployInfo.dst_root_path', index=1,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -702,8 +702,8 @@ _DEPLOYINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1199,
-  serialized_end=1280,
+  serialized_start=1218,
+  serialized_end=1276,
 )
 
 
@@ -715,35 +715,28 @@ _DEPLOY = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='src_root_path', full_name='gcm.Deploy.src_root_path', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='tmp_root_path', full_name='gcm.Deploy.tmp_root_path', index=1,
+      name='tmp_root_path', full_name='gcm.Deploy.tmp_root_path', index=0,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='dst_root_path', full_name='gcm.Deploy.dst_root_path', index=2,
+      name='dst_root_path', full_name='gcm.Deploy.dst_root_path', index=1,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='variables', full_name='gcm.Deploy.variables', index=3,
+      name='variables', full_name='gcm.Deploy.variables', index=2,
       number=4, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='worlds', full_name='gcm.Deploy.worlds', index=4,
+      name='worlds', full_name='gcm.Deploy.worlds', index=3,
       number=5, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -761,8 +754,8 @@ _DEPLOY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1283,
-  serialized_end=1422,
+  serialized_start=1278,
+  serialized_end=1394,
 )
 
 _HOSTCFG.fields_by_name['hosts'].message_type = _HOST
