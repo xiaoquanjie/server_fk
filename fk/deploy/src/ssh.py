@@ -48,13 +48,16 @@ def ssh_cmd(ip, user, passwd, cmd):
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.connect(ip, 22, user, passwd, timeout=30)
     stdin, stdout, stderr = client.exec_command(cmd)
+    ret = False
     if stdout.channel.recv_exit_status() == 0:
         LogInfo('success to: ' + cmd)
+        ret = True
     else:
         LogError('fail to: ' + cmd)
         for out in stderr.readlines():
             LogError(out)
     client.close()
+    return ret
 
 
 def upload_proccess(pro):

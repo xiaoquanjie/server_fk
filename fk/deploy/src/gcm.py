@@ -6,6 +6,13 @@ from gcm_data import GcmData
 import os
 import util
 import ssh
+import time
+
+class DeployFinishStatus:
+    def __init__(self):
+        self.show = False
+        self.finish = False
+
 
 class Gcm:
     def __init__(self, user, password, conf_paths, src_path):
@@ -118,7 +125,46 @@ class Gcm:
         pass
 
     def _push(self, instance_list, host_list, pattern):
-        pass
+        # check all machine whether has agent
+        finish_host_status = {}
+        for host in host_list:
+            finish_host_status[host] = DeployFinishStatus()
+            cmd = 'test -e ' + util.get_remote_deploy_file(self.gcm_data.deploy_info.dst_root_path)
+            if not ssh.ssh_cmd(host, self.user, self.password, cmd):
+                LogError('host: %s has no agent' % host)
+                raise BaseException()
+
+        pack_repo = util.pack_repo_files(self.gcm_data.artifact_map,
+                                           self.gcm_data.deploy_info.tmp_root_path,
+                                           self.src_path, instance_list,
+                                           util.get_repo_name())
+        dst_root_path = self.gcm_data.deploy_info.dst_root_path
+        remote_repo = util.get_remote_repo(dst_root_path)
+        # upload
+        ssh.ssh_upload_repo(host_list[0],
+                            self.user,
+                            self.password,
+                            pack_repo,
+                            remote_repo)
+        # unpack
+        ssh.ssh_cmd(host, self.user, self.password,
+                    util.get_unpack_remote_repo_cmd(dst_root_path))
+
+        # wait
+        finish_host_status[host_list[0]].finish = True
+        while True:
+            finish_cnt = 0
+            for key, value in finish_host_status.items():
+                if value.finish:
+                    finish_cnt += 1
+                    if not value.show:
+                        LogInfo('host: %s is finish' % key)
+                        value.show = True
+            if finish_cnt == len(finish_host_status):
+                break
+            time.sleep(1)
+
+        LogInfo('success to finish')
 
     def _reload(self, instance_list, host_list, pattern):
         pass

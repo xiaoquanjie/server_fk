@@ -98,3 +98,8 @@ def get_unpack_remote_agent_cmd(dst_root_path):
     cmd += '; tar -zxvf '
     cmd += get_agent_repo_name()
     return cmd
+
+
+def get_remote_deploy_file(dst_root_path):
+    path = os.path.join(dst_root_path, 'repo/deploy/src/deploy.py')
+    return path
