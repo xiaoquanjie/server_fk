@@ -8,52 +8,20 @@ from loghelper import LogInfo
 from gcm import Gcm
 
 
-def CheckDeployRootEXist(dir_path, deploy_name):
+def check_file_exist(dir_path, file_name):
     files = os.listdir(dir_path)
     for file in files:
-        if file == deploy_name:
+        if file == file_name:
             return True
-
     return False
 
 
-if __name__ == '__main__':
-    singleton = SingletonInstance()
-    if singleton.already_running():
-        LogError('Error: A Deploy Program is already running, please try it later')
-        sys.exit(-1)
-
-    arg_parser = argparse.ArgumentParser()
-    arg_parser.add_argument("cmd", help='push_agent|start_agent|start|stop|restart|update|check|push|reload|clean')
-    arg_parser.add_argument('pattern', help='*.*.*.* or *.*')
-    arg_parser.add_argument('-u', '--user', help='target machine username')
-    arg_parser.add_argument('-p', '--password', help='target machine password')
-    arg_parser.add_argument('-c', '--conf', nargs='+', help='config path')
-    args = arg_parser.parse_args()
-
-    pattern_splice = args.pattern.split('.')
-    if len(pattern_splice) not in [2, 4]:
-        LogError('Use instance pattern like *.*.*.* or *.*')
-        sys.exit(-1)
-
-    if len(pattern_splice) == 2:
-        args.pattern = "%s.*.%s.*" % (pattern_splice[0], pattern_splice[1])
-
-    if not args.conf:
-        LogError("conf parameter can't be empty")
-        sys.exit(-1)
-    else:
-        for conf in args.conf:
-            if not os.path.isdir(conf):
-                LogError('%s is not dir' % conf)
-                sys.exit(-1)
-
-    # 查找出DEPLOY_ROOT文件目录
+def get_deploy_root_exist():
     exec_path = os.path.split(os.path.realpath(__file__))[0]
     exe_dir = os.path.dirname(exec_path)
     deploy_root = None
     while True:
-        if CheckDeployRootEXist(exe_dir, 'DEPLOY_ROOT'):
+        if check_file_exist(exe_dir, 'DEPLOY_ROOT'):
             deploy_root = exe_dir
             break
         new_exe_dir = os.path.dirname(exe_dir)
@@ -63,10 +31,45 @@ if __name__ == '__main__':
 
     if not deploy_root:
         LogError("can't find the DEPLOY_ROOT file")
-        sys.exit(-1)
+        return None
+    else:
+        LogInfo('DEPLOY_ROOT file in: %s' % deploy_root)
+        return deploy_root
 
-    LogInfo('DEPLOY_ROOT file in: %s' % deploy_root)
 
+def arg_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("cmd", help='push_agent|start_agent|start|stop|restart|update|check|push|reload|clean')
+    parser.add_argument('pattern', help='*.*.*.* or *.* or *')
+    parser.add_argument('-u', '--user', help='target machine username')
+    parser.add_argument('-p', '--password', help='target machine password')
+    parser.add_argument('-c', '--conf', nargs='+', help='config path')
+    return parser.parse_args()
+
+
+def check_argument(args):
+    if not args.conf:
+        LogError("conf parameter can't be empty")
+        return False
+    else:
+        for conf in args.conf:
+            if not os.path.isdir(conf):
+                LogError('%s is not dir' % conf)
+                return False
+
+    if args.cmd in ['push_agent', 'start_agent']:
+        args.pattern = '%s.*.*.*' % args.pattern
+    else:
+        patterns = args.pattern.split('.')
+        if len(patterns) not in [2, 4]:
+            LogError('Use instance pattern like *.*.*.* or *.*')
+            return False
+        if len(patterns) == 2:
+            args.pattern = "%s.*.%s.*" % (patterns[0], patterns[1])
+    return True
+
+
+def exec_cmd(args, deploy_root):
     try:
         gcm = Gcm(args.user, args.password, args.conf, deploy_root)
         if args.cmd == 'push_agent':
@@ -91,10 +94,27 @@ if __name__ == '__main__':
             gcm.clean(args.pattern)
         else:
             LogError('illegal cmd: %s' % args.cmd)
-
     #except BaseException as err:
         #LogError(err)
     finally:
         pass
+
+
+if __name__ == '__main__':
+    singleton = SingletonInstance()
+    if singleton.already_running():
+        LogError('Error: A Deploy Program is already running, please try it later')
+        sys.exit(-1)
+
+    args = arg_parser()
+    if not check_argument(args):
+        sys.exit(-1)
+
+    # 查找出DEPLOY_ROOT文件目录
+    deploy_root = get_deploy_root_exist()
+    if not deploy_root:
+        sys.exit(-1)
+
+    exec_cmd(args, deploy_root)
 
 

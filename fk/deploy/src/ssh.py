@@ -4,6 +4,8 @@ import paramiko
 from loghelper import LogInfo
 from loghelper import LogError
 import sys
+import os
+import string
 
 paramiko.util.log_to_file('./ssh.log', paramiko.common.ERROR)
 
@@ -41,14 +43,17 @@ class ShowProcess():
         self.i = 0
 
 
-def ssh(ip, user, passwd, cmd):
+def ssh_cmd(ip, user, passwd, cmd):
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(ip, 22, user, passwd, timeout=10)
+    client.connect(ip, 22, user, passwd, timeout=30)
     stdin, stdout, stderr = client.exec_command(cmd)
-    LogInfo(cmd)
-    LogInfo(stdout.read())
-    LogError(stderr.read())
+    if stdout.channel.recv_exit_status() == 0:
+        LogInfo('success to: ' + cmd)
+    else:
+        LogError('fail to: ' + cmd)
+        for out in stderr.readlines():
+            LogError(out)
     client.close()
 
 
@@ -60,8 +65,10 @@ def upload_proccess(pro):
     return proccess
 
 
-def ssh_upload(ip, user, passwd, src_file, dst_file):
+def ssh_upload_repo(ip, user, passwd, src_file, dst_file):
     try:
+        dirname = os.path.dirname(dst_file)
+        ssh_cmd(ip, user, passwd, 'mkdir -p ' + dirname)
         proccess = ShowProcess(100)
         transport = paramiko.Transport((ip, 22))
         transport.connect(username=user, password=passwd)
@@ -72,8 +79,5 @@ def ssh_upload(ip, user, passwd, src_file, dst_file):
     except BaseException as err:
         LogError('fail to upload %s to %s@%s:%s' % (src_file, user, ip, dst_file))
         raise err
-
-
-
 
 

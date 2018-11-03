@@ -3,9 +3,8 @@
 from loghelper import LogInfo
 from loghelper import LogError
 from gcm_data import GcmData
-import re
 import os
-import tarfile
+import util
 import ssh
 
 class Gcm:
@@ -59,59 +58,85 @@ class Gcm:
         self.do_cmd('clean', pattern)
 
     def do_cmd(self, cmd, pattern):
-        instance_list = self._get_instance(pattern)
+        # get instances
+        instance_list = util.get_instances(self.gcm_data.artifact_instances, pattern)
         if not instance_list:
             LogError('find no instance in pattern: %s' % pattern)
             return
 
+        # get host set
         host_set = set()
         for instance in instance_list:
             host_set.add(instance.deploy_ip)
 
-        # pack file
-        repo = self._pack_files(instance_list)
-        remote_repo = os.path.join(self.gcm_data.deploy_info.dst_root_path, 'repo.tar.gz')
-        for host in host_set:
-            ssh.ssh_upload(host, 'user00', 'Iron@gbl', repo, remote_repo)
+        # get user and passwd
+        self._get_user_and_passwd(instance_list)
 
-    @staticmethod
-    def _regex_pattern(pattern):
-        return "^" + "\\.".join([s if s != "*" else ".+" for s in pattern.split(".")]) + "$"
+        # do real jobs
+        if cmd == 'push_agent':
+            self._push_agent(instance_list, list(host_set), pattern)
+        elif cmd == 'start_agent':
+            self._start_agent(instance_list, list(host_set), pattern)
+        elif cmd == 'start':
+            self._start(instance_list, list(host_set), pattern)
+        elif cmd == 'stop':
+            self._stop(instance_list, list(host_set), pattern)
+        elif cmd == 'check':
+            self._check(instance_list, list(host_set), pattern)
+        elif cmd == 'push':
+            self._push(instance_list, list(host_set), pattern)
+        elif cmd == 'reload':
+            self._reload(instance_list, list(host_set), pattern)
+        elif cmd == 'clean':
+            self._clean(instance_list, list(host_set), pattern)
 
-    def _get_instance(self, pattern):
-        def Priority(instance):
-            return instance.start_priority
+    def _push_agent(self, instance_list, host_list, pattern):
+        agent_repo = util.pack_agent_files(
+                                     self.gcm_data.deploy_info.tmp_root_path,
+                                     self.src_path,
+                                     self.gcm_data.agent_artifact.files,
+                                     util.get_agent_repo_name())
+        dst_root_path = self.gcm_data.deploy_info.dst_root_path
+        remote_agent_repo = util.get_remote_agent_repo(dst_root_path)
+        for host in host_list:
+            # upload
+            ssh.ssh_upload_repo(host, self.user, self.password, agent_repo, remote_agent_repo)
+            # unpack
+            ssh.ssh_cmd(host, self.user, self.password,
+                        util.get_unpack_remote_agent_cmd(dst_root_path))
 
-        regex_pattern = self._regex_pattern(pattern)
-        instance_list = []
-        for instance in self.gcm_data.artifact_instances:
-            if not re.match(regex_pattern, instance.instance_name):
-                continue
-            instance_list.append(instance)
+    def _start_agent(self, instance_list, host_list, pattern):
+        pass
 
-        instance_list.sort(key=Priority, reverse=True)
-        return instance_list
+    def _start(self, instance_list, host_list, pattern):
+        pass
 
-    def _pack_files(self, instance_list):
-        LogInfo('\n\n==================================== collecting file or directory ====================================')
-        tmp_path = self.gcm_data.deploy_info.tmp_root_path
-        repo_path = os.path.join(tmp_path, 'repo.tar.gz')
-        if not os.path.exists(self.src_path):
-            LogError('src_path: %s is not exist' % self.src_path)
-            raise BaseException()
-        if not os.path.exists(tmp_path):
-            os.mkdir(tmp_path)
+    def _stop(self, instance_list, host_list, pattern):
+        pass
 
-        tar_file = tarfile.open(repo_path, "w:gz")
-        cwd = os.getcwd()
-        os.chdir(self.src_path)
-        for instance in instance_list:
-            artifacts = self.gcm_data.artifact_map[instance.artifact_name]
-            for f in artifacts.files:
-                LogInfo(f.src)
-                tar_file.add(f.src)
+    def _check(self, instance_list, host_list, pattern):
+        pass
 
-        tar_file.close()
-        os.chdir(cwd)
-        LogInfo('tar.gz file: %s' % repo_path)
-        return repo_path
+    def _push(self, instance_list, host_list, pattern):
+        pass
+
+    def _reload(self, instance_list, host_list, pattern):
+        pass
+
+    def _clean(self, instance_list, host_list, pattern):
+        pass
+
+    def _get_user_and_passwd(self, instance_list):
+        if not self.user:
+            if not instance_list:
+                return
+            world_name = instance_list[0].instance_name
+            world_name = world_name.split('.')[0]
+            world = self.gcm_data.world_map[world_name]
+            self.user = world.user
+            self.password = world.passwd
+
+    def _unpack_remote_repo(self, ip):
+        cmd = 'cd ' + os.path.dirname(self._get_remote_repo())
+        cmd += '; tar -zxvf repo.tar.gz'
+        ssh.ssh_cmd(ip, self.user, self.password, cmd)
