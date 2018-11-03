@@ -89,6 +89,7 @@ message World {
 message DeployInfo {
     optional string tmp_root_path = 2;
     optional string dst_root_path = 3;
+    optional int32 listen_port = 4;
 }
 
 message Deploy {
@@ -96,5 +97,6 @@ message Deploy {
     optional string dst_root_path = 3;
     repeated KeyValue variables = 4;
     repeated World worlds = 5;
+    optional int32 listen_port = 6;
 }
 

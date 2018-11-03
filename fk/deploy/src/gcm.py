@@ -8,6 +8,7 @@ import util
 import ssh
 import time
 
+
 class DeployFinishStatus:
     def __init__(self):
         self.show = False
@@ -64,6 +65,10 @@ class Gcm:
         LogInfo('\n\n==================================== clean %s ====================================' % pattern)
         self.do_cmd('clean', pattern)
 
+    def copy(self, source_host, host_list):
+        LogInfo('\n\n==================================== copy %s ====================================' % host_list)
+        pass
+
     def do_cmd(self, cmd, pattern):
         # get instances
         instance_list = util.get_instances(self.gcm_data.artifact_instances, pattern)
@@ -106,11 +111,7 @@ class Gcm:
         dst_root_path = self.gcm_data.deploy_info.dst_root_path
         remote_agent_repo = util.get_remote_agent_repo(dst_root_path)
         for host in host_list:
-            # upload
-            ssh.ssh_upload_repo(host, self.user, self.password, agent_repo, remote_agent_repo)
-            # unpack
-            ssh.ssh_cmd(host, self.user, self.password,
-                        util.get_unpack_remote_agent_cmd(dst_root_path))
+            self._real_push(host, agent_repo, remote_agent_repo)
 
     def _start_agent(self, instance_list, host_list, pattern):
         pass
@@ -130,9 +131,7 @@ class Gcm:
         for host in host_list:
             finish_host_status[host] = DeployFinishStatus()
             cmd = 'test -e ' + util.get_remote_deploy_file(self.gcm_data.deploy_info.dst_root_path)
-            if not ssh.ssh_cmd(host, self.user, self.password, cmd):
-                LogError('host: %s has no agent' % host)
-                raise BaseException()
+            ssh.ssh_cmd(host, self.user, self.password, cmd)
 
         pack_repo = util.pack_repo_files(self.gcm_data.artifact_map,
                                            self.gcm_data.deploy_info.tmp_root_path,
@@ -140,15 +139,7 @@ class Gcm:
                                            util.get_repo_name())
         dst_root_path = self.gcm_data.deploy_info.dst_root_path
         remote_repo = util.get_remote_repo(dst_root_path)
-        # upload
-        ssh.ssh_upload_repo(host_list[0],
-                            self.user,
-                            self.password,
-                            pack_repo,
-                            remote_repo)
-        # unpack
-        ssh.ssh_cmd(host, self.user, self.password,
-                    util.get_unpack_remote_repo_cmd(dst_root_path))
+        self._real_push(host_list[0], pack_repo, remote_repo)
 
         # wait
         finish_host_status[host_list[0]].finish = True
@@ -182,7 +173,19 @@ class Gcm:
             self.user = world.user
             self.password = world.passwd
 
-    def _unpack_remote_repo(self, ip):
-        cmd = 'cd ' + os.path.dirname(self._get_remote_repo())
-        cmd += '; tar -zxvf repo.tar.gz'
-        ssh.ssh_cmd(ip, self.user, self.password, cmd)
+    def _real_push(self, host, pack_repo, remote_pack_repo):
+        # upload
+        ssh.ssh_upload_repo(host,
+                            self.user,
+                            self.password,
+                            pack_repo,
+                            remote_pack_repo)
+        # unpack
+        cmd = 'cd ' + os.path.dirname(remote_pack_repo);
+        cmd += '; tar -zxvf '
+        cmd += os.path.basename(remote_pack_repo)
+        return ssh.ssh_cmd(
+            host,
+            self.user,
+            self.password,
+            cmd)

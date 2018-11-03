@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
-from singleton_instance import SingletonInstance
-import argparse
-from loghelper import LogError
-from loghelper import LogInfo
-from gcm import Gcm
 
 
 def check_file_exist(dir_path, file_name):
@@ -30,11 +25,24 @@ def get_deploy_root_exist():
         exe_dir = new_exe_dir
 
     if not deploy_root:
-        LogError("can't find the DEPLOY_ROOT file")
+        print("can't find the DEPLOY_ROOT file")
         return None
     else:
-        LogInfo('DEPLOY_ROOT file in: %s' % deploy_root)
+        print('DEPLOY_ROOT file in: %s' % deploy_root)
         return deploy_root
+
+
+# 查找出DEPLOY_ROOT文件目录
+deploy_root = get_deploy_root_exist()
+if not deploy_root:
+    sys.exit(-1)
+os.chdir(deploy_root)
+
+
+from singleton_instance import SingletonInstance
+import argparse
+import loghelper
+from gcm import Gcm
 
 
 def arg_parser():
@@ -44,25 +52,31 @@ def arg_parser():
     parser.add_argument('-u', '--user', help='target machine username')
     parser.add_argument('-p', '--password', help='target machine password')
     parser.add_argument('-c', '--conf', nargs='+', help='config path')
+    parser.add_argument('-a', '--address')
+    parser.add_argument('-s', '--source')
     return parser.parse_args()
 
 
 def check_argument(args):
     if not args.conf:
-        LogError("conf parameter can't be empty")
+        loghelper.LogError("conf parameter can't be empty")
         return False
     else:
         for conf in args.conf:
             if not os.path.isdir(conf):
-                LogError('%s is not dir' % conf)
+                loghelper.LogError('%s is not dir' % conf)
                 return False
 
     if args.cmd in ['push_agent', 'start_agent']:
         args.pattern = '%s.*.*.*' % args.pattern
+    elif args.cmd == 'copy':
+        if not args.address:
+            loghelper.LogError('address is empty')
+            return False
     else:
         patterns = args.pattern.split('.')
         if len(patterns) not in [2, 4]:
-            LogError('Use instance pattern like *.*.*.* or *.*')
+            loghelper.LogError('Use instance pattern like *.*.*.* or *.*')
             return False
         if len(patterns) == 2:
             args.pattern = "%s.*.%s.*" % (patterns[0], patterns[1])
@@ -92,8 +106,10 @@ def exec_cmd(args, deploy_root):
             gcm.reload(args.pattern)
         elif args.cmd == 'clean':
             gcm.clean(args.pattern)
+        elif args.cmd == 'copy':
+            gcm.copy(args.source, args.address)
         else:
-            LogError('illegal cmd: %s' % args.cmd)
+            loghelper.LogError('illegal cmd: %s' % args.cmd)
     #except BaseException as err:
         #LogError(err)
     finally:
@@ -103,18 +119,14 @@ def exec_cmd(args, deploy_root):
 if __name__ == '__main__':
     singleton = SingletonInstance()
     if singleton.already_running():
-        LogError('Error: A Deploy Program is already running, please try it later')
+        print('Error: A Deploy Program is already running, please try it later')
         sys.exit(-1)
 
     args = arg_parser()
     if not check_argument(args):
         sys.exit(-1)
 
-    # 查找出DEPLOY_ROOT文件目录
-    deploy_root = get_deploy_root_exist()
-    if not deploy_root:
-        sys.exit(-1)
-
     exec_cmd(args, deploy_root)
+    sys.exit(0)
 
 

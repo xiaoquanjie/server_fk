@@ -16,9 +16,9 @@ def gen_py_from_pb(proto_path):
         if os.path.exists(pre_file):
             pass
         if platform.system() == "Windows":
-            command = "..\\..\\bin\\protoc.exe --proto_path=../proto --python_out=../proto/ " + file
+            command = ".\\bin\\protoc.exe --proto_path=./deploy/proto --python_out=./deploy/proto/ " + file
         else:
-            command = "protoc --proto_path=../proto --python_out=../proto " + file
+            command = "protoc --proto_path=./deploy/proto --python_out=./deploy/proto " + file
         try:
             LogInfo(command)
             os.system(command)

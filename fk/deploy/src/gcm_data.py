@@ -3,7 +3,7 @@
 import gen_py_from_pb
 import sys
 import os
-gen_py_from_pb.gen_py_from_pb('../proto/')
+gen_py_from_pb.gen_py_from_pb('./deploy/proto/')
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), "./proto/"))
 from google.protobuf import text_format
 from gcm_pb2 import *
@@ -93,6 +93,7 @@ class GcmData:
         # parse global const variable
         self.deploy_info.tmp_root_path = deploy.tmp_root_path
         self.deploy_info.dst_root_path = deploy.dst_root_path
+        self.deploy_info.listen_port = deploy.listen_port
 
         for word in deploy.worlds:
             if word.name in self.world_map:

@@ -7,15 +7,10 @@ import sys
 import os
 import string
 
-paramiko.util.log_to_file('./ssh.log', paramiko.common.ERROR)
+paramiko.util.log_to_file('./deploy/ssh.log', paramiko.common.ERROR)
 
 
 class ShowProcess():
-    # i = 0  # 当前的处理进度
-    # max_steps = 0  # 总共需要处理的次数
-    # max_arrow = 50  # 进度条的长度
-    # infoDone = 'done'
-
     def __init__(self, max_steps, infoDone = 'Done'):
         self.max_arrow = 50
         self.max_steps = max_steps
@@ -57,7 +52,8 @@ def ssh_cmd(ip, user, passwd, cmd):
         for out in stderr.readlines():
             LogError(out)
     client.close()
-    return ret
+    if not ret:
+        raise BaseException()
 
 
 def upload_proccess(pro):

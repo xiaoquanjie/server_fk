@@ -29,7 +29,7 @@ class LogHelper:
     def _init():
         # file log
         formatter = logging.Formatter('%(asctime)s|%(levelname)s|%(lineno)d|%(funcName)s|%(message)s')
-        handler = logging.FileHandler('deploy.log', mode='w')
+        handler = logging.FileHandler('./deploy/deploy.log', mode='w')
         handler.setFormatter(formatter)
         LogHelper._logger = logging.getLogger()
         LogHelper._logger.addHandler(handler)
