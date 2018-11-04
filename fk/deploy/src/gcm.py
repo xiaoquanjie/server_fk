@@ -112,6 +112,9 @@ class Gcm:
         remote_agent_repo = util.get_remote_agent_repo(dst_root_path)
         for host in host_list:
             self._real_push(host, agent_repo, remote_agent_repo)
+            cmd = 'cd ' + self.gcm_data.deploy_info.dst_root_path
+            cmd += '; chmod +x ./repo/deploy/bin/*'
+            ssh.ssh_cmd(host, self.user, self.password, cmd)
 
     def _start_agent(self, instance_list, host_list, pattern):
         pass
