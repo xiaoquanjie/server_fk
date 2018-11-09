@@ -24,9 +24,9 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 
 				// 检查字段们是否冲突
 				int tmp = 0;
-				if (field.has_add_col_after()) {
+				/*if (field.has_add_col_after()) {
 					tmp++;
-				}
+				}*/
 				if (field.has_rename_from()) {
 					tmp++;
 				}
@@ -34,7 +34,7 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 					tmp++;
 				}
 
-				if (tmp >= 2) {
+				if (tmp >= 1) {
 					// 上以三者不能同时存在两个及以上
 					LogError("Error: add_col_after、rename_from、modify_type must be exclusive in field: " << field.name() << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
@@ -162,7 +162,7 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 			}
 
 			// add_col_after 必须存在field
-			for (auto iter_field = field_map.begin(); iter_field != field_map.end(); ++iter_field) {
+			/*for (auto iter_field = field_map.begin(); iter_field != field_map.end(); ++iter_field) {
 				if (!iter_field->second->has_add_col_after()) {
 					continue;
 				}
@@ -176,7 +176,7 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 						<< " in schema: " << schema.schema_name());
 					return false;
 				}
-			}
+			}*/
 }
 	}
 	

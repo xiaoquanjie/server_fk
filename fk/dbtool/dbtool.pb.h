@@ -250,21 +250,6 @@ class TableField : public ::google::protobuf::Message /* @@protoc_insertion_poin
   ::std::string* release_default_();
   void set_allocated_default_(::std::string* default_);
 
-  // optional string add_col_after = 6;
-  bool has_add_col_after() const;
-  void clear_add_col_after();
-  static const int kAddColAfterFieldNumber = 6;
-  const ::std::string& add_col_after() const;
-  void set_add_col_after(const ::std::string& value);
-  #if LANG_CXX11
-  void set_add_col_after(::std::string&& value);
-  #endif
-  void set_add_col_after(const char* value);
-  void set_add_col_after(const char* value, size_t size);
-  ::std::string* mutable_add_col_after();
-  ::std::string* release_add_col_after();
-  void set_allocated_add_col_after(::std::string* add_col_after);
-
   // optional string rename_from = 7;
   bool has_rename_from() const;
   void clear_rename_from();
@@ -334,8 +319,6 @@ class TableField : public ::google::protobuf::Message /* @@protoc_insertion_poin
   void clear_has_auto_incr();
   void set_has_default_();
   void clear_has_default_();
-  void set_has_add_col_after();
-  void clear_has_add_col_after();
   void set_has_rename_from();
   void clear_has_rename_from();
   void set_has_modify_type();
@@ -350,7 +333,6 @@ class TableField : public ::google::protobuf::Message /* @@protoc_insertion_poin
   mutable int _cached_size_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::internal::ArenaStringPtr default__;
-  ::google::protobuf::internal::ArenaStringPtr add_col_after_;
   ::google::protobuf::internal::ArenaStringPtr rename_from_;
   bool not_null_;
   bool auto_incr_;
@@ -1040,13 +1022,13 @@ inline void TableField::set_allocated_name(::std::string* name) {
 
 // optional .dbtool.MysqlFieldType type = 2;
 inline bool TableField::has_type() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00000080u) != 0;
 }
 inline void TableField::set_has_type() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000080u;
 }
 inline void TableField::clear_has_type() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void TableField::clear_type() {
   type_ = 1;
@@ -1065,13 +1047,13 @@ inline void TableField::set_type(::dbtool::MysqlFieldType value) {
 
 // optional bool not_null = 3;
 inline bool TableField::has_not_null() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void TableField::set_has_not_null() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void TableField::clear_has_not_null() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void TableField::clear_not_null() {
   not_null_ = false;
@@ -1089,13 +1071,13 @@ inline void TableField::set_not_null(bool value) {
 
 // optional bool auto_incr = 4;
 inline bool TableField::has_auto_incr() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void TableField::set_has_auto_incr() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void TableField::clear_has_auto_incr() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void TableField::clear_auto_incr() {
   auto_incr_ = false;
@@ -1174,78 +1156,15 @@ inline void TableField::set_allocated_default_(::std::string* default_) {
   // @@protoc_insertion_point(field_set_allocated:dbtool.TableField.default)
 }
 
-// optional string add_col_after = 6;
-inline bool TableField::has_add_col_after() const {
-  return (_has_bits_[0] & 0x00000004u) != 0;
-}
-inline void TableField::set_has_add_col_after() {
-  _has_bits_[0] |= 0x00000004u;
-}
-inline void TableField::clear_has_add_col_after() {
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline void TableField::clear_add_col_after() {
-  add_col_after_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  clear_has_add_col_after();
-}
-inline const ::std::string& TableField::add_col_after() const {
-  // @@protoc_insertion_point(field_get:dbtool.TableField.add_col_after)
-  return add_col_after_.GetNoArena();
-}
-inline void TableField::set_add_col_after(const ::std::string& value) {
-  set_has_add_col_after();
-  add_col_after_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:dbtool.TableField.add_col_after)
-}
-#if LANG_CXX11
-inline void TableField::set_add_col_after(::std::string&& value) {
-  set_has_add_col_after();
-  add_col_after_.SetNoArena(
-    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:dbtool.TableField.add_col_after)
-}
-#endif
-inline void TableField::set_add_col_after(const char* value) {
-  GOOGLE_DCHECK(value != NULL);
-  set_has_add_col_after();
-  add_col_after_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:dbtool.TableField.add_col_after)
-}
-inline void TableField::set_add_col_after(const char* value, size_t size) {
-  set_has_add_col_after();
-  add_col_after_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:dbtool.TableField.add_col_after)
-}
-inline ::std::string* TableField::mutable_add_col_after() {
-  set_has_add_col_after();
-  // @@protoc_insertion_point(field_mutable:dbtool.TableField.add_col_after)
-  return add_col_after_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* TableField::release_add_col_after() {
-  // @@protoc_insertion_point(field_release:dbtool.TableField.add_col_after)
-  clear_has_add_col_after();
-  return add_col_after_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void TableField::set_allocated_add_col_after(::std::string* add_col_after) {
-  if (add_col_after != NULL) {
-    set_has_add_col_after();
-  } else {
-    clear_has_add_col_after();
-  }
-  add_col_after_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), add_col_after);
-  // @@protoc_insertion_point(field_set_allocated:dbtool.TableField.add_col_after)
-}
-
 // optional string rename_from = 7;
 inline bool TableField::has_rename_from() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000004u) != 0;
 }
 inline void TableField::set_has_rename_from() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000004u;
 }
 inline void TableField::clear_has_rename_from() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline void TableField::clear_rename_from() {
   rename_from_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
@@ -1302,13 +1221,13 @@ inline void TableField::set_allocated_rename_from(::std::string* rename_from) {
 
 // optional .dbtool.MysqlFieldType modify_type = 8;
 inline bool TableField::has_modify_type() const {
-  return (_has_bits_[0] & 0x00000200u) != 0;
+  return (_has_bits_[0] & 0x00000100u) != 0;
 }
 inline void TableField::set_has_modify_type() {
-  _has_bits_[0] |= 0x00000200u;
+  _has_bits_[0] |= 0x00000100u;
 }
 inline void TableField::clear_has_modify_type() {
-  _has_bits_[0] &= ~0x00000200u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline void TableField::clear_modify_type() {
   modify_type_ = 1;
@@ -1327,13 +1246,13 @@ inline void TableField::set_modify_type(::dbtool::MysqlFieldType value) {
 
 // optional uint32 varchar_len = 9 [default = 255];
 inline bool TableField::has_varchar_len() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void TableField::set_has_varchar_len() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void TableField::clear_has_varchar_len() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void TableField::clear_varchar_len() {
   varchar_len_ = 255u;
@@ -1351,13 +1270,13 @@ inline void TableField::set_varchar_len(::google::protobuf::uint32 value) {
 
 // optional bool is_delete = 10;
 inline bool TableField::has_is_delete() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void TableField::set_has_is_delete() {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void TableField::clear_has_is_delete() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void TableField::clear_is_delete() {
   is_delete_ = false;

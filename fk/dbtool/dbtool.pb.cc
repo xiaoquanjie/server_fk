@@ -170,21 +170,19 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, not_null_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, auto_incr_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, default__),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, add_col_after_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, rename_from_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, modify_type_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, varchar_len_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableField, is_delete_),
   0,
-  8,
+  7,
+  3,
   4,
-  5,
   1,
   2,
-  3,
-  9,
-  7,
+  8,
   6,
+  5,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableKey, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::dbtool::TableKey, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -233,11 +231,11 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   ~0u,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 15, sizeof(::dbtool::TableField)},
-  { 25, 33, sizeof(::dbtool::TableKey)},
-  { 36, 44, sizeof(::dbtool::MysqlTable)},
-  { 47, 58, sizeof(::dbtool::MysqlSchema)},
-  { 64, 70, sizeof(::dbtool::MysqlSchemaConf)},
+  { 0, 14, sizeof(::dbtool::TableField)},
+  { 23, 31, sizeof(::dbtool::TableKey)},
+  { 34, 42, sizeof(::dbtool::MysqlTable)},
+  { 45, 56, sizeof(::dbtool::MysqlSchema)},
+  { 62, 68, sizeof(::dbtool::MysqlSchemaConf)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
@@ -270,36 +268,35 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\014dbtool.proto\022\006dbtool\"\374\001\n\nTableField\022\014\n"
+      "\n\014dbtool.proto\022\006dbtool\"\345\001\n\nTableField\022\014\n"
       "\004name\030\001 \001(\t\022$\n\004type\030\002 \001(\0162\026.dbtool.Mysql"
       "FieldType\022\020\n\010not_null\030\003 \001(\010\022\021\n\tauto_incr"
-      "\030\004 \001(\010\022\017\n\007default\030\005 \001(\t\022\025\n\radd_col_after"
-      "\030\006 \001(\t\022\023\n\013rename_from\030\007 \001(\t\022+\n\013modify_ty"
-      "pe\030\010 \001(\0162\026.dbtool.MysqlFieldType\022\030\n\013varc"
-      "har_len\030\t \001(\r:\003255\022\021\n\tis_delete\030\n \001(\010\"L\n"
-      "\010TableKey\022\014\n\004name\030\001 \001(\t\022\"\n\004type\030\002 \001(\0162\024."
-      "dbtool.MysqlKeyType\022\016\n\006fields\030\003 \003(\t\"d\n\nM"
-      "ysqlTable\022\022\n\ntable_name\030\001 \001(\t\022\"\n\006fields\030"
-      "\002 \003(\0132\022.dbtool.TableField\022\036\n\004keys\030\003 \003(\0132"
-      "\020.dbtool.TableKey\"\226\001\n\013MysqlSchema\022\020\n\010mys"
-      "ql_ip\030\001 \001(\t\022\022\n\nmysql_port\030\002 \001(\r\022\022\n\nmysql"
-      "_user\030\003 \001(\t\022\024\n\014mysql_passwd\030\004 \001(\t\022\023\n\013sch"
-      "ema_name\030\005 \001(\t\022\"\n\006tables\030\006 \003(\0132\022.dbtool."
-      "MysqlTable\"=\n\017MysqlSchemaConf\022*\n\rmysql_s"
-      "chemas\030\001 \003(\0132\023.dbtool.MysqlSchema*\254\002\n\016My"
-      "sqlFieldType\022\027\n\023E_FieldType_TinyInt\020\001\022\023\n"
-      "\017E_FieldType_Int\020\002\022\024\n\020E_FieldType_UInt\020\003"
-      "\022\026\n\022E_FieldType_BigInt\020\004\022\026\n\022E_FieldType_"
-      "Double\020\005\022\027\n\023E_FieldType_Varchar\020\006\022\024\n\020E_F"
-      "ieldType_Blob\020\007\022\032\n\026E_FieldType_MediumBlo"
-      "b\020\010\022\024\n\020E_FieldType_Text\020\t\022\024\n\020E_FieldType"
-      "_Date\020\n\022\024\n\020E_FieldType_Time\020\013\022\031\n\025E_Field"
-      "Type_TimeStamp\020\014*Q\n\014MysqlKeyType\022\025\n\021E_Ke"
-      "yType_Primary\020\001\022\024\n\020E_KeyType_Normal\020\002\022\024\n"
-      "\020E_KeyType_Unique\020\003"
+      "\030\004 \001(\010\022\017\n\007default\030\005 \001(\t\022\023\n\013rename_from\030\007"
+      " \001(\t\022+\n\013modify_type\030\010 \001(\0162\026.dbtool.Mysql"
+      "FieldType\022\030\n\013varchar_len\030\t \001(\r:\003255\022\021\n\ti"
+      "s_delete\030\n \001(\010\"L\n\010TableKey\022\014\n\004name\030\001 \001(\t"
+      "\022\"\n\004type\030\002 \001(\0162\024.dbtool.MysqlKeyType\022\016\n\006"
+      "fields\030\003 \003(\t\"d\n\nMysqlTable\022\022\n\ntable_name"
+      "\030\001 \001(\t\022\"\n\006fields\030\002 \003(\0132\022.dbtool.TableFie"
+      "ld\022\036\n\004keys\030\003 \003(\0132\020.dbtool.TableKey\"\226\001\n\013M"
+      "ysqlSchema\022\020\n\010mysql_ip\030\001 \001(\t\022\022\n\nmysql_po"
+      "rt\030\002 \001(\r\022\022\n\nmysql_user\030\003 \001(\t\022\024\n\014mysql_pa"
+      "sswd\030\004 \001(\t\022\023\n\013schema_name\030\005 \001(\t\022\"\n\006table"
+      "s\030\006 \003(\0132\022.dbtool.MysqlTable\"=\n\017MysqlSche"
+      "maConf\022*\n\rmysql_schemas\030\001 \003(\0132\023.dbtool.M"
+      "ysqlSchema*\254\002\n\016MysqlFieldType\022\027\n\023E_Field"
+      "Type_TinyInt\020\001\022\023\n\017E_FieldType_Int\020\002\022\024\n\020E"
+      "_FieldType_UInt\020\003\022\026\n\022E_FieldType_BigInt\020"
+      "\004\022\026\n\022E_FieldType_Double\020\005\022\027\n\023E_FieldType"
+      "_Varchar\020\006\022\024\n\020E_FieldType_Blob\020\007\022\032\n\026E_Fi"
+      "eldType_MediumBlob\020\010\022\024\n\020E_FieldType_Text"
+      "\020\t\022\024\n\020E_FieldType_Date\020\n\022\024\n\020E_FieldType_"
+      "Time\020\013\022\031\n\025E_FieldType_TimeStamp\020\014*Q\n\014Mys"
+      "qlKeyType\022\025\n\021E_KeyType_Primary\020\001\022\024\n\020E_Ke"
+      "yType_Normal\020\002\022\024\n\020E_KeyType_Unique\020\003"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 1059);
+      descriptor, 1036);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "dbtool.proto", &protobuf_RegisterTypes);
 }
@@ -366,7 +363,6 @@ const int TableField::kTypeFieldNumber;
 const int TableField::kNotNullFieldNumber;
 const int TableField::kAutoIncrFieldNumber;
 const int TableField::kDefaultFieldNumber;
-const int TableField::kAddColAfterFieldNumber;
 const int TableField::kRenameFromFieldNumber;
 const int TableField::kModifyTypeFieldNumber;
 const int TableField::kVarcharLenFieldNumber;
@@ -395,10 +391,6 @@ TableField::TableField(const TableField& from)
   if (from.has_default_()) {
     default__.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.default__);
   }
-  add_col_after_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_add_col_after()) {
-    add_col_after_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.add_col_after_);
-  }
   rename_from_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (from.has_rename_from()) {
     rename_from_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.rename_from_);
@@ -413,7 +405,6 @@ void TableField::SharedCtor() {
   _cached_size_ = 0;
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   default__.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  add_col_after_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   rename_from_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&not_null_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&is_delete_) -
@@ -431,7 +422,6 @@ TableField::~TableField() {
 void TableField::SharedDtor() {
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   default__.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  add_col_after_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   rename_from_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
@@ -465,7 +455,7 @@ void TableField::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 15u) {
+  if (cached_has_bits & 7u) {
     if (cached_has_bits & 0x00000001u) {
       GOOGLE_DCHECK(!name_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
       (*name_.UnsafeRawStringPointer())->clear();
@@ -475,10 +465,6 @@ void TableField::Clear() {
       (*default__.UnsafeRawStringPointer())->clear();
     }
     if (cached_has_bits & 0x00000004u) {
-      GOOGLE_DCHECK(!add_col_after_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
-      (*add_col_after_.UnsafeRawStringPointer())->clear();
-    }
-    if (cached_has_bits & 0x00000008u) {
       GOOGLE_DCHECK(!rename_from_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
       (*rename_from_.UnsafeRawStringPointer())->clear();
     }
@@ -486,11 +472,11 @@ void TableField::Clear() {
   ::memset(&not_null_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&is_delete_) -
       reinterpret_cast<char*>(&not_null_)) + sizeof(is_delete_));
-  varchar_len_ = 255u;
-  if (cached_has_bits & 768u) {
+  if (cached_has_bits & 192u) {
+    varchar_len_ = 255u;
     type_ = 1;
-    modify_type_ = 1;
   }
+  modify_type_ = 1;
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -579,22 +565,6 @@ bool TableField::MergePartialFromCodedStream(
             this->default_().data(), static_cast<int>(this->default_().length()),
             ::google::protobuf::internal::WireFormat::PARSE,
             "dbtool.TableField.default");
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional string add_col_after = 6;
-      case 6: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_add_col_after()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->add_col_after().data(), static_cast<int>(this->add_col_after().length()),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "dbtool.TableField.add_col_after");
         } else {
           goto handle_unusual;
         }
@@ -703,18 +673,18 @@ void TableField::SerializeWithCachedSizes(
   }
 
   // optional .dbtool.MysqlFieldType type = 2;
-  if (cached_has_bits & 0x00000100u) {
+  if (cached_has_bits & 0x00000080u) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       2, this->type(), output);
   }
 
   // optional bool not_null = 3;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000008u) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->not_null(), output);
   }
 
   // optional bool auto_incr = 4;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000010u) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(4, this->auto_incr(), output);
   }
 
@@ -728,18 +698,8 @@ void TableField::SerializeWithCachedSizes(
       5, this->default_(), output);
   }
 
-  // optional string add_col_after = 6;
-  if (cached_has_bits & 0x00000004u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->add_col_after().data(), static_cast<int>(this->add_col_after().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "dbtool.TableField.add_col_after");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      6, this->add_col_after(), output);
-  }
-
   // optional string rename_from = 7;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000004u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->rename_from().data(), static_cast<int>(this->rename_from().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -749,18 +709,18 @@ void TableField::SerializeWithCachedSizes(
   }
 
   // optional .dbtool.MysqlFieldType modify_type = 8;
-  if (cached_has_bits & 0x00000200u) {
+  if (cached_has_bits & 0x00000100u) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
       8, this->modify_type(), output);
   }
 
   // optional uint32 varchar_len = 9 [default = 255];
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000040u) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->varchar_len(), output);
   }
 
   // optional bool is_delete = 10;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000020u) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(10, this->is_delete(), output);
   }
 
@@ -791,18 +751,18 @@ void TableField::SerializeWithCachedSizes(
   }
 
   // optional .dbtool.MysqlFieldType type = 2;
-  if (cached_has_bits & 0x00000100u) {
+  if (cached_has_bits & 0x00000080u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       2, this->type(), target);
   }
 
   // optional bool not_null = 3;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000008u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->not_null(), target);
   }
 
   // optional bool auto_incr = 4;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000010u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->auto_incr(), target);
   }
 
@@ -817,19 +777,8 @@ void TableField::SerializeWithCachedSizes(
         5, this->default_(), target);
   }
 
-  // optional string add_col_after = 6;
-  if (cached_has_bits & 0x00000004u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->add_col_after().data(), static_cast<int>(this->add_col_after().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "dbtool.TableField.add_col_after");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->add_col_after(), target);
-  }
-
   // optional string rename_from = 7;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000004u) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->rename_from().data(), static_cast<int>(this->rename_from().length()),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
@@ -840,18 +789,18 @@ void TableField::SerializeWithCachedSizes(
   }
 
   // optional .dbtool.MysqlFieldType modify_type = 8;
-  if (cached_has_bits & 0x00000200u) {
+  if (cached_has_bits & 0x00000100u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
       8, this->modify_type(), target);
   }
 
   // optional uint32 varchar_len = 9 [default = 255];
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000040u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(9, this->varchar_len(), target);
   }
 
   // optional bool is_delete = 10;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000020u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(10, this->is_delete(), target);
   }
 
@@ -887,13 +836,6 @@ size_t TableField::ByteSizeLong() const {
           this->default_());
     }
 
-    // optional string add_col_after = 6;
-    if (has_add_col_after()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->add_col_after());
-    }
-
     // optional string rename_from = 7;
     if (has_rename_from()) {
       total_size += 1 +
@@ -923,21 +865,19 @@ size_t TableField::ByteSizeLong() const {
           this->varchar_len());
     }
 
-  }
-  if (_has_bits_[8 / 32] & 768u) {
     // optional .dbtool.MysqlFieldType type = 2;
     if (has_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
 
-    // optional .dbtool.MysqlFieldType modify_type = 8;
-    if (has_modify_type()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::EnumSize(this->modify_type());
-    }
-
   }
+  // optional .dbtool.MysqlFieldType modify_type = 8;
+  if (has_modify_type()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->modify_type());
+  }
+
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = cached_size;
@@ -978,35 +918,28 @@ void TableField::MergeFrom(const TableField& from) {
       default__.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.default__);
     }
     if (cached_has_bits & 0x00000004u) {
-      set_has_add_col_after();
-      add_col_after_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.add_col_after_);
-    }
-    if (cached_has_bits & 0x00000008u) {
       set_has_rename_from();
       rename_from_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.rename_from_);
     }
-    if (cached_has_bits & 0x00000010u) {
+    if (cached_has_bits & 0x00000008u) {
       not_null_ = from.not_null_;
     }
-    if (cached_has_bits & 0x00000020u) {
+    if (cached_has_bits & 0x00000010u) {
       auto_incr_ = from.auto_incr_;
     }
-    if (cached_has_bits & 0x00000040u) {
+    if (cached_has_bits & 0x00000020u) {
       is_delete_ = from.is_delete_;
     }
-    if (cached_has_bits & 0x00000080u) {
+    if (cached_has_bits & 0x00000040u) {
       varchar_len_ = from.varchar_len_;
+    }
+    if (cached_has_bits & 0x00000080u) {
+      type_ = from.type_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
-  if (cached_has_bits & 768u) {
-    if (cached_has_bits & 0x00000100u) {
-      type_ = from.type_;
-    }
-    if (cached_has_bits & 0x00000200u) {
-      modify_type_ = from.modify_type_;
-    }
-    _has_bits_[0] |= cached_has_bits;
+  if (cached_has_bits & 0x00000100u) {
+    set_modify_type(from.modify_type());
   }
 }
 
@@ -1036,7 +969,6 @@ void TableField::InternalSwap(TableField* other) {
   using std::swap;
   name_.Swap(&other->name_);
   default__.Swap(&other->default__);
-  add_col_after_.Swap(&other->add_col_after_);
   rename_from_.Swap(&other->rename_from_);
   swap(not_null_, other->not_null_);
   swap(auto_incr_, other->auto_incr_);
