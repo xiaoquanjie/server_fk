@@ -36,7 +36,7 @@ namespace protobuf_mytest_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[1];
+  static const ::google::protobuf::internal::ParseTable schema[2];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -44,14 +44,20 @@ struct TableStruct {
 void AddDescriptors();
 void InitDefaultsmystery_boxImpl();
 void InitDefaultsmystery_box();
+void InitDefaultsmystery_box_listImpl();
+void InitDefaultsmystery_box_list();
 inline void InitDefaults() {
   InitDefaultsmystery_box();
+  InitDefaultsmystery_box_list();
 }
 }  // namespace protobuf_mytest_2eproto
 namespace mytest {
 class mystery_box;
 class mystery_boxDefaultTypeInternal;
 extern mystery_boxDefaultTypeInternal _mystery_box_default_instance_;
+class mystery_box_list;
+class mystery_box_listDefaultTypeInternal;
+extern mystery_box_listDefaultTypeInternal _mystery_box_list_default_instance_;
 }  // namespace mytest
 namespace mytest {
 
@@ -278,6 +284,119 @@ class mystery_box : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::uint32 name_uint_;
   friend struct ::protobuf_mytest_2eproto::TableStruct;
   friend void ::protobuf_mytest_2eproto::InitDefaultsmystery_boxImpl();
+};
+// -------------------------------------------------------------------
+
+class mystery_box_list : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:mytest.mystery_box_list) */ {
+ public:
+  mystery_box_list();
+  virtual ~mystery_box_list();
+
+  mystery_box_list(const mystery_box_list& from);
+
+  inline mystery_box_list& operator=(const mystery_box_list& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  mystery_box_list(mystery_box_list&& from) noexcept
+    : mystery_box_list() {
+    *this = ::std::move(from);
+  }
+
+  inline mystery_box_list& operator=(mystery_box_list&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const mystery_box_list& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const mystery_box_list* internal_default_instance() {
+    return reinterpret_cast<const mystery_box_list*>(
+               &_mystery_box_list_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    1;
+
+  void Swap(mystery_box_list* other);
+  friend void swap(mystery_box_list& a, mystery_box_list& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline mystery_box_list* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  mystery_box_list* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const mystery_box_list& from);
+  void MergeFrom(const mystery_box_list& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(mystery_box_list* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated .mytest.mystery_box items = 1;
+  int items_size() const;
+  void clear_items();
+  static const int kItemsFieldNumber = 1;
+  const ::mytest::mystery_box& items(int index) const;
+  ::mytest::mystery_box* mutable_items(int index);
+  ::mytest::mystery_box* add_items();
+  ::google::protobuf::RepeatedPtrField< ::mytest::mystery_box >*
+      mutable_items();
+  const ::google::protobuf::RepeatedPtrField< ::mytest::mystery_box >&
+      items() const;
+
+  // @@protoc_insertion_point(class_scope:mytest.mystery_box_list)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable int _cached_size_;
+  ::google::protobuf::RepeatedPtrField< ::mytest::mystery_box > items_;
+  friend struct ::protobuf_mytest_2eproto::TableStruct;
+  friend void ::protobuf_mytest_2eproto::InitDefaultsmystery_box_listImpl();
 };
 // ===================================================================
 
@@ -647,9 +766,45 @@ inline void mystery_box::set_name_time2(::google::protobuf::int64 value) {
   // @@protoc_insertion_point(field_set:mytest.mystery_box.name_time2)
 }
 
+// -------------------------------------------------------------------
+
+// mystery_box_list
+
+// repeated .mytest.mystery_box items = 1;
+inline int mystery_box_list::items_size() const {
+  return items_.size();
+}
+inline void mystery_box_list::clear_items() {
+  items_.Clear();
+}
+inline const ::mytest::mystery_box& mystery_box_list::items(int index) const {
+  // @@protoc_insertion_point(field_get:mytest.mystery_box_list.items)
+  return items_.Get(index);
+}
+inline ::mytest::mystery_box* mystery_box_list::mutable_items(int index) {
+  // @@protoc_insertion_point(field_mutable:mytest.mystery_box_list.items)
+  return items_.Mutable(index);
+}
+inline ::mytest::mystery_box* mystery_box_list::add_items() {
+  // @@protoc_insertion_point(field_add:mytest.mystery_box_list.items)
+  return items_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::mytest::mystery_box >*
+mystery_box_list::mutable_items() {
+  // @@protoc_insertion_point(field_mutable_list:mytest.mystery_box_list.items)
+  return &items_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::mytest::mystery_box >&
+mystery_box_list::items() const {
+  // @@protoc_insertion_point(field_list:mytest.mystery_box_list.items)
+  return items_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 

@@ -13,3 +13,7 @@ message mystery_box {
     optional int64 name_time2 = 10;
 }
 
+message mystery_box_list {
+    repeated mystery_box items = 1;
+}
+

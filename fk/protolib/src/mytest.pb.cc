@@ -25,6 +25,11 @@ class mystery_boxDefaultTypeInternal {
   ::google::protobuf::internal::ExplicitlyConstructed<mystery_box>
       _instance;
 } _mystery_box_default_instance_;
+class mystery_box_listDefaultTypeInternal {
+ public:
+  ::google::protobuf::internal::ExplicitlyConstructed<mystery_box_list>
+      _instance;
+} _mystery_box_list_default_instance_;
 }  // namespace mytest
 namespace protobuf_mytest_2eproto {
 void InitDefaultsmystery_boxImpl() {
@@ -48,7 +53,29 @@ void InitDefaultsmystery_box() {
   ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsmystery_boxImpl);
 }
 
-::google::protobuf::Metadata file_level_metadata[1];
+void InitDefaultsmystery_box_listImpl() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
+#else
+  ::google::protobuf::internal::InitProtobufDefaults();
+#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
+  protobuf_mytest_2eproto::InitDefaultsmystery_box();
+  {
+    void* ptr = &::mytest::_mystery_box_list_default_instance_;
+    new (ptr) ::mytest::mystery_box_list();
+    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::mytest::mystery_box_list::InitAsDefaultInstance();
+}
+
+void InitDefaultsmystery_box_list() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsmystery_box_listImpl);
+}
+
+::google::protobuf::Metadata file_level_metadata[2];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, _has_bits_),
@@ -76,13 +103,22 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   2,
   7,
   8,
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box_list, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box_list, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box_list, items_),
+  ~0u,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 15, sizeof(::mytest::mystery_box)},
+  { 25, 31, sizeof(::mytest::mystery_box_list)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::google::protobuf::Message*>(&::mytest::_mystery_box_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::mytest::_mystery_box_list_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -101,7 +137,7 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 1);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 2);
 }
 
 void AddDescriptorsImpl() {
@@ -113,10 +149,11 @@ void AddDescriptorsImpl() {
       "\023\n\013name_double\030\005 \001(\001\022\024\n\014name_varchar\030\006 \001"
       "(\t\022\021\n\tname_blob\030\007 \001(\t\022\024\n\014name_medblob\030\010 "
       "\001(\t\022\021\n\tname_date\030\t \001(\003\022\022\n\nname_time2\030\n \001"
-      "(\003"
+      "(\003\"6\n\020mystery_box_list\022\"\n\005items\030\001 \003(\0132\023."
+      "mytest.mystery_box"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 242);
+      descriptor, 298);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "mytest.proto", &protobuf_RegisterTypes);
 }
@@ -793,6 +830,250 @@ void mystery_box::InternalSwap(mystery_box* other) {
 }
 
 ::google::protobuf::Metadata mystery_box::GetMetadata() const {
+  protobuf_mytest_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_mytest_2eproto::file_level_metadata[kIndexInFileMessages];
+}
+
+
+// ===================================================================
+
+void mystery_box_list::InitAsDefaultInstance() {
+}
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int mystery_box_list::kItemsFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+mystery_box_list::mystery_box_list()
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    ::protobuf_mytest_2eproto::InitDefaultsmystery_box_list();
+  }
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:mytest.mystery_box_list)
+}
+mystery_box_list::mystery_box_list(const mystery_box_list& from)
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0),
+      items_(from.items_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:mytest.mystery_box_list)
+}
+
+void mystery_box_list::SharedCtor() {
+  _cached_size_ = 0;
+}
+
+mystery_box_list::~mystery_box_list() {
+  // @@protoc_insertion_point(destructor:mytest.mystery_box_list)
+  SharedDtor();
+}
+
+void mystery_box_list::SharedDtor() {
+}
+
+void mystery_box_list::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* mystery_box_list::descriptor() {
+  ::protobuf_mytest_2eproto::protobuf_AssignDescriptorsOnce();
+  return ::protobuf_mytest_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
+}
+
+const mystery_box_list& mystery_box_list::default_instance() {
+  ::protobuf_mytest_2eproto::InitDefaultsmystery_box_list();
+  return *internal_default_instance();
+}
+
+mystery_box_list* mystery_box_list::New(::google::protobuf::Arena* arena) const {
+  mystery_box_list* n = new mystery_box_list;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void mystery_box_list::Clear() {
+// @@protoc_insertion_point(message_clear_start:mytest.mystery_box_list)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  items_.Clear();
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+bool mystery_box_list::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:mytest.mystery_box_list)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .mytest.mystery_box items = 1;
+      case 1: {
+        if (static_cast< ::google::protobuf::uint8>(tag) ==
+            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_items()));
+        } else {
+          goto handle_unusual;
+        }
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, _internal_metadata_.mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:mytest.mystery_box_list)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:mytest.mystery_box_list)
+  return false;
+#undef DO_
+}
+
+void mystery_box_list::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:mytest.mystery_box_list)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .mytest.mystery_box items = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->items_size()); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      1, this->items(static_cast<int>(i)), output);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        _internal_metadata_.unknown_fields(), output);
+  }
+  // @@protoc_insertion_point(serialize_end:mytest.mystery_box_list)
+}
+
+::google::protobuf::uint8* mystery_box_list::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:mytest.mystery_box_list)
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .mytest.mystery_box items = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->items_size()); i < n; i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      InternalWriteMessageToArray(
+        1, this->items(static_cast<int>(i)), deterministic, target);
+  }
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mytest.mystery_box_list)
+  return target;
+}
+
+size_t mystery_box_list::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mytest.mystery_box_list)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        _internal_metadata_.unknown_fields());
+  }
+  // repeated .mytest.mystery_box items = 1;
+  {
+    unsigned int count = static_cast<unsigned int>(this->items_size());
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSize(
+          this->items(static_cast<int>(i)));
+    }
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = cached_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void mystery_box_list::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:mytest.mystery_box_list)
+  GOOGLE_DCHECK_NE(&from, this);
+  const mystery_box_list* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const mystery_box_list>(
+          &from);
+  if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:mytest.mystery_box_list)
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:mytest.mystery_box_list)
+    MergeFrom(*source);
+  }
+}
+
+void mystery_box_list::MergeFrom(const mystery_box_list& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:mytest.mystery_box_list)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::google::protobuf::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  items_.MergeFrom(from.items_);
+}
+
+void mystery_box_list::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:mytest.mystery_box_list)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void mystery_box_list::CopyFrom(const mystery_box_list& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mytest.mystery_box_list)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool mystery_box_list::IsInitialized() const {
+  return true;
+}
+
+void mystery_box_list::Swap(mystery_box_list* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void mystery_box_list::InternalSwap(mystery_box_list* other) {
+  using std::swap;
+  items_.InternalSwap(&other->items_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_cached_size_, other->_cached_size_);
+}
+
+::google::protobuf::Metadata mystery_box_list::GetMetadata() const {
   protobuf_mytest_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_mytest_2eproto::file_level_metadata[kIndexInFileMessages];
 }

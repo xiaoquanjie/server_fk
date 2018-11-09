@@ -91,6 +91,12 @@ def gen_proto(args):
 
                 print(table.to_string())
                 table_map[schema.schema_name].append(table)
+                table2 = Table()
+                table2.schema = schema.schema_name
+                table2.name = table.name + '_list'
+                table2.column_str.append('repeated ' + table.name + ' items = 1')
+                print(table2.to_string())
+                table_map[schema.schema_name].append(table2)
 
     table_cache_map = {}
     for name, tables in table_map.items():
