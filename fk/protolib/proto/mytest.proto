@@ -1,0 +1,15 @@
+package mytest;
+
+message mystery_box {
+    optional int32 name_int = 1;
+    optional int32 name_tiny_int = 2;
+    optional uint32 name_uint = 3;
+    optional int64 name_bigint = 4;
+    optional double name_double = 5;
+    optional string name_varchar = 6;
+    optional string name_blob = 7;
+    optional string name_medblob = 8;
+    optional int64 name_date = 9;
+    optional int64 name_time2 = 10;
+}
+

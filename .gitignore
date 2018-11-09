@@ -20,5 +20,5 @@
 /fk/deploy/src/*.pyc
 /fk/deploy/src/*.log
 /fk/deploy/proto/*.pyc
-
+/fk/dbtool/*.log
 
