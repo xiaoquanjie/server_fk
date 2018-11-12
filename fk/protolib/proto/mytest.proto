@@ -9,8 +9,8 @@ message mystery_box {
     optional string name_varchar = 6;
     optional string name_blob = 7;
     optional string name_medblob = 8;
-    optional int64 name_date = 9;
-    optional int64 name_time2 = 10;
+    optional string name_date = 9;
+    optional string name_time2 = 10;
 }
 
 message mystery_box_list {

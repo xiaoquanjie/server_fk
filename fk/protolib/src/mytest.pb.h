@@ -197,6 +197,36 @@ class mystery_box : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::std::string* release_name_medblob();
   void set_allocated_name_medblob(::std::string* name_medblob);
 
+  // optional string name_date = 9;
+  bool has_name_date() const;
+  void clear_name_date();
+  static const int kNameDateFieldNumber = 9;
+  const ::std::string& name_date() const;
+  void set_name_date(const ::std::string& value);
+  #if LANG_CXX11
+  void set_name_date(::std::string&& value);
+  #endif
+  void set_name_date(const char* value);
+  void set_name_date(const char* value, size_t size);
+  ::std::string* mutable_name_date();
+  ::std::string* release_name_date();
+  void set_allocated_name_date(::std::string* name_date);
+
+  // optional string name_time2 = 10;
+  bool has_name_time2() const;
+  void clear_name_time2();
+  static const int kNameTime2FieldNumber = 10;
+  const ::std::string& name_time2() const;
+  void set_name_time2(const ::std::string& value);
+  #if LANG_CXX11
+  void set_name_time2(::std::string&& value);
+  #endif
+  void set_name_time2(const char* value);
+  void set_name_time2(const char* value, size_t size);
+  ::std::string* mutable_name_time2();
+  ::std::string* release_name_time2();
+  void set_allocated_name_time2(::std::string* name_time2);
+
   // optional int32 name_int = 1;
   bool has_name_int() const;
   void clear_name_int();
@@ -224,20 +254,6 @@ class mystery_box : public ::google::protobuf::Message /* @@protoc_insertion_poi
   static const int kNameDoubleFieldNumber = 5;
   double name_double() const;
   void set_name_double(double value);
-
-  // optional int64 name_date = 9;
-  bool has_name_date() const;
-  void clear_name_date();
-  static const int kNameDateFieldNumber = 9;
-  ::google::protobuf::int64 name_date() const;
-  void set_name_date(::google::protobuf::int64 value);
-
-  // optional int64 name_time2 = 10;
-  bool has_name_time2() const;
-  void clear_name_time2();
-  static const int kNameTime2FieldNumber = 10;
-  ::google::protobuf::int64 name_time2() const;
-  void set_name_time2(::google::protobuf::int64 value);
 
   // optional uint32 name_uint = 3;
   bool has_name_uint() const;
@@ -275,12 +291,12 @@ class mystery_box : public ::google::protobuf::Message /* @@protoc_insertion_poi
   ::google::protobuf::internal::ArenaStringPtr name_varchar_;
   ::google::protobuf::internal::ArenaStringPtr name_blob_;
   ::google::protobuf::internal::ArenaStringPtr name_medblob_;
+  ::google::protobuf::internal::ArenaStringPtr name_date_;
+  ::google::protobuf::internal::ArenaStringPtr name_time2_;
   ::google::protobuf::int32 name_int_;
   ::google::protobuf::int32 name_tiny_int_;
   ::google::protobuf::int64 name_bigint_;
   double name_double_;
-  ::google::protobuf::int64 name_date_;
-  ::google::protobuf::int64 name_time2_;
   ::google::protobuf::uint32 name_uint_;
   friend struct ::protobuf_mytest_2eproto::TableStruct;
   friend void ::protobuf_mytest_2eproto::InitDefaultsmystery_boxImpl();
@@ -411,13 +427,13 @@ class mystery_box_list : public ::google::protobuf::Message /* @@protoc_insertio
 
 // optional int32 name_int = 1;
 inline bool mystery_box::has_name_int() const {
-  return (_has_bits_[0] & 0x00000008u) != 0;
+  return (_has_bits_[0] & 0x00000020u) != 0;
 }
 inline void mystery_box::set_has_name_int() {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000020u;
 }
 inline void mystery_box::clear_has_name_int() {
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline void mystery_box::clear_name_int() {
   name_int_ = 0;
@@ -435,13 +451,13 @@ inline void mystery_box::set_name_int(::google::protobuf::int32 value) {
 
 // optional int32 name_tiny_int = 2;
 inline bool mystery_box::has_name_tiny_int() const {
-  return (_has_bits_[0] & 0x00000010u) != 0;
+  return (_has_bits_[0] & 0x00000040u) != 0;
 }
 inline void mystery_box::set_has_name_tiny_int() {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000040u;
 }
 inline void mystery_box::clear_has_name_tiny_int() {
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline void mystery_box::clear_name_tiny_int() {
   name_tiny_int_ = 0;
@@ -483,13 +499,13 @@ inline void mystery_box::set_name_uint(::google::protobuf::uint32 value) {
 
 // optional int64 name_bigint = 4;
 inline bool mystery_box::has_name_bigint() const {
-  return (_has_bits_[0] & 0x00000020u) != 0;
+  return (_has_bits_[0] & 0x00000080u) != 0;
 }
 inline void mystery_box::set_has_name_bigint() {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000080u;
 }
 inline void mystery_box::clear_has_name_bigint() {
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void mystery_box::clear_name_bigint() {
   name_bigint_ = GOOGLE_LONGLONG(0);
@@ -507,13 +523,13 @@ inline void mystery_box::set_name_bigint(::google::protobuf::int64 value) {
 
 // optional double name_double = 5;
 inline bool mystery_box::has_name_double() const {
-  return (_has_bits_[0] & 0x00000040u) != 0;
+  return (_has_bits_[0] & 0x00000100u) != 0;
 }
 inline void mystery_box::set_has_name_double() {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000100u;
 }
 inline void mystery_box::clear_has_name_double() {
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline void mystery_box::clear_name_double() {
   name_double_ = 0;
@@ -718,52 +734,130 @@ inline void mystery_box::set_allocated_name_medblob(::std::string* name_medblob)
   // @@protoc_insertion_point(field_set_allocated:mytest.mystery_box.name_medblob)
 }
 
-// optional int64 name_date = 9;
+// optional string name_date = 9;
 inline bool mystery_box::has_name_date() const {
-  return (_has_bits_[0] & 0x00000080u) != 0;
+  return (_has_bits_[0] & 0x00000008u) != 0;
 }
 inline void mystery_box::set_has_name_date() {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000008u;
 }
 inline void mystery_box::clear_has_name_date() {
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline void mystery_box::clear_name_date() {
-  name_date_ = GOOGLE_LONGLONG(0);
+  name_date_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   clear_has_name_date();
 }
-inline ::google::protobuf::int64 mystery_box::name_date() const {
+inline const ::std::string& mystery_box::name_date() const {
   // @@protoc_insertion_point(field_get:mytest.mystery_box.name_date)
-  return name_date_;
+  return name_date_.GetNoArena();
 }
-inline void mystery_box::set_name_date(::google::protobuf::int64 value) {
+inline void mystery_box::set_name_date(const ::std::string& value) {
   set_has_name_date();
-  name_date_ = value;
+  name_date_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:mytest.mystery_box.name_date)
 }
+#if LANG_CXX11
+inline void mystery_box::set_name_date(::std::string&& value) {
+  set_has_name_date();
+  name_date_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:mytest.mystery_box.name_date)
+}
+#endif
+inline void mystery_box::set_name_date(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_name_date();
+  name_date_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:mytest.mystery_box.name_date)
+}
+inline void mystery_box::set_name_date(const char* value, size_t size) {
+  set_has_name_date();
+  name_date_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:mytest.mystery_box.name_date)
+}
+inline ::std::string* mystery_box::mutable_name_date() {
+  set_has_name_date();
+  // @@protoc_insertion_point(field_mutable:mytest.mystery_box.name_date)
+  return name_date_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* mystery_box::release_name_date() {
+  // @@protoc_insertion_point(field_release:mytest.mystery_box.name_date)
+  clear_has_name_date();
+  return name_date_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void mystery_box::set_allocated_name_date(::std::string* name_date) {
+  if (name_date != NULL) {
+    set_has_name_date();
+  } else {
+    clear_has_name_date();
+  }
+  name_date_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name_date);
+  // @@protoc_insertion_point(field_set_allocated:mytest.mystery_box.name_date)
+}
 
-// optional int64 name_time2 = 10;
+// optional string name_time2 = 10;
 inline bool mystery_box::has_name_time2() const {
-  return (_has_bits_[0] & 0x00000100u) != 0;
+  return (_has_bits_[0] & 0x00000010u) != 0;
 }
 inline void mystery_box::set_has_name_time2() {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000010u;
 }
 inline void mystery_box::clear_has_name_time2() {
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline void mystery_box::clear_name_time2() {
-  name_time2_ = GOOGLE_LONGLONG(0);
+  name_time2_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   clear_has_name_time2();
 }
-inline ::google::protobuf::int64 mystery_box::name_time2() const {
+inline const ::std::string& mystery_box::name_time2() const {
   // @@protoc_insertion_point(field_get:mytest.mystery_box.name_time2)
-  return name_time2_;
+  return name_time2_.GetNoArena();
 }
-inline void mystery_box::set_name_time2(::google::protobuf::int64 value) {
+inline void mystery_box::set_name_time2(const ::std::string& value) {
   set_has_name_time2();
-  name_time2_ = value;
+  name_time2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:mytest.mystery_box.name_time2)
+}
+#if LANG_CXX11
+inline void mystery_box::set_name_time2(::std::string&& value) {
+  set_has_name_time2();
+  name_time2_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:mytest.mystery_box.name_time2)
+}
+#endif
+inline void mystery_box::set_name_time2(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  set_has_name_time2();
+  name_time2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:mytest.mystery_box.name_time2)
+}
+inline void mystery_box::set_name_time2(const char* value, size_t size) {
+  set_has_name_time2();
+  name_time2_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:mytest.mystery_box.name_time2)
+}
+inline ::std::string* mystery_box::mutable_name_time2() {
+  set_has_name_time2();
+  // @@protoc_insertion_point(field_mutable:mytest.mystery_box.name_time2)
+  return name_time2_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* mystery_box::release_name_time2() {
+  // @@protoc_insertion_point(field_release:mytest.mystery_box.name_time2)
+  clear_has_name_time2();
+  return name_time2_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void mystery_box::set_allocated_name_time2(::std::string* name_time2) {
+  if (name_time2 != NULL) {
+    set_has_name_time2();
+  } else {
+    clear_has_name_time2();
+  }
+  name_time2_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name_time2);
+  // @@protoc_insertion_point(field_set_allocated:mytest.mystery_box.name_time2)
 }
 
 // -------------------------------------------------------------------

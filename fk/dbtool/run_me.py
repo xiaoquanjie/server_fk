@@ -78,11 +78,11 @@ def gen_proto(args):
                     elif field.type == dbtool_pb2.E_FieldType_Text:
                         field_type = 'string'
                     elif field.type == dbtool_pb2.E_FieldType_Date:
-                        field_type = 'int64'
+                        field_type = 'string'
                     elif field.type == dbtool_pb2.E_FieldType_Time:
-                        field_type = 'int64'
+                        field_type = 'string'
                     elif field.type == dbtool_pb2.E_FieldType_TimeStamp:
-                        field_type = 'int64'
+                        field_type = 'string'
                     else:
                         print(field.type)
                     col = 'optional ' + field_type + ' ' + field.name + ' = ' + str(idx)

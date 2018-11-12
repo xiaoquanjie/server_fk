@@ -9,6 +9,7 @@
 #include <time.h>
 #include <stdio.h>
 #include <string.h>
+#include <sstream>
 
 #include "slience/base/win.hpp"
 
@@ -228,7 +229,8 @@ namespace logger {
 	template<typename T>
 	void logstream::_convert(const T&value, size_t type) {
 		// 整数最长接受32个字符
-		if (_buffer.avail() >= 32) {
+		static const int MAX_LEN = 32;
+		if (_buffer.avail() >= MAX_LEN) {
 			const char* ptype = 0;
 			switch (type) {
 			case 0:
@@ -237,9 +239,12 @@ namespace logger {
 			case 1:
 				ptype = "%.12g";
 				break;
-			case 2:
-				ptype = "%llu";
-				break;
+			case 2: {
+				std::ostringstream oss;
+				oss << value;
+				_buffer.append(oss.str().c_str(), oss.str().length());
+			}
+				return;
 			default:
 				ptype = "0x%0X";
 				break;

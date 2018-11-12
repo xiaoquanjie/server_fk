@@ -93,16 +93,16 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_medblob_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_date_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_time2_),
-  3,
-  4,
-  9,
   5,
   6,
+  9,
+  7,
+  8,
   0,
   1,
   2,
-  7,
-  8,
+  3,
+  4,
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box_list, _has_bits_),
   GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box_list, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -148,8 +148,8 @@ void AddDescriptorsImpl() {
       "\021\n\tname_uint\030\003 \001(\r\022\023\n\013name_bigint\030\004 \001(\003\022"
       "\023\n\013name_double\030\005 \001(\001\022\024\n\014name_varchar\030\006 \001"
       "(\t\022\021\n\tname_blob\030\007 \001(\t\022\024\n\014name_medblob\030\010 "
-      "\001(\t\022\021\n\tname_date\030\t \001(\003\022\022\n\nname_time2\030\n \001"
-      "(\003\"6\n\020mystery_box_list\022\"\n\005items\030\001 \003(\0132\023."
+      "\001(\t\022\021\n\tname_date\030\t \001(\t\022\022\n\nname_time2\030\n \001"
+      "(\t\"6\n\020mystery_box_list\022\"\n\005items\030\001 \003(\0132\023."
       "mytest.mystery_box"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
@@ -214,6 +214,14 @@ mystery_box::mystery_box(const mystery_box& from)
   if (from.has_name_medblob()) {
     name_medblob_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_medblob_);
   }
+  name_date_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_name_date()) {
+    name_date_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_date_);
+  }
+  name_time2_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_name_time2()) {
+    name_time2_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_time2_);
+  }
   ::memcpy(&name_int_, &from.name_int_,
     static_cast<size_t>(reinterpret_cast<char*>(&name_uint_) -
     reinterpret_cast<char*>(&name_int_)) + sizeof(name_uint_));
@@ -225,6 +233,8 @@ void mystery_box::SharedCtor() {
   name_varchar_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   name_blob_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   name_medblob_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  name_date_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  name_time2_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&name_int_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&name_uint_) -
       reinterpret_cast<char*>(&name_int_)) + sizeof(name_uint_));
@@ -239,6 +249,8 @@ void mystery_box::SharedDtor() {
   name_varchar_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   name_blob_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   name_medblob_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  name_date_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  name_time2_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void mystery_box::SetCachedSize(int size) const {
@@ -271,7 +283,7 @@ void mystery_box::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 7u) {
+  if (cached_has_bits & 31u) {
     if (cached_has_bits & 0x00000001u) {
       GOOGLE_DCHECK(!name_varchar_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
       (*name_varchar_.UnsafeRawStringPointer())->clear();
@@ -284,16 +296,24 @@ void mystery_box::Clear() {
       GOOGLE_DCHECK(!name_medblob_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
       (*name_medblob_.UnsafeRawStringPointer())->clear();
     }
+    if (cached_has_bits & 0x00000008u) {
+      GOOGLE_DCHECK(!name_date_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
+      (*name_date_.UnsafeRawStringPointer())->clear();
+    }
+    if (cached_has_bits & 0x00000010u) {
+      GOOGLE_DCHECK(!name_time2_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
+      (*name_time2_.UnsafeRawStringPointer())->clear();
+    }
   }
-  if (cached_has_bits & 248u) {
+  if (cached_has_bits & 224u) {
     ::memset(&name_int_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&name_date_) -
-        reinterpret_cast<char*>(&name_int_)) + sizeof(name_date_));
+        reinterpret_cast<char*>(&name_bigint_) -
+        reinterpret_cast<char*>(&name_int_)) + sizeof(name_bigint_));
   }
   if (cached_has_bits & 768u) {
-    ::memset(&name_time2_, 0, static_cast<size_t>(
+    ::memset(&name_double_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&name_uint_) -
-        reinterpret_cast<char*>(&name_time2_)) + sizeof(name_uint_));
+        reinterpret_cast<char*>(&name_double_)) + sizeof(name_uint_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -427,28 +447,32 @@ bool mystery_box::MergePartialFromCodedStream(
         break;
       }
 
-      // optional int64 name_date = 9;
+      // optional string name_date = 9;
       case 9: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(72u /* 72 & 0xFF */)) {
-          set_has_name_date();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &name_date_)));
+            static_cast< ::google::protobuf::uint8>(74u /* 74 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_name_date()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->name_date().data(), static_cast<int>(this->name_date().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "mytest.mystery_box.name_date");
         } else {
           goto handle_unusual;
         }
         break;
       }
 
-      // optional int64 name_time2 = 10;
+      // optional string name_time2 = 10;
       case 10: {
         if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(80u /* 80 & 0xFF */)) {
-          set_has_name_time2();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &name_time2_)));
+            static_cast< ::google::protobuf::uint8>(82u /* 82 & 0xFF */)) {
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_name_time2()));
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+            this->name_time2().data(), static_cast<int>(this->name_time2().length()),
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "mytest.mystery_box.name_time2");
         } else {
           goto handle_unusual;
         }
@@ -483,12 +507,12 @@ void mystery_box::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional int32 name_int = 1;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000020u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->name_int(), output);
   }
 
   // optional int32 name_tiny_int = 2;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000040u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->name_tiny_int(), output);
   }
 
@@ -498,12 +522,12 @@ void mystery_box::SerializeWithCachedSizes(
   }
 
   // optional int64 name_bigint = 4;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000080u) {
     ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->name_bigint(), output);
   }
 
   // optional double name_double = 5;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000100u) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(5, this->name_double(), output);
   }
 
@@ -537,14 +561,24 @@ void mystery_box::SerializeWithCachedSizes(
       8, this->name_medblob(), output);
   }
 
-  // optional int64 name_date = 9;
-  if (cached_has_bits & 0x00000080u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(9, this->name_date(), output);
+  // optional string name_date = 9;
+  if (cached_has_bits & 0x00000008u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name_date().data(), static_cast<int>(this->name_date().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "mytest.mystery_box.name_date");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      9, this->name_date(), output);
   }
 
-  // optional int64 name_time2 = 10;
-  if (cached_has_bits & 0x00000100u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(10, this->name_time2(), output);
+  // optional string name_time2 = 10;
+  if (cached_has_bits & 0x00000010u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name_time2().data(), static_cast<int>(this->name_time2().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "mytest.mystery_box.name_time2");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      10, this->name_time2(), output);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -563,12 +597,12 @@ void mystery_box::SerializeWithCachedSizes(
 
   cached_has_bits = _has_bits_[0];
   // optional int32 name_int = 1;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000020u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->name_int(), target);
   }
 
   // optional int32 name_tiny_int = 2;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000040u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->name_tiny_int(), target);
   }
 
@@ -578,12 +612,12 @@ void mystery_box::SerializeWithCachedSizes(
   }
 
   // optional int64 name_bigint = 4;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000080u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(4, this->name_bigint(), target);
   }
 
   // optional double name_double = 5;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000100u) {
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(5, this->name_double(), target);
   }
 
@@ -620,14 +654,26 @@ void mystery_box::SerializeWithCachedSizes(
         8, this->name_medblob(), target);
   }
 
-  // optional int64 name_date = 9;
-  if (cached_has_bits & 0x00000080u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(9, this->name_date(), target);
+  // optional string name_date = 9;
+  if (cached_has_bits & 0x00000008u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name_date().data(), static_cast<int>(this->name_date().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "mytest.mystery_box.name_date");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        9, this->name_date(), target);
   }
 
-  // optional int64 name_time2 = 10;
-  if (cached_has_bits & 0x00000100u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(10, this->name_time2(), target);
+  // optional string name_time2 = 10;
+  if (cached_has_bits & 0x00000010u) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->name_time2().data(), static_cast<int>(this->name_time2().length()),
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "mytest.mystery_box.name_time2");
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        10, this->name_time2(), target);
   }
 
   if (_internal_metadata_.have_unknown_fields()) {
@@ -669,6 +715,20 @@ size_t mystery_box::ByteSizeLong() const {
           this->name_medblob());
     }
 
+    // optional string name_date = 9;
+    if (has_name_date()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->name_date());
+    }
+
+    // optional string name_time2 = 10;
+    if (has_name_time2()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->name_time2());
+    }
+
     // optional int32 name_int = 1;
     if (has_name_int()) {
       total_size += 1 +
@@ -690,25 +750,11 @@ size_t mystery_box::ByteSizeLong() const {
           this->name_bigint());
     }
 
+  }
+  if (_has_bits_[8 / 32] & 768u) {
     // optional double name_double = 5;
     if (has_name_double()) {
       total_size += 1 + 8;
-    }
-
-    // optional int64 name_date = 9;
-    if (has_name_date()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->name_date());
-    }
-
-  }
-  if (_has_bits_[8 / 32] & 768u) {
-    // optional int64 name_time2 = 10;
-    if (has_name_time2()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->name_time2());
     }
 
     // optional uint32 name_uint = 3;
@@ -763,25 +809,27 @@ void mystery_box::MergeFrom(const mystery_box& from) {
       name_medblob_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_medblob_);
     }
     if (cached_has_bits & 0x00000008u) {
-      name_int_ = from.name_int_;
+      set_has_name_date();
+      name_date_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_date_);
     }
     if (cached_has_bits & 0x00000010u) {
-      name_tiny_int_ = from.name_tiny_int_;
+      set_has_name_time2();
+      name_time2_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_time2_);
     }
     if (cached_has_bits & 0x00000020u) {
-      name_bigint_ = from.name_bigint_;
+      name_int_ = from.name_int_;
     }
     if (cached_has_bits & 0x00000040u) {
-      name_double_ = from.name_double_;
+      name_tiny_int_ = from.name_tiny_int_;
     }
     if (cached_has_bits & 0x00000080u) {
-      name_date_ = from.name_date_;
+      name_bigint_ = from.name_bigint_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
   if (cached_has_bits & 768u) {
     if (cached_has_bits & 0x00000100u) {
-      name_time2_ = from.name_time2_;
+      name_double_ = from.name_double_;
     }
     if (cached_has_bits & 0x00000200u) {
       name_uint_ = from.name_uint_;
@@ -817,12 +865,12 @@ void mystery_box::InternalSwap(mystery_box* other) {
   name_varchar_.Swap(&other->name_varchar_);
   name_blob_.Swap(&other->name_blob_);
   name_medblob_.Swap(&other->name_medblob_);
+  name_date_.Swap(&other->name_date_);
+  name_time2_.Swap(&other->name_time2_);
   swap(name_int_, other->name_int_);
   swap(name_tiny_int_, other->name_tiny_int_);
   swap(name_bigint_, other->name_bigint_);
   swap(name_double_, other->name_double_);
-  swap(name_date_, other->name_date_);
-  swap(name_time2_, other->name_time2_);
   swap(name_uint_, other->name_uint_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);

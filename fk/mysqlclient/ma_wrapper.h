@@ -19,6 +19,7 @@
 #include "mariadb-connector-c-master/include/mysqld_error.h"
 #include <unordered_map>
 #include <assert.h>
+#include <sstream>
 
 // 线程局部对象
 namespace _mysql_detail {
@@ -217,6 +218,9 @@ public:
 		return ret;
 	}
 	
+	template<typename T>
+	int Query(const char* sql, unsigned int sql_len, T& value_list);
+
 	int Autocommit(bool open_or_close) {
 		int ret = mysql_autocommit(&_st_mysql, open_or_close);
 		if (ret != 0) {
@@ -449,5 +453,87 @@ protected:
 		}
 	}
 };
+
+//////////////////////////////////////////////////////////////////
+
+template<typename T>
+int SqlConnection::Query(const char* sql, unsigned int sql_len, T& value_list) {
+	auto list_field_desc = T::descriptor()->field(0);
+	if (!list_field_desc) {
+		return -2000;
+	}
+
+	auto field_desc = list_field_desc->message_type();
+	int ret = Query(sql, sql_len, field_desc->field_count(),
+		[&value_list, field_desc](int Index, MYSQL_ROW row){
+		auto items = value_list.add_items();
+		auto reflection = items->GetReflection();
+		for (int idx = 0; idx < field_desc->field_count(); ++idx) {
+			auto field = field_desc->field(idx);
+			switch (field->type()) {
+			case google::protobuf::FieldDescriptor::TYPE_INT32: {
+				std::istringstream iss(row[idx]);
+				google::protobuf::int32 v;
+				iss >> v;
+				reflection->SetInt32(items, field, v);
+			}
+				break;
+			case google::protobuf::FieldDescriptor::TYPE_UINT32: {
+				std::istringstream iss(row[idx]);
+				google::protobuf::uint32 v;
+				iss >> v;
+				reflection->SetUInt32(items, field, v);
+			}
+				break;
+			case google::protobuf::FieldDescriptor::TYPE_INT64: {
+				std::istringstream iss(row[idx]);
+				google::protobuf::int64 v;
+				iss >> v;
+				reflection->SetInt64(items, field, v);
+			}
+				break;
+			case google::protobuf::FieldDescriptor::TYPE_UINT64: {
+				std::istringstream iss(row[idx]);
+				google::protobuf::uint64 v;
+				iss >> v;
+				reflection->SetUInt64(items, field, v);
+			}
+				break;
+			case google::protobuf::FieldDescriptor::TYPE_DOUBLE: {
+				std::istringstream iss(row[idx]);
+				double v;
+				iss >> v;
+				reflection->SetDouble(items, field, v);
+			}
+				break;
+			case google::protobuf::FieldDescriptor::TYPE_FLOAT: {
+				std::istringstream iss(row[idx]);
+				float v;
+				iss >> v;
+				reflection->SetFloat(items, field, v);
+			}
+				break;
+			case google::protobuf::FieldDescriptor::TYPE_BOOL: {
+				std::istringstream iss(row[idx]);
+				bool v;
+				iss >> v;
+				reflection->SetBool(items, field, v);
+			}
+				break;
+			case google::protobuf::FieldDescriptor::TYPE_STRING: {
+				reflection->SetString(items, field, row[idx]);
+			}
+				break;
+			case google::protobuf::FieldDescriptor::TYPE_BYTES: {
+				reflection->SetString(items, field, row[idx]);
+			}
+				break;
+			default:
+				break;
+			}
+		}
+	});
+	return ret;
+}
 
 #endif
