@@ -113,9 +113,6 @@ def gen_proto(args):
         print('gen proto file: %s' % proto_name)
 
 
-
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("cmd", help='gen_pb|gen_proto')
