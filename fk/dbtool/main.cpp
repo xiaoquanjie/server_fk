@@ -34,7 +34,7 @@ bool CheckMysqlSyntax(ServerCfg<dbtool::MysqlSchemaConf>& cfg) {
 					tmp++;
 				}
 
-				if (tmp >= 1) {
+				if (tmp >= 2) {
 					// 上以三者不能同时存在两个及以上
 					LogError("Error: add_col_after、rename_from、modify_type must be exclusive in field: " << field.name() << " in table: " << table.table_name()
 						<< " in schema: " << schema.schema_name());
