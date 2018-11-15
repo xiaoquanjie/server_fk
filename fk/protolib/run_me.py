@@ -193,7 +193,7 @@ if __name__ == '__main__':
 
         command = None
         if platform.system() == 'Windows':
-            command = "..\\bin\\protoc.exe --proto_path=./proto --cpp_out=./src/ " + f
+            command = "..\\tool\\protoc.exe --proto_path=./proto --cpp_out=./src/ " + f
         else:
             command = "cd proto; protoc --cpp_out=../src/ " + f
         print (command)

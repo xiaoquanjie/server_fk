@@ -13,9 +13,9 @@ def gen_pb():
         cpp_cmd = None
         python_cmd = None
         if platform.system() == 'Windows':
-            cpp_cmd = '..\\bin\\protoc.exe  --proto_path=../dbtool/  --cpp_out=../dbtool/ '
+            cpp_cmd = '..\\tool\\protoc.exe  --proto_path=../dbtool/  --cpp_out=../dbtool/ '
             cpp_cmd += f
-            python_cmd = '..\\bin\\protoc.exe  --proto_path=../dbtool/  --python_out=../dbtool/ '
+            python_cmd = '..\\tool\\protoc.exe  --proto_path=../dbtool/  --python_out=../dbtool/ '
             python_cmd += f
         else:
             cpp_cmd = "protoc --proto_path=./ --cpp_out=./ " + f
