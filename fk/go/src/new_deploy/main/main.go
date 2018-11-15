@@ -4,7 +4,6 @@ import (
 	"common/logger"
 	"common/sgl"
 	"flag"
-	"time"
 )
 
 func init()  {
@@ -18,7 +17,6 @@ func main() {
 	} else {
 		logger.Info("......")
 	}
-	time.Sleep(10000*time.Second)
 	logger.Stop()
 	singleton.Unlock()
 }
