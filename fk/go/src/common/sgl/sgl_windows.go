@@ -8,16 +8,18 @@ import (
 var(
 	nameMutex = "Sgl_ShaMem"
 	kernel = syscall.NewLazyDLL("kernel32.dll")
+	mutexId uintptr
 )
 
-func lockSgl() (uintptr, bool) {
+func lockSgl() (bool) {
 	id, _, err := kernel.NewProc("CreateMutexA").Call(0, 1, uintptr(unsafe.Pointer(&nameMutex)))
+	mutexId = id
 	if err.Error() != "The operation completed successfully." {
-		return 0, false
+		return false
 	}
-	return id, true
+	return true
 }
 
-func unlockSgl(id uintptr) {
-	syscall.CloseHandle(syscall.Handle(id))
+func unlockSgl() {
+	syscall.CloseHandle(syscall.Handle(mutexId))
 }
