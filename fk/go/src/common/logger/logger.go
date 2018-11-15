@@ -26,3 +26,7 @@ func Error(format string, args ... interface{}) {
 func Fatal(format string, args ... interface{})  {
 	glog.Fatalf(format, args...)
 }
+
+func Stop()  {
+	glog.Exit()
+}

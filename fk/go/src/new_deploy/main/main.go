@@ -2,10 +2,9 @@ package main
 
 import (
 	"common/logger"
+	"common/sgl"
 	"flag"
-	"github.com/golang/glog"
-	"github.com/golang/protobuf/proto"
-	"new_deploy/proto"
+	"time"
 )
 
 func init()  {
@@ -13,10 +12,14 @@ func init()  {
 }
 
 func main() {
-	deploy := protocol.Deploy{}
-	deploy.ListenPort = proto.Int32(54)
-	deploy.DstRootPath = proto.String("this is a test")
-	logger.Info(deploy.String())
-	glog.Exit()
+	singleton := sgl.Singleton{}
+	if !singleton.Lock() {
+		logger.Fatal("depoly has already runing")
+	} else {
+		logger.Info("......")
+	}
+	time.Sleep(10000*time.Second)
+	logger.Stop()
+	singleton.Unlock()
 }
 

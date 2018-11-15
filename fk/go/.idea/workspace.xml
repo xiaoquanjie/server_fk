@@ -5,10 +5,15 @@
       <change beforePath="$PROJECT_DIR$/../dbtool/dbtool.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../dbtool/dbtool.vcxproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../dbtool/dbtool_example.conf" beforeDir="false" afterPath="$PROJECT_DIR$/../dbtool/dbtool_example.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../deploy/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../deploy/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/logger/logger.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/logger/logger.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/golang/glog" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/golang/glog" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/golang/glog/glog.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/golang/glog/glog.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/golang/glog/glog_file.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/golang/glog/glog_file.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/github.com/golang/protobuf" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/golang/protobuf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/golang/protobuf/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/golang/protobuf/go.mod" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/github.com/golang/protobuf/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/src/github.com/golang/protobuf/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/new_deploy/main/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/src/new_deploy/main/main.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,44 +32,74 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="bat" value="6" />
-          <entry key="go" value="4" />
+          <entry key="go" value="13" />
           <entry key="proto" value="2" />
           <entry key="sh" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Go" value="4" />
+          <entry key="Go" value="13" />
           <entry key="PLAIN_TEXT" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="bat" value="157" />
-          <entry key="go" value="119" />
+          <entry key="go" value="766" />
           <entry key="proto" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Go" value="119" />
+          <entry key="Go" value="766" />
           <entry key="PLAIN_TEXT" value="176" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5668563">
+    <splitter split-orientation="horizontal" split-proportion="0.65824467">
       <split-first>
         <leaf>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/new_deploy/main/main.go">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="176">
-                  <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+                <state relative-caret-position="412">
+                  <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
                   <folding>
                     <element signature="e#14#79#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/common/sgl/sgl_linux.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="330">
+                  <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+                  <folding>
+                    <element signature="e#13#41#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://D:/Program Files/Go/src/syscall/dll_windows.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="225">
+                  <caret line="24" column="83" selection-start-line="24" selection-start-column="83" selection-end-line="24" selection-end-column="83" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://D:/Program Files/Go/src/syscall/syscall_windows.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="225">
+                  <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
                 </state>
               </provider>
             </entry>
@@ -82,19 +117,10 @@
             <entry file="file://$PROJECT_DIR$/src/new_deploy/proto/gcm.pb.go">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="225">
-                  <caret line="870" column="28" lean-forward="true" selection-start-line="870" selection-start-column="28" selection-end-line="870" selection-end-column="28" />
+                  <caret line="877" column="17" selection-start-line="877" selection-start-column="17" selection-end-line="877" selection-end-column="17" />
                   <folding>
-                    <element signature="e#86#162#0" expanded="true" />
+                    <element signature="e#89#165#0" expanded="true" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://D:/Program Files/Go/src/builtin/builtin.go">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="255">
-                  <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
                 </state>
               </provider>
             </entry>
@@ -112,7 +138,7 @@
             <entry file="file://$PROJECT_DIR$/protoc-gen-go.bat">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="44">
-                  <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+                  <caret line="2" selection-start-line="2" selection-end-line="2" />
                 </state>
               </provider>
             </entry>
@@ -129,8 +155,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/common/logger/logger.go">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="176">
-                  <caret line="8" selection-start-line="8" selection-end-line="8" />
+                <state relative-caret-position="616">
+                  <caret line="28" selection-start-line="28" selection-end-line="28" />
                   <folding>
                     <element signature="e#16#52#0" expanded="true" />
                   </folding>
@@ -143,10 +169,40 @@
       <split-second>
         <leaf>
           <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/common/sgl/sgl_windows.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="352">
+                  <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+                  <folding>
+                    <element signature="e#13#44#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://D:/Program Files/Go/src/builtin/builtin.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="500">
+                  <caret line="255" column="4" selection-start-line="255" selection-start-column="4" selection-end-line="255" selection-end-column="4" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/new_deploy/proto/gcm.proto">
               <provider selected="true" editor-type-id="text-editor">
-                <state>
-                  <caret column="16" selection-start-column="16" selection-end-column="16" />
+                <state relative-caret-position="216">
+                  <caret line="78" selection-start-line="78" selection-end-line="78" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/common/sgl/singleton.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="286">
+                  <caret line="13" selection-start-line="13" selection-end-line="13" />
                 </state>
               </provider>
             </entry>
@@ -154,6 +210,11 @@
         </leaf>
       </split-second>
     </splitter>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Name</find>
+    </findStrings>
   </component>
   <component name="GOROOT" path="D:\Program Files\Go" />
   <component name="Git.Settings">
@@ -174,8 +235,12 @@
         <option value="$PROJECT_DIR$/run.bat" />
         <option value="$PROJECT_DIR$/protoc-gen-go.bat" />
         <option value="$PROJECT_DIR$/src/new_deploy/proto/run_me.bat" />
-        <option value="$PROJECT_DIR$/src/new_deploy/main/main.go" />
         <option value="$PROJECT_DIR$/src/new_deploy/proto/gcm.proto" />
+        <option value="$PROJECT_DIR$/src/common/logger/logger.go" />
+        <option value="$PROJECT_DIR$/src/common/sgl/singleton.go" />
+        <option value="$PROJECT_DIR$/src/common/sgl/sgl_windows.go" />
+        <option value="$PROJECT_DIR$/src/new_deploy/main/main.go" />
+        <option value="$PROJECT_DIR$/src/common/sgl/sgl_linux.go" />
       </list>
     </option>
   </component>
@@ -210,6 +275,19 @@
               <item name="go" type="b2602c69:ProjectViewProjectNode" />
               <item name="go" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="go" type="b2602c69:ProjectViewProjectNode" />
+              <item name="go" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="go" type="b2602c69:ProjectViewProjectNode" />
+              <item name="go" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="common" type="462c0819:PsiDirectoryNode" />
+              <item name="sgl" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="go" type="b2602c69:ProjectViewProjectNode" />
@@ -267,7 +345,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Go Build.go build main.go">
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="go" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -276,9 +354,22 @@
       <directory value="$PROJECT_DIR$/" />
       <method v="2" />
     </configuration>
+    <configuration name="go build singleton.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="go" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/src/common/sgl/singleton.go" />
+      <directory value="$PROJECT_DIR$/" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Go Build.go build main.go" />
+      <item itemvalue="Go Build.go build singleton.go" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Go Build.go build main.go" />
+        <item itemvalue="Go Build.go build singleton.go" />
       </list>
     </recent_temporary>
   </component>
@@ -287,7 +378,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2497332" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19743863" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
@@ -296,7 +387,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2154171" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39915523" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -313,16 +404,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/common/logger/logger.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="e#16#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/new_deploy/build.bat">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
@@ -357,7 +438,7 @@
     <entry file="file://$PROJECT_DIR$/protoc-gen-go.bat">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
-          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
@@ -371,34 +452,85 @@
     <entry file="file://$PROJECT_DIR$/src/new_deploy/proto/gcm.pb.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
-          <caret line="870" column="28" lean-forward="true" selection-start-line="870" selection-start-column="28" selection-end-line="870" selection-end-column="28" />
+          <caret line="877" column="17" selection-start-line="877" selection-start-column="17" selection-end-line="877" selection-end-column="17" />
           <folding>
-            <element signature="e#86#162#0" expanded="true" />
+            <element signature="e#89#165#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://D:/Program Files/Go/src/builtin/builtin.go">
+    <entry file="file://$PROJECT_DIR$/src/common/logger/logger.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/new_deploy/main/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        <state relative-caret-position="616">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
           <folding>
-            <element signature="e#14#79#0" expanded="true" />
+            <element signature="e#16#52#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/new_deploy/proto/gcm.proto">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="16" selection-start-column="16" selection-end-column="16" />
+        <state relative-caret-position="216">
+          <caret line="78" selection-start-line="78" selection-end-line="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Go/src/builtin/builtin.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="255" column="4" selection-start-line="255" selection-start-column="4" selection-end-line="255" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/sgl/singleton.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/sgl/sgl_windows.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="16" column="5" lean-forward="true" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+          <folding>
+            <element signature="e#13#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Go/src/syscall/dll_windows.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="24" column="83" selection-start-line="24" selection-start-column="83" selection-end-line="24" selection-end-column="83" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program Files/Go/src/syscall/syscall_windows.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/new_deploy/main/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="19" column="5" lean-forward="true" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <folding>
+            <element signature="e#14#79#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/sgl/sgl_linux.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="25" lean-forward="true" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+          <folding>
+            <element signature="e#13#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
