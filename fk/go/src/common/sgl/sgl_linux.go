@@ -1,8 +1,8 @@
 package sgl
 
 import (
-	"fmt"
 	"syscall"
+	"unsafe"
 )
 
 var(
@@ -18,10 +18,11 @@ const (
 
 func lockSgl() (uintptr, bool) {
 	id, _, err := syscall.Syscall6(syscall.SYS_SHMGET, uintptr(unsafe.Pointer(&nameMutex)), 1, IPC_CREAT|IPC_EXCL, 0, 0, 0)
-	if err != nil {
-		fmt.Println(err)
-		return 0, false
-	}
+	fmt.Println(err)
+	//if err != nil {
+	//
+	//	return 0, false
+	//}
 	return id, true
 }
 
