@@ -21,4 +21,5 @@
 /fk/deploy/src/*.log
 /fk/deploy/proto/*.pyc
 /fk/dbtool/*.log
+/fk/go/build/*
 
