@@ -21,10 +21,10 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type Host struct {
-	Name                 *string  `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
-	InnerIp              *string  `protobuf:"bytes,2,opt,name=inner_ip,json=innerIp" json:"inner_ip,omitempty"`
-	OuterIp              *string  `protobuf:"bytes,3,opt,name=outer_ip,json=outerIp" json:"outer_ip,omitempty"`
-	DeployIp             *string  `protobuf:"bytes,4,opt,name=deploy_ip,json=deployIp" json:"deploy_ip,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	InnerIp              string   `protobuf:"bytes,2,opt,name=inner_ip,json=innerIp,proto3" json:"inner_ip,omitempty"`
+	OuterIp              string   `protobuf:"bytes,3,opt,name=outer_ip,json=outerIp,proto3" json:"outer_ip,omitempty"`
+	DeployIp             string   `protobuf:"bytes,4,opt,name=deploy_ip,json=deployIp,proto3" json:"deploy_ip,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -56,35 +56,35 @@ func (m *Host) XXX_DiscardUnknown() {
 var xxx_messageInfo_Host proto.InternalMessageInfo
 
 func (m *Host) GetName() string {
-	if m != nil && m.Name != nil {
-		return *m.Name
+	if m != nil {
+		return m.Name
 	}
 	return ""
 }
 
 func (m *Host) GetInnerIp() string {
-	if m != nil && m.InnerIp != nil {
-		return *m.InnerIp
+	if m != nil {
+		return m.InnerIp
 	}
 	return ""
 }
 
 func (m *Host) GetOuterIp() string {
-	if m != nil && m.OuterIp != nil {
-		return *m.OuterIp
+	if m != nil {
+		return m.OuterIp
 	}
 	return ""
 }
 
 func (m *Host) GetDeployIp() string {
-	if m != nil && m.DeployIp != nil {
-		return *m.DeployIp
+	if m != nil {
+		return m.DeployIp
 	}
 	return ""
 }
 
 type HostCfg struct {
-	Hosts                []*Host  `protobuf:"bytes,1,rep,name=hosts" json:"hosts,omitempty"`
+	Hosts                []*Host  `protobuf:"bytes,1,rep,name=hosts,proto3" json:"hosts,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -123,11 +123,11 @@ func (m *HostCfg) GetHosts() []*Host {
 }
 
 type ArtifactFile struct {
-	Src                  *string  `protobuf:"bytes,1,opt,name=src" json:"src,omitempty"`
-	Dst                  *string  `protobuf:"bytes,2,opt,name=dst" json:"dst,omitempty"`
-	IsDir                *bool    `protobuf:"varint,3,opt,name=is_dir,json=isDir" json:"is_dir,omitempty"`
-	NeedBackup           *bool    `protobuf:"varint,4,opt,name=need_backup,json=needBackup" json:"need_backup,omitempty"`
-	Tags                 []string `protobuf:"bytes,5,rep,name=tags" json:"tags,omitempty"`
+	Src                  string   `protobuf:"bytes,1,opt,name=src,proto3" json:"src,omitempty"`
+	Dst                  string   `protobuf:"bytes,2,opt,name=dst,proto3" json:"dst,omitempty"`
+	IsDir                bool     `protobuf:"varint,3,opt,name=is_dir,json=isDir,proto3" json:"is_dir,omitempty"`
+	NeedBackup           bool     `protobuf:"varint,4,opt,name=need_backup,json=needBackup,proto3" json:"need_backup,omitempty"`
+	Tags                 []string `protobuf:"bytes,5,rep,name=tags,proto3" json:"tags,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -159,29 +159,29 @@ func (m *ArtifactFile) XXX_DiscardUnknown() {
 var xxx_messageInfo_ArtifactFile proto.InternalMessageInfo
 
 func (m *ArtifactFile) GetSrc() string {
-	if m != nil && m.Src != nil {
-		return *m.Src
+	if m != nil {
+		return m.Src
 	}
 	return ""
 }
 
 func (m *ArtifactFile) GetDst() string {
-	if m != nil && m.Dst != nil {
-		return *m.Dst
+	if m != nil {
+		return m.Dst
 	}
 	return ""
 }
 
 func (m *ArtifactFile) GetIsDir() bool {
-	if m != nil && m.IsDir != nil {
-		return *m.IsDir
+	if m != nil {
+		return m.IsDir
 	}
 	return false
 }
 
 func (m *ArtifactFile) GetNeedBackup() bool {
-	if m != nil && m.NeedBackup != nil {
-		return *m.NeedBackup
+	if m != nil {
+		return m.NeedBackup
 	}
 	return false
 }
@@ -194,13 +194,13 @@ func (m *ArtifactFile) GetTags() []string {
 }
 
 type AgentArtifact struct {
-	Files                []*ArtifactFile `protobuf:"bytes,1,rep,name=files" json:"files,omitempty"`
-	Name                 *string         `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
-	FunctionId           *int32          `protobuf:"varint,3,opt,name=function_id,json=functionId" json:"function_id,omitempty"`
-	StartCmd             *string         `protobuf:"bytes,4,opt,name=start_cmd,json=startCmd" json:"start_cmd,omitempty"`
-	StopCmd              *string         `protobuf:"bytes,5,opt,name=stop_cmd,json=stopCmd" json:"stop_cmd,omitempty"`
-	CleanCmd             *string         `protobuf:"bytes,6,opt,name=clean_cmd,json=cleanCmd" json:"clean_cmd,omitempty"`
-	CheckCmd             *string         `protobuf:"bytes,7,opt,name=check_cmd,json=checkCmd" json:"check_cmd,omitempty"`
+	Files                []*ArtifactFile `protobuf:"bytes,1,rep,name=files,proto3" json:"files,omitempty"`
+	Name                 string          `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	FunctionId           int32           `protobuf:"varint,3,opt,name=function_id,json=functionId,proto3" json:"function_id,omitempty"`
+	StartCmd             string          `protobuf:"bytes,4,opt,name=start_cmd,json=startCmd,proto3" json:"start_cmd,omitempty"`
+	StopCmd              string          `protobuf:"bytes,5,opt,name=stop_cmd,json=stopCmd,proto3" json:"stop_cmd,omitempty"`
+	CleanCmd             string          `protobuf:"bytes,6,opt,name=clean_cmd,json=cleanCmd,proto3" json:"clean_cmd,omitempty"`
+	CheckCmd             string          `protobuf:"bytes,7,opt,name=check_cmd,json=checkCmd,proto3" json:"check_cmd,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
@@ -239,50 +239,50 @@ func (m *AgentArtifact) GetFiles() []*ArtifactFile {
 }
 
 func (m *AgentArtifact) GetName() string {
-	if m != nil && m.Name != nil {
-		return *m.Name
+	if m != nil {
+		return m.Name
 	}
 	return ""
 }
 
 func (m *AgentArtifact) GetFunctionId() int32 {
-	if m != nil && m.FunctionId != nil {
-		return *m.FunctionId
+	if m != nil {
+		return m.FunctionId
 	}
 	return 0
 }
 
 func (m *AgentArtifact) GetStartCmd() string {
-	if m != nil && m.StartCmd != nil {
-		return *m.StartCmd
+	if m != nil {
+		return m.StartCmd
 	}
 	return ""
 }
 
 func (m *AgentArtifact) GetStopCmd() string {
-	if m != nil && m.StopCmd != nil {
-		return *m.StopCmd
+	if m != nil {
+		return m.StopCmd
 	}
 	return ""
 }
 
 func (m *AgentArtifact) GetCleanCmd() string {
-	if m != nil && m.CleanCmd != nil {
-		return *m.CleanCmd
+	if m != nil {
+		return m.CleanCmd
 	}
 	return ""
 }
 
 func (m *AgentArtifact) GetCheckCmd() string {
-	if m != nil && m.CheckCmd != nil {
-		return *m.CheckCmd
+	if m != nil {
+		return m.CheckCmd
 	}
 	return ""
 }
 
 type TemplateArtifactItem struct {
-	TemplateName         *string         `protobuf:"bytes,1,opt,name=template_name,json=templateName" json:"template_name,omitempty"`
-	Files                []*ArtifactFile `protobuf:"bytes,2,rep,name=files" json:"files,omitempty"`
+	TemplateName         string          `protobuf:"bytes,1,opt,name=template_name,json=templateName,proto3" json:"template_name,omitempty"`
+	Files                []*ArtifactFile `protobuf:"bytes,2,rep,name=files,proto3" json:"files,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
@@ -314,8 +314,8 @@ func (m *TemplateArtifactItem) XXX_DiscardUnknown() {
 var xxx_messageInfo_TemplateArtifactItem proto.InternalMessageInfo
 
 func (m *TemplateArtifactItem) GetTemplateName() string {
-	if m != nil && m.TemplateName != nil {
-		return *m.TemplateName
+	if m != nil {
+		return m.TemplateName
 	}
 	return ""
 }
@@ -328,7 +328,7 @@ func (m *TemplateArtifactItem) GetFiles() []*ArtifactFile {
 }
 
 type TemplateArtifact struct {
-	TemplateArtifacts    []*TemplateArtifactItem `protobuf:"bytes,1,rep,name=template_artifacts,json=templateArtifacts" json:"template_artifacts,omitempty"`
+	TemplateArtifacts    []*TemplateArtifactItem `protobuf:"bytes,1,rep,name=template_artifacts,json=templateArtifacts,proto3" json:"template_artifacts,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                `json:"-"`
 	XXX_unrecognized     []byte                  `json:"-"`
 	XXX_sizecache        int32                   `json:"-"`
@@ -367,12 +367,12 @@ func (m *TemplateArtifact) GetTemplateArtifacts() []*TemplateArtifactItem {
 }
 
 type NormalArtifactItem struct {
-	TemplateName         *string         `protobuf:"bytes,1,opt,name=template_name,json=templateName" json:"template_name,omitempty"`
-	Name                 *string         `protobuf:"bytes,2,opt,name=name" json:"name,omitempty"`
-	FunctionId           *int32          `protobuf:"varint,3,opt,name=function_id,json=functionId" json:"function_id,omitempty"`
-	StartPriority        *int32          `protobuf:"varint,4,opt,name=start_priority,json=startPriority" json:"start_priority,omitempty"`
-	Files                []*ArtifactFile `protobuf:"bytes,5,rep,name=files" json:"files,omitempty"`
-	Copies               *uint32         `protobuf:"varint,6,opt,name=copies,def=1" json:"copies,omitempty"`
+	TemplateName         string          `protobuf:"bytes,1,opt,name=template_name,json=templateName,proto3" json:"template_name,omitempty"`
+	Name                 string          `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	FunctionId           int32           `protobuf:"varint,3,opt,name=function_id,json=functionId,proto3" json:"function_id,omitempty"`
+	StartPriority        int32           `protobuf:"varint,4,opt,name=start_priority,json=startPriority,proto3" json:"start_priority,omitempty"`
+	Files                []*ArtifactFile `protobuf:"bytes,5,rep,name=files,proto3" json:"files,omitempty"`
+	Copies               uint32          `protobuf:"varint,6,opt,name=copies,proto3" json:"copies,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
 	XXX_unrecognized     []byte          `json:"-"`
 	XXX_sizecache        int32           `json:"-"`
@@ -403,32 +403,30 @@ func (m *NormalArtifactItem) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_NormalArtifactItem proto.InternalMessageInfo
 
-const Default_NormalArtifactItem_Copies uint32 = 1
-
 func (m *NormalArtifactItem) GetTemplateName() string {
-	if m != nil && m.TemplateName != nil {
-		return *m.TemplateName
+	if m != nil {
+		return m.TemplateName
 	}
 	return ""
 }
 
 func (m *NormalArtifactItem) GetName() string {
-	if m != nil && m.Name != nil {
-		return *m.Name
+	if m != nil {
+		return m.Name
 	}
 	return ""
 }
 
 func (m *NormalArtifactItem) GetFunctionId() int32 {
-	if m != nil && m.FunctionId != nil {
-		return *m.FunctionId
+	if m != nil {
+		return m.FunctionId
 	}
 	return 0
 }
 
 func (m *NormalArtifactItem) GetStartPriority() int32 {
-	if m != nil && m.StartPriority != nil {
-		return *m.StartPriority
+	if m != nil {
+		return m.StartPriority
 	}
 	return 0
 }
@@ -441,14 +439,14 @@ func (m *NormalArtifactItem) GetFiles() []*ArtifactFile {
 }
 
 func (m *NormalArtifactItem) GetCopies() uint32 {
-	if m != nil && m.Copies != nil {
-		return *m.Copies
+	if m != nil {
+		return m.Copies
 	}
-	return Default_NormalArtifactItem_Copies
+	return 0
 }
 
 type NormalArtifact struct {
-	Artifacts            []*NormalArtifactItem `protobuf:"bytes,1,rep,name=artifacts" json:"artifacts,omitempty"`
+	Artifacts            []*NormalArtifactItem `protobuf:"bytes,1,rep,name=artifacts,proto3" json:"artifacts,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
 	XXX_unrecognized     []byte                `json:"-"`
 	XXX_sizecache        int32                 `json:"-"`
@@ -487,8 +485,8 @@ func (m *NormalArtifact) GetArtifacts() []*NormalArtifactItem {
 }
 
 type ArtifactGroupItem struct {
-	Name                 *string  `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
-	ArtifactNames        []string `protobuf:"bytes,2,rep,name=artifact_names,json=artifactNames" json:"artifact_names,omitempty"`
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	ArtifactNames        []string `protobuf:"bytes,2,rep,name=artifact_names,json=artifactNames,proto3" json:"artifact_names,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -520,8 +518,8 @@ func (m *ArtifactGroupItem) XXX_DiscardUnknown() {
 var xxx_messageInfo_ArtifactGroupItem proto.InternalMessageInfo
 
 func (m *ArtifactGroupItem) GetName() string {
-	if m != nil && m.Name != nil {
-		return *m.Name
+	if m != nil {
+		return m.Name
 	}
 	return ""
 }
@@ -534,7 +532,7 @@ func (m *ArtifactGroupItem) GetArtifactNames() []string {
 }
 
 type ArtifactGroup struct {
-	ArtifactGroups       []*ArtifactGroupItem `protobuf:"bytes,1,rep,name=artifact_groups,json=artifactGroups" json:"artifact_groups,omitempty"`
+	ArtifactGroups       []*ArtifactGroupItem `protobuf:"bytes,1,rep,name=artifact_groups,json=artifactGroups,proto3" json:"artifact_groups,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}             `json:"-"`
 	XXX_unrecognized     []byte               `json:"-"`
 	XXX_sizecache        int32                `json:"-"`
@@ -573,8 +571,8 @@ func (m *ArtifactGroup) GetArtifactGroups() []*ArtifactGroupItem {
 }
 
 type KeyValue struct {
-	Key                  *string  `protobuf:"bytes,1,opt,name=key" json:"key,omitempty"`
-	Value                *string  `protobuf:"bytes,2,opt,name=value" json:"value,omitempty"`
+	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Value                string   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -606,23 +604,23 @@ func (m *KeyValue) XXX_DiscardUnknown() {
 var xxx_messageInfo_KeyValue proto.InternalMessageInfo
 
 func (m *KeyValue) GetKey() string {
-	if m != nil && m.Key != nil {
-		return *m.Key
+	if m != nil {
+		return m.Key
 	}
 	return ""
 }
 
 func (m *KeyValue) GetValue() string {
-	if m != nil && m.Value != nil {
-		return *m.Value
+	if m != nil {
+		return m.Value
 	}
 	return ""
 }
 
 type InstanceGroup struct {
-	ArtifactGroupName    *string  `protobuf:"bytes,1,opt,name=artifact_group_name,json=artifactGroupName" json:"artifact_group_name,omitempty"`
-	HostName             *string  `protobuf:"bytes,2,opt,name=host_name,json=hostName" json:"host_name,omitempty"`
-	InstanceId           *int32   `protobuf:"varint,3,opt,name=instance_id,json=instanceId" json:"instance_id,omitempty"`
+	ArtifactGroupName    string   `protobuf:"bytes,1,opt,name=artifact_group_name,json=artifactGroupName,proto3" json:"artifact_group_name,omitempty"`
+	HostName             string   `protobuf:"bytes,2,opt,name=host_name,json=hostName,proto3" json:"host_name,omitempty"`
+	InstanceId           int32    `protobuf:"varint,3,opt,name=instance_id,json=instanceId,proto3" json:"instance_id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -654,30 +652,30 @@ func (m *InstanceGroup) XXX_DiscardUnknown() {
 var xxx_messageInfo_InstanceGroup proto.InternalMessageInfo
 
 func (m *InstanceGroup) GetArtifactGroupName() string {
-	if m != nil && m.ArtifactGroupName != nil {
-		return *m.ArtifactGroupName
+	if m != nil {
+		return m.ArtifactGroupName
 	}
 	return ""
 }
 
 func (m *InstanceGroup) GetHostName() string {
-	if m != nil && m.HostName != nil {
-		return *m.HostName
+	if m != nil {
+		return m.HostName
 	}
 	return ""
 }
 
 func (m *InstanceGroup) GetInstanceId() int32 {
-	if m != nil && m.InstanceId != nil {
-		return *m.InstanceId
+	if m != nil {
+		return m.InstanceId
 	}
 	return 0
 }
 
 type Zone struct {
-	Name                 *string          `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
-	Id                   *int32           `protobuf:"varint,2,opt,name=id" json:"id,omitempty"`
-	InstanceGroups       []*InstanceGroup `protobuf:"bytes,4,rep,name=instance_groups,json=instanceGroups" json:"instance_groups,omitempty"`
+	Name                 string           `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Id                   int32            `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
+	InstanceGroups       []*InstanceGroup `protobuf:"bytes,4,rep,name=instance_groups,json=instanceGroups,proto3" json:"instance_groups,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
 	XXX_unrecognized     []byte           `json:"-"`
 	XXX_sizecache        int32            `json:"-"`
@@ -709,15 +707,15 @@ func (m *Zone) XXX_DiscardUnknown() {
 var xxx_messageInfo_Zone proto.InternalMessageInfo
 
 func (m *Zone) GetName() string {
-	if m != nil && m.Name != nil {
-		return *m.Name
+	if m != nil {
+		return m.Name
 	}
 	return ""
 }
 
 func (m *Zone) GetId() int32 {
-	if m != nil && m.Id != nil {
-		return *m.Id
+	if m != nil {
+		return m.Id
 	}
 	return 0
 }
@@ -730,12 +728,12 @@ func (m *Zone) GetInstanceGroups() []*InstanceGroup {
 }
 
 type World struct {
-	Name                 *string     `protobuf:"bytes,1,opt,name=name" json:"name,omitempty"`
-	Id                   *int32      `protobuf:"varint,2,opt,name=id" json:"id,omitempty"`
-	User                 *string     `protobuf:"bytes,3,opt,name=user" json:"user,omitempty"`
-	Passwd               *string     `protobuf:"bytes,4,opt,name=passwd" json:"passwd,omitempty"`
-	Variables            []*KeyValue `protobuf:"bytes,5,rep,name=variables" json:"variables,omitempty"`
-	Zones                []*Zone     `protobuf:"bytes,6,rep,name=zones" json:"zones,omitempty"`
+	Name                 string      `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Id                   int32       `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
+	User                 string      `protobuf:"bytes,3,opt,name=user,proto3" json:"user,omitempty"`
+	Passwd               string      `protobuf:"bytes,4,opt,name=passwd,proto3" json:"passwd,omitempty"`
+	Variables            []*KeyValue `protobuf:"bytes,5,rep,name=variables,proto3" json:"variables,omitempty"`
+	Zones                []*Zone     `protobuf:"bytes,6,rep,name=zones,proto3" json:"zones,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
 	XXX_unrecognized     []byte      `json:"-"`
 	XXX_sizecache        int32       `json:"-"`
@@ -767,29 +765,29 @@ func (m *World) XXX_DiscardUnknown() {
 var xxx_messageInfo_World proto.InternalMessageInfo
 
 func (m *World) GetName() string {
-	if m != nil && m.Name != nil {
-		return *m.Name
+	if m != nil {
+		return m.Name
 	}
 	return ""
 }
 
 func (m *World) GetId() int32 {
-	if m != nil && m.Id != nil {
-		return *m.Id
+	if m != nil {
+		return m.Id
 	}
 	return 0
 }
 
 func (m *World) GetUser() string {
-	if m != nil && m.User != nil {
-		return *m.User
+	if m != nil {
+		return m.User
 	}
 	return ""
 }
 
 func (m *World) GetPasswd() string {
-	if m != nil && m.Passwd != nil {
-		return *m.Passwd
+	if m != nil {
+		return m.Passwd
 	}
 	return ""
 }
@@ -809,9 +807,9 @@ func (m *World) GetZones() []*Zone {
 }
 
 type DeployInfo struct {
-	TmpRootPath          *string  `protobuf:"bytes,2,opt,name=tmp_root_path,json=tmpRootPath" json:"tmp_root_path,omitempty"`
-	DstRootPath          *string  `protobuf:"bytes,3,opt,name=dst_root_path,json=dstRootPath" json:"dst_root_path,omitempty"`
-	ListenPort           *int32   `protobuf:"varint,4,opt,name=listen_port,json=listenPort" json:"listen_port,omitempty"`
+	TmpRootPath          string   `protobuf:"bytes,2,opt,name=tmp_root_path,json=tmpRootPath,proto3" json:"tmp_root_path,omitempty"`
+	DstRootPath          string   `protobuf:"bytes,3,opt,name=dst_root_path,json=dstRootPath,proto3" json:"dst_root_path,omitempty"`
+	ListenPort           int32    `protobuf:"varint,4,opt,name=listen_port,json=listenPort,proto3" json:"listen_port,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -843,32 +841,32 @@ func (m *DeployInfo) XXX_DiscardUnknown() {
 var xxx_messageInfo_DeployInfo proto.InternalMessageInfo
 
 func (m *DeployInfo) GetTmpRootPath() string {
-	if m != nil && m.TmpRootPath != nil {
-		return *m.TmpRootPath
+	if m != nil {
+		return m.TmpRootPath
 	}
 	return ""
 }
 
 func (m *DeployInfo) GetDstRootPath() string {
-	if m != nil && m.DstRootPath != nil {
-		return *m.DstRootPath
+	if m != nil {
+		return m.DstRootPath
 	}
 	return ""
 }
 
 func (m *DeployInfo) GetListenPort() int32 {
-	if m != nil && m.ListenPort != nil {
-		return *m.ListenPort
+	if m != nil {
+		return m.ListenPort
 	}
 	return 0
 }
 
 type Deploy struct {
-	TmpRootPath          *string     `protobuf:"bytes,2,opt,name=tmp_root_path,json=tmpRootPath" json:"tmp_root_path,omitempty"`
-	DstRootPath          *string     `protobuf:"bytes,3,opt,name=dst_root_path,json=dstRootPath" json:"dst_root_path,omitempty"`
-	Variables            []*KeyValue `protobuf:"bytes,4,rep,name=variables" json:"variables,omitempty"`
-	Worlds               []*World    `protobuf:"bytes,5,rep,name=worlds" json:"worlds,omitempty"`
-	ListenPort           *int32      `protobuf:"varint,6,opt,name=listen_port,json=listenPort" json:"listen_port,omitempty"`
+	TmpRootPath          string      `protobuf:"bytes,2,opt,name=tmp_root_path,json=tmpRootPath,proto3" json:"tmp_root_path,omitempty"`
+	DstRootPath          string      `protobuf:"bytes,3,opt,name=dst_root_path,json=dstRootPath,proto3" json:"dst_root_path,omitempty"`
+	Variables            []*KeyValue `protobuf:"bytes,4,rep,name=variables,proto3" json:"variables,omitempty"`
+	Worlds               []*World    `protobuf:"bytes,5,rep,name=worlds,proto3" json:"worlds,omitempty"`
+	ListenPort           int32       `protobuf:"varint,6,opt,name=listen_port,json=listenPort,proto3" json:"listen_port,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
 	XXX_unrecognized     []byte      `json:"-"`
 	XXX_sizecache        int32       `json:"-"`
@@ -900,15 +898,15 @@ func (m *Deploy) XXX_DiscardUnknown() {
 var xxx_messageInfo_Deploy proto.InternalMessageInfo
 
 func (m *Deploy) GetTmpRootPath() string {
-	if m != nil && m.TmpRootPath != nil {
-		return *m.TmpRootPath
+	if m != nil {
+		return m.TmpRootPath
 	}
 	return ""
 }
 
 func (m *Deploy) GetDstRootPath() string {
-	if m != nil && m.DstRootPath != nil {
-		return *m.DstRootPath
+	if m != nil {
+		return m.DstRootPath
 	}
 	return ""
 }
@@ -928,8 +926,8 @@ func (m *Deploy) GetWorlds() []*World {
 }
 
 func (m *Deploy) GetListenPort() int32 {
-	if m != nil && m.ListenPort != nil {
-		return *m.ListenPort
+	if m != nil {
+		return m.ListenPort
 	}
 	return 0
 }
@@ -958,54 +956,54 @@ func init() { proto.RegisterFile("gcm.proto", fileDescriptor_6e49f9b792356f6b) }
 var fileDescriptor_6e49f9b792356f6b = []byte{
 	// 813 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x55, 0xdd, 0x6e, 0x23, 0x35,
-	0x14, 0xd6, 0xa4, 0x99, 0x34, 0x73, 0xb2, 0x93, 0x6e, 0xcd, 0xb2, 0x74, 0x55, 0x44, 0x2b, 0xc3,
-	0x8a, 0xbd, 0x40, 0x05, 0xf6, 0x72, 0xaf, 0x58, 0x5a, 0x01, 0x11, 0x50, 0x55, 0x16, 0x3f, 0x12,
-	0x37, 0x23, 0xef, 0x8c, 0x93, 0x5a, 0x9d, 0x19, 0x5b, 0xb6, 0xb3, 0xab, 0x20, 0xc1, 0x2b, 0xf1,
-	0x22, 0x3c, 0x03, 0x57, 0x3c, 0x08, 0xf2, 0xdf, 0xcc, 0x24, 0xdb, 0x8b, 0x80, 0xb8, 0xaa, 0xfd,
-	0x7d, 0x67, 0x7c, 0xbe, 0xf3, 0x9d, 0xd3, 0x13, 0xc8, 0x56, 0x65, 0x73, 0x21, 0x95, 0x30, 0x02,
-	0x4d, 0xdd, 0x9f, 0x52, 0xd4, 0xb8, 0x81, 0xf1, 0x37, 0x42, 0x1b, 0x84, 0x60, 0xdc, 0xd2, 0x86,
-	0x9d, 0x24, 0xe7, 0xc9, 0xb3, 0x8c, 0xb8, 0x33, 0x7a, 0x02, 0x53, 0xde, 0xb6, 0x4c, 0x15, 0x5c,
-	0x9e, 0x8c, 0x1c, 0x7e, 0xe8, 0xee, 0x0b, 0x69, 0x29, 0xb1, 0x36, 0x9e, 0x3a, 0xf0, 0x94, 0xbb,
-	0x2f, 0x24, 0x3a, 0x85, 0xac, 0x62, 0xb2, 0x16, 0x1b, 0xcb, 0x8d, 0x1d, 0x37, 0xf5, 0xc0, 0x42,
-	0xe2, 0x4f, 0xe1, 0xd0, 0xa6, 0xbb, 0x5c, 0xae, 0xd0, 0x47, 0x90, 0xde, 0x0a, 0x6d, 0xf4, 0x49,
-	0x72, 0x7e, 0xf0, 0x6c, 0xf6, 0x7c, 0x7e, 0x11, 0x35, 0x5d, 0xd8, 0x08, 0xe2, 0x49, 0xfc, 0x3b,
-	0x3c, 0x78, 0xa9, 0x0c, 0x5f, 0xd2, 0xd2, 0x7c, 0xc5, 0x6b, 0x86, 0x1e, 0xc2, 0x81, 0x56, 0x65,
-	0x90, 0x69, 0x8f, 0x16, 0xa9, 0xb4, 0x09, 0x02, 0xed, 0x11, 0xbd, 0x0b, 0x13, 0xae, 0x8b, 0x8a,
-	0x2b, 0x27, 0x6d, 0x4a, 0x52, 0xae, 0xaf, 0xb8, 0x42, 0x67, 0x30, 0x6b, 0x19, 0xab, 0x8a, 0x57,
-	0xb4, 0xbc, 0x5b, 0x7b, 0x69, 0x53, 0x02, 0x16, 0xfa, 0xd2, 0x21, 0xd6, 0x03, 0x43, 0x57, 0xfa,
-	0x24, 0x3d, 0x3f, 0xb0, 0x1e, 0xd8, 0x33, 0xfe, 0x3b, 0x81, 0xfc, 0xe5, 0x8a, 0xb5, 0x26, 0xaa,
-	0x40, 0x9f, 0x40, 0xba, 0xe4, 0x35, 0x8b, 0xba, 0x1f, 0xf7, 0xba, 0x87, 0x42, 0x89, 0x0f, 0xea,
-	0x7c, 0x1d, 0x0d, 0x7c, 0x3d, 0x83, 0xd9, 0x72, 0xdd, 0x96, 0x86, 0x8b, 0xb6, 0xe0, 0x95, 0x13,
-	0x99, 0x12, 0x88, 0xd0, 0xa2, 0xb2, 0x16, 0x6a, 0x43, 0x95, 0x29, 0xca, 0xa6, 0x8a, 0x16, 0x3a,
-	0xe0, 0xb2, 0xa9, 0xac, 0xf5, 0xda, 0x08, 0xe9, 0xb8, 0xd4, 0x5b, 0x6f, 0xef, 0x96, 0x3a, 0x85,
-	0xac, 0xac, 0x19, 0x6d, 0x1d, 0x37, 0xf1, 0xdf, 0x39, 0x20, 0x92, 0xb7, 0xac, 0xbc, 0x73, 0xe4,
-	0x61, 0x20, 0x2d, 0x70, 0xd9, 0x54, 0x98, 0xc3, 0xa3, 0x1f, 0x58, 0x23, 0x6b, 0x6a, 0x58, 0xac,
-	0x62, 0x61, 0x58, 0x83, 0x3e, 0x84, 0xdc, 0x04, 0xbc, 0x18, 0xcc, 0xc7, 0x83, 0x08, 0x5e, 0xdb,
-	0x7a, 0x3a, 0x47, 0x46, 0x7b, 0x38, 0x82, 0x29, 0x3c, 0xdc, 0x4d, 0x85, 0xbe, 0x07, 0xd4, 0xa5,
-	0xa1, 0x01, 0x8c, 0x06, 0x7f, 0xd0, 0x3f, 0x77, 0x9f, 0x44, 0x72, 0x6c, 0x76, 0x50, 0x8d, 0xff,
-	0x4a, 0x00, 0x5d, 0x0b, 0xd5, 0xd0, 0xfa, 0xdf, 0x17, 0xf3, 0x9f, 0x1a, 0xf6, 0x14, 0xe6, 0xbe,
-	0x61, 0x52, 0x71, 0xa1, 0xb8, 0xd9, 0xb8, 0xae, 0xa5, 0x24, 0x77, 0xe8, 0x4d, 0x00, 0x7b, 0xa3,
-	0xd2, 0x7d, 0x46, 0xe7, 0x09, 0x4c, 0x4a, 0x21, 0x39, 0xd3, 0xae, 0x95, 0xf9, 0x8b, 0xe4, 0x73,
-	0x12, 0x00, 0xfc, 0x1d, 0xcc, 0xb7, 0xeb, 0x43, 0x2f, 0x20, 0xdb, 0x35, 0xee, 0xfd, 0xfe, 0xf9,
-	0xb7, 0xcd, 0x20, 0x7d, 0x38, 0xbe, 0x86, 0xe3, 0x48, 0x7d, 0xad, 0xc4, 0x5a, 0x3a, 0xb3, 0xee,
-	0x5b, 0x08, 0x4f, 0x61, 0x1e, 0xbf, 0x72, 0x06, 0xfa, 0x8e, 0x67, 0x24, 0x8f, 0xa8, 0x75, 0x50,
-	0xe3, 0x1f, 0x21, 0xdf, 0x7a, 0x0f, 0x5d, 0xc1, 0x51, 0xf7, 0xdd, 0xca, 0x22, 0x51, 0xe2, 0xe9,
-	0xdb, 0x0e, 0x74, 0x0a, 0x48, 0x97, 0xcb, 0x41, 0x1a, 0x3f, 0x87, 0xe9, 0xb7, 0x6c, 0xf3, 0x13,
-	0xad, 0xd7, 0x6e, 0x0d, 0xdc, 0xb1, 0x4d, 0x5c, 0x03, 0x77, 0x6c, 0x83, 0x1e, 0x41, 0xfa, 0xda,
-	0x52, 0xa1, 0x71, 0xfe, 0x82, 0x7f, 0x83, 0x7c, 0xd1, 0x6a, 0x43, 0xdb, 0x92, 0x79, 0x29, 0x17,
-	0xf0, 0xce, 0xb6, 0x94, 0xe1, 0x24, 0x1c, 0x6f, 0x65, 0x74, 0xe3, 0x70, 0x0a, 0x99, 0x5d, 0x44,
-	0xc5, 0x60, 0x26, 0xa6, 0x16, 0xb8, 0x0e, 0x73, 0xc1, 0xc3, 0xeb, 0x83, 0xb9, 0x88, 0xd0, 0xa2,
-	0xc2, 0x35, 0x8c, 0x7f, 0x11, 0x2d, 0xbb, 0xd7, 0xcc, 0x39, 0x8c, 0x78, 0xe5, 0x9e, 0x4c, 0xc9,
-	0x88, 0x57, 0xe8, 0x0b, 0x38, 0xea, 0x1e, 0x0b, 0x26, 0x8d, 0x9d, 0x49, 0xef, 0xf5, 0x26, 0x6d,
-	0xd5, 0x42, 0xe6, 0x7c, 0x78, 0xd5, 0xf8, 0x8f, 0x04, 0xd2, 0x9f, 0x85, 0xaa, 0xab, 0xbd, 0xf2,
-	0x21, 0x18, 0xaf, 0x35, 0x53, 0x61, 0x7d, 0xbb, 0x33, 0x7a, 0x0c, 0x13, 0x49, 0xb5, 0x7e, 0x13,
-	0xb7, 0x4e, 0xb8, 0xa1, 0xcf, 0x20, 0x7b, 0x4d, 0x15, 0xa7, 0xaf, 0xfa, 0xe1, 0x45, 0xbd, 0xaa,
-	0xd8, 0x15, 0xd2, 0x07, 0xd9, 0xed, 0xfe, 0xab, 0x68, 0xdd, 0xec, 0xee, 0x6c, 0x77, 0x6b, 0x08,
-	0xf1, 0x24, 0x5e, 0x03, 0x5c, 0xf9, 0x9f, 0x86, 0x76, 0x29, 0x10, 0x86, 0xdc, 0x34, 0xb2, 0x50,
-	0x42, 0x98, 0x42, 0x52, 0x73, 0x1b, 0xfc, 0x9e, 0x99, 0x46, 0x12, 0x21, 0xcc, 0x0d, 0x35, 0xb7,
-	0x36, 0xa6, 0xd2, 0x66, 0x10, 0xe3, 0xe5, 0xcf, 0x2a, 0x6d, 0xba, 0x98, 0x33, 0x98, 0xd5, 0x5c,
-	0x1b, 0xd6, 0x16, 0x52, 0x28, 0x13, 0xfe, 0x15, 0xc1, 0x43, 0x37, 0x42, 0x19, 0xfc, 0x67, 0x02,
-	0x13, 0x9f, 0xf7, 0x7f, 0xcb, 0xb9, 0xe5, 0xd0, 0x78, 0x1f, 0x87, 0x3e, 0x86, 0xc9, 0x1b, 0xdb,
-	0xac, 0x68, 0xe8, 0x51, 0x1f, 0xee, 0x9a, 0x48, 0x02, 0xbd, 0x5b, 0xce, 0x64, 0xb7, 0x9c, 0x7f,
-	0x02, 0x00, 0x00, 0xff, 0xff, 0x85, 0x77, 0xb1, 0x01, 0xd9, 0x07, 0x00, 0x00,
+	0x14, 0x56, 0xd2, 0x4c, 0x9a, 0x39, 0xd9, 0x49, 0xb7, 0x66, 0x59, 0x8a, 0x8a, 0x68, 0x65, 0x58,
+	0xb1, 0x17, 0xa8, 0xa0, 0xe5, 0x8e, 0x2b, 0x96, 0x56, 0x40, 0x04, 0x54, 0x95, 0xc5, 0x8f, 0xc4,
+	0xcd, 0xc8, 0x9d, 0x71, 0x12, 0x2b, 0x33, 0x63, 0xcb, 0x76, 0x76, 0x15, 0x24, 0x78, 0x25, 0x5e,
+	0x84, 0x37, 0xe0, 0x96, 0x07, 0x41, 0xfe, 0x9b, 0x99, 0x64, 0x7b, 0x11, 0x10, 0x57, 0xb5, 0xbf,
+	0xef, 0x8c, 0xcf, 0x77, 0xbe, 0x73, 0x7a, 0x02, 0xe9, 0xb2, 0xa8, 0xaf, 0xa4, 0x12, 0x46, 0xa0,
+	0x89, 0xfb, 0x53, 0x88, 0x0a, 0xd7, 0x30, 0xfa, 0x46, 0x68, 0x83, 0x10, 0x8c, 0x1a, 0x5a, 0xb3,
+	0xb3, 0xc1, 0xe5, 0xe0, 0x79, 0x4a, 0xdc, 0x19, 0xbd, 0x0b, 0x13, 0xde, 0x34, 0x4c, 0xe5, 0x5c,
+	0x9e, 0x0d, 0x1d, 0x7e, 0xec, 0xee, 0x73, 0x69, 0x29, 0xb1, 0x31, 0x9e, 0x3a, 0xf2, 0x94, 0xbb,
+	0xcf, 0x25, 0x3a, 0x87, 0xb4, 0x64, 0xb2, 0x12, 0x5b, 0xcb, 0x8d, 0x1c, 0x37, 0xf1, 0xc0, 0x5c,
+	0xe2, 0x4f, 0xe0, 0xd8, 0xa6, 0xbb, 0x5e, 0x2c, 0xd1, 0x87, 0x90, 0xac, 0x84, 0x36, 0xfa, 0x6c,
+	0x70, 0x79, 0xf4, 0x7c, 0xfa, 0x62, 0x76, 0x15, 0x35, 0x5d, 0xd9, 0x08, 0xe2, 0x49, 0xfc, 0x3b,
+	0x3c, 0x7a, 0xa9, 0x0c, 0x5f, 0xd0, 0xc2, 0x7c, 0xc5, 0x2b, 0x86, 0x1e, 0xc3, 0x91, 0x56, 0x45,
+	0x90, 0x69, 0x8f, 0x16, 0x29, 0xb5, 0x09, 0x02, 0xed, 0x11, 0xbd, 0x0d, 0x63, 0xae, 0xf3, 0x92,
+	0x2b, 0x27, 0x6d, 0x42, 0x12, 0xae, 0x6f, 0xb8, 0x42, 0x17, 0x30, 0x6d, 0x18, 0x2b, 0xf3, 0x7b,
+	0x5a, 0xac, 0x37, 0x5e, 0xda, 0x84, 0x80, 0x85, 0xbe, 0x74, 0x88, 0xf5, 0xc0, 0xd0, 0xa5, 0x3e,
+	0x4b, 0x2e, 0x8f, 0xac, 0x07, 0xf6, 0x8c, 0xff, 0x1e, 0x40, 0xf6, 0x72, 0xc9, 0x1a, 0x13, 0x55,
+	0xa0, 0x8f, 0x21, 0x59, 0xf0, 0x8a, 0x45, 0xdd, 0x4f, 0x3b, 0xdd, 0x7d, 0xa1, 0xc4, 0x07, 0xb5,
+	0xbe, 0x0e, 0x7b, 0xbe, 0x5e, 0xc0, 0x74, 0xb1, 0x69, 0x0a, 0xc3, 0x45, 0x93, 0xf3, 0xd2, 0x89,
+	0x4c, 0x08, 0x44, 0x68, 0x5e, 0x5a, 0x0b, 0xb5, 0xa1, 0xca, 0xe4, 0x45, 0x5d, 0x46, 0x0b, 0x1d,
+	0x70, 0x5d, 0x97, 0xd6, 0x7a, 0x6d, 0x84, 0x74, 0x5c, 0xe2, 0xad, 0xb7, 0x77, 0x4b, 0x9d, 0x43,
+	0x5a, 0x54, 0x8c, 0x36, 0x8e, 0x1b, 0xfb, 0xef, 0x1c, 0x10, 0xc9, 0x15, 0x2b, 0xd6, 0x8e, 0x3c,
+	0x0e, 0xa4, 0x05, 0xae, 0xeb, 0x12, 0x73, 0x78, 0xf2, 0x03, 0xab, 0x65, 0x45, 0x0d, 0x8b, 0x55,
+	0xcc, 0x0d, 0xab, 0xd1, 0x07, 0x90, 0x99, 0x80, 0xe7, 0xbd, 0xf9, 0x78, 0x14, 0xc1, 0x5b, 0x5b,
+	0x4f, 0xeb, 0xc8, 0xf0, 0x00, 0x47, 0x30, 0x85, 0xc7, 0xfb, 0xa9, 0xd0, 0xf7, 0x80, 0xda, 0x34,
+	0x34, 0x80, 0xd1, 0xe0, 0xf7, 0xbb, 0xe7, 0x1e, 0x92, 0x48, 0x4e, 0xcd, 0x1e, 0xaa, 0xf1, 0x5f,
+	0x03, 0x40, 0xb7, 0x42, 0xd5, 0xb4, 0xfa, 0xf7, 0xc5, 0xfc, 0xa7, 0x86, 0x3d, 0x83, 0x99, 0x6f,
+	0x98, 0x54, 0x5c, 0x28, 0x6e, 0xb6, 0xae, 0x6b, 0x09, 0xc9, 0x1c, 0x7a, 0x17, 0xc0, 0xce, 0xa8,
+	0xe4, 0x90, 0xd1, 0x79, 0x0a, 0xe3, 0x42, 0x48, 0xce, 0xb4, 0x6b, 0x65, 0x46, 0xc2, 0x0d, 0x7f,
+	0x07, 0xb3, 0xdd, 0xe2, 0xd0, 0xe7, 0x90, 0xee, 0xbb, 0xf6, 0x5e, 0xf7, 0xf6, 0x9b, 0x4e, 0x90,
+	0x2e, 0x1c, 0xdf, 0xc2, 0x69, 0xa4, 0xbe, 0x56, 0x62, 0x23, 0x9d, 0x53, 0x0f, 0x6d, 0x83, 0x67,
+	0x30, 0x8b, 0x5f, 0x39, 0xf7, 0x7c, 0xbb, 0x53, 0x92, 0x45, 0xd4, 0xda, 0xa7, 0xf1, 0x8f, 0x90,
+	0xed, 0xbc, 0x87, 0x6e, 0xe0, 0xa4, 0xfd, 0x6e, 0x69, 0x91, 0x28, 0xf1, 0xfc, 0xcd, 0xf2, 0x5b,
+	0x05, 0xa4, 0xcd, 0xe5, 0x20, 0x8d, 0x5f, 0xc0, 0xe4, 0x5b, 0xb6, 0xfd, 0x89, 0x56, 0x1b, 0xb7,
+	0x03, 0xd6, 0x6c, 0x1b, 0x77, 0xc0, 0x9a, 0x6d, 0xd1, 0x13, 0x48, 0x5e, 0x59, 0x2a, 0x74, 0xcd,
+	0x5f, 0xf0, 0x6f, 0x90, 0xcd, 0x1b, 0x6d, 0x68, 0x53, 0x30, 0x2f, 0xe5, 0x0a, 0xde, 0xda, 0x95,
+	0xd2, 0x1f, 0x83, 0xd3, 0x9d, 0x8c, 0x6e, 0x16, 0xce, 0x21, 0xb5, 0x5b, 0x28, 0xef, 0x0d, 0xc4,
+	0xc4, 0x02, 0xb7, 0x61, 0x28, 0x78, 0x78, 0xbd, 0x37, 0x14, 0x11, 0x9a, 0x97, 0xb8, 0x82, 0xd1,
+	0x2f, 0xa2, 0x61, 0x0f, 0x9a, 0x39, 0x83, 0x21, 0x2f, 0xdd, 0x93, 0x09, 0x19, 0xf2, 0x12, 0x7d,
+	0x01, 0x27, 0xed, 0x63, 0xc1, 0xa4, 0x91, 0x33, 0xe9, 0x9d, 0xce, 0xa4, 0x9d, 0x5a, 0xc8, 0x8c,
+	0xf7, 0xaf, 0x1a, 0xff, 0x31, 0x80, 0xe4, 0x67, 0xa1, 0xaa, 0xf2, 0xa0, 0x7c, 0x08, 0x46, 0x1b,
+	0xcd, 0x54, 0xd8, 0xdd, 0xee, 0x6c, 0xe7, 0x4d, 0x52, 0xad, 0x5f, 0xc7, 0x95, 0x13, 0x6e, 0xe8,
+	0x53, 0x48, 0x5f, 0x51, 0xc5, 0xe9, 0x7d, 0x37, 0xb9, 0xa8, 0x53, 0x15, 0xbb, 0x42, 0xba, 0x20,
+	0xbb, 0xda, 0x7f, 0x15, 0x8d, 0x1b, 0xdc, 0xbd, 0xd5, 0x6e, 0x0d, 0x21, 0x9e, 0xc4, 0x1b, 0x80,
+	0x1b, 0xff, 0xbb, 0xd0, 0x2c, 0x04, 0xc2, 0x90, 0x99, 0x5a, 0xe6, 0x4a, 0x08, 0x93, 0x4b, 0x6a,
+	0x56, 0xc1, 0xef, 0xa9, 0xa9, 0x25, 0x11, 0xc2, 0xdc, 0x51, 0xb3, 0xb2, 0x31, 0xa5, 0x36, 0xbd,
+	0x18, 0x2f, 0x7f, 0x5a, 0x6a, 0xd3, 0xc6, 0x5c, 0xc0, 0xb4, 0xe2, 0xda, 0xb0, 0x26, 0x97, 0x42,
+	0x99, 0xf0, 0x7f, 0x08, 0x1e, 0xba, 0x13, 0xca, 0xe0, 0x3f, 0x07, 0x30, 0xf6, 0x79, 0xff, 0xb7,
+	0x9c, 0x3b, 0x0e, 0x8d, 0x0e, 0x71, 0xe8, 0x23, 0x18, 0xbf, 0xb6, 0xcd, 0x8a, 0x86, 0x9e, 0x74,
+	0xe1, 0xae, 0x89, 0x24, 0xd0, 0xfb, 0xe5, 0x8c, 0xf7, 0xcb, 0xb9, 0x1f, 0xbb, 0x0f, 0x3f, 0xfb,
+	0x27, 0x00, 0x00, 0xff, 0xff, 0xdd, 0x45, 0xd7, 0xb2, 0xde, 0x07, 0x00, 0x00,
 }
