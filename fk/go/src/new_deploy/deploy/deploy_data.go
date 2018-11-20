@@ -39,6 +39,13 @@ type DeployData struct {
 }
 
 func (d *DeployData) init(confs []string) bool {
+	d.hostMap = make(map[string]protocol.Host)
+	d.templateArtifactMap = make(map[string]protocol.TemplateArtifactItem)
+	d.artifactMap = make(map[string]protocol.NormalArtifactItem)
+	d.artifactGroupMap = make(map[string]protocol.ArtifactGroupItem)
+	d.variableMap = make(map[string]string)
+	d.worldMap = make(map[string]protocol.World)
+
 	for _, conf := range confs {
 		if !d.loadConf(conf) {
 			logger.Error("")
