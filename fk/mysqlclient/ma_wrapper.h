@@ -219,7 +219,10 @@ public:
 	}
 	
 	template<typename T>
-	int Query(const char* sql, unsigned int sql_len, T& value_list);
+	int QueryToProtobuf(const char* sql, unsigned int sql_len, T& value_list);
+
+	template<typename T>
+	int QueryToRepeated(const char* sql, unsigned int sql_len, ::google::protobuf::RepeatedPtrField<T>& value_list);
 
 	int Autocommit(bool open_or_close) {
 		int ret = mysql_autocommit(&_st_mysql, open_or_close);
@@ -457,19 +460,20 @@ protected:
 //////////////////////////////////////////////////////////////////
 
 template<typename T>
-int SqlConnection::Query(const char* sql, unsigned int sql_len, T& value_list) {
-	auto list_field_desc = T::descriptor()->field(0);
-	if (!list_field_desc) {
-		return -2000;
-	}
+int SqlConnection::QueryToProtobuf(const char* sql, unsigned int sql_len, T& value_list) {
+	auto repeated_items = value_list.mutable_items();
+	return QueryToRepeated(sql, sql_len, *repeated_items);
+}
 
-	auto field_desc = list_field_desc->message_type();
-	int ret = Query(sql, sql_len, field_desc->field_count(),
-		[&value_list, field_desc](int Index, MYSQL_ROW row){
-		auto items = value_list.add_items();
+template<typename T>
+int SqlConnection::QueryToRepeated(const char* sql, unsigned int sql_len, ::google::protobuf::RepeatedPtrField<T>& value_list) {
+	auto desc = T::descriptor();
+	int ret = Query(sql, sql_len, desc->field_count(),
+		[&value_list, desc](int Index, MYSQL_ROW row) {
+		auto items = value_list.Add();
 		auto reflection = items->GetReflection();
-		for (int idx = 0; idx < field_desc->field_count(); ++idx) {
-			auto field = field_desc->field(idx);
+		for (int idx = 0; idx < desc->field_count(); ++idx) {
+			auto field = desc->field(idx);
 			switch (field->type()) {
 			case google::protobuf::FieldDescriptor::TYPE_INT32: {
 				std::istringstream iss(row[idx]);
