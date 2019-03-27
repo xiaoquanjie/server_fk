@@ -50,6 +50,12 @@
     <Filter Include="net_handler">
       <UniqueIdentifier>{a3b60c9e-fbb0-4bb5-93f9-f43bb282b223}</UniqueIdentifier>
     </Filter>
+    <Filter Include="async">
+      <UniqueIdentifier>{44b2c233-ebe7-4604-8e67-c78f14a174b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="common">
+      <UniqueIdentifier>{6f8d147f-5ff5-49a7-8072-d7e262ead7d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="svr_base\getopt.c">
@@ -93,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="net_handler\router_mgr.cpp">
       <Filter>net_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="async\async_mysql_mgr.cpp">
+      <Filter>async</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -767,6 +776,12 @@
     </ClInclude>
     <ClInclude Include="net_handler\router_mgr.h">
       <Filter>net_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="async\async_mysql_mgr.h">
+      <Filter>async</Filter>
+    </ClInclude>
+    <ClInclude Include="common\comm_struct.h">
+      <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

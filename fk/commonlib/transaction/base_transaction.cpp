@@ -4,6 +4,8 @@
 #include "slience/base/buffer.hpp"
 #include "commonlib/net_handler/net_handler.h"
 #include "slience/base/random.hpp"
+#include "commonlib/async/async_mysql_mgr.h"
+#include "mysqlclient/ma_wrapper.h"
 
 void Transaction::Construct() {
 	_trans_id = 0;
@@ -18,6 +20,7 @@ void Transaction::Construct() {
 	_state = E_STATE_IDLE;
 	_timer_id = 0;
 	_req_random = 0;
+	_mysql_rsp = 0;
 	memset(&_ori_frame, 0, sizeof(_ori_frame));
 }
 
@@ -69,6 +72,13 @@ int Transaction::Process(base::s_int64_t fd, base::s_uint32_t self_svr_type,
 	_cur_frame_data = data;
 	_cur_frame = &frame;
 	_cur_fd = fd;
+	OnState();
+	return 0;
+}
+
+int Transaction::ProcessMysqlRsp(void* rsp) {
+	_mysql_rsp = rsp;
+	_state = E_STATE_ACTIVE;
 	OnState();
 	return 0;
 }
@@ -288,6 +298,86 @@ int Transaction::SendMsgByFd(int cmd, google::protobuf::Message& request
 		return -1;
 	}
 	return 0;
+}
+
+// 需要注意一下返回值
+int Transaction::MysqlQuery(base::s_uint64_t orderid,
+	const std::string& url,
+	const std::string& sql,
+	int expected_fields,
+	MysqlCallBack func) {
+	int affected_rows = 0;
+	return MysqlQuery(orderid, url, sql, affected_rows, expected_fields, func);
+}
+
+int Transaction::MysqlQuery(base::s_uint64_t orderid,
+	const std::string& url,
+	const std::string& sql,
+	int& affected_rows,
+	int expected_fields,
+	MysqlCallBack func) {
+	MysqlReq* req = new MysqlReq;
+	req->type = MysqlReq::E_QUERY;
+	req->trans_id = trans_id();
+	req->url = url;
+	req->sql = sql;
+
+	AsyncMysqlMgr::AddRequest(orderid, req);
+	Wait(E_WAIT_MYSQL);
+
+	MysqlRsp* rsp = (MysqlRsp*)_mysql_rsp;
+	if (!rsp) {
+		LogError("MysqlRsp is null");
+		return E_MYSQL_ERROR;
+	}
+
+	int ret = E_MYSQL_SUCCESS;
+	do {
+		if (rsp->err_code != 0) {
+			LogError(
+				"{userid:"
+				<< userid()
+				<< "} "
+				<< "failed to Request Mysql, code:"
+				<< rsp->err_code
+				<< " ,is_dup_key:"
+				<< rsp->is_dup_entry
+				<< " ,what:"
+				<< rsp->code_what
+				<< " ,sql:"
+				<< sql;
+			);
+			// 重键错误　
+			ret = rsp->is_dup_entry ? E_MYSQL_DUP_KEY : E_MYSQL_ERROR;
+			break;
+		}
+
+		MYSQL_RES* result = (MYSQL_RES *)rsp->mysql_res;
+		if (expected_fields != mysql_num_fields(result)) {
+			LogError("{userid:"
+				<< userid()
+				<< "} failed to Request Mysql, wrong expected_fields:"
+				<< expected_fields
+				<< " ,real_fields:"
+				<< mysql_num_fields(result)
+				<< " ,sql:"
+				<< sql;
+			);
+			ret = E_MYSQL_ERROR;
+			break;
+		}
+
+		affected_rows = rsp->affected_rows;
+		int idx = 0;
+		MYSQL_ROW row = 0;
+		while (0 != (row = mysql_fetch_row(result))) {
+			func(idx, row);
+		}
+	} while (false);
+
+	_mysql_rsp = 0;
+	mysql_free_result((MYSQL_RES *)rsp->mysql_res);
+	return ret;
 }
 
 base::s_uint32_t Transaction::trans_id() {

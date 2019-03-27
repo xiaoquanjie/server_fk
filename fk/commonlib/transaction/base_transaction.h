@@ -7,6 +7,12 @@
 #include "commonlib/svr_base/svrbase.h"
 #include "commonlib/net_handler/router_mgr.h"
 
+#ifdef WIN32
+typedef std::function<void(int, char**)> MysqlCallBack;
+#else
+typedef std::tr1::function<void(int, char**)> MysqlCallBack;
+#endif
+
 class Transaction {
 	friend class TransactionMgrImpl;
 public:
@@ -24,6 +30,12 @@ public:
 		E_WAIT_THREE_SECOND = 3 * 1000,
 		E_WAIT_FIVE_SECOND = 5 * 1000,
 		E_WAIT_TEN_SECOND = 10 * 1000,
+		E_WAIT_MYSQL = 120 * 1000,
+	};
+	enum Mysql_Return {
+		E_MYSQL_SUCCESS = 0,
+		E_MYSQL_DUP_KEY = -1,
+		E_MYSQL_ERROR = -2,
 	};
 
 	void Construct();
@@ -38,6 +50,8 @@ protected:
 	int Process(base::s_int64_t fd, base::s_uint32_t self_svr_type, 
 		base::s_uint32_t self_inst_id,
 		const AppHeadFrame& frame, const char* data);
+
+	int ProcessMysqlRsp(void* rsp);
 
 	int ParseMsg(google::protobuf::Message& message);
 
@@ -58,6 +72,22 @@ protected:
 	int SendMsgByFd(int cmd, google::protobuf::Message& request
 		, google::protobuf::Message& respond);
 
+	/////////////////////////////////////// mysql接口begin ///////////////////////////////
+
+	int MysqlQuery(base::s_uint64_t orderid, 
+		const std::string& url, 
+		const std::string& sql,
+		int expected_fields,
+		MysqlCallBack func);
+
+	int MysqlQuery(base::s_uint64_t orderid,
+		const std::string& url,
+		const std::string& sql,
+		int& affected_rows,
+		int expected_fields,
+		MysqlCallBack func);
+
+	/////////////////////////////////////// mysql接口end ///////////////////////////////
 protected:
 	void OnState();
 
@@ -115,6 +145,7 @@ private:
 	const AppHeadFrame* _cur_frame;
 	AppHeadFrame _ori_frame;
 	const char* _cur_frame_data;
+	void* _mysql_rsp;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

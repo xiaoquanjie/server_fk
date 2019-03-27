@@ -8,6 +8,7 @@
 #include "protolib/src/svr_base.pb.h"
 #include "commonlib/svr_base/svrbase.h"
 #include "commonlib/svr_base/server_cfg.h"
+#include <queue>
 
 class ApplicationBase {
 public:
@@ -26,6 +27,8 @@ public:
 	const std::string& PidFile()const;
 
 	const base::timestamp& GetNow()const;
+
+	int SendMsgToSelf(int cmd, base::s_uint64_t uid, const google::protobuf::Message& msg);
 
 protected:
 	virtual int OnInit();
@@ -48,6 +51,12 @@ protected:
 
 	virtual int OnExit();
 
+	virtual bool UseAsyncMysql();
+
+	virtual int OnInitAsncMysql();
+
+	size_t TickCount();
+
 protected:
 	int ParseOpt(int argc, char** argv);
 
@@ -69,11 +78,14 @@ protected:
 	int _daemon;
 	int _svr_thread_cnt;
 
-	int _msg_cache_size;
+	// æ´∂» «1 tick /100∫¡√Î
+	size_t _total_tick_count_;
 	base::timestamp _now;
-
+	
 	// application state
 	static bool _app_exit;
+
+	std::queue<char*> _self_msg_queue;
 };
 
 #endif

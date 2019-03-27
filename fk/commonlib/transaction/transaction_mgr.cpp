@@ -62,6 +62,20 @@ int TransactionMgrImpl::ProcessFrame(base::s_int64_t fd, base::s_uint32_t self_s
 	return 0;
 }
 
+int TransactionMgrImpl::ProcessMysqlRsp(MysqlRsp* rsp) {
+	do {
+		Transaction* p = GetTransaction(rsp->trans_id);
+		if (p) {
+			p->ProcessMysqlRsp(rsp);
+		}
+		else {
+			LogWarn("can't find the old transaction, trans_id: " << rsp->trans_id);
+		}
+	} while (false);
+	delete rsp;
+	return 0;
+}
+
 void TransactionMgrImpl::CoroutineEnter(void* p) {
 	Transaction* trans = (Transaction*)p;
 	trans->set_co_id(coroutine::Coroutine::curid());
@@ -161,4 +175,10 @@ void TransactionMgrImpl::PrintStatus() {
 
 base::s_int32_t TransactionMgrImpl::GetActiveTransCnt() {
 	return _active_trans_map.size();
+}
+
+///////////////////////////////////////////////////////////////////////
+
+void TransactionMgr::Init() {
+	GetImpl()->Init();
 }

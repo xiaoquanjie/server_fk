@@ -5,9 +5,11 @@
 #include "slience/coroutine/coroutine.hpp"
 #include "slience/base/time_pool.h"
 #include "commonlib/transaction/base_transaction.h"
+#include "commonlib/common/comm_struct.h"
 
 class Transaction;
 struct AppHeadFrame;
+class TransactionMgrMysql;
 
 class TransactionBucket {
 public:
@@ -70,6 +72,8 @@ public:
 		base::s_uint32_t self_inst_id,
 		const AppHeadFrame& frame, const char* data);
 
+	int ProcessMysqlRsp(MysqlRsp* rsp);
+
 	void CoroutineEnter(void* p);
 
 	void TimerCallback(base::s_uint32_t trans_id);
@@ -118,9 +122,7 @@ int TransactionMgrImpl::RegisterTransaction() {
 
 class TransactionMgr {
 public:
-	static void Init() {
-		return GetImpl()->Init();
-	}
+	static void Init();
 
 	static void Init(base::s_int32_t max_concurrent_trans) {
 		return GetImpl()->Init(max_concurrent_trans);
@@ -134,6 +136,10 @@ public:
 		base::s_uint32_t self_inst_id,
 		const AppHeadFrame& frame, const char* data) {
 		return GetImpl()->ProcessFrame(fd, self_svr_type, self_inst_id, frame, data);
+	}
+
+	static int ProcessMysqlRsp(MysqlRsp* rsp) {
+		return GetImpl()->ProcessMysqlRsp(rsp);
 	}
 
 	static void CoroutineEnter(void* p) {
@@ -195,5 +201,10 @@ protected:
 enum cmd##_ {};\
 enum TRANS_TYPE##_{};\
 	int ret_##cmd = TransactionMgr::RegisterTransaction<proto::CMD::cmd, TRANS_TYPE>();
+
+#define REGISTER__TEST_TRANSACTION(cmd, TRANS_TYPE) \
+enum cmd##_ {};\
+enum TRANS_TYPE##_{};\
+	int ret_##cmd = TransactionMgr::RegisterTransaction<mytest::CMD::cmd, TRANS_TYPE>();
 
 #endif

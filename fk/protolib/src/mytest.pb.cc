@@ -20,19 +20,14 @@
 #endif
 // @@protoc_insertion_point(includes)
 namespace mytest {
-class mystery_boxDefaultTypeInternal {
+class MysqlTestNotifyDefaultTypeInternal {
  public:
-  ::google::protobuf::internal::ExplicitlyConstructed<mystery_box>
+  ::google::protobuf::internal::ExplicitlyConstructed<MysqlTestNotify>
       _instance;
-} _mystery_box_default_instance_;
-class mystery_box_listDefaultTypeInternal {
- public:
-  ::google::protobuf::internal::ExplicitlyConstructed<mystery_box_list>
-      _instance;
-} _mystery_box_list_default_instance_;
+} _MysqlTestNotify_default_instance_;
 }  // namespace mytest
 namespace protobuf_mytest_2eproto {
-void InitDefaultsmystery_boxImpl() {
+void InitDefaultsMysqlTestNotifyImpl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
 #ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
@@ -41,84 +36,34 @@ void InitDefaultsmystery_boxImpl() {
   ::google::protobuf::internal::InitProtobufDefaults();
 #endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
   {
-    void* ptr = &::mytest::_mystery_box_default_instance_;
-    new (ptr) ::mytest::mystery_box();
+    void* ptr = &::mytest::_MysqlTestNotify_default_instance_;
+    new (ptr) ::mytest::MysqlTestNotify();
     ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
   }
-  ::mytest::mystery_box::InitAsDefaultInstance();
+  ::mytest::MysqlTestNotify::InitAsDefaultInstance();
 }
 
-void InitDefaultsmystery_box() {
+void InitDefaultsMysqlTestNotify() {
   static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsmystery_boxImpl);
+  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsMysqlTestNotifyImpl);
 }
 
-void InitDefaultsmystery_box_listImpl() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-#ifdef GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  ::google::protobuf::internal::InitProtobufDefaultsForceUnique();
-#else
-  ::google::protobuf::internal::InitProtobufDefaults();
-#endif  // GOOGLE_PROTOBUF_ENFORCE_UNIQUENESS
-  protobuf_mytest_2eproto::InitDefaultsmystery_box();
-  {
-    void* ptr = &::mytest::_mystery_box_list_default_instance_;
-    new (ptr) ::mytest::mystery_box_list();
-    ::google::protobuf::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::mytest::mystery_box_list::InitAsDefaultInstance();
-}
-
-void InitDefaultsmystery_box_list() {
-  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
-  ::google::protobuf::GoogleOnceInit(&once, &InitDefaultsmystery_box_listImpl);
-}
-
-::google::protobuf::Metadata file_level_metadata[2];
+::google::protobuf::Metadata file_level_metadata[1];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[1];
 
 const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, _internal_metadata_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::MysqlTestNotify, _has_bits_),
+  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::MysqlTestNotify, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_int_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_tiny_int_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_uint_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_bigint_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_double_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_varchar_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_blob_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_medblob_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_date_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box, name_time2_),
-  5,
-  6,
-  9,
-  7,
-  8,
-  0,
-  1,
-  2,
-  3,
-  4,
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box_list, _has_bits_),
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box_list, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::mytest::mystery_box_list, items_),
-  ~0u,
 };
 static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 15, sizeof(::mytest::mystery_box)},
-  { 25, 31, sizeof(::mytest::mystery_box_list)},
+  { 0, 5, sizeof(::mytest::MysqlTestNotify)},
 };
 
 static ::google::protobuf::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::google::protobuf::Message*>(&::mytest::_mystery_box_default_instance_),
-  reinterpret_cast<const ::google::protobuf::Message*>(&::mytest::_mystery_box_list_default_instance_),
+  reinterpret_cast<const ::google::protobuf::Message*>(&::mytest::_MysqlTestNotify_default_instance_),
 };
 
 void protobuf_AssignDescriptors() {
@@ -126,7 +71,7 @@ void protobuf_AssignDescriptors() {
   ::google::protobuf::MessageFactory* factory = NULL;
   AssignDescriptors(
       "mytest.proto", schemas, file_default_instances, TableStruct::offsets, factory,
-      file_level_metadata, NULL, NULL);
+      file_level_metadata, file_level_enum_descriptors, NULL);
 }
 
 void protobuf_AssignDescriptorsOnce() {
@@ -137,23 +82,17 @@ void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) GOOGLE_PROTOBUF_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 2);
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 1);
 }
 
 void AddDescriptorsImpl() {
   InitDefaults();
   static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
-      "\n\014mytest.proto\022\006mytest\"\331\001\n\013mystery_box\022\020"
-      "\n\010name_int\030\001 \001(\005\022\025\n\rname_tiny_int\030\002 \001(\005\022"
-      "\021\n\tname_uint\030\003 \001(\r\022\023\n\013name_bigint\030\004 \001(\003\022"
-      "\023\n\013name_double\030\005 \001(\001\022\024\n\014name_varchar\030\006 \001"
-      "(\t\022\021\n\tname_blob\030\007 \001(\t\022\024\n\014name_medblob\030\010 "
-      "\001(\t\022\021\n\tname_date\030\t \001(\t\022\022\n\nname_time2\030\n \001"
-      "(\t\"6\n\020mystery_box_list\022\"\n\005items\030\001 \003(\0132\023."
-      "mytest.mystery_box"
+      "\n\014mytest.proto\022\006mytest\"\021\n\017MysqlTestNotif"
+      "y*\035\n\003CMD\022\026\n\021MYSQL_TEST_NOTIFY\020\350\007"
   };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-      descriptor, 298);
+      descriptor, 72);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "mytest.proto", &protobuf_RegisterTypes);
 }
@@ -170,600 +109,150 @@ struct StaticDescriptorInitializer {
 } static_descriptor_initializer;
 }  // namespace protobuf_mytest_2eproto
 namespace mytest {
+const ::google::protobuf::EnumDescriptor* CMD_descriptor() {
+  protobuf_mytest_2eproto::protobuf_AssignDescriptorsOnce();
+  return protobuf_mytest_2eproto::file_level_enum_descriptors[0];
+}
+bool CMD_IsValid(int value) {
+  switch (value) {
+    case 1000:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
-void mystery_box::InitAsDefaultInstance() {
+void MysqlTestNotify::InitAsDefaultInstance() {
 }
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int mystery_box::kNameIntFieldNumber;
-const int mystery_box::kNameTinyIntFieldNumber;
-const int mystery_box::kNameUintFieldNumber;
-const int mystery_box::kNameBigintFieldNumber;
-const int mystery_box::kNameDoubleFieldNumber;
-const int mystery_box::kNameVarcharFieldNumber;
-const int mystery_box::kNameBlobFieldNumber;
-const int mystery_box::kNameMedblobFieldNumber;
-const int mystery_box::kNameDateFieldNumber;
-const int mystery_box::kNameTime2FieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-mystery_box::mystery_box()
+MysqlTestNotify::MysqlTestNotify()
   : ::google::protobuf::Message(), _internal_metadata_(NULL) {
   if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
-    ::protobuf_mytest_2eproto::InitDefaultsmystery_box();
+    ::protobuf_mytest_2eproto::InitDefaultsMysqlTestNotify();
   }
   SharedCtor();
-  // @@protoc_insertion_point(constructor:mytest.mystery_box)
+  // @@protoc_insertion_point(constructor:mytest.MysqlTestNotify)
 }
-mystery_box::mystery_box(const mystery_box& from)
+MysqlTestNotify::MysqlTestNotify(const MysqlTestNotify& from)
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
       _cached_size_(0) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  name_varchar_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_name_varchar()) {
-    name_varchar_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_varchar_);
-  }
-  name_blob_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_name_blob()) {
-    name_blob_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_blob_);
-  }
-  name_medblob_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_name_medblob()) {
-    name_medblob_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_medblob_);
-  }
-  name_date_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_name_date()) {
-    name_date_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_date_);
-  }
-  name_time2_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  if (from.has_name_time2()) {
-    name_time2_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_time2_);
-  }
-  ::memcpy(&name_int_, &from.name_int_,
-    static_cast<size_t>(reinterpret_cast<char*>(&name_uint_) -
-    reinterpret_cast<char*>(&name_int_)) + sizeof(name_uint_));
-  // @@protoc_insertion_point(copy_constructor:mytest.mystery_box)
+  // @@protoc_insertion_point(copy_constructor:mytest.MysqlTestNotify)
 }
 
-void mystery_box::SharedCtor() {
+void MysqlTestNotify::SharedCtor() {
   _cached_size_ = 0;
-  name_varchar_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  name_blob_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  name_medblob_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  name_date_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  name_time2_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(&name_int_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&name_uint_) -
-      reinterpret_cast<char*>(&name_int_)) + sizeof(name_uint_));
 }
 
-mystery_box::~mystery_box() {
-  // @@protoc_insertion_point(destructor:mytest.mystery_box)
+MysqlTestNotify::~MysqlTestNotify() {
+  // @@protoc_insertion_point(destructor:mytest.MysqlTestNotify)
   SharedDtor();
 }
 
-void mystery_box::SharedDtor() {
-  name_varchar_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  name_blob_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  name_medblob_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  name_date_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  name_time2_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+void MysqlTestNotify::SharedDtor() {
 }
 
-void mystery_box::SetCachedSize(int size) const {
+void MysqlTestNotify::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* mystery_box::descriptor() {
+const ::google::protobuf::Descriptor* MysqlTestNotify::descriptor() {
   ::protobuf_mytest_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_mytest_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
 }
 
-const mystery_box& mystery_box::default_instance() {
-  ::protobuf_mytest_2eproto::InitDefaultsmystery_box();
+const MysqlTestNotify& MysqlTestNotify::default_instance() {
+  ::protobuf_mytest_2eproto::InitDefaultsMysqlTestNotify();
   return *internal_default_instance();
 }
 
-mystery_box* mystery_box::New(::google::protobuf::Arena* arena) const {
-  mystery_box* n = new mystery_box;
+MysqlTestNotify* MysqlTestNotify::New(::google::protobuf::Arena* arena) const {
+  MysqlTestNotify* n = new MysqlTestNotify;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void mystery_box::Clear() {
-// @@protoc_insertion_point(message_clear_start:mytest.mystery_box)
+void MysqlTestNotify::Clear() {
+// @@protoc_insertion_point(message_clear_start:mytest.MysqlTestNotify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 31u) {
-    if (cached_has_bits & 0x00000001u) {
-      GOOGLE_DCHECK(!name_varchar_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
-      (*name_varchar_.UnsafeRawStringPointer())->clear();
-    }
-    if (cached_has_bits & 0x00000002u) {
-      GOOGLE_DCHECK(!name_blob_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
-      (*name_blob_.UnsafeRawStringPointer())->clear();
-    }
-    if (cached_has_bits & 0x00000004u) {
-      GOOGLE_DCHECK(!name_medblob_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
-      (*name_medblob_.UnsafeRawStringPointer())->clear();
-    }
-    if (cached_has_bits & 0x00000008u) {
-      GOOGLE_DCHECK(!name_date_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
-      (*name_date_.UnsafeRawStringPointer())->clear();
-    }
-    if (cached_has_bits & 0x00000010u) {
-      GOOGLE_DCHECK(!name_time2_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
-      (*name_time2_.UnsafeRawStringPointer())->clear();
-    }
-  }
-  if (cached_has_bits & 224u) {
-    ::memset(&name_int_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&name_bigint_) -
-        reinterpret_cast<char*>(&name_int_)) + sizeof(name_bigint_));
-  }
-  if (cached_has_bits & 768u) {
-    ::memset(&name_double_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&name_uint_) -
-        reinterpret_cast<char*>(&name_double_)) + sizeof(name_uint_));
-  }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
 
-bool mystery_box::MergePartialFromCodedStream(
+bool MysqlTestNotify::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mytest.mystery_box)
+  // @@protoc_insertion_point(parse_start:mytest.MysqlTestNotify)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
     tag = p.first;
     if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 name_int = 1;
-      case 1: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(8u /* 8 & 0xFF */)) {
-          set_has_name_int();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &name_int_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int32 name_tiny_int = 2;
-      case 2: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
-          set_has_name_tiny_int();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &name_tiny_int_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional uint32 name_uint = 3;
-      case 3: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(24u /* 24 & 0xFF */)) {
-          set_has_name_uint();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &name_uint_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional int64 name_bigint = 4;
-      case 4: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(32u /* 32 & 0xFF */)) {
-          set_has_name_bigint();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
-                 input, &name_bigint_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional double name_double = 5;
-      case 5: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(41u /* 41 & 0xFF */)) {
-          set_has_name_double();
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
-                 input, &name_double_)));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional string name_varchar = 6;
-      case 6: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_name_varchar()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->name_varchar().data(), static_cast<int>(this->name_varchar().length()),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "mytest.mystery_box.name_varchar");
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional string name_blob = 7;
-      case 7: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(58u /* 58 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_name_blob()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->name_blob().data(), static_cast<int>(this->name_blob().length()),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "mytest.mystery_box.name_blob");
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional string name_medblob = 8;
-      case 8: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(66u /* 66 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_name_medblob()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->name_medblob().data(), static_cast<int>(this->name_medblob().length()),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "mytest.mystery_box.name_medblob");
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional string name_date = 9;
-      case 9: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(74u /* 74 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_name_date()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->name_date().data(), static_cast<int>(this->name_date().length()),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "mytest.mystery_box.name_date");
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      // optional string name_time2 = 10;
-      case 10: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(82u /* 82 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_name_time2()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-            this->name_time2().data(), static_cast<int>(this->name_time2().length()),
-            ::google::protobuf::internal::WireFormat::PARSE,
-            "mytest.mystery_box.name_time2");
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
+  handle_unusual:
+    if (tag == 0) {
+      goto success;
     }
+    DO_(::google::protobuf::internal::WireFormat::SkipField(
+          input, tag, _internal_metadata_.mutable_unknown_fields()));
   }
 success:
-  // @@protoc_insertion_point(parse_success:mytest.mystery_box)
+  // @@protoc_insertion_point(parse_success:mytest.MysqlTestNotify)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:mytest.mystery_box)
+  // @@protoc_insertion_point(parse_failure:mytest.MysqlTestNotify)
   return false;
 #undef DO_
 }
 
-void mystery_box::SerializeWithCachedSizes(
+void MysqlTestNotify::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:mytest.mystery_box)
+  // @@protoc_insertion_point(serialize_start:mytest.MysqlTestNotify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
-
-  cached_has_bits = _has_bits_[0];
-  // optional int32 name_int = 1;
-  if (cached_has_bits & 0x00000020u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->name_int(), output);
-  }
-
-  // optional int32 name_tiny_int = 2;
-  if (cached_has_bits & 0x00000040u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->name_tiny_int(), output);
-  }
-
-  // optional uint32 name_uint = 3;
-  if (cached_has_bits & 0x00000200u) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->name_uint(), output);
-  }
-
-  // optional int64 name_bigint = 4;
-  if (cached_has_bits & 0x00000080u) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt64(4, this->name_bigint(), output);
-  }
-
-  // optional double name_double = 5;
-  if (cached_has_bits & 0x00000100u) {
-    ::google::protobuf::internal::WireFormatLite::WriteDouble(5, this->name_double(), output);
-  }
-
-  // optional string name_varchar = 6;
-  if (cached_has_bits & 0x00000001u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->name_varchar().data(), static_cast<int>(this->name_varchar().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "mytest.mystery_box.name_varchar");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      6, this->name_varchar(), output);
-  }
-
-  // optional string name_blob = 7;
-  if (cached_has_bits & 0x00000002u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->name_blob().data(), static_cast<int>(this->name_blob().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "mytest.mystery_box.name_blob");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      7, this->name_blob(), output);
-  }
-
-  // optional string name_medblob = 8;
-  if (cached_has_bits & 0x00000004u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->name_medblob().data(), static_cast<int>(this->name_medblob().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "mytest.mystery_box.name_medblob");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      8, this->name_medblob(), output);
-  }
-
-  // optional string name_date = 9;
-  if (cached_has_bits & 0x00000008u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->name_date().data(), static_cast<int>(this->name_date().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "mytest.mystery_box.name_date");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      9, this->name_date(), output);
-  }
-
-  // optional string name_time2 = 10;
-  if (cached_has_bits & 0x00000010u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->name_time2().data(), static_cast<int>(this->name_time2().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "mytest.mystery_box.name_time2");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      10, this->name_time2(), output);
-  }
 
   if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         _internal_metadata_.unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:mytest.mystery_box)
+  // @@protoc_insertion_point(serialize_end:mytest.MysqlTestNotify)
 }
 
-::google::protobuf::uint8* mystery_box::InternalSerializeWithCachedSizesToArray(
+::google::protobuf::uint8* MysqlTestNotify::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:mytest.mystery_box)
+  // @@protoc_insertion_point(serialize_to_array_start:mytest.MysqlTestNotify)
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
-
-  cached_has_bits = _has_bits_[0];
-  // optional int32 name_int = 1;
-  if (cached_has_bits & 0x00000020u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->name_int(), target);
-  }
-
-  // optional int32 name_tiny_int = 2;
-  if (cached_has_bits & 0x00000040u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->name_tiny_int(), target);
-  }
-
-  // optional uint32 name_uint = 3;
-  if (cached_has_bits & 0x00000200u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->name_uint(), target);
-  }
-
-  // optional int64 name_bigint = 4;
-  if (cached_has_bits & 0x00000080u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(4, this->name_bigint(), target);
-  }
-
-  // optional double name_double = 5;
-  if (cached_has_bits & 0x00000100u) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(5, this->name_double(), target);
-  }
-
-  // optional string name_varchar = 6;
-  if (cached_has_bits & 0x00000001u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->name_varchar().data(), static_cast<int>(this->name_varchar().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "mytest.mystery_box.name_varchar");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        6, this->name_varchar(), target);
-  }
-
-  // optional string name_blob = 7;
-  if (cached_has_bits & 0x00000002u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->name_blob().data(), static_cast<int>(this->name_blob().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "mytest.mystery_box.name_blob");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        7, this->name_blob(), target);
-  }
-
-  // optional string name_medblob = 8;
-  if (cached_has_bits & 0x00000004u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->name_medblob().data(), static_cast<int>(this->name_medblob().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "mytest.mystery_box.name_medblob");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        8, this->name_medblob(), target);
-  }
-
-  // optional string name_date = 9;
-  if (cached_has_bits & 0x00000008u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->name_date().data(), static_cast<int>(this->name_date().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "mytest.mystery_box.name_date");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        9, this->name_date(), target);
-  }
-
-  // optional string name_time2 = 10;
-  if (cached_has_bits & 0x00000010u) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->name_time2().data(), static_cast<int>(this->name_time2().length()),
-      ::google::protobuf::internal::WireFormat::SERIALIZE,
-      "mytest.mystery_box.name_time2");
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        10, this->name_time2(), target);
-  }
 
   if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:mytest.mystery_box)
+  // @@protoc_insertion_point(serialize_to_array_end:mytest.MysqlTestNotify)
   return target;
 }
 
-size_t mystery_box::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:mytest.mystery_box)
+size_t MysqlTestNotify::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mytest.MysqlTestNotify)
   size_t total_size = 0;
 
   if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         _internal_metadata_.unknown_fields());
-  }
-  if (_has_bits_[0 / 32] & 255u) {
-    // optional string name_varchar = 6;
-    if (has_name_varchar()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->name_varchar());
-    }
-
-    // optional string name_blob = 7;
-    if (has_name_blob()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->name_blob());
-    }
-
-    // optional string name_medblob = 8;
-    if (has_name_medblob()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->name_medblob());
-    }
-
-    // optional string name_date = 9;
-    if (has_name_date()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->name_date());
-    }
-
-    // optional string name_time2 = 10;
-    if (has_name_time2()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->name_time2());
-    }
-
-    // optional int32 name_int = 1;
-    if (has_name_int()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->name_int());
-    }
-
-    // optional int32 name_tiny_int = 2;
-    if (has_name_tiny_int()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->name_tiny_int());
-    }
-
-    // optional int64 name_bigint = 4;
-    if (has_name_bigint()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int64Size(
-          this->name_bigint());
-    }
-
-  }
-  if (_has_bits_[8 / 32] & 768u) {
-    // optional double name_double = 5;
-    if (has_name_double()) {
-      total_size += 1 + 8;
-    }
-
-    // optional uint32 name_uint = 3;
-    if (has_name_uint()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->name_uint());
-    }
-
   }
   int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -772,356 +261,60 @@ size_t mystery_box::ByteSizeLong() const {
   return total_size;
 }
 
-void mystery_box::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:mytest.mystery_box)
+void MysqlTestNotify::MergeFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:mytest.MysqlTestNotify)
   GOOGLE_DCHECK_NE(&from, this);
-  const mystery_box* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const mystery_box>(
+  const MysqlTestNotify* source =
+      ::google::protobuf::internal::DynamicCastToGenerated<const MysqlTestNotify>(
           &from);
   if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:mytest.mystery_box)
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:mytest.MysqlTestNotify)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:mytest.mystery_box)
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:mytest.MysqlTestNotify)
     MergeFrom(*source);
   }
 }
 
-void mystery_box::MergeFrom(const mystery_box& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:mytest.mystery_box)
+void MysqlTestNotify::MergeFrom(const MysqlTestNotify& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:mytest.MysqlTestNotify)
   GOOGLE_DCHECK_NE(&from, this);
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::google::protobuf::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 255u) {
-    if (cached_has_bits & 0x00000001u) {
-      set_has_name_varchar();
-      name_varchar_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_varchar_);
-    }
-    if (cached_has_bits & 0x00000002u) {
-      set_has_name_blob();
-      name_blob_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_blob_);
-    }
-    if (cached_has_bits & 0x00000004u) {
-      set_has_name_medblob();
-      name_medblob_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_medblob_);
-    }
-    if (cached_has_bits & 0x00000008u) {
-      set_has_name_date();
-      name_date_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_date_);
-    }
-    if (cached_has_bits & 0x00000010u) {
-      set_has_name_time2();
-      name_time2_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_time2_);
-    }
-    if (cached_has_bits & 0x00000020u) {
-      name_int_ = from.name_int_;
-    }
-    if (cached_has_bits & 0x00000040u) {
-      name_tiny_int_ = from.name_tiny_int_;
-    }
-    if (cached_has_bits & 0x00000080u) {
-      name_bigint_ = from.name_bigint_;
-    }
-    _has_bits_[0] |= cached_has_bits;
-  }
-  if (cached_has_bits & 768u) {
-    if (cached_has_bits & 0x00000100u) {
-      name_double_ = from.name_double_;
-    }
-    if (cached_has_bits & 0x00000200u) {
-      name_uint_ = from.name_uint_;
-    }
-    _has_bits_[0] |= cached_has_bits;
-  }
 }
 
-void mystery_box::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:mytest.mystery_box)
+void MysqlTestNotify::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:mytest.MysqlTestNotify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void mystery_box::CopyFrom(const mystery_box& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:mytest.mystery_box)
+void MysqlTestNotify::CopyFrom(const MysqlTestNotify& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mytest.MysqlTestNotify)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool mystery_box::IsInitialized() const {
+bool MysqlTestNotify::IsInitialized() const {
   return true;
 }
 
-void mystery_box::Swap(mystery_box* other) {
+void MysqlTestNotify::Swap(MysqlTestNotify* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void mystery_box::InternalSwap(mystery_box* other) {
+void MysqlTestNotify::InternalSwap(MysqlTestNotify* other) {
   using std::swap;
-  name_varchar_.Swap(&other->name_varchar_);
-  name_blob_.Swap(&other->name_blob_);
-  name_medblob_.Swap(&other->name_medblob_);
-  name_date_.Swap(&other->name_date_);
-  name_time2_.Swap(&other->name_time2_);
-  swap(name_int_, other->name_int_);
-  swap(name_tiny_int_, other->name_tiny_int_);
-  swap(name_bigint_, other->name_bigint_);
-  swap(name_double_, other->name_double_);
-  swap(name_uint_, other->name_uint_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_cached_size_, other->_cached_size_);
 }
 
-::google::protobuf::Metadata mystery_box::GetMetadata() const {
-  protobuf_mytest_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_mytest_2eproto::file_level_metadata[kIndexInFileMessages];
-}
-
-
-// ===================================================================
-
-void mystery_box_list::InitAsDefaultInstance() {
-}
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int mystery_box_list::kItemsFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
-
-mystery_box_list::mystery_box_list()
-  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
-  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
-    ::protobuf_mytest_2eproto::InitDefaultsmystery_box_list();
-  }
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:mytest.mystery_box_list)
-}
-mystery_box_list::mystery_box_list(const mystery_box_list& from)
-  : ::google::protobuf::Message(),
-      _internal_metadata_(NULL),
-      _has_bits_(from._has_bits_),
-      _cached_size_(0),
-      items_(from.items_) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:mytest.mystery_box_list)
-}
-
-void mystery_box_list::SharedCtor() {
-  _cached_size_ = 0;
-}
-
-mystery_box_list::~mystery_box_list() {
-  // @@protoc_insertion_point(destructor:mytest.mystery_box_list)
-  SharedDtor();
-}
-
-void mystery_box_list::SharedDtor() {
-}
-
-void mystery_box_list::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* mystery_box_list::descriptor() {
-  ::protobuf_mytest_2eproto::protobuf_AssignDescriptorsOnce();
-  return ::protobuf_mytest_2eproto::file_level_metadata[kIndexInFileMessages].descriptor;
-}
-
-const mystery_box_list& mystery_box_list::default_instance() {
-  ::protobuf_mytest_2eproto::InitDefaultsmystery_box_list();
-  return *internal_default_instance();
-}
-
-mystery_box_list* mystery_box_list::New(::google::protobuf::Arena* arena) const {
-  mystery_box_list* n = new mystery_box_list;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
-
-void mystery_box_list::Clear() {
-// @@protoc_insertion_point(message_clear_start:mytest.mystery_box_list)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  items_.Clear();
-  _has_bits_.Clear();
-  _internal_metadata_.Clear();
-}
-
-bool mystery_box_list::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:mytest.mystery_box_list)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .mytest.mystery_box items = 1;
-      case 1: {
-        if (static_cast< ::google::protobuf::uint8>(tag) ==
-            static_cast< ::google::protobuf::uint8>(10u /* 10 & 0xFF */)) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessage(input, add_items()));
-        } else {
-          goto handle_unusual;
-        }
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, _internal_metadata_.mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:mytest.mystery_box_list)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:mytest.mystery_box_list)
-  return false;
-#undef DO_
-}
-
-void mystery_box_list::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:mytest.mystery_box_list)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // repeated .mytest.mystery_box items = 1;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->items_size()); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->items(static_cast<int>(i)), output);
-  }
-
-  if (_internal_metadata_.have_unknown_fields()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        _internal_metadata_.unknown_fields(), output);
-  }
-  // @@protoc_insertion_point(serialize_end:mytest.mystery_box_list)
-}
-
-::google::protobuf::uint8* mystery_box_list::InternalSerializeWithCachedSizesToArray(
-    bool deterministic, ::google::protobuf::uint8* target) const {
-  (void)deterministic; // Unused
-  // @@protoc_insertion_point(serialize_to_array_start:mytest.mystery_box_list)
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // repeated .mytest.mystery_box items = 1;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->items_size()); i < n; i++) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      InternalWriteMessageToArray(
-        1, this->items(static_cast<int>(i)), deterministic, target);
-  }
-
-  if (_internal_metadata_.have_unknown_fields()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:mytest.mystery_box_list)
-  return target;
-}
-
-size_t mystery_box_list::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:mytest.mystery_box_list)
-  size_t total_size = 0;
-
-  if (_internal_metadata_.have_unknown_fields()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        _internal_metadata_.unknown_fields());
-  }
-  // repeated .mytest.mystery_box items = 1;
-  {
-    unsigned int count = static_cast<unsigned int>(this->items_size());
-    total_size += 1UL * count;
-    for (unsigned int i = 0; i < count; i++) {
-      total_size +=
-        ::google::protobuf::internal::WireFormatLite::MessageSize(
-          this->items(static_cast<int>(i)));
-    }
-  }
-
-  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = cached_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void mystery_box_list::MergeFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:mytest.mystery_box_list)
-  GOOGLE_DCHECK_NE(&from, this);
-  const mystery_box_list* source =
-      ::google::protobuf::internal::DynamicCastToGenerated<const mystery_box_list>(
-          &from);
-  if (source == NULL) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:mytest.mystery_box_list)
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:mytest.mystery_box_list)
-    MergeFrom(*source);
-  }
-}
-
-void mystery_box_list::MergeFrom(const mystery_box_list& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:mytest.mystery_box_list)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::google::protobuf::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  items_.MergeFrom(from.items_);
-}
-
-void mystery_box_list::CopyFrom(const ::google::protobuf::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:mytest.mystery_box_list)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void mystery_box_list::CopyFrom(const mystery_box_list& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:mytest.mystery_box_list)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool mystery_box_list::IsInitialized() const {
-  return true;
-}
-
-void mystery_box_list::Swap(mystery_box_list* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void mystery_box_list::InternalSwap(mystery_box_list* other) {
-  using std::swap;
-  items_.InternalSwap(&other->items_);
-  swap(_has_bits_[0], other->_has_bits_[0]);
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(_cached_size_, other->_cached_size_);
-}
-
-::google::protobuf::Metadata mystery_box_list::GetMetadata() const {
+::google::protobuf::Metadata MysqlTestNotify::GetMetadata() const {
   protobuf_mytest_2eproto::protobuf_AssignDescriptorsOnce();
   return ::protobuf_mytest_2eproto::file_level_metadata[kIndexInFileMessages];
 }

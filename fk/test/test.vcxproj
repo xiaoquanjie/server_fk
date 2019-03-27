@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{B9D9DA5E-6FD8-4828-9EB4-A88841788A0B}</ProjectGuid>
-    <RootNamespace>serveragent</RootNamespace>
+    <ProjectGuid>{5FCD096B-A4E5-4A06-9E5C-D7008331A6CB}</ProjectGuid>
+    <RootNamespace>test</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -82,11 +82,10 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <DisableSpecificWarnings>4819;4146</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>..\bin\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>commonlibd.lib;protobufd.lib;slienced.lib;protolibd.lib;mysqlclientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>commonlibd.lib;protobufd.lib;slienced.lib;hiredis_wrapperd.lib;protolibd.lib;mysqlclientd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -127,14 +126,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="server_agent.cpp" />
+    <ClCompile Include="test.cpp" />
+    <ClCompile Include="transaction\trans_test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\conf\server_agent\server_agent.conf" />
+    <ClInclude Include="test.h" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="BUILD" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="server_agent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -20,6 +20,7 @@
 #include <unordered_map>
 #include <assert.h>
 #include <sstream>
+#include "google/protobuf/repeated_field.h"
 
 // 线程局部对象
 namespace _mysql_detail {
@@ -179,7 +180,7 @@ public:
 			res = mysql_store_result(&_st_mysql);
 			if (!res) {
 				ret = -1;
-				break;
+				break;;
 			}
 
 			int fields_cnt = mysql_num_fields(res);
@@ -193,8 +194,8 @@ public:
 				break;
 			}
 
-			row_cnt = (int)mysql_num_rows(res);
-			if (row_cnt < 0) {
+			affected_rows = (int)mysql_num_rows(res);
+			if (affected_rows < 0) {
 				ret = -3;
 				break;
 			}
@@ -223,6 +224,11 @@ public:
 
 	template<typename T>
 	int QueryToRepeated(const char* sql, unsigned int sql_len, ::google::protobuf::RepeatedPtrField<T>& value_list);
+
+	MYSQL_RES* StoreResult() {
+		MYSQL_RES* res = mysql_store_result(&_st_mysql);
+		return res;
+	}
 
 	int Autocommit(bool open_or_close) {
 		int ret = mysql_autocommit(&_st_mysql, open_or_close);

@@ -8,6 +8,7 @@
 #include "protolib/src/svr_base.pb.h"
 #include "protolib/src/cmd.pb.h"
 #include "commonlib/transaction/transaction_mgr.h"
+#include "commonlib/async/async_mysql_mgr.h"
 
 /////////////////////////////////////////////////////////////
 
@@ -18,8 +19,8 @@ ApplicationBase::ApplicationBase() {
 	_log_level = base::logger::LOG_LEVEL_TRACE;
 	_log_withpid = 0;
 	_daemon = 0;
-	_msg_cache_size = 5000;
 	_svr_thread_cnt = 4;
+	_total_tick_count_ = 0;
 }
 
 ApplicationBase::~ApplicationBase() {
@@ -90,6 +91,14 @@ int ApplicationBase::Init(int argc, char** argv) {
 		// init transaction manager
 		TransactionMgr::Init();
 
+		if (UseAsyncMysql()) {
+			ret = OnInitAsncMysql();
+			if (ret != 0) {
+				LogError("async mysql init error.....");
+				break;
+			}
+		}
+
 	} while (false);
 	  
 	if (0 == ret) {
@@ -128,6 +137,18 @@ int ApplicationBase::OnProc(base::s_int64_t fd, const AppHeadFrame& frame, const
 int ApplicationBase::OnExit() {
 	OnStopNetWork();
 	return 0;
+}
+
+bool ApplicationBase::UseAsyncMysql() {
+	return false;
+}
+
+int ApplicationBase::OnInitAsncMysql() {
+	return AsyncMysqlMgr::Init(4, 10);
+}
+
+size_t ApplicationBase::TickCount() {
+	return _total_tick_count_;
 }
 
 const std::string& ApplicationBase::ConfigFilePath()const {
@@ -243,4 +264,26 @@ bool ApplicationBase::CheckReload() {
 		}
 	}
 	return false;
+}
+
+int ApplicationBase::SendMsgToSelf(int cmd, base::s_uint64_t uid, const google::protobuf::Message& msg) {
+	// ÔİÊ±ÏŞÖÆ4k
+	const int len = 4 * 1024;
+	char* buf = new char[len];
+
+	AppHeadFrame* frame = (AppHeadFrame*)buf;
+	char* ser_buf = buf + sizeof(AppHeadFrame);
+	msg.SerializePartialToArray(ser_buf, len - sizeof(AppHeadFrame));
+
+	frame->set_is_broadcast(false);
+	frame->set_src_svr_type(ServerType());
+	frame->set_dst_svr_type(ServerType());
+	frame->set_src_inst_id(InstanceId());
+	frame->set_src_trans_id(0);
+	frame->set_dst_trans_id(0);
+	frame->set_cmd(cmd);
+	frame->set_cmd_length(msg.ByteSize());
+	frame->set_userid(uid);
+	_self_msg_queue.push(buf);
+	return 0;
 }

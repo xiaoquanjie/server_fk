@@ -14,6 +14,7 @@ cc_library(
 	   'net_handler/router_mgr.cpp',
 	   'transaction/transaction_mgr.cpp',
 	   'transaction/base_transaction.cpp',
+	   'async/async_mysql_mgr.cpp',
     ],
 
     deps = [
