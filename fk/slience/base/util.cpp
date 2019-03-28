@@ -2,6 +2,10 @@
 #include "slience/base/string_util.hpp"
 #include "slience/base/timer.hpp"
 
+#ifndef M_PLATFORM_WIN
+#include <arpa/inet.h>
+#endif
+
 M_BASE_NAMESPACE_BEGIN
 
 time_t HmsToSecond(const std::string& hms) {

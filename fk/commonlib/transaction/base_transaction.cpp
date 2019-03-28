@@ -356,7 +356,7 @@ int Transaction::MysqlQuery(base::s_uint64_t orderid,
 		}
 
 		MYSQL_RES* result = (MYSQL_RES *)rsp->mysql_res;
-		if (expected_fields != mysql_num_fields(result)) {
+		if (expected_fields != (int)mysql_num_fields(result)) {
 			LogError("{userid:"
 				<< userid()
 				<< "} failed to Request Mysql, wrong expected_fields:"
