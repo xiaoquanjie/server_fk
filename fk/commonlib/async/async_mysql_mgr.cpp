@@ -52,6 +52,7 @@ void AsyncMysqlMgrImpl::run(void* param) {
 
 		// 处于请求
 		MysqlRsp* rsp = proccss(req);
+		delete req;
 
 		// rsp丢入TransactionMgr进行处理
 		_mutex.lock();
@@ -120,7 +121,6 @@ MysqlRsp* AsyncMysqlMgrImpl::proccss(MysqlReq* req) {
 		}
 
 	} while (false);
-	delete req;
 	return rsp;
 }
 

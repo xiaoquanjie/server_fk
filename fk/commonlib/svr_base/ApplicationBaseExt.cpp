@@ -26,6 +26,7 @@ int ApplicationBase::Run() {
 			MysqlRsp* rsp = AsyncMysqlMgr::Pick();
 			if (rsp) {
 				TransactionMgr::ProcessMysqlRsp(rsp);
+				delete rsp;
 			}
 		}
 		if (_self_msg_queue.size()) {
@@ -33,6 +34,7 @@ int ApplicationBase::Run() {
 			_self_msg_queue.pop();
 			AppHeadFrame& frame = (AppHeadFrame&)*msg;
 			TransactionMgr::ProcessFrame(0, ServerType(), InstanceId(), frame, msg + sizeof(AppHeadFrame));
+			delete[]msg;
 		}
 	}
 	OnExit();

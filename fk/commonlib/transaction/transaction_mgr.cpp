@@ -72,7 +72,6 @@ int TransactionMgrImpl::ProcessMysqlRsp(MysqlRsp* rsp) {
 			LogWarn("can't find the old transaction, trans_id: " << rsp->trans_id);
 		}
 	} while (false);
-	delete rsp;
 	return 0;
 }
 
