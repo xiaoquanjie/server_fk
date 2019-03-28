@@ -22,6 +22,7 @@ private: \
 #pragma pack(1)
 struct AppHeadFrame {
 #else
+#include <arpa/inet.h>
 struct __attribute__((__packed__)) AppHeadFrame {
 #endif
 	GETSETVAR(base::s_uint16_t, is_broadcast);			// 消息是否广播
