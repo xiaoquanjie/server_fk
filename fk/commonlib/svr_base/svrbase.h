@@ -4,6 +4,7 @@
 #include "slience/base/buffer.hpp"
 #include "slience/netio/netio.hpp"
 #include "slience/base/timer.hpp"
+#include "slience/base/util.h"
 #include "boost/multi_index_container.hpp"
 #include "boost/multi_index/member.hpp"
 #include "boost/multi_index/ordered_index.hpp"
@@ -22,7 +23,6 @@ private: \
 #pragma pack(1)
 struct AppHeadFrame {
 #else
-#include <arpa/inet.h>
 struct __attribute__((__packed__)) AppHeadFrame {
 #endif
 	GETSETVAR(base::s_uint16_t, is_broadcast);			// 消息是否广播
@@ -78,7 +78,7 @@ public:
 		dst_trans_id = ntohl(dst_trans_id);
 		cmd = ntohl(cmd);
 		cmd_length = ntohl(cmd_length);
-		userid = ntohll(userid);
+		userid = base::ntohll(userid);
 		req_random = ntohl(req_random);
 	}
 
@@ -92,7 +92,7 @@ public:
 		dst_trans_id = htonl(dst_trans_id);
 		cmd = htonl(cmd);
 		cmd_length = htonl(cmd_length);
-		userid = htonll(userid);
+		userid = base::htonll(userid);
 		req_random = htonl(req_random);
 	}
 };

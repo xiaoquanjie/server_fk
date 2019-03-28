@@ -38,4 +38,14 @@ time_t ClosestTimeOfDay(time_t now, time_t peroid) {
 	return next_time;
 }
 
+base::s_uint64_t ntohll(base::s_uint64_t val) {
+	return (((uint64_t)htonl((int32_t)((val << 32) >> 32))) << 32)
+		| (uint32_t)htonl((int32_t)(val >> 32));
+}
+
+base::s_uint64_t htonll(base::s_uint64_t val) {
+	return (((uint64_t)htonl((int32_t)((val << 32) >> 32))) << 32)
+		| (uint32_t)htonl((int32_t)(val >> 32));
+}
+
 M_BASE_NAMESPACE_END
