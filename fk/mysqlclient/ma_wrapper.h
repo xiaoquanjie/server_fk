@@ -21,6 +21,7 @@
 #include <assert.h>
 #include <sstream>
 #include "google/protobuf/repeated_field.h"
+#include "google/protobuf/descriptor.h"
 
 // 线程局部对象
 namespace _mysql_detail {
