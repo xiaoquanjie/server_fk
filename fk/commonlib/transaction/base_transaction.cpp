@@ -322,9 +322,12 @@ int Transaction::MysqlQuery(base::s_uint64_t orderid,
 	req->url = url;
 	req->sql = sql;
 
-	AsyncMysqlMgr::AddRequest(orderid, req);
-	Wait(E_WAIT_MYSQL);
+	if (!AsyncMysqlMgr::AddRequest(orderid, req)) {
+		LogError("AsyncMysqlMgr error");
+		return E_MYSQL_ERROR;
+	}
 
+	Wait(E_WAIT_MYSQL);
 	MysqlRsp* rsp = (MysqlRsp*)_mysql_rsp;
 	if (!rsp) {
 		LogError("MysqlRsp is null");

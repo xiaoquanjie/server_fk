@@ -61,8 +61,12 @@ void AsyncMysqlMgrImpl::run(void* param) {
 	}
 }
 
-void AsyncMysqlMgrImpl::AddRequest(base::s_uint64_t orderid, MysqlReq* req) {
+bool AsyncMysqlMgrImpl::AddRequest(base::s_uint64_t orderid, MysqlReq* req) {
 	// 队列满了只能等，没有别的办法
+	if (_work_queue.empty()) {
+		delete req;
+		return false;
+	}
 	int idx = orderid % _work_queue.size();
 	MysqlWork* work = _work_queue[idx];
 	work->_mutex.lock();
@@ -72,6 +76,7 @@ void AsyncMysqlMgrImpl::AddRequest(base::s_uint64_t orderid, MysqlReq* req) {
 	work->_queue.push(req);
 	work->_mutex.unlock();
 	work->_cond.notify();
+	return true;
 }
 
 MysqlRsp* AsyncMysqlMgrImpl::proccss(MysqlReq* req) {
@@ -134,7 +139,7 @@ MysqlRsp* AsyncMysqlMgr::Pick() {
 	return GetImpl()->Pick();
 }
 
-void AsyncMysqlMgr::AddRequest(base::s_uint64_t orderid, MysqlReq* req) {
+bool AsyncMysqlMgr::AddRequest(base::s_uint64_t orderid, MysqlReq* req) {
 	return GetImpl()->AddRequest(orderid, req);
 }
 

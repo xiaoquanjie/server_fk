@@ -24,7 +24,7 @@ public:
 
 	MysqlRsp* Pick();
 
-	void AddRequest(base::s_uint64_t orderid, MysqlReq* req);
+	bool AddRequest(base::s_uint64_t orderid, MysqlReq* req);
 
 protected:
 	void run(void* param);
@@ -47,7 +47,7 @@ public:
 
 	static MysqlRsp* Pick();
 
-	static void AddRequest(base::s_uint64_t orderid, MysqlReq* req);
+	static bool AddRequest(base::s_uint64_t orderid, MysqlReq* req);
 protected:
 	static AsyncMysqlMgrImpl* GetImpl();
 
