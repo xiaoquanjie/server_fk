@@ -6,6 +6,8 @@
 //http://www.cnblogs.com/hjwublog/p/5639990.html
 //https://redis.io/commands/setbit
 
+struct redisReply;
+struct BaseRedisCmd;
 
 // redis连接
 class RedisConnection {
@@ -30,6 +32,9 @@ public:
 	unsigned long long connectionid()const;
 
 	////////////////////////////////////////////////////////////////////
+	redisReply* Command(const std::string& cmd);
+
+	redisReply* Command(const BaseRedisCmd& cmd);
 
 	// 超时命令
 	bool expire(const char* key, time_t expire);
@@ -42,28 +47,13 @@ public:
 
 	////////////////////////////////////////////////////////////////////
 
-	template<typename T>
-	void set(const char* key, T value);
-
 	void set(const char* key, const std::string& value);
-
-	void set(const char* key, const char* value, unsigned int len);
 	
 	// 设置key对应的值为String类型的value，如果key已经存在则返回false
-	template<typename T>
-	bool setnx(const char* key, T value);
-	
 	bool setnx(const char* key, const std::string& value);
 	
-	bool setnx(const char* key, const char* value, unsigned int len);
-
 	// 设置值，并设置一个超时 
-	template<typename T>
-	void setex(const char* key, T value, time_t expire);
-	
 	void setex(const char* key, const std::string& value, time_t expire);
-	
-	void setex(const char* key, const char* value, unsigned int len, time_t expire);
 	
 	////////////////////////////////////////////////////////////////////
 

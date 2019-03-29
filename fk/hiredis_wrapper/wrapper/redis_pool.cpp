@@ -5,6 +5,15 @@ RedisConnection RedisPool::GetConnection(const std::string& ip, unsigned short p
 }
 
 RedisConnection RedisPool::GetConnection(const std::string& ip, unsigned short port, unsigned short database) {
+	return GetConnection(ip, port, database, "", "");
+}
+
+RedisConnection RedisPool::GetConnection(const std::string& ip,
+	unsigned short port,
+	unsigned short database,
+	const std::string& user,
+	const std::string passwd) 
+{
 	typedef _redis_detail::ThreadLocalData<_redisinfo_> RedisDataType;
 	_redisinfo_* pinfo = (_redisinfo_*)&RedisDataType::data();
 	unsigned long long unique_id = _redisaddr_::three_only_id((unsigned int)inet_addr(ip.c_str()),
@@ -23,6 +32,10 @@ RedisConnection RedisPool::GetConnection(const std::string& ip, unsigned short p
 			if (context->err != 0) {
 				throw RedisException(context->errstr);
 			}
+			if (passwd.size()) {
+				_auth(context, user.c_str(), passwd.c_str());
+			}
+
 			if (database != 0 && !_selectdb(context, database))
 				throw RedisException(M_ERR_REDIS_SELECT_DB_ERROR);
 		}
@@ -36,6 +49,8 @@ RedisConnection RedisPool::GetConnection(const std::string& ip, unsigned short p
 		context_ptr->_ip = ip;
 		context_ptr->_port = port;
 		context_ptr->_db = database;
+		context_ptr->user = user;
+		context_ptr->passwd = passwd;
 		pinfo->_info[unique_id] = context_ptr;
 		pinfo->_revinfo[context_ptr] = unique_id;
 
@@ -75,6 +90,29 @@ bool RedisPool::_selectdb(redisContext* context, unsigned short db) {
 	return true;
 }
 
+void RedisPool::_auth(redisContext* context, const char* user, const char* passwd) {
+	if (!context) {
+		throw RedisException(M_ERR_REDIS_AUTH_ERROR);
+	}
+
+	redisReply* reply = (redisReply*)redisCommand(context, "AUTH %s:%s", user, passwd);
+	if (!reply) {
+		throw RedisException(context->errstr);
+	}
+
+	RedisException error;
+	do {
+		if (reply->type == REDIS_REPLY_ERROR) {
+			error = RedisException(reply->str);
+			break;
+		}
+	} while (false);
+	freeReplyObject(reply);
+	if (!error.Empty()) {
+		throw error;
+	}
+}
+
 void RedisPool::_releaseConnection(shard_ptr_t<_rediscontext_> context) {
 	do {
 		typedef _redis_detail::ThreadLocalData<_redisinfo_> RedisDataType;
@@ -112,8 +150,10 @@ void* w_redisCommand(RedisConnection& conn, const char *format, ...) {
 			std::string ip = conn._context->_ip;
 			unsigned short port = conn._context->_port;
 			unsigned short database = conn._context->_db;
+			std::string user = conn._context->user;
+			std::string passwd = conn._context->passwd;
 			RedisPool::ReleaseConnection(conn);
-			conn = RedisPool::GetConnection(ip, port, database);
+			conn = RedisPool::GetConnection(ip, port, database, user, passwd);
 			reply = (redisReply*)redisvCommand(conn._context->_context, format, ap);
 		}
 		va_end(ap);

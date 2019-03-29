@@ -199,6 +199,8 @@ struct _rediscontext_ {
 	std::string    _ip;
 	unsigned short _port;
 	unsigned short _db;
+	std::string user;
+	std::string passwd;
 };
 
 // redisµÿ÷∑
@@ -267,7 +269,7 @@ void* w_redisCommand(RedisConnection& conn, const char *format, ...);
 ///////////////////////////////////////////////////////////////////////////
 #define M_ERR_CODE_NOT_DEFINED (-1)
 ///////////////////////////////////////////////////////////////////////////
-#define M_ERR_NOT_DEFINED			("not defined error")
+#define M_ERR_NOT_DEFINED			("wrong type")
 #define M_ERR_REDIS_CONNECT_FAIL	("redisConnect fail")
 #define M_ERR_REDIS_NOT_CONNECTED	("redis is not connected")
 #define M_ERR_REDIS_REPLY_NULL		("redis reply is null")
@@ -275,5 +277,6 @@ void* w_redisCommand(RedisConnection& conn, const char *format, ...);
 #define M_ERR_REDIS_KEY_NOT_EXIST	("key not exist")
 #define M_ERR_REDIS_ARRAY_SIZE_NOT_MATCH	("array size doesn't match")
 #define M_ERR_REDIS_SELECT_DB_ERROR ("select db error")
+#define M_ERR_REDIS_AUTH_ERROR		("auth error")	
 
 #endif

@@ -3,7 +3,20 @@
 
 #include "redis_connection.hpp"
 #include "redis_pool.hpp"
+#include "redis_helper.h"
 
+redisReply* RedisConnection::Command(const std::string& cmd) {
+	M_CHECK_REDIS_CONTEXT(_context);
+	redisReply* reply = (redisReply*)w_redisCommand(*this, cmd.c_str());
+	if (!reply)
+		M_CLOSE_CONNECTION(this);
+
+	return reply;
+}
+
+redisReply* RedisConnection::Command(const BaseRedisCmd& cmd) {
+	return Command(cmd.cmd);
+}
 
 bool RedisConnection::expire(const char* key, time_t expire)
 {

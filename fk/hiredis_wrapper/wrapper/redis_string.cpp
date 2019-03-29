@@ -1,13 +1,6 @@
 #include "redis_connection.hpp"
 #include "redis_pool.hpp"
 
-template<typename T>
-void RedisConnection::set(const char* key, T value) {
-	std::ostringstream oss;
-	oss << value;
-	set(key, oss.str());
-}
-
 void RedisConnection::set(const char* key, const std::string& value) {
 	M_CHECK_REDIS_CONTEXT(_context);
 	redisReply* reply = (redisReply*)w_redisCommand(*this, "SET %s %s", key, value.c_str());
@@ -33,17 +26,6 @@ void RedisConnection::set(const char* key, const std::string& value) {
 	freeReplyObject(reply);
 	if (!error.Empty())
 		throw error;
-}
-
-void RedisConnection::set(const char* key, const char* value, unsigned int len) {
-	set(key, std::string(value, len));
-}
-
-template<typename T>
-bool RedisConnection::setnx(const char* key, T value) {
-	std::ostringstream oss;
-	oss << value;
-	return setnx(key, oss.str());
 }
 
 bool RedisConnection::setnx(const char* key, const std::string& value) {
@@ -73,17 +55,6 @@ bool RedisConnection::setnx(const char* key, const std::string& value) {
 	return flag;
 }
 
-bool RedisConnection::setnx(const char* key, const char* value, unsigned int len) {
-	return setnx(key, std::string(value, len));
-}
-
-template<typename T>
-void RedisConnection::setex(const char* key, T value, time_t expire) {
-	std::ostringstream oss;
-	oss << value;
-	setex(key, oss.str(), expire);
-}
-
 void RedisConnection::setex(const char* key, const std::string& value, time_t expire) {
 	M_CHECK_REDIS_CONTEXT(_context);
 	redisReply* reply = (redisReply*)w_redisCommand(*this, "SETEX %s %d %s", key, expire, value.c_str());
@@ -109,10 +80,6 @@ void RedisConnection::setex(const char* key, const std::string& value, time_t ex
 	freeReplyObject(reply);
 	if (!error.Empty())
 		throw error;
-}
-
-void RedisConnection::setex(const char* key, const char* value, unsigned int len, time_t expire) {
-	setex(key, std::string(value, len), expire);
 }
 
 template<typename T>
@@ -213,7 +180,6 @@ void RedisConnection::incrby(const char* key, int step, T& new_value) {
 template<typename T>
 void RedisConnection::decrby(const char* key, int step, T& new_value) {
 	M_CHECK_REDIS_CONTEXT(_context);
-	std::string k = "DECRBY " + std::string(key) + " %d";
 	redisReply* reply = (redisReply*)w_redisCommand(*this, "DECRBY %s %d", key, step);
 	if (!reply)
 		M_CLOSE_CONNECTION(this);

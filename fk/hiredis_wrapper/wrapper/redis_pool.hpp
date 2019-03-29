@@ -8,10 +8,19 @@
 class RedisPool {
 public:
 	// 每个线程都会有一个连接,最好别跨线程使用,否则不保证线程安全
-	static RedisConnection GetConnection(const std::string& ip, unsigned short port);
+	static RedisConnection GetConnection(const std::string& ip, 
+		unsigned short port);
 
 	// 每个线程都会有一个连接,最好别跨线程使用,否则不保证线程安全
-	static RedisConnection GetConnection(const std::string& ip, unsigned short port, unsigned short database);
+	static RedisConnection GetConnection(const std::string& ip,
+		unsigned short port, 
+		unsigned short database);
+
+	static RedisConnection GetConnection(const std::string& ip,
+		unsigned short port,
+		unsigned short database, 
+		const std::string& user, 
+		const std::string passwd);
 
 	// 释放连接
 	static void ReleaseConnection(RedisConnection& con);
@@ -20,6 +29,8 @@ private:
 	static void _releaseConnection(shard_ptr_t<_rediscontext_> context);
 
 	static bool _selectdb(redisContext* context, unsigned short db);
+
+	static void _auth(redisContext* context, const char* user, const char* passwd);
 
 	static void _freeRedisContext(redisContext* context);
 };

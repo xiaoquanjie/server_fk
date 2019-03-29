@@ -73,6 +73,9 @@
     <ClInclude Include="win32.h">
       <Filter>源文件</Filter>
     </ClInclude>
+    <ClInclude Include="wrapper\redis_helper.h">
+      <Filter>wrapper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="wrapper\redis_connection.cpp">
@@ -134,6 +137,9 @@
     </ClCompile>
     <ClCompile Include="sds.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="wrapper\redis_helper.cpp">
+      <Filter>wrapper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

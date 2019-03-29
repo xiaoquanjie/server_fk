@@ -21,6 +21,7 @@ cc_library(
 	  'wrapper/redis_set.cpp',
 	  'wrapper/redis_sort_set.cpp',
 	  'wrapper/redis_string.cpp',
+	  'wrapper/redis_helper.cpp',
     ],
     deps = [
     ],

@@ -36,6 +36,7 @@
     <ClInclude Include="wrapper\convert.hpp" />
     <ClInclude Include="wrapper\mutex.hpp" />
     <ClInclude Include="wrapper\redis_connection.hpp" />
+    <ClInclude Include="wrapper\redis_helper.h" />
     <ClInclude Include="wrapper\redis_pool.hpp" />
     <ClInclude Include="wrapper\redis_wrapper.hpp" />
     <ClInclude Include="wrapper\redis_wrapper_config.hpp" />
@@ -56,6 +57,7 @@
     <ClCompile Include="sds.cpp" />
     <ClCompile Include="wrapper\redis_connection.cpp" />
     <ClCompile Include="wrapper\redis_hash.cpp" />
+    <ClCompile Include="wrapper\redis_helper.cpp" />
     <ClCompile Include="wrapper\redis_list.cpp" />
     <ClCompile Include="wrapper\redis_others.cpp" />
     <ClCompile Include="wrapper\redis_pool.cpp" />
