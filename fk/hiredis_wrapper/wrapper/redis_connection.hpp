@@ -94,8 +94,7 @@ public:
 
 	////////////////////////////////////////////////////////////////////
 
-	// 返回原位的值，只会是0和1
-	int setbit(const char* key, unsigned int offset, int value);
+	int setb(const char* key, unsigned int offset, int value);
 	
 	int getbit(const char* key, unsigned int offset);
 

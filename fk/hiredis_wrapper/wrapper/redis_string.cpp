@@ -119,7 +119,7 @@ void RedisConnection::getrange(const char* key, int beg_idx, int end_idx, std::s
 	parser.GetString(value);
 }
 
-int RedisConnection::setbit(const char* key, unsigned int offset, int value) {
+int RedisConnection::setb(const char* key, unsigned int offset, int value) {
 	RedisReplyParser parser(this->Command(SetbitRedisCmd(key, offset, value)));
 
 	long long v = 0;
