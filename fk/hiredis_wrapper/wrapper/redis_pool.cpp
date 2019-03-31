@@ -166,6 +166,28 @@ void* w_redisCommand(RedisConnection& conn, const char *format, ...) {
 	return 0;
 }
 
+void* wredisCommandArgv(RedisConnection& conn, int argc, const char **argv, const size_t *argvlen) {
+	try {
+		void* reply = redisCommandArgv(conn._context->_context, argc, argv, argvlen);
+		if (!reply) {
+			// try again
+			std::string ip = conn._context->_ip;
+			unsigned short port = conn._context->_port;
+			unsigned short database = conn._context->_db;
+			std::string user = conn._context->user;
+			std::string passwd = conn._context->passwd;
+			RedisPool::ReleaseConnection(conn);
+			conn = RedisPool::GetConnection(ip, port, database, user, passwd);
+			reply = redisCommandArgv(conn._context->_context, argc, argv, argvlen);
+		}
+		return reply;
+	}	
+	catch (RedisException& e) {
+		throw e;
+	}
+	return 0;
+}
+
 #ifdef M_PLATFORM_WIN
 long WinSockInit() {
 	WSADATA wsa_data;

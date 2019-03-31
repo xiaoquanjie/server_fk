@@ -5,89 +5,43 @@
 #include "redis_pool.hpp"
 #include "redis_helper.h"
 
-redisReply* RedisConnection::Command(const std::string& cmd) {
+redisReply* RedisConnection::Command(const BaseRedisCmd& cmd) {
 	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, cmd.c_str());
+	std::vector<const char *> argv(cmd.cmd.size());
+	std::vector<size_t> argvlen(cmd.cmd.size());
+	for (size_t idx = 0; idx < cmd.cmd.size(); ++idx) {
+		argv[idx] = cmd.cmd[idx].c_str();
+		argvlen[idx] = cmd.cmd[idx].length();
+	}
+	redisReply* reply = (redisReply*)wredisCommandArgv(*this, cmd.cmd.size(), &(argv[0]), &(argvlen[0]));
 	if (!reply)
 		M_CLOSE_CONNECTION(this);
 
 	return reply;
 }
 
-redisReply* RedisConnection::Command(const BaseRedisCmd& cmd) {
-	return Command(cmd.cmd);
-}
-
 bool RedisConnection::expire(const char* key, time_t expire)
 {
-	M_CHECK_REDIS_CONTEXT(_context);
-	std::string k = "EXPIRE " + std::string(key) + " %d";
-	redisReply* reply = (redisReply*)w_redisCommand(*this, k.c_str(), expire);
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
-	
-	int success_flag = 0;
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_INTEGER) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		success_flag = (int)reply->integer;
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
-
-	return (success_flag == 1 ? true : false);
+	redisReply* reply = this->Command(ExpireRedisCmd(key, expire));
+	RedisReplyParser parser(reply);
+	long long value = 0;
+	parser.GetInteger(value);
+	return (value == 1 ? true : false);
 }
 
 int RedisConnection::del(const char* key) {
-	std::vector<std::string> vec;
+	std::vector<const char*> vec;
 	vec.push_back(key);
 	return dels(vec);
 }
 
-template<typename T>
-int RedisConnection::dels(const T& keys) {
-	if (keys.empty())
-		return 0;
+int RedisConnection::dels(const std::vector<const char*>& l) {
+	redisReply* reply = this->Command(DelRedisCmd(l));
+	RedisReplyParser parser(reply);
 
-	M_CHECK_REDIS_CONTEXT(_context);
-	std::string k = "DEL ";
-	for (typename T::const_iterator iter = keys.begin();
-		iter != keys.end(); ++iter) {
-		k += *iter + " ";
-	}
-
-	redisReply* reply = (redisReply*)w_redisCommand(*this, k.c_str());
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
-
-	int size = 0;
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_INTEGER) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		size = (int)reply->integer;
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
-
-	return size;
+	long long value = 0;
+	parser.GetInteger(value);
+	return (int)value;
 }
 
 #endif

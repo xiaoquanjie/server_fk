@@ -266,6 +266,8 @@ if (!context || !context->_context) throw RedisException(M_ERR_REDIS_NOT_CONNECT
 class RedisConnection;
 void* w_redisCommand(RedisConnection& conn, const char *format, ...);
 
+void* wredisCommandArgv(RedisConnection& conn, int argc, const char **argv, const size_t *argvlen);
+
 ///////////////////////////////////////////////////////////////////////////
 #define M_ERR_CODE_NOT_DEFINED (-1)
 ///////////////////////////////////////////////////////////////////////////

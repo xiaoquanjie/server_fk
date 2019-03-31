@@ -3,7 +3,7 @@
 #include "redis_wrapper_config.hpp"
 
 struct BaseRedisCmd {
-	std::string cmd;
+	std::vector<std::string> cmd;
 };
 
 struct ExpireRedisCmd : public BaseRedisCmd {
@@ -11,7 +11,9 @@ struct ExpireRedisCmd : public BaseRedisCmd {
 };
 
 struct DelRedisCmd : public BaseRedisCmd {
-	DelRedisCmd(std::initializer_list<char*> l);
+	DelRedisCmd(std::initializer_list<const char*> l);
+
+	DelRedisCmd(const std::vector<const char*>& l);
 };
 
 struct SetRedisCmd : public BaseRedisCmd {
@@ -67,6 +69,8 @@ struct RedisReplyParser {
 	RedisReplyParser(redisReply* reply);
 
 	~RedisReplyParser();
+
+	void Reset(redisReply* reply);
 
 	void GetInteger(long long& value);
 

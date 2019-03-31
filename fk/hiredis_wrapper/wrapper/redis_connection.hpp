@@ -32,8 +32,6 @@ public:
 	unsigned long long connectionid()const;
 
 	////////////////////////////////////////////////////////////////////
-	redisReply* Command(const std::string& cmd);
-
 	redisReply* Command(const BaseRedisCmd& cmd);
 
 	// 超时命令
@@ -42,8 +40,7 @@ public:
 	// 1为key存在，0表示key不存在
 	int del(const char* key);
 
-	template<typename T>
-	int dels(const T& keys);
+	int dels(const std::vector<const char*>& l);
 
 	////////////////////////////////////////////////////////////////////
 
