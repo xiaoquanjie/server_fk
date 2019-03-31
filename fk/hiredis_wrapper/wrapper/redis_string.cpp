@@ -83,7 +83,7 @@ int RedisConnection::strlen(const char* key) {
 	
 	long long v = 0;
 	parser.GetInteger(v);
-	return v;
+	return (int)v;
 }
 
 int RedisConnection::append(const char* key, const std::string& app_value) {
@@ -91,7 +91,7 @@ int RedisConnection::append(const char* key, const std::string& app_value) {
 
 	long long v = 0;
 	parser.GetInteger(v);
-	return v;
+	return (int)v;
 }
 
 int RedisConnection::append(const char* key, const char* value, unsigned int len) {
@@ -99,7 +99,7 @@ int RedisConnection::append(const char* key, const char* value, unsigned int len
 
 	long long v = 0;
 	parser.GetInteger(v);
-	return v;
+	return (int)v;
 }
 
 int RedisConnection::setrange(const char* key, int beg_idx, const char* value, unsigned int len) {
@@ -111,7 +111,7 @@ int RedisConnection::setrange(const char* key, int beg_idx, const std::string& v
 
 	long long v = 0;
 	parser.GetInteger(v);
-	return v;
+	return (int)v;
 }
 
 void RedisConnection::getrange(const char* key, int beg_idx, int end_idx, std::string& value) {
@@ -120,57 +120,17 @@ void RedisConnection::getrange(const char* key, int beg_idx, int end_idx, std::s
 }
 
 int RedisConnection::setbit(const char* key, unsigned int offset, int value) {
-	M_CHECK_REDIS_CONTEXT(_context);
-	if (value != 0)
-		value = 1;
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "SETBIT %s %d %d", key, offset, value);
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
+	RedisReplyParser parser(this->Command(SetbitRedisCmd(key, offset, value)));
 
-	value = 0;
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_INTEGER) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		value = (int)reply->integer;
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
-
-	return value;
+	long long v = 0;
+	parser.GetInteger(v);
+	return (int)v;
 }
 
 int RedisConnection::getbit(const char* key, unsigned int offset) {
-	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "GETBIT %s %d", key, offset);
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
+	RedisReplyParser parser(this->Command(GetbitRedisCmd(key, offset)));
 
-	int value = 0;
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_INTEGER) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		value = (int)reply->integer;
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
-
-	return value;
+	long long v = 0;
+	parser.GetInteger(v);
+	return (int)v;
 }

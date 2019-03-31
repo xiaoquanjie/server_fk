@@ -106,6 +106,19 @@ GetRangeRediCmd::GetRangeRediCmd(const char* key, int beg_idx, int end_idx) {
 	cmd.push_back(std::to_string(end_idx));
 }
 
+SetbitRedisCmd::SetbitRedisCmd(const char* key, unsigned int offset, int value) {
+	cmd.push_back("SETBIT");
+	cmd.push_back(key);
+	cmd.push_back(std::to_string(offset));
+	cmd.push_back(std::to_string(value));
+}
+
+GetbitRedisCmd::GetbitRedisCmd(const char* key, unsigned int offset) {
+	cmd.push_back("GETBIT");
+	cmd.push_back(key);
+	cmd.push_back(std::to_string(offset));
+}
+
 /////////////////////////////////////////////////////////////////////////////////////
 
 RedisReplyParser::RedisReplyParser(redisReply* reply) {

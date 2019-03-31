@@ -67,6 +67,14 @@ struct GetRangeRediCmd : public BaseRedisCmd {
 	GetRangeRediCmd(const char* key, int beg_idx, int end_idx);
 };
 
+struct SetbitRedisCmd : public BaseRedisCmd {
+	SetbitRedisCmd(const char* key, unsigned int offset, int value);
+};
+
+struct GetbitRedisCmd : public BaseRedisCmd {
+	GetbitRedisCmd(const char* key, unsigned int offset);
+};
+
 /////////////////////////////////////////////////////////////////////////////////////
 
 struct redisReply;
