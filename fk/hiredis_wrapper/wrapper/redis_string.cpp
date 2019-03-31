@@ -1,85 +1,36 @@
 #include "redis_connection.hpp"
 #include "redis_pool.hpp"
+#include "redis_helper.h"
 
 void RedisConnection::set(const char* key, const std::string& value) {
-	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "SET %s %s", key, value.c_str());
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
+	redisReply* reply = this->Command(SetRedisCmd(key, value.c_str()));
+	RedisReplyParser parser(reply);
 
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_STATUS) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		if (strcasecmp(reply->str, "OK") != 0) {
-			error = RedisException(reply->str);
-			break;
-		}
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
+	bool ok = false;
+	parser.GetOk(ok);
+	if (!ok) {
+		throw RedisException(reply->str);
+	}
 }
 
 bool RedisConnection::setnx(const char* key, const std::string& value) {
-	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "SETNX %s %s", key, value.c_str());
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
+	redisReply* reply = this->Command(SetNxRedisCmd(key, value.c_str()));
+	RedisReplyParser parser(reply);
 
-	RedisException error;
-	bool flag = false;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_INTEGER) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		flag = static_cast<bool>(reply->integer);
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
-
-	return flag;
+	long long v = 0;
+	parser.GetInteger(v);
+	return (v == 1 ? true : false);
 }
 
 void RedisConnection::setex(const char* key, const std::string& value, time_t expire) {
-	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "SETEX %s %d %s", key, expire, value.c_str());
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
+	redisReply* reply = this->Command(SetExRedisCmd(key, value.c_str(), expire));
+	RedisReplyParser parser(reply);
 
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_STATUS) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		if (strcasecmp(reply->str, "OK") != 0) {
-			error = RedisException(reply->str);
-			break;
-		}
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
+	bool ok = false;
+	parser.GetOk(ok);
+	if (!ok) {
+		throw RedisException(reply->str);
+	}
 }
 
 template<typename T>
@@ -91,60 +42,15 @@ void RedisConnection::get(const char* key, T& value) {
 }
 
 void RedisConnection::get(const char* key, std::string& value) {
-	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "GET %s", key);
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
-
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type == REDIS_REPLY_NIL) {
-			error = RedisException(M_ERR_REDIS_KEY_NOT_EXIST);
-			break;
-		}
-
-		value.clear();
-		value.append(reply->str, reply->len);
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
+	RedisReplyParser parser(this->Command(GetRedisCmd(key)));
+	parser.GetString(value);
 }
 
 void RedisConnection::get(const char* key, char* value, unsigned int len)
 {
-	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "GET %s", key);
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
-
-	RedisException error;
-	do
-	{
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type == REDIS_REPLY_NIL) {
-			error = RedisException(M_ERR_REDIS_KEY_NOT_EXIST);
-			break;
-		}
-
-		if (len > (unsigned int)reply->len)
-			len = (unsigned int)reply->len;
-		memcpy(value, reply->str, len);
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
+	RedisReplyParser parser(this->Command(GetRedisCmd(key)));
+	parser.GetString(value, len);
 }
-
 
 void RedisConnection::incrby(const char* key, int step) {
 	int value = 0;
@@ -153,53 +59,18 @@ void RedisConnection::incrby(const char* key, int step) {
 
 template<typename T>
 void RedisConnection::incrby(const char* key, int step, T& new_value) {
-	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "INCRBY %s %d", key, step);
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
-
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_INTEGER) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		new_value = (T)reply->integer;
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
+	RedisReplyParser parser(this->Command(IncrbyRedisCmd(key, step)));
+	long long v = 0;
+	parser.GetInteger(v);
+	new_value = (T)v;
 }
-
 
 template<typename T>
 void RedisConnection::decrby(const char* key, int step, T& new_value) {
-	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "DECRBY %s %d", key, step);
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
-
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_INTEGER) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		new_value = (T)reply->integer;
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
+	RedisReplyParser parser(this->Command(DecrbyRedisCmd(key, step)));
+	long long v = 0;
+	parser.GetInteger(v);
+	new_value = (T)v;
 }
 
 void RedisConnection::decrby(const char* key, int step) {
@@ -207,63 +78,28 @@ void RedisConnection::decrby(const char* key, int step) {
 	decrby(key, step, value);
 }
 
-
 int RedisConnection::strlen(const char* key) {
-	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "STRLEN %s", key);
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
-
-	int len = 0;
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_INTEGER) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		len = (int)reply->integer;
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
-
-	return len;
+	RedisReplyParser parser(this->Command(StrlenRedisCmd(key)));
+	
+	long long v = 0;
+	parser.GetInteger(v);
+	return v;
 }
 
 int RedisConnection::append(const char* key, const std::string& app_value) {
-	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "APPEND %s %s", key, app_value.c_str());
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
+	RedisReplyParser parser(this->Command(AppendRedisCmd(key, app_value.c_str())));
 
-	int len = 0;
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_INTEGER) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		len = (int)reply->integer;
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
-
-	return len;
+	long long v = 0;
+	parser.GetInteger(v);
+	return v;
 }
 
 int RedisConnection::append(const char* key, const char* value, unsigned int len) {
-	return append(key, std::string(value, len));
+	RedisReplyParser parser(this->Command(AppendRedisCmd(key, value, len)));
+
+	long long v = 0;
+	parser.GetInteger(v);
+	return v;
 }
 
 int RedisConnection::setrange(const char* key, int beg_idx, const char* value, unsigned int len) {
@@ -271,55 +107,16 @@ int RedisConnection::setrange(const char* key, int beg_idx, const char* value, u
 }
 
 int RedisConnection::setrange(const char* key, int beg_idx, const std::string& value) {
-	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "SETRANGE %s %d %s", key, beg_idx, value.c_str());
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
+	RedisReplyParser parser(this->Command(SetRangeRedisCmd(key, beg_idx, value.c_str())));
 
-	int len = 0;
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_INTEGER) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		len = (int)reply->integer;
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
-
-	return len;
+	long long v = 0;
+	parser.GetInteger(v);
+	return v;
 }
 
 void RedisConnection::getrange(const char* key, int beg_idx, int end_idx, std::string& value) {
-	M_CHECK_REDIS_CONTEXT(_context);
-	redisReply* reply = (redisReply*)w_redisCommand(*this, "GETRANGE %s %d %d", key, beg_idx, end_idx);
-	if (!reply)
-		M_CLOSE_CONNECTION(this);
-
-	RedisException error;
-	do {
-		if (reply->type == REDIS_REPLY_ERROR) {
-			error = RedisException(reply->str);
-			break;
-		}
-		if (reply->type != REDIS_REPLY_STRING) {
-			error = RedisException(M_ERR_NOT_DEFINED);
-			break;
-		}
-		value.clear();
-		value.append(reply->str, reply->len);
-	} while (false);
-
-	freeReplyObject(reply);
-	if (!error.Empty())
-		throw error;
+	RedisReplyParser parser(this->Command(GetRangeRediCmd(key, beg_idx, end_idx)));
+	parser.GetString(value);
 }
 
 int RedisConnection::setbit(const char* key, unsigned int offset, int value) {

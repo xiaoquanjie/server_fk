@@ -152,6 +152,31 @@ void RedisReplyParser::GetString(std::string& value) {
 		throw error;
 }
 
+void RedisReplyParser::GetString(char* value, unsigned int len) {
+	RedisException error;
+	do {
+		if (!_reply) {
+			error = RedisException(M_ERR_REDIS_REPLY_NULL);
+			break;
+		}
+		if (_reply->type == REDIS_REPLY_ERROR) {
+			error = RedisException(_reply->str);
+			break;
+		}
+		if (_reply->type != REDIS_REPLY_STRING) {
+			error = RedisException(M_ERR_NOT_DEFINED);
+			break;
+		}
+
+		if (len > (unsigned int)_reply->len)
+			len = (unsigned int)_reply->len;
+		memcpy(value, _reply->str, len);
+	} while (false);
+
+	if (!error.Empty())
+		throw error;
+}
+
 void RedisReplyParser::GetOk(bool& value) {
 	RedisException error;
 	do {

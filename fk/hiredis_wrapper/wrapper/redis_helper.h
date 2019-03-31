@@ -76,6 +76,8 @@ struct RedisReplyParser {
 
 	void GetString(std::string& value);
 
+	void GetString(char* value, unsigned int len);
+
 	template<typename T>
 	void GetArray(T& values) {
 		RedisException error;
