@@ -2,6 +2,7 @@
 #define M_REDIS_CONNECTION_INCLUDE
 
 #include "redis_wrapper_config.hpp"
+#include "redis_helper.h"
 
 //http://www.cnblogs.com/hjwublog/p/5639990.html
 //https://redis.io/commands/setbit
@@ -55,7 +56,12 @@ public:
 	////////////////////////////////////////////////////////////////////
 
 	template<typename T>
-	void get(const char* key, T& value);
+	void get(const char* key, T& value) {
+		std::string v;
+		get(key, v);
+		std::istringstream iss(v);
+		iss >> value;
+	}
 
 	void get(const char* key, std::string& value);
 	
@@ -66,10 +72,20 @@ public:
 	void incrby(const char* key, int step);
 
 	template<typename T>
-	void incrby(const char* key, int step, T& new_value);
+	void incrby(const char* key, int step, T& new_value) {
+		RedisReplyParser parser(this->Command(IncrbyRedisCmd(key, step)));
+		long long v = 0;
+		parser.GetInteger(v);
+		new_value = (T)v;
+	}
 
 	template<typename T>
-	void decrby(const char* key, int step, T& new_value);
+	void decrby(const char* key, int step, T& new_value) {
+		RedisReplyParser parser(this->Command(DecrbyRedisCmd(key, step)));
+		long long v = 0;
+		parser.GetInteger(v);
+		new_value = (T)v;
+	}
 	
 	void decrby(const char* key, int step);
 

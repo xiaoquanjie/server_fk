@@ -33,13 +33,13 @@ void RedisConnection::setex(const char* key, const std::string& value, time_t ex
 	}
 }
 
-template<typename T>
-void RedisConnection::get(const char* key, T& value) {
-	std::string v;
-	get(key, v);
-	std::istringstream iss(v);
-	iss >> value;
-}
+//template<typename T>
+//void RedisConnection::get(const char* key, T& value) {
+//	std::string v;
+//	get(key, v);
+//	std::istringstream iss(v);
+//	iss >> value;
+//}
 
 void RedisConnection::get(const char* key, std::string& value) {
 	RedisReplyParser parser(this->Command(GetRedisCmd(key)));
@@ -57,21 +57,21 @@ void RedisConnection::incrby(const char* key, int step) {
 	incrby(key, step, value);
 }
 
-template<typename T>
-void RedisConnection::incrby(const char* key, int step, T& new_value) {
-	RedisReplyParser parser(this->Command(IncrbyRedisCmd(key, step)));
-	long long v = 0;
-	parser.GetInteger(v);
-	new_value = (T)v;
-}
+//template<typename T>
+//void RedisConnection::incrby(const char* key, int step, T& new_value) {
+//	RedisReplyParser parser(this->Command(IncrbyRedisCmd(key, step)));
+//	long long v = 0;
+//	parser.GetInteger(v);
+//	new_value = (T)v;
+//}
 
-template<typename T>
-void RedisConnection::decrby(const char* key, int step, T& new_value) {
-	RedisReplyParser parser(this->Command(DecrbyRedisCmd(key, step)));
-	long long v = 0;
-	parser.GetInteger(v);
-	new_value = (T)v;
-}
+//template<typename T>
+//void RedisConnection::decrby(const char* key, int step, T& new_value) {
+//	RedisReplyParser parser(this->Command(DecrbyRedisCmd(key, step)));
+//	long long v = 0;
+//	parser.GetInteger(v);
+//	new_value = (T)v;
+//}
 
 void RedisConnection::decrby(const char* key, int step) {
 	int value = 0;
