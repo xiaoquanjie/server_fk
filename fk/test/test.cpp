@@ -32,17 +32,27 @@ bool TestApplication::UseAsyncMysql() {
 	return true;
 }
 
+bool TestApplication::UseAsyncRedis() {
+	return true;
+}
+
 int TestApplication::OnTick(const base::timestamp& now) {
 	static int idx = 0;
-	if (TickCount() % 10000 == 0) {
-		mytest::MysqlTestNotify notify;
-		SendMsgToSelf(mytest::CMD::MYSQL_TEST_NOTIFY, idx, notify);
-		idx++;
-		///SendMsgToSelf(mytest::CMD::MYSQL_TEST_NOTIFY, idx, notify);
-		///idx++;
+	if (false) {
+		if (TickCount() % 10000 == 0) {
+			mytest::MysqlTestNotify notify;
+			SendMsgToSelf(mytest::CMD::MYSQL_TEST_NOTIFY, idx, notify);
+			idx++;
+		}
 	}
-	if (TickCount() % 2000 == 0) {
-		LogInfo("tick..........");
+
+	if (true) {
+		if (TickCount() % 10000 == 0) {
+			mytest::RedisTestNotify notify;
+			SendMsgToSelf(mytest::CMD::REDIS_TEST_NOTIFY, idx, notify);
+			idx++;
+		}
 	}
+	
 	return 0;
 }

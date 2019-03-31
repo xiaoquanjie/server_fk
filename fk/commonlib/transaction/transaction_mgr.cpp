@@ -75,6 +75,19 @@ int TransactionMgrImpl::ProcessMysqlRsp(MysqlRsp* rsp) {
 	return 0;
 }
 
+int TransactionMgrImpl::ProcessRedisRsp(RedisRsp* rsp) {
+	do {
+		Transaction* p = GetTransaction(rsp->trans_id);
+		if (p) {
+			p->ProcessRedisRsp(rsp);
+		}
+		else {
+			LogWarn("can't find the old transaction, trans_id: " << rsp->trans_id);
+		}
+	} while (false);
+	return 0;
+}
+
 void TransactionMgrImpl::CoroutineEnter(void* p) {
 	Transaction* trans = (Transaction*)p;
 	trans->set_co_id(coroutine::Coroutine::curid());

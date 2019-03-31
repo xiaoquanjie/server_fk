@@ -6,6 +6,8 @@
 #include "slience/base/random.hpp"
 #include "commonlib/async/async_mysql_mgr.h"
 #include "mysqlclient/ma_wrapper.h"
+#include "commonlib/async/async_redis_mgr.h"
+#include "hiredis_wrapper/wrapper/redis_wrapper.hpp"
 
 void Transaction::Construct() {
 	_trans_id = 0;
@@ -21,6 +23,7 @@ void Transaction::Construct() {
 	_timer_id = 0;
 	_req_random = 0;
 	_mysql_rsp = 0;
+	_redis_rsp = 0;
 	memset(&_ori_frame, 0, sizeof(_ori_frame));
 }
 
@@ -78,6 +81,13 @@ int Transaction::Process(base::s_int64_t fd, base::s_uint32_t self_svr_type,
 
 int Transaction::ProcessMysqlRsp(void* rsp) {
 	_mysql_rsp = rsp;
+	_state = E_STATE_ACTIVE;
+	OnState();
+	return 0;
+}
+
+int Transaction::ProcessRedisRsp(void* rsp) {
+	_redis_rsp = rsp;
 	_state = E_STATE_ACTIVE;
 	OnState();
 	return 0;
@@ -323,7 +333,7 @@ int Transaction::MysqlQuery(base::s_uint64_t orderid,
 	req->sql = sql;
 
 	if (!AsyncMysqlMgr::AddRequest(orderid, req)) {
-		LogError("AsyncMysqlMgr error");
+		LogError("failed to add request to AsyncMysqlMgr");
 		return E_MYSQL_ERROR;
 	}
 
@@ -381,6 +391,47 @@ int Transaction::MysqlQuery(base::s_uint64_t orderid,
 	_mysql_rsp = 0;
 	mysql_free_result((MYSQL_RES *)rsp->mysql_res);
 	return ret;
+}
+
+int Transaction::RedisExecute(base::s_uint16_t orderid,
+	const std::string& url,
+	const BaseRedisCmd& cmd,
+	RedisCallBack func) {
+	RedisReq* req = new RedisReq;
+	req->trans_id = trans_id();
+	req->cmd = cmd.cmd;
+	req->url = url;
+
+	if (!AsyncRedisMgr::AddRequest(orderid, req)) {
+		LogError("failed to add request to AsyncRedisMgr");
+		return E_REDIS_ERROR;
+	}
+
+	Wait(E_WAIT_REDIS);
+	RedisRsp* rsp = (RedisRsp*)_redis_rsp;
+	if (!rsp) {
+		LogError("RedisRsp is null");
+		return E_REDIS_ERROR;
+	}
+
+	RedisReplyParser parser((redisReply*)rsp->reply);
+	if (rsp->err_code != 0) {
+		LogError(
+			"{userid:"
+			<< userid()
+			<< "} failed to Request Redis, code"
+			<< rsp->err_code
+			<< " ,what:"
+			<< rsp->code_what
+			<< " ,cmd:"
+			<< cmd.GetCmd()
+		);
+		return E_REDIS_ERROR;
+	}
+
+	_redis_rsp = 0;
+	func(parser);
+	return 0;
 }
 
 base::s_uint32_t Transaction::trans_id() {

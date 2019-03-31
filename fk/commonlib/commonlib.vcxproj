@@ -93,6 +93,7 @@
     <ClCompile Include="..\tinyxml\tinyxmlerror.cpp" />
     <ClCompile Include="..\tinyxml\tinyxmlparser.cpp" />
     <ClCompile Include="async\async_mysql_mgr.cpp" />
+    <ClCompile Include="async\async_redis_mgr.cpp" />
     <ClCompile Include="net_handler\net_handler.cpp" />
     <ClCompile Include="net_handler\router_mgr.cpp" />
     <ClCompile Include="svr_base\ApplicationBaseExt.cpp" />
@@ -314,6 +315,7 @@
     <ClInclude Include="..\tinyxml\tinystr.h" />
     <ClInclude Include="..\tinyxml\tinyxml.h" />
     <ClInclude Include="async\async_mysql_mgr.h" />
+    <ClInclude Include="async\async_redis_mgr.h" />
     <ClInclude Include="common\comm_struct.h" />
     <ClInclude Include="net_handler\net_handler.h" />
     <ClInclude Include="net_handler\router_mgr.h" />

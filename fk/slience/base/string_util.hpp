@@ -41,6 +41,10 @@ public:
 				iss >> t;
 				array.push_back(t);
 			}
+			else {
+				T t;
+				array.push_back(t);
+			}
 		}
 	}
 };

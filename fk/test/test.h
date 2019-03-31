@@ -18,6 +18,8 @@ protected:
 
 	bool UseAsyncMysql() override;
 
+	bool UseAsyncRedis() override;
+
 	int OnTick(const base::timestamp& now);
 };
 

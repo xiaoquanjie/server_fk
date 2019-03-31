@@ -74,6 +74,8 @@ public:
 
 	int ProcessMysqlRsp(MysqlRsp* rsp);
 
+	int ProcessRedisRsp(RedisRsp* rsp);
+
 	void CoroutineEnter(void* p);
 
 	void TimerCallback(base::s_uint32_t trans_id);
@@ -140,6 +142,10 @@ public:
 
 	static int ProcessMysqlRsp(MysqlRsp* rsp) {
 		return GetImpl()->ProcessMysqlRsp(rsp);
+	}
+
+	static int ProcessRedisRsp(RedisRsp* rsp) {
+		return GetImpl()->ProcessRedisRsp(rsp);
 	}
 
 	static void CoroutineEnter(void* p) {

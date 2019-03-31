@@ -1,5 +1,22 @@
 #include "redis_helper.h"
 
+BaseRedisCmd::BaseRedisCmd() {
+
+}
+
+BaseRedisCmd::BaseRedisCmd(const std::vector<std::string>& l) {
+	cmd = l;
+}
+
+std::string BaseRedisCmd::GetCmd() const {
+	if (cmd.size()) {
+		return cmd[0];
+	}
+	else {
+		return "Emtpy Cmd";
+	}
+}
+
 ExpireRedisCmd::ExpireRedisCmd(const char* key, time_t expire) {
 	cmd.push_back("EXPIRE");
 	cmd.push_back(key);

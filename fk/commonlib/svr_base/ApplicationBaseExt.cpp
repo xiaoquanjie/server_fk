@@ -4,6 +4,7 @@
 #include "commonlib/svr_base/ApplicationFunc.hpp"
 #include "commonlib/transaction/transaction_mgr.h"
 #include "commonlib/async/async_mysql_mgr.h"
+#include "commonlib/async/async_redis_mgr.h"
 
 int ApplicationBase::Run() {
 	while (!gAppExist) {
@@ -26,6 +27,13 @@ int ApplicationBase::Run() {
 			MysqlRsp* rsp = AsyncMysqlMgr::Pick();
 			if (rsp) {
 				TransactionMgr::ProcessMysqlRsp(rsp);
+				delete rsp;
+			}
+		}
+		if (UseAsyncRedis()) {
+			RedisRsp* rsp = AsyncRedisMgr::Pick();
+			if (rsp) {
+				TransactionMgr::ProcessRedisRsp(rsp);
 				delete rsp;
 			}
 		}

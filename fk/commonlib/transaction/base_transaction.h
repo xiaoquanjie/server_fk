@@ -7,10 +7,15 @@
 #include "commonlib/svr_base/svrbase.h"
 #include "commonlib/net_handler/router_mgr.h"
 
+struct BaseRedisCmd;
+struct RedisReplyParser;
+
 #ifdef WIN32
 typedef std::function<void(int, char**)> MysqlCallBack;
+typedef std::function<void(RedisReplyParser&)> RedisCallBack;
 #else
 typedef std::tr1::function<void(int, char**)> MysqlCallBack;
+typedef std::tr1::function<void(RedisReplyParser&)> RedisCallBack;
 #endif
 
 class Transaction {
@@ -31,11 +36,16 @@ public:
 		E_WAIT_FIVE_SECOND = 5 * 1000,
 		E_WAIT_TEN_SECOND = 10 * 1000,
 		E_WAIT_MYSQL = 120 * 1000,
+		E_WAIT_REDIS = 120 * 1000,
 	};
 	enum Mysql_Return {
 		E_MYSQL_SUCCESS = 0,
 		E_MYSQL_DUP_KEY = -1,
 		E_MYSQL_ERROR = -2,
+	};
+	enum Redis_Return {
+		E_REDIS_SUCCESS = 0,
+		E_REDIS_ERROR = -1,
 	};
 
 	void Construct();
@@ -53,7 +63,11 @@ protected:
 
 	int ProcessMysqlRsp(void* rsp);
 
+	int ProcessRedisRsp(void* rsp);
+
 	int ParseMsg(google::protobuf::Message& message);
+
+	////////////////////////////////// 服务发送接口 /////////////////////////////////////
 
 	int SendMsgByServerType(int cmd, int svr_type,
 		google::protobuf::Message& request, google::protobuf::Message& respond);
@@ -87,7 +101,13 @@ protected:
 		int expected_fields,
 		MysqlCallBack func);
 
-	/////////////////////////////////////// mysql接口end ///////////////////////////////
+	/////////////////////////////////////// redis接口begin ///////////////////////////////
+
+	int RedisExecute(base::s_uint16_t orderid,
+		const std::string& url,
+		const BaseRedisCmd& cmd,
+		RedisCallBack func);
+
 protected:
 	void OnState();
 
@@ -146,6 +166,7 @@ private:
 	AppHeadFrame _ori_frame;
 	const char* _cur_frame_data;
 	void* _mysql_rsp;
+	void* _redis_rsp;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

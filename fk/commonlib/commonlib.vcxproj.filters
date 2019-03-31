@@ -103,6 +103,9 @@
     <ClCompile Include="async\async_mysql_mgr.cpp">
       <Filter>async</Filter>
     </ClCompile>
+    <ClCompile Include="async\async_redis_mgr.cpp">
+      <Filter>async</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="svr_base\ApplicationBase.h">
@@ -782,6 +785,9 @@
     </ClInclude>
     <ClInclude Include="common\comm_struct.h">
       <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="async\async_redis_mgr.h">
+      <Filter>async</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

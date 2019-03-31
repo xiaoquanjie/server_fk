@@ -55,6 +55,10 @@ protected:
 
 	virtual int OnInitAsncMysql();
 
+	virtual bool UseAsyncRedis();
+
+	virtual int OnInitAsyncRedis();
+
 	size_t TickCount();
 
 protected:

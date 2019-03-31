@@ -15,13 +15,15 @@ cc_library(
 	   'transaction/transaction_mgr.cpp',
 	   'transaction/base_transaction.cpp',
 	   'async/async_mysql_mgr.cpp',
+	   'async/async_redis_mgr.cpp',
     ],
 
     deps = [
 		'//slience:slience',
 		'#pthread',
 		'//mariadb-connector-c-master:mysqlclient',
-		'//tinyxml:tinyxml'
+		'//tinyxml:tinyxml',
+		'//hiredis_wrapper:hiredis_wrapper',
     ],
 
     #link_all_symbols = True,

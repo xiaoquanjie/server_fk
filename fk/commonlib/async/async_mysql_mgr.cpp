@@ -8,7 +8,7 @@ MysqlWork::MysqlWork() : _mutex(), _cond(_mutex) {
 }
 
 AsyncMysqlMgrImpl::AsyncMysqlMgrImpl() {
-	_queue_max_size = 10;
+	_queue_max_size = 40;
 }
 
 int AsyncMysqlMgrImpl::Init(base::s_uint32_t work_cnt, base::s_uint32_t queue_max_size) {

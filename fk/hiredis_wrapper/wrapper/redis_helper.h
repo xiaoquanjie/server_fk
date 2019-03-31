@@ -4,6 +4,12 @@
 
 struct BaseRedisCmd {
 	std::vector<std::string> cmd;
+
+	BaseRedisCmd();
+
+	BaseRedisCmd(const std::vector<std::string>& l);
+
+	std::string GetCmd() const;
 };
 
 struct ExpireRedisCmd : public BaseRedisCmd {

@@ -37,7 +37,7 @@ namespace protobuf_mytest_2eproto {
 struct TableStruct {
   static const ::google::protobuf::internal::ParseTableField entries[];
   static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-  static const ::google::protobuf::internal::ParseTable schema[1];
+  static const ::google::protobuf::internal::ParseTable schema[2];
   static const ::google::protobuf::internal::FieldMetadata field_metadata[];
   static const ::google::protobuf::internal::SerializationTable serialization_table[];
   static const ::google::protobuf::uint32 offsets[];
@@ -45,23 +45,30 @@ struct TableStruct {
 void AddDescriptors();
 void InitDefaultsMysqlTestNotifyImpl();
 void InitDefaultsMysqlTestNotify();
+void InitDefaultsRedisTestNotifyImpl();
+void InitDefaultsRedisTestNotify();
 inline void InitDefaults() {
   InitDefaultsMysqlTestNotify();
+  InitDefaultsRedisTestNotify();
 }
 }  // namespace protobuf_mytest_2eproto
 namespace mytest {
 class MysqlTestNotify;
 class MysqlTestNotifyDefaultTypeInternal;
 extern MysqlTestNotifyDefaultTypeInternal _MysqlTestNotify_default_instance_;
+class RedisTestNotify;
+class RedisTestNotifyDefaultTypeInternal;
+extern RedisTestNotifyDefaultTypeInternal _RedisTestNotify_default_instance_;
 }  // namespace mytest
 namespace mytest {
 
 enum CMD {
-  MYSQL_TEST_NOTIFY = 1000
+  MYSQL_TEST_NOTIFY = 1000,
+  REDIS_TEST_NOTIFY = 1001
 };
 bool CMD_IsValid(int value);
 const CMD CMD_MIN = MYSQL_TEST_NOTIFY;
-const CMD CMD_MAX = MYSQL_TEST_NOTIFY;
+const CMD CMD_MAX = REDIS_TEST_NOTIFY;
 const int CMD_ARRAYSIZE = CMD_MAX + 1;
 
 const ::google::protobuf::EnumDescriptor* CMD_descriptor();
@@ -174,6 +181,106 @@ class MysqlTestNotify : public ::google::protobuf::Message /* @@protoc_insertion
   friend struct ::protobuf_mytest_2eproto::TableStruct;
   friend void ::protobuf_mytest_2eproto::InitDefaultsMysqlTestNotifyImpl();
 };
+// -------------------------------------------------------------------
+
+class RedisTestNotify : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:mytest.RedisTestNotify) */ {
+ public:
+  RedisTestNotify();
+  virtual ~RedisTestNotify();
+
+  RedisTestNotify(const RedisTestNotify& from);
+
+  inline RedisTestNotify& operator=(const RedisTestNotify& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  #if LANG_CXX11
+  RedisTestNotify(RedisTestNotify&& from) noexcept
+    : RedisTestNotify() {
+    *this = ::std::move(from);
+  }
+
+  inline RedisTestNotify& operator=(RedisTestNotify&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+  #endif
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const RedisTestNotify& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const RedisTestNotify* internal_default_instance() {
+    return reinterpret_cast<const RedisTestNotify*>(
+               &_RedisTestNotify_default_instance_);
+  }
+  static PROTOBUF_CONSTEXPR int const kIndexInFileMessages =
+    1;
+
+  void Swap(RedisTestNotify* other);
+  friend void swap(RedisTestNotify& a, RedisTestNotify& b) {
+    a.Swap(&b);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline RedisTestNotify* New() const PROTOBUF_FINAL { return New(NULL); }
+
+  RedisTestNotify* New(::google::protobuf::Arena* arena) const PROTOBUF_FINAL;
+  void CopyFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void MergeFrom(const ::google::protobuf::Message& from) PROTOBUF_FINAL;
+  void CopyFrom(const RedisTestNotify& from);
+  void MergeFrom(const RedisTestNotify& from);
+  void Clear() PROTOBUF_FINAL;
+  bool IsInitialized() const PROTOBUF_FINAL;
+
+  size_t ByteSizeLong() const PROTOBUF_FINAL;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input) PROTOBUF_FINAL;
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const PROTOBUF_FINAL;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const PROTOBUF_FINAL;
+  int GetCachedSize() const PROTOBUF_FINAL { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const PROTOBUF_FINAL;
+  void InternalSwap(RedisTestNotify* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return NULL;
+  }
+  inline void* MaybeArenaPtr() const {
+    return NULL;
+  }
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const PROTOBUF_FINAL;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:mytest.RedisTestNotify)
+ private:
+
+  ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+  ::google::protobuf::internal::HasBits<1> _has_bits_;
+  mutable int _cached_size_;
+  friend struct ::protobuf_mytest_2eproto::TableStruct;
+  friend void ::protobuf_mytest_2eproto::InitDefaultsRedisTestNotifyImpl();
+};
 // ===================================================================
 
 
@@ -185,9 +292,15 @@ class MysqlTestNotify : public ::google::protobuf::Message /* @@protoc_insertion
 #endif  // __GNUC__
 // MysqlTestNotify
 
+// -------------------------------------------------------------------
+
+// RedisTestNotify
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 

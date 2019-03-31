@@ -9,6 +9,7 @@
 #include "protolib/src/cmd.pb.h"
 #include "commonlib/transaction/transaction_mgr.h"
 #include "commonlib/async/async_mysql_mgr.h"
+#include "commonlib/async/async_redis_mgr.h"
 
 /////////////////////////////////////////////////////////////
 
@@ -99,6 +100,14 @@ int ApplicationBase::Init(int argc, char** argv) {
 			}
 		}
 
+		if (UseAsyncRedis()) {
+			ret = OnInitAsyncRedis();
+			if (ret != 0) {
+				LogError("async redis init error.....");
+				break;
+			}
+		}
+
 	} while (false);
 	  
 	if (0 == ret) {
@@ -144,7 +153,15 @@ bool ApplicationBase::UseAsyncMysql() {
 }
 
 int ApplicationBase::OnInitAsncMysql() {
-	return AsyncMysqlMgr::Init(4, 10);
+	return AsyncMysqlMgr::Init(4, 40);
+}
+
+bool ApplicationBase::UseAsyncRedis() {
+	return false;
+}
+
+int ApplicationBase::OnInitAsyncRedis() {
+	return AsyncRedisMgr::Init(4, 40);
 }
 
 size_t ApplicationBase::TickCount() {
