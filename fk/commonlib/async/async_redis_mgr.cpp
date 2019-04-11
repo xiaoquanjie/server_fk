@@ -45,19 +45,24 @@ void AsyncRedisMgrImpl::run(void* param) {
 		if (work->_queue.empty()) {
 			work->_cond.wait();
 		}
-		RedisReq* req = work->_queue.front();
-		work->_queue.pop();
+		RedisReq* req = 0;
+		if (work->_queue.size()) {
+			req = work->_queue.front();
+			work->_queue.pop();
+		}
 		work->_mutex.unlock();
 		work->_cond.notify();
 
 		// 处于请求
-		RedisRsp* rsp = proccss(req);
-		delete req;
+		if (req) {
+			RedisRsp* rsp = proccss(req);
+			delete req;
 
-		// rsp丢入TransactionMgr进行处理
-		_mutex.lock();
-		_rsp_queue.push(rsp);
-		_mutex.unlock();
+			// rsp丢入TransactionMgr进行处理
+			_mutex.lock();
+			_rsp_queue.push(rsp);
+			_mutex.unlock();
+		}
 	}
 }
 

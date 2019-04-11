@@ -45,19 +45,24 @@ void AsyncMysqlMgrImpl::run(void* param) {
 		if (work->_queue.empty()) {
 			work->_cond.wait();
 		}
-		MysqlReq* req = work->_queue.front();
-		work->_queue.pop();
+		MysqlReq* req = 0;
+		if (work->_queue.size()) {
+			req = work->_queue.front();
+			work->_queue.pop();
+		}
 		work->_mutex.unlock();
 		work->_cond.notify();
 
 		// 处于请求
-		MysqlRsp* rsp = proccss(req);
-		delete req;
+		if (req) {
+			MysqlRsp* rsp = proccss(req);
+			delete req;
 
-		// rsp丢入TransactionMgr进行处理
-		_mutex.lock();
-		_rsp_queue.push(rsp);
-		_mutex.unlock();
+			// rsp丢入TransactionMgr进行处理
+			_mutex.lock();
+			_rsp_queue.push(rsp);
+			_mutex.unlock();
+		}
 	}
 }
 
