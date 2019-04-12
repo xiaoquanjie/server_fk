@@ -68,7 +68,7 @@ namespace _mysql_detail {
 			pthread_key_t _tkey;
 			_init_() {
 				// ´´½¨
-				pthread_key_create(&_tkey, 0);
+				pthread_key_create(&_tkey, destructor);
 			}
 			~_init_() {
 				T* pv = (T*)pthread_getspecific(_tkey);
@@ -89,7 +89,10 @@ namespace _mysql_detail {
 	protected:
 		ThreadLocalData(const ThreadLocalData&);
 		ThreadLocalData& operator=(const ThreadLocalData&);
-
+		static void destructor(void* v) {
+			T* pv = (T*)v;
+			delete pv;
+		}
 	private:
 		static _init_ _data;
 	};

@@ -150,7 +150,7 @@ namespace _redis_detail {
 	protected:
 		ThreadLocalData(const ThreadLocalData&);
 		ThreadLocalData& operator=(const ThreadLocalData&);
-
+		
 	private:
 		static _init_ _data;
 	};
@@ -164,12 +164,9 @@ namespace _redis_detail {
 			pthread_key_t _tkey;
 			_init_(){
 				// ´´½¨
-				pthread_key_create(&_tkey, 0);
+				pthread_key_create(&_tkey, destructor);
 			}
 			~_init_(){
-				T* pv = (T*)pthread_getspecific(_tkey);
-				pthread_key_delete(_tkey);
-				delete pv;
 			}
 		};
 
@@ -185,7 +182,10 @@ namespace _redis_detail {
 	protected:
 		ThreadLocalData(const ThreadLocalData&);
 		ThreadLocalData& operator=(const ThreadLocalData&);
-
+		static void destructor(void* v) {
+			T* pv = (T*)v;
+			delete pv;
+		}
 	private:
 		static _init_ _data;
 	};

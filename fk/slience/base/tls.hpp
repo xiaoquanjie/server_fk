@@ -33,7 +33,9 @@ public:
 			assert(_tkey != TLS_OUT_OF_INDEXES);
 		}
 		~_init_(){
+			T* pv = (T*)TlsGetValue(_tkey);
 			TlsFree(_tkey);
+			delete pv;
 		}
 	};
 
@@ -63,12 +65,9 @@ public:
 		pthread_key_t _tkey;
 		_init_(){
 			// ´´½¨
-			pthread_key_create(&_tkey, 0);
+			pthread_key_create(&_tkey, destructor);
 		}
 		~_init_(){
-			T* pv = (T*)pthread_getspecific(_tkey);
-			pthread_key_delete(_tkey);
-			delete pv;
 		}
 	};
 
@@ -84,6 +83,10 @@ public:
 protected:
 	tlsdata(const tlsdata&);
 	tlsdata& operator=(const tlsdata&);
+	static void destructor(void* v) {
+		T* pv = (T*)v;
+		delete pv;
+	}
 
 private:
 	static _init_ _data;
