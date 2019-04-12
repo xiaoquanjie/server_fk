@@ -236,21 +236,13 @@ struct _redisaddr_ {
 struct _redisinfo_ {
 	std::map<unsigned long long, shard_ptr_t<_rediscontext_> > _info;
 	std::map<shard_ptr_t<_rediscontext_>, unsigned long long> _revinfo;
-};
 
-struct _redisinfoset_ {
-	std::set<_rediscontext_*> _contexts;
-
-	~_redisinfoset_() {
-		for (std::set<_rediscontext_*>::iterator iter = _contexts.begin();
-			iter != _contexts.end(); ++iter) {
-			redisFree((*iter)->_context);
-			delete ((_rediscontext_*)*iter);
+	~_redisinfo_() {
+		for (auto iter = _info.begin(); iter != _info.end(); ++iter) {
+			redisFree(iter->second->_context);
 		}
-		_contexts.clear();
 	}
 };
-
 
 #define M_CHECK_REDIS_CONTEXT(context)\
 if (!context || !context->_context) throw RedisException(M_ERR_REDIS_NOT_CONNECTED);
