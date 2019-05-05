@@ -11,11 +11,11 @@
 // °æ±¾£ºV1.0.0
 //----------------------------------------------------------------*/
 
-#ifndef M_NETIO_NETIO_INCLUDE
-#define M_NETIO_NETIO_INCLUDE
+#pragma once
 
 #include "slience/netio/config.hpp"
 #include "slience/base/thread.hpp"
+
 M_NETIO_NAMESPACE_BEGIN
 
 class NetIo;
@@ -119,15 +119,3 @@ enum {
 };
 
 M_NETIO_NAMESPACE_END
-#endif
-
-#include "slience/netio/packet.hpp"
-#include "slience/netio/tcp_base_socket.hpp"
-#include "slience/netio/tcp_stream_socket.hpp"
-#include "slience/netio/tcp_socket.h"
-#include "slience/netio/tcp_connector.h"
-#include "slience/netio/httpmsg.hpp"
-#include "slience/netio/http_base_socket.hpp"
-#include "slience/netio/http_socket.h"
-#include "slience/netio/http_connector.h"
-#include "slience/netio/sync_connector.h"

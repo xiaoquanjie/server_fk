@@ -1,7 +1,8 @@
-#ifndef M_NETIO_SYNC_CONNECTOR_INCLUDE
-#define M_NETIO_SYNC_CONNECTOR_INCLUDE
+#pragma once
 
 #include "slience/netio/config.hpp"
+#include "slience/netio/packet.hpp"
+
 M_NETIO_NAMESPACE_BEGIN
 
 // Í¬²½connector
@@ -55,4 +56,3 @@ protected:
 
 
 M_NETIO_NAMESPACE_END
-#endif

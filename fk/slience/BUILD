@@ -15,6 +15,7 @@ cc_library(
 	   'base/object_pool.cpp',
 	   'base/time_pool.cpp',
 	   'base/util.cpp',
+	   'base/random.cpp',
 	   'socket/error.cpp',
 	   'netio/sync_connector.cpp',
 	   'netio/http_connector.cpp',
@@ -25,7 +26,9 @@ cc_library(
 	   'coroutine/coroutine.cpp',
 	   'coroutine/coroutine_linux.cpp',
 	   'coroutine/coroutine_win.cpp',
-	   'coroutine/courtouine_task.cpp'
+	   'coroutine/courtouine_task.cpp',
+	   'socket/address.cpp',
+	   'socket/hdr_helper.cpp',
     ],
 
     deps = [

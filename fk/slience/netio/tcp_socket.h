@@ -1,7 +1,7 @@
-#ifndef M_NETIO_TCP_SOCKET_INCLUDE
-#define M_NETIO_TCP_SOCKET_INCLUDE
+#pragma once
 
-#include "slience/netio/config.hpp"
+#include "slience/netio/tcp_stream_socket.hpp"
+
 M_NETIO_NAMESPACE_BEGIN
 
 // class tcpsocket
@@ -20,4 +20,3 @@ protected:
 };
 
 M_NETIO_NAMESPACE_END
-#endif

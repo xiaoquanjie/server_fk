@@ -132,6 +132,7 @@
     <None Include="BUILD" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="socket\hdr_helper.cpp" />
     <ClInclude Include="base\atomic.hpp" />
     <ClInclude Include="base\buffer.hpp" />
     <ClInclude Include="base\circular_queue.hpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="netio\http_base_socket.hpp" />
     <ClInclude Include="netio\http_connector.h" />
     <ClInclude Include="netio\http_socket.h" />
+    <ClInclude Include="netio\netio.h" />
     <ClInclude Include="netio\sync_connector.h" />
     <ClInclude Include="netio\tcp_base_socket.hpp" />
     <ClInclude Include="netio\config.hpp" />
@@ -169,6 +171,7 @@
     <ClInclude Include="netio\log.hpp" />
     <ClInclude Include="netio\netio.hpp" />
     <ClCompile Include="base\object_pool.cpp" />
+    <ClCompile Include="base\random.cpp" />
     <ClCompile Include="base\time_pool.cpp" />
     <ClCompile Include="base\util.cpp" />
     <ClCompile Include="coroutine\coroutine.cpp" />
@@ -195,7 +198,7 @@
     <ClInclude Include="socket\iocp_access.hpp" />
     <ClInclude Include="socket\ioservice.ipp" />
     <ClInclude Include="socket\io_object.hpp" />
-    <ClInclude Include="socket\linuxsock_init.hpp" />
+    <ClInclude Include="socket\linuxsock_init.ipp" />
     <ClInclude Include="socket\linux_config.hpp" />
     <ClInclude Include="socket\linux_epoll.hpp" />
     <ClInclude Include="socket\option.hpp" />
@@ -211,7 +214,7 @@
     <ClInclude Include="socket\stream_service.hpp" />
     <ClInclude Include="socket\type.hpp" />
     <ClInclude Include="socket\util.hpp" />
-    <ClInclude Include="socket\winsock_init.hpp" />
+    <ClInclude Include="socket\winsock_init.ipp" />
     <ClInclude Include="socket\win_config.hpp" />
     <ClInclude Include="socket\win_iocp.hpp" />
   </ItemGroup>
@@ -227,6 +230,7 @@
     <ClCompile Include="netio\sync_connector.cpp" />
     <ClCompile Include="netio\tcp_connector.cpp" />
     <ClCompile Include="netio\tcp_socket.cpp" />
+    <ClCompile Include="socket\address.cpp" />
     <ClCompile Include="socket\error.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

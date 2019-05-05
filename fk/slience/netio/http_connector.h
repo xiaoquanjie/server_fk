@@ -1,7 +1,7 @@
-#ifndef M_NETIO_HTTP_CONNECTOR_INCLUDE
-#define M_NETIO_HTTP_CONNECTOR_INCLUDE
+#pragma once
 
-#include "slience/netio/config.hpp"
+#include "slience/netio/http_base_socket.hpp"
+
 M_NETIO_NAMESPACE_BEGIN
 
 class HttpConnector : 
@@ -26,4 +26,3 @@ protected:
 
 
 M_NETIO_NAMESPACE_END
-#endif

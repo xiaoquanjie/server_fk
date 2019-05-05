@@ -138,9 +138,6 @@
     <ClInclude Include="socket\linux_epoll.hpp">
       <Filter>socket</Filter>
     </ClInclude>
-    <ClInclude Include="socket\linuxsock_init.hpp">
-      <Filter>socket</Filter>
-    </ClInclude>
     <ClInclude Include="socket\option.hpp">
       <Filter>socket</Filter>
     </ClInclude>
@@ -184,9 +181,6 @@
       <Filter>socket</Filter>
     </ClInclude>
     <ClInclude Include="socket\win_iocp.hpp">
-      <Filter>socket</Filter>
-    </ClInclude>
-    <ClInclude Include="socket\winsock_init.hpp">
       <Filter>socket</Filter>
     </ClInclude>
     <ClInclude Include="base\object_pool.h">
@@ -239,6 +233,15 @@
     </ClInclude>
     <ClInclude Include="base\util.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\linuxsock_init.ipp">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="socket\winsock_init.ipp">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="netio\netio.h">
+      <Filter>netio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -304,6 +307,15 @@
     </ClCompile>
     <ClCompile Include="base\util.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="base\random.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\address.cpp">
+      <Filter>socket</Filter>
+    </ClCompile>
+    <ClCompile Include="socket\hdr_helper.cpp">
+      <Filter>socket</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
